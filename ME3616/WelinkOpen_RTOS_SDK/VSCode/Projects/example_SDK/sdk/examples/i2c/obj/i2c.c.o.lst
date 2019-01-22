@@ -1,0 +1,1813 @@
+ARM GAS   			page 1
+
+
+   1              	 .cpu cortex-m4
+   2              	 .eabi_attribute 27,1
+   3              	 .eabi_attribute 28,1
+   4              	 .eabi_attribute 20,1
+   5              	 .eabi_attribute 21,1
+   6              	 .eabi_attribute 23,3
+   7              	 .eabi_attribute 24,1
+   8              	 .eabi_attribute 25,1
+   9              	 .eabi_attribute 26,1
+  10              	 .eabi_attribute 30,1
+  11              	 .eabi_attribute 34,1
+  12              	 .eabi_attribute 18,4
+  13              	 .file "i2c.c"
+  14              	 .text
+  15              	.Ltext0:
+  16              	 .cfi_sections .debug_frame
+  17              	 .global __aeabi_f2d
+  18              	 .section .text.display,"ax",%progbits
+  19              	 .align 1
+  20              	 .syntax unified
+  21              	 .thumb
+  22              	 .thumb_func
+  23              	 .fpu fpv4-sp-d16
+  25              	display:
+  26              	.LFB26:
+  27              	 .file 1 "i2c.c"
+   1:i2c.c         **** /** File   : i2c.c
+   2:i2c.c         **** **
+   3:i2c.c         **** ** Copyright (C) 2013-2018 Gosuncn. All rights reserved.
+   4:i2c.c         **** **
+   5:i2c.c         **** ** Licensed under the Apache License, Version 2.0 (the "License");
+   6:i2c.c         **** ** you may not use this file except in compliance with the License.
+   7:i2c.c         **** ** You may obtain a copy of the License at
+   8:i2c.c         **** **
+   9:i2c.c         **** **      http://www.apache.org/licenses/LICENSE-2.0
+  10:i2c.c         **** **
+  11:i2c.c         **** ** Unless required by applicable law or agreed to in writing, software
+  12:i2c.c         **** ** distributed under the License is distributed on an "AS IS" BASIS,
+  13:i2c.c         **** ** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  14:i2c.c         **** ** See the License for the specific language governing permissions and
+  15:i2c.c         **** ** limitations under the License.
+  16:i2c.c         **** **
+  17:i2c.c         **** ** Author : zhangxin2@gosuncn.cn
+  18:i2c.c         **** **
+  19:i2c.c         **** **  $Date: 2018/09/04 08:45:36GMT+08:00 $
+  20:i2c.c         **** **
+  21:i2c.c         **** */
+  22:i2c.c         **** 
+  23:i2c.c         **** /*
+  24:i2c.c         ****  * This example shows how to use i2c bus to control the bmp180 sensor.
+  25:i2c.c         ****  */
+  26:i2c.c         ****  
+  27:i2c.c         **** #include "gsdk_sdk.h"
+  28:i2c.c         **** 
+  29:i2c.c         **** typedef unsigned char       UB8;
+  30:i2c.c         **** typedef unsigned short      UW16;
+  31:i2c.c         **** typedef unsigned long       UL32;
+ARM GAS   			page 2
+
+
+  32:i2c.c         **** typedef char                SB8;
+  33:i2c.c         **** typedef short               SW16;
+  34:i2c.c         **** typedef long                SL32;
+  35:i2c.c         **** 
+  36:i2c.c         **** #define BMP180_NOT_EXISTENCE                0
+  37:i2c.c         **** #define BMP180_EXISTENCE                    1
+  38:i2c.c         **** #define BMP180_ID_REGISTER_ADDRESS          0xD0
+  39:i2c.c         **** #define BMP180_DEVICE_ADDRESS_BASE_VALUE    0x77
+  40:i2c.c         **** #define BMP180_DEVICE_ID                    0x55
+  41:i2c.c         **** #define MAX_WRITE_LENGTH                    4
+  42:i2c.c         **** #define OSS                                 2
+  43:i2c.c         **** 
+  44:i2c.c         **** 
+  45:i2c.c         **** #define BMP180_DIG_AC1_MSB_REG  0xAA
+  46:i2c.c         **** #define BMP180_DIG_AC1_LSB_REG  0xAB
+  47:i2c.c         **** #define BMP180_DIG_AC2_MSB_REG  0xAC
+  48:i2c.c         **** #define BMP180_DIG_AC2_LSB_REG  0XAD
+  49:i2c.c         **** #define BMP180_DIG_AC3_MSB_REG  0xAE
+  50:i2c.c         **** #define BMP180_DIG_AC3_LSB_REG  0xAF
+  51:i2c.c         **** #define BMP180_DIG_AC4_MSB_REG  0xB0
+  52:i2c.c         **** #define BMP180_DIG_AC4_LSB_REG  0xB1
+  53:i2c.c         **** #define BMP180_DIG_AC5_MSB_REG  0xB2
+  54:i2c.c         **** #define BMP180_DIG_AC5_LSB_REG  0xB3
+  55:i2c.c         **** #define BMP180_DIG_AC6_MSB_REG  0xB4
+  56:i2c.c         **** #define BMP180_DIG_AC6_LSB_REG  0xB5
+  57:i2c.c         **** #define BMP180_DIG_B1_MSB_REG   0xB6
+  58:i2c.c         **** #define BMP180_DIG_B1_LSB_REG   0xB7
+  59:i2c.c         **** #define BMP180_DIG_B2_MSB_REG   0xB8
+  60:i2c.c         **** #define BMP180_DIG_B2_LSB_REG   0xB9
+  61:i2c.c         **** #define BMP180_DIG_MB_MSB_REG   0xBA
+  62:i2c.c         **** #define BMP180_DIG_MB_LSB_REG   0xBB
+  63:i2c.c         **** #define BMP180_DIG_MC_MSB_REG   0xBC
+  64:i2c.c         **** #define BMP180_DIG_MC_LSB_REG   0xBD
+  65:i2c.c         **** #define BMP180_DIG_MD_MSB_REG   0xBE
+  66:i2c.c         **** #define BMP180_DIG_MD_LSB_REG   0xBF
+  67:i2c.c         **** 
+  68:i2c.c         **** static gsdk_handle_t g_huart;
+  69:i2c.c         **** static gsdk_handle_t g_hi2c;
+  70:i2c.c         **** static uint8_t DEVICEID;
+  71:i2c.c         **** //static uint8_t bmp180_txbuffer[MAX_WRITE_LENGTH * 2];
+  72:i2c.c         **** static uint8_t bmp180_reg_addr;
+  73:i2c.c         **** 
+  74:i2c.c         **** typedef struct {
+  75:i2c.c         **** 
+  76:i2c.c         ****     SW16    AC1;
+  77:i2c.c         ****     SW16    AC2;
+  78:i2c.c         ****     SW16    AC3;
+  79:i2c.c         ****     UW16    AC4;
+  80:i2c.c         ****     UW16    AC5;
+  81:i2c.c         ****     UW16    AC6;
+  82:i2c.c         ****     SW16    B1;
+  83:i2c.c         ****     SW16    B2;
+  84:i2c.c         ****     SW16    MB;
+  85:i2c.c         ****     SW16    MC;
+  86:i2c.c         ****     SW16    MD;
+  87:i2c.c         **** 
+  88:i2c.c         **** } BMP180_cal_param;
+ARM GAS   			page 3
+
+
+  89:i2c.c         **** 
+  90:i2c.c         **** typedef struct {
+  91:i2c.c         ****     uint8_t ExistFlag;      //存在标志
+  92:i2c.c         **** 
+  93:i2c.c         ****     BMP180_cal_param cal_param; //修正系数
+  94:i2c.c         **** 
+  95:i2c.c         ****     SL32 UnsetTemperature;  //未校正的温度值
+  96:i2c.c         ****     SL32 UnsetGasPress; //未校正的气压值
+  97:i2c.c         **** 
+  98:i2c.c         ****     float Temperature;      //校正后的温度值
+  99:i2c.c         ****     SL32  GasPress;         //校正后的气压值
+ 100:i2c.c         **** } BMP180_info;
+ 101:i2c.c         **** 
+ 102:i2c.c         **** int __io_puts(char *data, int len)
+ 103:i2c.c         **** {
+ 104:i2c.c         ****     int ret = 0;
+ 105:i2c.c         ****     if (g_huart) {
+ 106:i2c.c         ****         ret = gsdk_uart_write(g_huart, (uint8_t *)data, len, 1000);
+ 107:i2c.c         ****     }
+ 108:i2c.c         ****     return ret;
+ 109:i2c.c         **** }
+ 110:i2c.c         **** 
+ 111:i2c.c         **** static int bmp180_I2C_multi_read(uint8_t addr, uint8_t *result, uint16_t len)
+ 112:i2c.c         **** {
+ 113:i2c.c         ****     int ret;
+ 114:i2c.c         ****     bmp180_reg_addr = addr;
+ 115:i2c.c         ****     int timeout_ms = 5000;
+ 116:i2c.c         **** 
+ 117:i2c.c         ****     ret = gsdk_i2c_write(g_hi2c, BMP180_DEVICE_ADDRESS_BASE_VALUE, &bmp180_reg_addr, 1);
+ 118:i2c.c         ****     if (ret != GSDK_SUCCESS) {
+ 119:i2c.c         ****         gsdk_syslog_printf("I2C Transmit error (%ld)\n", ret);
+ 120:i2c.c         ****         return -1;
+ 121:i2c.c         ****     }
+ 122:i2c.c         **** 
+ 123:i2c.c         ****     ret = gsdk_i2c_read(g_hi2c, BMP180_DEVICE_ADDRESS_BASE_VALUE, result, len, timeout_ms);
+ 124:i2c.c         ****     if (ret != GSDK_SUCCESS) {
+ 125:i2c.c         ****         gsdk_syslog_printf("I2C Read error (%ld)\n", ret);
+ 126:i2c.c         ****         return -1;
+ 127:i2c.c         ****     }
+ 128:i2c.c         ****     return ret;
+ 129:i2c.c         **** }
+ 130:i2c.c         **** 
+ 131:i2c.c         **** /*static int bmp180_I2C_multi_write(uint8_t addr, uint8_t *value, uint16_t len)
+ 132:i2c.c         **** {
+ 133:i2c.c         ****     uint8_t reg_addr = addr;
+ 134:i2c.c         ****     uint8_t reg_len  = len;
+ 135:i2c.c         ****     uint8_t *ptxbuffer = bmp180_txbuffer;
+ 136:i2c.c         ****     int ret;
+ 137:i2c.c         **** 
+ 138:i2c.c         ****     if (len > MAX_WRITE_LENGTH) {
+ 139:i2c.c         ****         gsdk_syslog_printf("I2C Max Write length exceeds! \n");
+ 140:i2c.c         ****         return -1;
+ 141:i2c.c         ****     }
+ 142:i2c.c         **** 
+ 143:i2c.c         ****     while (reg_len != 0) {
+ 144:i2c.c         **** 
+ 145:i2c.c         ****         *ptxbuffer = reg_addr;
+ARM GAS   			page 4
+
+
+ 146:i2c.c         ****         reg_addr++;
+ 147:i2c.c         ****         ptxbuffer++;
+ 148:i2c.c         **** 
+ 149:i2c.c         ****         *ptxbuffer = *value;
+ 150:i2c.c         ****         value++;
+ 151:i2c.c         ****         ptxbuffer++;
+ 152:i2c.c         **** 
+ 153:i2c.c         ****         reg_len--;
+ 154:i2c.c         ****     }
+ 155:i2c.c         **** 
+ 156:i2c.c         ****     ret = gsdk_i2c_write(g_hi2c, BMP180_DEVICE_ADDRESS_BASE_VALUE, bmp180_txbuffer, (len * 2));
+ 157:i2c.c         **** 
+ 158:i2c.c         ****     if (ret != GSDK_SUCCESS) {
+ 159:i2c.c         ****         gsdk_syslog_printf("I2C Transmit error(%ld)\n", ret);
+ 160:i2c.c         ****         return -1;
+ 161:i2c.c         ****     }
+ 162:i2c.c         ****     return ret;
+ 163:i2c.c         **** }*/
+ 164:i2c.c         **** 
+ 165:i2c.c         **** static SL32 BMP180ReadUnsetTemperature(void)
+ 166:i2c.c         **** {
+ 167:i2c.c         ****     uint8_t param[] = {0xF4, 0x2E};
+ 168:i2c.c         ****     uint8_t *data;
+ 169:i2c.c         **** 	data = (uint8_t *)malloc(2);
+ 170:i2c.c         ****     //bmp180_I2C_multi_write(BMP180_DEVICE_ADDRESS_BASE_VALUE,&param,2);
+ 171:i2c.c         ****     gsdk_i2c_write(g_hi2c, BMP180_DEVICE_ADDRESS_BASE_VALUE, &param[0], 1);
+ 172:i2c.c         ****     gsdk_i2c_write(g_hi2c, BMP180_DEVICE_ADDRESS_BASE_VALUE, &param[1], 1);
+ 173:i2c.c         ****     vTaskDelay(50);
+ 174:i2c.c         ****     bmp180_I2C_multi_read(0xF6, data, 2);
+ 175:i2c.c         ****     SL32 temp = (data[0] << 8) | data[1];
+ 176:i2c.c         **** 	free(data);
+ 177:i2c.c         ****     return temp;
+ 178:i2c.c         **** }
+ 179:i2c.c         **** static SL32 BMP180ReadUnsetPressure(void)
+ 180:i2c.c         **** {
+ 181:i2c.c         ****     uint8_t param[] = {0xF4, 0x34 + (OSS << 6)};
+ 182:i2c.c         ****     uint8_t *data;
+ 183:i2c.c         **** 	data = (uint8_t *)malloc(3);
+ 184:i2c.c         ****     //bmp180_I2C_multi_write(BMP180_DEVICE_ADDRESS_BASE_VALUE,&param,2);
+ 185:i2c.c         ****     gsdk_i2c_write(g_hi2c, BMP180_DEVICE_ADDRESS_BASE_VALUE, &param[0], 1);
+ 186:i2c.c         ****     gsdk_i2c_write(g_hi2c, BMP180_DEVICE_ADDRESS_BASE_VALUE, &param[1], 1);
+ 187:i2c.c         ****     vTaskDelay(50);
+ 188:i2c.c         ****     bmp180_I2C_multi_read(0xF6, data, 3);
+ 189:i2c.c         ****     SL32 temp = ((data[0] << 16) + (data[1] << 8) + data[2]) >> (8 - OSS);
+ 190:i2c.c         **** 	free(data);
+ 191:i2c.c         ****     return temp;
+ 192:i2c.c         **** }
+ 193:i2c.c         **** 
+ 194:i2c.c         **** static void BMP180Convert(BMP180_info *temp)
+ 195:i2c.c         **** {
+ 196:i2c.c         ****     SL32 x1, x2, B5, B6, x3, B3, p;
+ 197:i2c.c         ****     unsigned long b4, b7;
+ 198:i2c.c         **** 
+ 199:i2c.c         ****     temp->UnsetTemperature = BMP180ReadUnsetTemperature();
+ 200:i2c.c         ****     temp->UnsetGasPress =  BMP180ReadUnsetPressure();
+ 201:i2c.c         **** 
+ 202:i2c.c         ****     gsdk_syslog_printf("UT:%d", temp->UnsetTemperature);
+ARM GAS   			page 5
+
+
+ 203:i2c.c         ****     gsdk_syslog_printf("UP:%d", temp->UnsetGasPress);
+ 204:i2c.c         **** 
+ 205:i2c.c         ****     x1 = ((temp->UnsetTemperature) - temp->cal_param.AC6) * (temp->cal_param.AC5) >> 15;
+ 206:i2c.c         ****     x2 = ((SL32)(temp->cal_param.MC) << 11) / (x1 + temp->cal_param.MD);
+ 207:i2c.c         ****     B5 = x1 + x2;
+ 208:i2c.c         ****     temp->Temperature = ((B5 + 8) >> 4);
+ 209:i2c.c         **** 
+ 210:i2c.c         ****     B6 = B5 - 4000;
+ 211:i2c.c         ****     x1 = ((SL32)(temp->cal_param.B2) * (B6 * B6 >> 12)) >> 11;
+ 212:i2c.c         ****     x2 = ((SL32)temp->cal_param.AC2) * B6 >> 11;
+ 213:i2c.c         ****     x3 = x1 + x2;
+ 214:i2c.c         ****     B3 = ((((SL32)(temp->cal_param.AC1) * 4 + x3) << OSS) + 2) / 4;
+ 215:i2c.c         ****     x1 = ((SL32)temp->cal_param.AC3) * B6 >> 13;
+ 216:i2c.c         ****     x2 = ((SL32)(temp->cal_param.B1) * (B6 * B6 >> 12)) >> 16;
+ 217:i2c.c         ****     x3 = ((x1 + x2) + 2) >> 2;
+ 218:i2c.c         ****     b4 = ((SL32)(temp->cal_param.AC4) * (unsigned long)(x3 + 32768)) >> 15;
+ 219:i2c.c         ****     b7 = ((unsigned long)(temp->UnsetGasPress) - B3) * (50000 >> OSS);
+ 220:i2c.c         ****     if (b7 < 0x80000000) {
+ 221:i2c.c         ****         p = (b7 * 2) / b4 ;
+ 222:i2c.c         ****     } else {
+ 223:i2c.c         ****         p = (b7 / b4) * 2;
+ 224:i2c.c         ****     }
+ 225:i2c.c         ****     x1 = (p >> 8) * (p >> 8);
+ 226:i2c.c         ****     x1 = ((SL32)x1 * 3038) >> 16;
+ 227:i2c.c         ****     x2 = (-7357 * p) >> 16;
+ 228:i2c.c         ****     temp->GasPress = p + ((x1 + x2 + 3791) >> 4);
+ 229:i2c.c         **** }
+ 230:i2c.c         **** 
+ 231:i2c.c         **** static void BMP180ReadCalibrateParam(BMP180_info *p)
+ 232:i2c.c         **** {
+ 233:i2c.c         **** 
+ 234:i2c.c         ****     uint8_t *bmp180_a_data_u8r;					//read the bmp180 calibration parameters
+ 235:i2c.c         **** 	bmp180_a_data_u8r = (uint8_t *)malloc(2);
+ 236:i2c.c         **** 	
+ 237:i2c.c         ****     bmp180_I2C_multi_read(BMP180_DIG_AC1_MSB_REG, bmp180_a_data_u8r, 2);
+ 238:i2c.c         ****     p->cal_param.AC1 = (int16_t)((((int16_t)((signed char)bmp180_a_data_u8r[0])) << 8) | bmp180_a_d
+ 239:i2c.c         **** 	bmp180_I2C_multi_read(BMP180_DIG_AC2_MSB_REG, bmp180_a_data_u8r, 2);
+ 240:i2c.c         ****     p->cal_param.AC2 = (int16_t)((((int16_t)((signed char)bmp180_a_data_u8r[0])) << 8) | bmp180_a_d
+ 241:i2c.c         **** 	bmp180_I2C_multi_read(BMP180_DIG_AC3_MSB_REG, bmp180_a_data_u8r, 2);
+ 242:i2c.c         ****     p->cal_param.AC3 = (int16_t)((((int16_t)((signed char)bmp180_a_data_u8r[0])) << 8) | bmp180_a_d
+ 243:i2c.c         **** 	bmp180_I2C_multi_read(BMP180_DIG_AC4_MSB_REG, bmp180_a_data_u8r, 2);
+ 244:i2c.c         ****     p->cal_param.AC4 = (uint16_t)((((uint16_t)((unsigned char)bmp180_a_data_u8r[0])) << 8) | bmp180
+ 245:i2c.c         **** 	bmp180_I2C_multi_read(BMP180_DIG_AC5_MSB_REG, bmp180_a_data_u8r, 2);
+ 246:i2c.c         ****     p->cal_param.AC5 = (uint16_t)((((uint16_t)((unsigned char)bmp180_a_data_u8r[0])) << 8) | bmp180
+ 247:i2c.c         **** 	bmp180_I2C_multi_read(BMP180_DIG_AC6_MSB_REG, bmp180_a_data_u8r, 2);
+ 248:i2c.c         ****     p->cal_param.AC6 = (uint16_t)((((uint16_t)((unsigned char)bmp180_a_data_u8r[0])) << 8) | bmp180
+ 249:i2c.c         **** 	bmp180_I2C_multi_read(BMP180_DIG_B1_MSB_REG, bmp180_a_data_u8r, 2);
+ 250:i2c.c         ****     p->cal_param.B1  = (int16_t)((((int16_t)((signed char)bmp180_a_data_u8r[0])) << 8) | bmp180_a_d
+ 251:i2c.c         **** 	bmp180_I2C_multi_read(BMP180_DIG_B2_MSB_REG, bmp180_a_data_u8r, 2);
+ 252:i2c.c         ****     p->cal_param.B2  = (int16_t)((((int16_t)((signed char)bmp180_a_data_u8r[0])) << 8) | bmp180_a_d
+ 253:i2c.c         **** 	bmp180_I2C_multi_read(BMP180_DIG_MB_MSB_REG, bmp180_a_data_u8r, 2);
+ 254:i2c.c         ****     p->cal_param.MB  = (int16_t)((((int16_t)((signed char)bmp180_a_data_u8r[0])) << 8) | bmp180_a_d
+ 255:i2c.c         **** 	bmp180_I2C_multi_read(BMP180_DIG_MC_MSB_REG, bmp180_a_data_u8r, 2);
+ 256:i2c.c         ****     p->cal_param.MC  = (int16_t)((((int16_t)((signed char)bmp180_a_data_u8r[0])) << 8) | bmp180_a_d
+ 257:i2c.c         **** 	bmp180_I2C_multi_read(BMP180_DIG_MD_MSB_REG, bmp180_a_data_u8r, 2);
+ 258:i2c.c         ****     p->cal_param.MD  = (int16_t)((((int16_t)((signed char)bmp180_a_data_u8r[0])) << 8) | bmp180_a_d
+ 259:i2c.c         **** 
+ARM GAS   			page 6
+
+
+ 260:i2c.c         ****     gsdk_syslog_printf("The p->cal_param.AC1:%d\n", p->cal_param.AC1);
+ 261:i2c.c         ****     gsdk_syslog_printf("The p->cal_param.AC2:%d\n", p->cal_param.AC2);
+ 262:i2c.c         ****     gsdk_syslog_printf("The p->cal_param.AC3:%d\n", p->cal_param.AC3);
+ 263:i2c.c         ****     gsdk_syslog_printf("The p->cal_param.AC4:%d\n", p->cal_param.AC4);
+ 264:i2c.c         ****     gsdk_syslog_printf("The p->cal_param.AC5:%d\n", p->cal_param.AC5);
+ 265:i2c.c         ****     gsdk_syslog_printf("The p->cal_param.AC6:%d\n", p->cal_param.AC6);
+ 266:i2c.c         ****     gsdk_syslog_printf("The p->cal_param.B1:%d\n", p->cal_param.B1);
+ 267:i2c.c         ****     gsdk_syslog_printf("The p->cal_param.B2:%d\n", p->cal_param.B2);
+ 268:i2c.c         ****     gsdk_syslog_printf("The p->cal_param.MB:%d\n", p->cal_param.MB);
+ 269:i2c.c         ****     gsdk_syslog_printf("The p->cal_param.MC:%d\n", p->cal_param.MC);
+ 270:i2c.c         ****     gsdk_syslog_printf("The p->cal_param.MD:%d\n", p->cal_param.MD);
+ 271:i2c.c         **** 	
+ 272:i2c.c         **** 	free(bmp180_a_data_u8r);
+ 273:i2c.c         **** }
+ 274:i2c.c         **** 
+ 275:i2c.c         **** static void BMP180_init(BMP180_info *p)
+ 276:i2c.c         **** {
+ 277:i2c.c         ****     bmp180_I2C_multi_read(BMP180_ID_REGISTER_ADDRESS, &DEVICEID, 1);  //read bmp180 device id by i2
+ 278:i2c.c         ****     if (DEVICEID == BMP180_DEVICE_ID) {
+ 279:i2c.c         ****         gsdk_syslog_printf("The BMP180 device id 0x%x\n\r", DEVICEID);
+ 280:i2c.c         ****         p->ExistFlag = BMP180_EXISTENCE;
+ 281:i2c.c         ****         BMP180ReadCalibrateParam(p); 							//the bmp180 calibration parameters
+ 282:i2c.c         ****     } else {
+ 283:i2c.c         ****         p->ExistFlag = BMP180_NOT_EXISTENCE;
+ 284:i2c.c         ****     }
+ 285:i2c.c         **** }
+ 286:i2c.c         **** 
+ 287:i2c.c         **** static void display(BMP180_info temp)
+ 288:i2c.c         **** {
+  28              	 .loc 1 288 0
+  29              	 .cfi_startproc
+  30              	 
+  31              	 
+  32 0000 84B0     	 sub sp,sp,#16
+  33              	 .cfi_def_cfa_offset 16
+  34 0002 08B5     	 push {r3,lr}
+  35              	 .cfi_def_cfa_offset 24
+  36              	 .cfi_offset 3,-24
+  37              	 .cfi_offset 14,-20
+  38 0004 0DF1080C 	 add ip,sp,#8
+  39 0008 8CE80F00 	 stm ip,{r0,r1,r2,r3}
+ 289:i2c.c         ****     gsdk_syslog_printf("The Pressure : %4.2f Kpa\n\r", (float)(temp.GasPress) / 1000);
+  40              	 .loc 1 289 0
+  41 000c DDED0B7A 	 vldr.32 s15,[sp,#44]
+  42 0010 F8EEE77A 	 vcvt.f32.s32 s15,s15
+  43 0014 9FED087A 	 vldr.32 s14,.L3
+  44 0018 C7EE877A 	 vdiv.f32 s15,s15,s14
+  45 001c 17EE900A 	 vmov r0,s15
+  46 0020 FFF7FEFF 	 bl __aeabi_f2d
+  47              	.LVL0:
+  48 0024 0246     	 mov r2,r0
+  49 0026 0B46     	 mov r3,r1
+  50 0028 0448     	 ldr r0,.L3+4
+  51 002a FFF7FEFF 	 bl gsdk_syslog_printf
+  52              	.LVL1:
+ 290:i2c.c         **** }
+  53              	 .loc 1 290 0
+ARM GAS   			page 7
+
+
+  54 002e BDE80840 	 pop {r3,lr}
+  55              	 .cfi_restore 14
+  56              	 .cfi_restore 3
+  57              	 .cfi_def_cfa_offset 16
+  58 0032 04B0     	 add sp,sp,#16
+  59              	 .cfi_def_cfa_offset 0
+  60 0034 7047     	 bx lr
+  61              	.L4:
+  62 0036 00BF     	 .align 2
+  63              	.L3:
+  64 0038 00007A44 	 .word 1148846080
+  65 003c 00000000 	 .word .LC2
+  66              	 .cfi_endproc
+  67              	.LFE26:
+  69              	 .section .text.bmp180_I2C_multi_read,"ax",%progbits
+  70              	 .align 1
+  71              	 .syntax unified
+  72              	 .thumb
+  73              	 .thumb_func
+  74              	 .fpu fpv4-sp-d16
+  76              	bmp180_I2C_multi_read:
+  77              	.LFB20:
+ 112:i2c.c         ****     int ret;
+  78              	 .loc 1 112 0
+  79              	 .cfi_startproc
+  80              	 
+  81              	 
+  82              	.LVL2:
+  83 0000 30B5     	 push {r4,r5,lr}
+  84              	 .cfi_def_cfa_offset 12
+  85              	 .cfi_offset 4,-12
+  86              	 .cfi_offset 5,-8
+  87              	 .cfi_offset 14,-4
+  88 0002 83B0     	 sub sp,sp,#12
+  89              	 .cfi_def_cfa_offset 24
+  90 0004 0C46     	 mov r4,r1
+  91 0006 1546     	 mov r5,r2
+ 114:i2c.c         ****     int timeout_ms = 5000;
+  92              	 .loc 1 114 0
+  93 0008 114A     	 ldr r2,.L11
+  94              	.LVL3:
+  95 000a 1070     	 strb r0,[r2]
+  96              	.LVL4:
+ 117:i2c.c         ****     if (ret != GSDK_SUCCESS) {
+  97              	 .loc 1 117 0
+  98 000c 0123     	 movs r3,#1
+  99 000e 7721     	 movs r1,#119
+ 100              	.LVL5:
+ 101 0010 1048     	 ldr r0,.L11+4
+ 102              	.LVL6:
+ 103 0012 0068     	 ldr r0,[r0]
+ 104 0014 FFF7FEFF 	 bl gsdk_i2c_write
+ 105              	.LVL7:
+ 118:i2c.c         ****         gsdk_syslog_printf("I2C Transmit error (%ld)\n", ret);
+ 106              	 .loc 1 118 0
+ 107 0018 68B9     	 cbnz r0,.L9
+ 123:i2c.c         ****     if (ret != GSDK_SUCCESS) {
+ARM GAS   			page 8
+
+
+ 108              	 .loc 1 123 0
+ 109 001a 0E4B     	 ldr r3,.L11+4
+ 110 001c 1868     	 ldr r0,[r3]
+ 111              	.LVL8:
+ 112 001e 41F28833 	 movw r3,#5000
+ 113 0022 0093     	 str r3,[sp]
+ 114 0024 2B46     	 mov r3,r5
+ 115 0026 2246     	 mov r2,r4
+ 116 0028 7721     	 movs r1,#119
+ 117 002a FFF7FEFF 	 bl gsdk_i2c_read
+ 118              	.LVL9:
+ 119 002e 0146     	 mov r1,r0
+ 120              	.LVL10:
+ 124:i2c.c         ****         gsdk_syslog_printf("I2C Read error (%ld)\n", ret);
+ 121              	 .loc 1 124 0
+ 122 0030 40B9     	 cbnz r0,.L10
+ 123              	.LVL11:
+ 124              	.L5:
+ 129:i2c.c         **** 
+ 125              	 .loc 1 129 0
+ 126 0032 03B0     	 add sp,sp,#12
+ 127              	 .cfi_remember_state
+ 128              	 .cfi_def_cfa_offset 12
+ 129              	 
+ 130 0034 30BD     	 pop {r4,r5,pc}
+ 131              	.LVL12:
+ 132              	.L9:
+ 133              	 .cfi_restore_state
+ 134 0036 0146     	 mov r1,r0
+ 119:i2c.c         ****         return -1;
+ 135              	 .loc 1 119 0
+ 136 0038 0748     	 ldr r0,.L11+8
+ 137              	.LVL13:
+ 138 003a FFF7FEFF 	 bl gsdk_syslog_printf
+ 139              	.LVL14:
+ 120:i2c.c         ****     }
+ 140              	 .loc 1 120 0
+ 141 003e 4FF0FF30 	 mov r0,#-1
+ 142 0042 F6E7     	 b .L5
+ 143              	.LVL15:
+ 144              	.L10:
+ 125:i2c.c         ****         return -1;
+ 145              	 .loc 1 125 0
+ 146 0044 0548     	 ldr r0,.L11+12
+ 147              	.LVL16:
+ 148 0046 FFF7FEFF 	 bl gsdk_syslog_printf
+ 149              	.LVL17:
+ 126:i2c.c         ****     }
+ 150              	 .loc 1 126 0
+ 151 004a 4FF0FF30 	 mov r0,#-1
+ 152 004e F0E7     	 b .L5
+ 153              	.L12:
+ 154              	 .align 2
+ 155              	.L11:
+ 156 0050 00000000 	 .word .LANCHOR0
+ 157 0054 00000000 	 .word .LANCHOR1
+ 158 0058 00000000 	 .word .LC3
+ARM GAS   			page 9
+
+
+ 159 005c 1C000000 	 .word .LC4
+ 160              	 .cfi_endproc
+ 161              	.LFE20:
+ 163              	 .section .text.BMP180ReadCalibrateParam,"ax",%progbits
+ 164              	 .align 1
+ 165              	 .syntax unified
+ 166              	 .thumb
+ 167              	 .thumb_func
+ 168              	 .fpu fpv4-sp-d16
+ 170              	BMP180ReadCalibrateParam:
+ 171              	.LFB24:
+ 232:i2c.c         **** 
+ 172              	 .loc 1 232 0
+ 173              	 .cfi_startproc
+ 174              	 
+ 175              	 
+ 176              	.LVL18:
+ 177 0000 38B5     	 push {r3,r4,r5,lr}
+ 178              	 .cfi_def_cfa_offset 16
+ 179              	 .cfi_offset 3,-16
+ 180              	 .cfi_offset 4,-12
+ 181              	 .cfi_offset 5,-8
+ 182              	 .cfi_offset 14,-4
+ 183 0002 0546     	 mov r5,r0
+ 235:i2c.c         **** 	
+ 184              	 .loc 1 235 0
+ 185 0004 0220     	 movs r0,#2
+ 186              	.LVL19:
+ 187 0006 FFF7FEFF 	 bl malloc
+ 188              	.LVL20:
+ 189 000a 0446     	 mov r4,r0
+ 190              	.LVL21:
+ 237:i2c.c         ****     p->cal_param.AC1 = (int16_t)((((int16_t)((signed char)bmp180_a_data_u8r[0])) << 8) | bmp180_a_d
+ 191              	 .loc 1 237 0
+ 192 000c 0222     	 movs r2,#2
+ 193 000e 0146     	 mov r1,r0
+ 194 0010 AA20     	 movs r0,#170
+ 195              	.LVL22:
+ 196 0012 FFF7FEFF 	 bl bmp180_I2C_multi_read
+ 197              	.LVL23:
+ 238:i2c.c         **** 	bmp180_I2C_multi_read(BMP180_DIG_AC2_MSB_REG, bmp180_a_data_u8r, 2);
+ 198              	 .loc 1 238 0
+ 199 0016 94F90020 	 ldrsb r2,[r4]
+ 200 001a 6378     	 ldrb r3,[r4,#1]
+ 201 001c 43EA0223 	 orr r3,r3,r2,lsl#8
+ 202 0020 6B80     	 strh r3,[r5,#2]
+ 239:i2c.c         ****     p->cal_param.AC2 = (int16_t)((((int16_t)((signed char)bmp180_a_data_u8r[0])) << 8) | bmp180_a_d
+ 203              	 .loc 1 239 0
+ 204 0022 0222     	 movs r2,#2
+ 205 0024 2146     	 mov r1,r4
+ 206 0026 AC20     	 movs r0,#172
+ 207 0028 FFF7FEFF 	 bl bmp180_I2C_multi_read
+ 208              	.LVL24:
+ 240:i2c.c         **** 	bmp180_I2C_multi_read(BMP180_DIG_AC3_MSB_REG, bmp180_a_data_u8r, 2);
+ 209              	 .loc 1 240 0
+ 210 002c 94F90020 	 ldrsb r2,[r4]
+ 211 0030 6378     	 ldrb r3,[r4,#1]
+ARM GAS   			page 10
+
+
+ 212 0032 43EA0223 	 orr r3,r3,r2,lsl#8
+ 213 0036 AB80     	 strh r3,[r5,#4]
+ 241:i2c.c         ****     p->cal_param.AC3 = (int16_t)((((int16_t)((signed char)bmp180_a_data_u8r[0])) << 8) | bmp180_a_d
+ 214              	 .loc 1 241 0
+ 215 0038 0222     	 movs r2,#2
+ 216 003a 2146     	 mov r1,r4
+ 217 003c AE20     	 movs r0,#174
+ 218 003e FFF7FEFF 	 bl bmp180_I2C_multi_read
+ 219              	.LVL25:
+ 242:i2c.c         **** 	bmp180_I2C_multi_read(BMP180_DIG_AC4_MSB_REG, bmp180_a_data_u8r, 2);
+ 220              	 .loc 1 242 0
+ 221 0042 94F90020 	 ldrsb r2,[r4]
+ 222 0046 6378     	 ldrb r3,[r4,#1]
+ 223 0048 43EA0223 	 orr r3,r3,r2,lsl#8
+ 224 004c EB80     	 strh r3,[r5,#6]
+ 243:i2c.c         ****     p->cal_param.AC4 = (uint16_t)((((uint16_t)((unsigned char)bmp180_a_data_u8r[0])) << 8) | bmp180
+ 225              	 .loc 1 243 0
+ 226 004e 0222     	 movs r2,#2
+ 227 0050 2146     	 mov r1,r4
+ 228 0052 B020     	 movs r0,#176
+ 229 0054 FFF7FEFF 	 bl bmp180_I2C_multi_read
+ 230              	.LVL26:
+ 244:i2c.c         **** 	bmp180_I2C_multi_read(BMP180_DIG_AC5_MSB_REG, bmp180_a_data_u8r, 2);
+ 231              	 .loc 1 244 0
+ 232 0058 2278     	 ldrb r2,[r4]
+ 233 005a 6378     	 ldrb r3,[r4,#1]
+ 234 005c 43EA0223 	 orr r3,r3,r2,lsl#8
+ 235 0060 2B81     	 strh r3,[r5,#8]
+ 245:i2c.c         ****     p->cal_param.AC5 = (uint16_t)((((uint16_t)((unsigned char)bmp180_a_data_u8r[0])) << 8) | bmp180
+ 236              	 .loc 1 245 0
+ 237 0062 0222     	 movs r2,#2
+ 238 0064 2146     	 mov r1,r4
+ 239 0066 B220     	 movs r0,#178
+ 240 0068 FFF7FEFF 	 bl bmp180_I2C_multi_read
+ 241              	.LVL27:
+ 246:i2c.c         **** 	bmp180_I2C_multi_read(BMP180_DIG_AC6_MSB_REG, bmp180_a_data_u8r, 2);
+ 242              	 .loc 1 246 0
+ 243 006c 2278     	 ldrb r2,[r4]
+ 244 006e 6378     	 ldrb r3,[r4,#1]
+ 245 0070 43EA0223 	 orr r3,r3,r2,lsl#8
+ 246 0074 6B81     	 strh r3,[r5,#10]
+ 247:i2c.c         ****     p->cal_param.AC6 = (uint16_t)((((uint16_t)((unsigned char)bmp180_a_data_u8r[0])) << 8) | bmp180
+ 247              	 .loc 1 247 0
+ 248 0076 0222     	 movs r2,#2
+ 249 0078 2146     	 mov r1,r4
+ 250 007a B420     	 movs r0,#180
+ 251 007c FFF7FEFF 	 bl bmp180_I2C_multi_read
+ 252              	.LVL28:
+ 248:i2c.c         **** 	bmp180_I2C_multi_read(BMP180_DIG_B1_MSB_REG, bmp180_a_data_u8r, 2);
+ 253              	 .loc 1 248 0
+ 254 0080 2278     	 ldrb r2,[r4]
+ 255 0082 6378     	 ldrb r3,[r4,#1]
+ 256 0084 43EA0223 	 orr r3,r3,r2,lsl#8
+ 257 0088 AB81     	 strh r3,[r5,#12]
+ 249:i2c.c         ****     p->cal_param.B1  = (int16_t)((((int16_t)((signed char)bmp180_a_data_u8r[0])) << 8) | bmp180_a_d
+ 258              	 .loc 1 249 0
+ 259 008a 0222     	 movs r2,#2
+ARM GAS   			page 11
+
+
+ 260 008c 2146     	 mov r1,r4
+ 261 008e B620     	 movs r0,#182
+ 262 0090 FFF7FEFF 	 bl bmp180_I2C_multi_read
+ 263              	.LVL29:
+ 250:i2c.c         **** 	bmp180_I2C_multi_read(BMP180_DIG_B2_MSB_REG, bmp180_a_data_u8r, 2);
+ 264              	 .loc 1 250 0
+ 265 0094 94F90020 	 ldrsb r2,[r4]
+ 266 0098 6378     	 ldrb r3,[r4,#1]
+ 267 009a 43EA0223 	 orr r3,r3,r2,lsl#8
+ 268 009e EB81     	 strh r3,[r5,#14]
+ 251:i2c.c         ****     p->cal_param.B2  = (int16_t)((((int16_t)((signed char)bmp180_a_data_u8r[0])) << 8) | bmp180_a_d
+ 269              	 .loc 1 251 0
+ 270 00a0 0222     	 movs r2,#2
+ 271 00a2 2146     	 mov r1,r4
+ 272 00a4 B820     	 movs r0,#184
+ 273 00a6 FFF7FEFF 	 bl bmp180_I2C_multi_read
+ 274              	.LVL30:
+ 252:i2c.c         **** 	bmp180_I2C_multi_read(BMP180_DIG_MB_MSB_REG, bmp180_a_data_u8r, 2);
+ 275              	 .loc 1 252 0
+ 276 00aa 94F90020 	 ldrsb r2,[r4]
+ 277 00ae 6378     	 ldrb r3,[r4,#1]
+ 278 00b0 43EA0223 	 orr r3,r3,r2,lsl#8
+ 279 00b4 2B82     	 strh r3,[r5,#16]
+ 253:i2c.c         ****     p->cal_param.MB  = (int16_t)((((int16_t)((signed char)bmp180_a_data_u8r[0])) << 8) | bmp180_a_d
+ 280              	 .loc 1 253 0
+ 281 00b6 0222     	 movs r2,#2
+ 282 00b8 2146     	 mov r1,r4
+ 283 00ba BA20     	 movs r0,#186
+ 284 00bc FFF7FEFF 	 bl bmp180_I2C_multi_read
+ 285              	.LVL31:
+ 254:i2c.c         **** 	bmp180_I2C_multi_read(BMP180_DIG_MC_MSB_REG, bmp180_a_data_u8r, 2);
+ 286              	 .loc 1 254 0
+ 287 00c0 94F90020 	 ldrsb r2,[r4]
+ 288 00c4 6378     	 ldrb r3,[r4,#1]
+ 289 00c6 43EA0223 	 orr r3,r3,r2,lsl#8
+ 290 00ca 6B82     	 strh r3,[r5,#18]
+ 255:i2c.c         ****     p->cal_param.MC  = (int16_t)((((int16_t)((signed char)bmp180_a_data_u8r[0])) << 8) | bmp180_a_d
+ 291              	 .loc 1 255 0
+ 292 00cc 0222     	 movs r2,#2
+ 293 00ce 2146     	 mov r1,r4
+ 294 00d0 BC20     	 movs r0,#188
+ 295 00d2 FFF7FEFF 	 bl bmp180_I2C_multi_read
+ 296              	.LVL32:
+ 256:i2c.c         **** 	bmp180_I2C_multi_read(BMP180_DIG_MD_MSB_REG, bmp180_a_data_u8r, 2);
+ 297              	 .loc 1 256 0
+ 298 00d6 94F90020 	 ldrsb r2,[r4]
+ 299 00da 6378     	 ldrb r3,[r4,#1]
+ 300 00dc 43EA0223 	 orr r3,r3,r2,lsl#8
+ 301 00e0 AB82     	 strh r3,[r5,#20]
+ 257:i2c.c         ****     p->cal_param.MD  = (int16_t)((((int16_t)((signed char)bmp180_a_data_u8r[0])) << 8) | bmp180_a_d
+ 302              	 .loc 1 257 0
+ 303 00e2 0222     	 movs r2,#2
+ 304 00e4 2146     	 mov r1,r4
+ 305 00e6 BE20     	 movs r0,#190
+ 306 00e8 FFF7FEFF 	 bl bmp180_I2C_multi_read
+ 307              	.LVL33:
+ 258:i2c.c         **** 
+ARM GAS   			page 12
+
+
+ 308              	 .loc 1 258 0
+ 309 00ec 94F90020 	 ldrsb r2,[r4]
+ 310 00f0 6378     	 ldrb r3,[r4,#1]
+ 311 00f2 43EA0223 	 orr r3,r3,r2,lsl#8
+ 312 00f6 EB82     	 strh r3,[r5,#22]
+ 260:i2c.c         ****     gsdk_syslog_printf("The p->cal_param.AC2:%d\n", p->cal_param.AC2);
+ 313              	 .loc 1 260 0
+ 314 00f8 B5F90210 	 ldrsh r1,[r5,#2]
+ 315 00fc 1A48     	 ldr r0,.L15
+ 316 00fe FFF7FEFF 	 bl gsdk_syslog_printf
+ 317              	.LVL34:
+ 261:i2c.c         ****     gsdk_syslog_printf("The p->cal_param.AC3:%d\n", p->cal_param.AC3);
+ 318              	 .loc 1 261 0
+ 319 0102 B5F90410 	 ldrsh r1,[r5,#4]
+ 320 0106 1948     	 ldr r0,.L15+4
+ 321 0108 FFF7FEFF 	 bl gsdk_syslog_printf
+ 322              	.LVL35:
+ 262:i2c.c         ****     gsdk_syslog_printf("The p->cal_param.AC4:%d\n", p->cal_param.AC4);
+ 323              	 .loc 1 262 0
+ 324 010c B5F90610 	 ldrsh r1,[r5,#6]
+ 325 0110 1748     	 ldr r0,.L15+8
+ 326 0112 FFF7FEFF 	 bl gsdk_syslog_printf
+ 327              	.LVL36:
+ 263:i2c.c         ****     gsdk_syslog_printf("The p->cal_param.AC5:%d\n", p->cal_param.AC5);
+ 328              	 .loc 1 263 0
+ 329 0116 2989     	 ldrh r1,[r5,#8]
+ 330 0118 1648     	 ldr r0,.L15+12
+ 331 011a FFF7FEFF 	 bl gsdk_syslog_printf
+ 332              	.LVL37:
+ 264:i2c.c         ****     gsdk_syslog_printf("The p->cal_param.AC6:%d\n", p->cal_param.AC6);
+ 333              	 .loc 1 264 0
+ 334 011e 6989     	 ldrh r1,[r5,#10]
+ 335 0120 1548     	 ldr r0,.L15+16
+ 336 0122 FFF7FEFF 	 bl gsdk_syslog_printf
+ 337              	.LVL38:
+ 265:i2c.c         ****     gsdk_syslog_printf("The p->cal_param.B1:%d\n", p->cal_param.B1);
+ 338              	 .loc 1 265 0
+ 339 0126 A989     	 ldrh r1,[r5,#12]
+ 340 0128 1448     	 ldr r0,.L15+20
+ 341 012a FFF7FEFF 	 bl gsdk_syslog_printf
+ 342              	.LVL39:
+ 266:i2c.c         ****     gsdk_syslog_printf("The p->cal_param.B2:%d\n", p->cal_param.B2);
+ 343              	 .loc 1 266 0
+ 344 012e B5F90E10 	 ldrsh r1,[r5,#14]
+ 345 0132 1348     	 ldr r0,.L15+24
+ 346 0134 FFF7FEFF 	 bl gsdk_syslog_printf
+ 347              	.LVL40:
+ 267:i2c.c         ****     gsdk_syslog_printf("The p->cal_param.MB:%d\n", p->cal_param.MB);
+ 348              	 .loc 1 267 0
+ 349 0138 B5F91010 	 ldrsh r1,[r5,#16]
+ 350 013c 1148     	 ldr r0,.L15+28
+ 351 013e FFF7FEFF 	 bl gsdk_syslog_printf
+ 352              	.LVL41:
+ 268:i2c.c         ****     gsdk_syslog_printf("The p->cal_param.MC:%d\n", p->cal_param.MC);
+ 353              	 .loc 1 268 0
+ 354 0142 B5F91210 	 ldrsh r1,[r5,#18]
+ 355 0146 1048     	 ldr r0,.L15+32
+ARM GAS   			page 13
+
+
+ 356 0148 FFF7FEFF 	 bl gsdk_syslog_printf
+ 357              	.LVL42:
+ 269:i2c.c         ****     gsdk_syslog_printf("The p->cal_param.MD:%d\n", p->cal_param.MD);
+ 358              	 .loc 1 269 0
+ 359 014c B5F91410 	 ldrsh r1,[r5,#20]
+ 360 0150 0E48     	 ldr r0,.L15+36
+ 361 0152 FFF7FEFF 	 bl gsdk_syslog_printf
+ 362              	.LVL43:
+ 270:i2c.c         **** 	
+ 363              	 .loc 1 270 0
+ 364 0156 B5F91610 	 ldrsh r1,[r5,#22]
+ 365 015a 0D48     	 ldr r0,.L15+40
+ 366 015c FFF7FEFF 	 bl gsdk_syslog_printf
+ 367              	.LVL44:
+ 272:i2c.c         **** }
+ 368              	 .loc 1 272 0
+ 369 0160 2046     	 mov r0,r4
+ 370 0162 FFF7FEFF 	 bl free
+ 371              	.LVL45:
+ 273:i2c.c         **** 
+ 372              	 .loc 1 273 0
+ 373 0166 38BD     	 pop {r3,r4,r5,pc}
+ 374              	.LVL46:
+ 375              	.L16:
+ 376              	 .align 2
+ 377              	.L15:
+ 378 0168 00000000 	 .word .LC5
+ 379 016c 1C000000 	 .word .LC6
+ 380 0170 38000000 	 .word .LC7
+ 381 0174 54000000 	 .word .LC8
+ 382 0178 70000000 	 .word .LC9
+ 383 017c 8C000000 	 .word .LC10
+ 384 0180 A8000000 	 .word .LC11
+ 385 0184 C0000000 	 .word .LC12
+ 386 0188 D8000000 	 .word .LC13
+ 387 018c F0000000 	 .word .LC14
+ 388 0190 08010000 	 .word .LC15
+ 389              	 .cfi_endproc
+ 390              	.LFE24:
+ 392              	 .section .text.BMP180_init,"ax",%progbits
+ 393              	 .align 1
+ 394              	 .syntax unified
+ 395              	 .thumb
+ 396              	 .thumb_func
+ 397              	 .fpu fpv4-sp-d16
+ 399              	BMP180_init:
+ 400              	.LFB25:
+ 276:i2c.c         ****     bmp180_I2C_multi_read(BMP180_ID_REGISTER_ADDRESS, &DEVICEID, 1);  //read bmp180 device id by i2
+ 401              	 .loc 1 276 0
+ 402              	 .cfi_startproc
+ 403              	 
+ 404              	 
+ 405              	.LVL47:
+ 406 0000 38B5     	 push {r3,r4,r5,lr}
+ 407              	 .cfi_def_cfa_offset 16
+ 408              	 .cfi_offset 3,-16
+ 409              	 .cfi_offset 4,-12
+ARM GAS   			page 14
+
+
+ 410              	 .cfi_offset 5,-8
+ 411              	 .cfi_offset 14,-4
+ 412 0002 0546     	 mov r5,r0
+ 277:i2c.c         ****     if (DEVICEID == BMP180_DEVICE_ID) {
+ 413              	 .loc 1 277 0
+ 414 0004 0A4C     	 ldr r4,.L22
+ 415 0006 0122     	 movs r2,#1
+ 416 0008 2146     	 mov r1,r4
+ 417 000a D020     	 movs r0,#208
+ 418              	.LVL48:
+ 419 000c FFF7FEFF 	 bl bmp180_I2C_multi_read
+ 420              	.LVL49:
+ 278:i2c.c         ****         gsdk_syslog_printf("The BMP180 device id 0x%x\n\r", DEVICEID);
+ 421              	 .loc 1 278 0
+ 422 0010 2178     	 ldrb r1,[r4]
+ 423 0012 5529     	 cmp r1,#85
+ 424 0014 02D0     	 beq .L21
+ 283:i2c.c         ****     }
+ 425              	 .loc 1 283 0
+ 426 0016 0023     	 movs r3,#0
+ 427 0018 2B70     	 strb r3,[r5]
+ 428              	.L17:
+ 285:i2c.c         **** 
+ 429              	 .loc 1 285 0
+ 430 001a 38BD     	 pop {r3,r4,r5,pc}
+ 431              	.LVL50:
+ 432              	.L21:
+ 279:i2c.c         ****         p->ExistFlag = BMP180_EXISTENCE;
+ 433              	 .loc 1 279 0
+ 434 001c 0548     	 ldr r0,.L22+4
+ 435 001e FFF7FEFF 	 bl gsdk_syslog_printf
+ 436              	.LVL51:
+ 280:i2c.c         ****         BMP180ReadCalibrateParam(p); 							//the bmp180 calibration parameters
+ 437              	 .loc 1 280 0
+ 438 0022 0123     	 movs r3,#1
+ 439 0024 2B70     	 strb r3,[r5]
+ 281:i2c.c         ****     } else {
+ 440              	 .loc 1 281 0
+ 441 0026 2846     	 mov r0,r5
+ 442 0028 FFF7FEFF 	 bl BMP180ReadCalibrateParam
+ 443              	.LVL52:
+ 444 002c F5E7     	 b .L17
+ 445              	.L23:
+ 446 002e 00BF     	 .align 2
+ 447              	.L22:
+ 448 0030 00000000 	 .word .LANCHOR2
+ 449 0034 00000000 	 .word .LC16
+ 450              	 .cfi_endproc
+ 451              	.LFE25:
+ 453              	 .section .text.BMP180ReadUnsetTemperature,"ax",%progbits
+ 454              	 .align 1
+ 455              	 .syntax unified
+ 456              	 .thumb
+ 457              	 .thumb_func
+ 458              	 .fpu fpv4-sp-d16
+ 460              	BMP180ReadUnsetTemperature:
+ 461              	.LFB21:
+ARM GAS   			page 15
+
+
+ 166:i2c.c         ****     uint8_t param[] = {0xF4, 0x2E};
+ 462              	 .loc 1 166 0
+ 463              	 .cfi_startproc
+ 464              	 
+ 465              	 
+ 466 0000 70B5     	 push {r4,r5,r6,lr}
+ 467              	 .cfi_def_cfa_offset 16
+ 468              	 .cfi_offset 4,-16
+ 469              	 .cfi_offset 5,-12
+ 470              	 .cfi_offset 6,-8
+ 471              	 .cfi_offset 14,-4
+ 472 0002 82B0     	 sub sp,sp,#8
+ 473              	 .cfi_def_cfa_offset 24
+ 167:i2c.c         ****     uint8_t *data;
+ 474              	 .loc 1 167 0
+ 475 0004 144B     	 ldr r3,.L26
+ 476 0006 1B88     	 ldrh r3,[r3]
+ 477 0008 02AD     	 add r5,sp,#8
+ 478 000a 25F8043D 	 strh r3,[r5,#-4]!
+ 169:i2c.c         ****     //bmp180_I2C_multi_write(BMP180_DEVICE_ADDRESS_BASE_VALUE,&param,2);
+ 479              	 .loc 1 169 0
+ 480 000e 0220     	 movs r0,#2
+ 481 0010 FFF7FEFF 	 bl malloc
+ 482              	.LVL53:
+ 483 0014 0446     	 mov r4,r0
+ 484              	.LVL54:
+ 171:i2c.c         ****     gsdk_i2c_write(g_hi2c, BMP180_DEVICE_ADDRESS_BASE_VALUE, &param[1], 1);
+ 485              	 .loc 1 171 0
+ 486 0016 114E     	 ldr r6,.L26+4
+ 487 0018 0123     	 movs r3,#1
+ 488 001a 2A46     	 mov r2,r5
+ 489 001c 7721     	 movs r1,#119
+ 490 001e 3068     	 ldr r0,[r6]
+ 491              	.LVL55:
+ 492 0020 FFF7FEFF 	 bl gsdk_i2c_write
+ 493              	.LVL56:
+ 172:i2c.c         ****     vTaskDelay(50);
+ 494              	 .loc 1 172 0
+ 495 0024 0123     	 movs r3,#1
+ 496 0026 0DF10502 	 add r2,sp,#5
+ 497 002a 7721     	 movs r1,#119
+ 498 002c 3068     	 ldr r0,[r6]
+ 499 002e FFF7FEFF 	 bl gsdk_i2c_write
+ 500              	.LVL57:
+ 173:i2c.c         ****     bmp180_I2C_multi_read(0xF6, data, 2);
+ 501              	 .loc 1 173 0
+ 502 0032 3220     	 movs r0,#50
+ 503 0034 FFF7FEFF 	 bl vTaskDelay
+ 504              	.LVL58:
+ 174:i2c.c         ****     SL32 temp = (data[0] << 8) | data[1];
+ 505              	 .loc 1 174 0
+ 506 0038 0222     	 movs r2,#2
+ 507 003a 2146     	 mov r1,r4
+ 508 003c F620     	 movs r0,#246
+ 509 003e FFF7FEFF 	 bl bmp180_I2C_multi_read
+ 510              	.LVL59:
+ 175:i2c.c         **** 	free(data);
+ARM GAS   			page 16
+
+
+ 511              	 .loc 1 175 0
+ 512 0042 2378     	 ldrb r3,[r4]
+ 513 0044 6578     	 ldrb r5,[r4,#1]
+ 514 0046 45EA0325 	 orr r5,r5,r3,lsl#8
+ 515              	.LVL60:
+ 176:i2c.c         ****     return temp;
+ 516              	 .loc 1 176 0
+ 517 004a 2046     	 mov r0,r4
+ 518 004c FFF7FEFF 	 bl free
+ 519              	.LVL61:
+ 178:i2c.c         **** static SL32 BMP180ReadUnsetPressure(void)
+ 520              	 .loc 1 178 0
+ 521 0050 2846     	 mov r0,r5
+ 522 0052 02B0     	 add sp,sp,#8
+ 523              	 .cfi_def_cfa_offset 16
+ 524              	 
+ 525 0054 70BD     	 pop {r4,r5,r6,pc}
+ 526              	.LVL62:
+ 527              	.L27:
+ 528 0056 00BF     	 .align 2
+ 529              	.L26:
+ 530 0058 00000000 	 .word .LANCHOR3
+ 531 005c 00000000 	 .word .LANCHOR1
+ 532              	 .cfi_endproc
+ 533              	.LFE21:
+ 535              	 .section .text.BMP180ReadUnsetPressure,"ax",%progbits
+ 536              	 .align 1
+ 537              	 .syntax unified
+ 538              	 .thumb
+ 539              	 .thumb_func
+ 540              	 .fpu fpv4-sp-d16
+ 542              	BMP180ReadUnsetPressure:
+ 543              	.LFB22:
+ 180:i2c.c         ****     uint8_t param[] = {0xF4, 0x34 + (OSS << 6)};
+ 544              	 .loc 1 180 0
+ 545              	 .cfi_startproc
+ 546              	 
+ 547              	 
+ 548 0000 70B5     	 push {r4,r5,r6,lr}
+ 549              	 .cfi_def_cfa_offset 16
+ 550              	 .cfi_offset 4,-16
+ 551              	 .cfi_offset 5,-12
+ 552              	 .cfi_offset 6,-8
+ 553              	 .cfi_offset 14,-4
+ 554 0002 82B0     	 sub sp,sp,#8
+ 555              	 .cfi_def_cfa_offset 24
+ 181:i2c.c         ****     uint8_t *data;
+ 556              	 .loc 1 181 0
+ 557 0004 164B     	 ldr r3,.L30
+ 558 0006 9B88     	 ldrh r3,[r3,#4]
+ 559 0008 02AC     	 add r4,sp,#8
+ 560 000a 24F8043D 	 strh r3,[r4,#-4]!
+ 183:i2c.c         ****     //bmp180_I2C_multi_write(BMP180_DEVICE_ADDRESS_BASE_VALUE,&param,2);
+ 561              	 .loc 1 183 0
+ 562 000e 0320     	 movs r0,#3
+ 563 0010 FFF7FEFF 	 bl malloc
+ 564              	.LVL63:
+ARM GAS   			page 17
+
+
+ 565 0014 0546     	 mov r5,r0
+ 566              	.LVL64:
+ 185:i2c.c         ****     gsdk_i2c_write(g_hi2c, BMP180_DEVICE_ADDRESS_BASE_VALUE, &param[1], 1);
+ 567              	 .loc 1 185 0
+ 568 0016 134E     	 ldr r6,.L30+4
+ 569 0018 0123     	 movs r3,#1
+ 570 001a 2246     	 mov r2,r4
+ 571 001c 7721     	 movs r1,#119
+ 572 001e 3068     	 ldr r0,[r6]
+ 573              	.LVL65:
+ 574 0020 FFF7FEFF 	 bl gsdk_i2c_write
+ 575              	.LVL66:
+ 186:i2c.c         ****     vTaskDelay(50);
+ 576              	 .loc 1 186 0
+ 577 0024 0123     	 movs r3,#1
+ 578 0026 0DF10502 	 add r2,sp,#5
+ 579 002a 7721     	 movs r1,#119
+ 580 002c 3068     	 ldr r0,[r6]
+ 581 002e FFF7FEFF 	 bl gsdk_i2c_write
+ 582              	.LVL67:
+ 187:i2c.c         ****     bmp180_I2C_multi_read(0xF6, data, 3);
+ 583              	 .loc 1 187 0
+ 584 0032 3220     	 movs r0,#50
+ 585 0034 FFF7FEFF 	 bl vTaskDelay
+ 586              	.LVL68:
+ 188:i2c.c         ****     SL32 temp = ((data[0] << 16) + (data[1] << 8) + data[2]) >> (8 - OSS);
+ 587              	 .loc 1 188 0
+ 588 0038 0322     	 movs r2,#3
+ 589 003a 2946     	 mov r1,r5
+ 590 003c F620     	 movs r0,#246
+ 591 003e FFF7FEFF 	 bl bmp180_I2C_multi_read
+ 592              	.LVL69:
+ 189:i2c.c         **** 	free(data);
+ 593              	 .loc 1 189 0
+ 594 0042 2B78     	 ldrb r3,[r5]
+ 595 0044 6C78     	 ldrb r4,[r5,#1]
+ 596 0046 2402     	 lsls r4,r4,#8
+ 597 0048 04EB0344 	 add r4,r4,r3,lsl#16
+ 598 004c AB78     	 ldrb r3,[r5,#2]
+ 599 004e 1C44     	 add r4,r4,r3
+ 600 0050 A411     	 asrs r4,r4,#6
+ 601              	.LVL70:
+ 190:i2c.c         ****     return temp;
+ 602              	 .loc 1 190 0
+ 603 0052 2846     	 mov r0,r5
+ 604 0054 FFF7FEFF 	 bl free
+ 605              	.LVL71:
+ 192:i2c.c         **** 
+ 606              	 .loc 1 192 0
+ 607 0058 2046     	 mov r0,r4
+ 608 005a 02B0     	 add sp,sp,#8
+ 609              	 .cfi_def_cfa_offset 16
+ 610              	 
+ 611 005c 70BD     	 pop {r4,r5,r6,pc}
+ 612              	.LVL72:
+ 613              	.L31:
+ 614 005e 00BF     	 .align 2
+ARM GAS   			page 18
+
+
+ 615              	.L30:
+ 616 0060 00000000 	 .word .LANCHOR3
+ 617 0064 00000000 	 .word .LANCHOR1
+ 618              	 .cfi_endproc
+ 619              	.LFE22:
+ 621              	 .section .text.BMP180Convert,"ax",%progbits
+ 622              	 .align 1
+ 623              	 .syntax unified
+ 624              	 .thumb
+ 625              	 .thumb_func
+ 626              	 .fpu fpv4-sp-d16
+ 628              	BMP180Convert:
+ 629              	.LFB23:
+ 195:i2c.c         ****     SL32 x1, x2, B5, B6, x3, B3, p;
+ 630              	 .loc 1 195 0
+ 631              	 .cfi_startproc
+ 632              	 
+ 633              	 
+ 634              	.LVL73:
+ 635 0000 10B5     	 push {r4,lr}
+ 636              	 .cfi_def_cfa_offset 8
+ 637              	 .cfi_offset 4,-8
+ 638              	 .cfi_offset 14,-4
+ 639 0002 0446     	 mov r4,r0
+ 199:i2c.c         ****     temp->UnsetGasPress =  BMP180ReadUnsetPressure();
+ 640              	 .loc 1 199 0
+ 641 0004 FFF7FEFF 	 bl BMP180ReadUnsetTemperature
+ 642              	.LVL74:
+ 643 0008 A061     	 str r0,[r4,#24]
+ 200:i2c.c         **** 
+ 644              	 .loc 1 200 0
+ 645 000a FFF7FEFF 	 bl BMP180ReadUnsetPressure
+ 646              	.LVL75:
+ 647 000e E061     	 str r0,[r4,#28]
+ 202:i2c.c         ****     gsdk_syslog_printf("UP:%d", temp->UnsetGasPress);
+ 648              	 .loc 1 202 0
+ 649 0010 A169     	 ldr r1,[r4,#24]
+ 650 0012 3748     	 ldr r0,.L38
+ 651 0014 FFF7FEFF 	 bl gsdk_syslog_printf
+ 652              	.LVL76:
+ 203:i2c.c         **** 
+ 653              	 .loc 1 203 0
+ 654 0018 E169     	 ldr r1,[r4,#28]
+ 655 001a 3648     	 ldr r0,.L38+4
+ 656 001c FFF7FEFF 	 bl gsdk_syslog_printf
+ 657              	.LVL77:
+ 205:i2c.c         ****     x2 = ((SL32)(temp->cal_param.MC) << 11) / (x1 + temp->cal_param.MD);
+ 658              	 .loc 1 205 0
+ 659 0020 A269     	 ldr r2,[r4,#24]
+ 660 0022 A389     	 ldrh r3,[r4,#12]
+ 661 0024 D31A     	 subs r3,r2,r3
+ 662 0026 6289     	 ldrh r2,[r4,#10]
+ 663 0028 02FB03F2 	 mul r2,r2,r3
+ 664 002c D213     	 asrs r2,r2,#15
+ 665              	.LVL78:
+ 206:i2c.c         ****     B5 = x1 + x2;
+ 666              	 .loc 1 206 0
+ARM GAS   			page 19
+
+
+ 667 002e B4F91430 	 ldrsh r3,[r4,#20]
+ 668 0032 DB02     	 lsls r3,r3,#11
+ 669 0034 B4F91610 	 ldrsh r1,[r4,#22]
+ 670 0038 1144     	 add r1,r1,r2
+ 671 003a 93FBF1F3 	 sdiv r3,r3,r1
+ 672              	.LVL79:
+ 207:i2c.c         ****     temp->Temperature = ((B5 + 8) >> 4);
+ 673              	 .loc 1 207 0
+ 674 003e 1A44     	 add r2,r2,r3
+ 675              	.LVL80:
+ 208:i2c.c         **** 
+ 676              	 .loc 1 208 0
+ 677 0040 02F10803 	 add r3,r2,#8
+ 678              	.LVL81:
+ 679 0044 1B11     	 asrs r3,r3,#4
+ 680 0046 07EE903A 	 vmov s15,r3
+ 681 004a F8EEE77A 	 vcvt.f32.s32 s15,s15
+ 682 004e C4ED087A 	 vstr.32 s15,[r4,#32]
+ 210:i2c.c         ****     x1 = ((SL32)(temp->cal_param.B2) * (B6 * B6 >> 12)) >> 11;
+ 683              	 .loc 1 210 0
+ 684 0052 A2F57A62 	 sub r2,r2,#4000
+ 685              	.LVL82:
+ 211:i2c.c         ****     x2 = ((SL32)temp->cal_param.AC2) * B6 >> 11;
+ 686              	 .loc 1 211 0
+ 687 0056 B4F91010 	 ldrsh r1,[r4,#16]
+ 688              	.LVL83:
+ 689 005a 02FB02F3 	 mul r3,r2,r2
+ 690 005e 1813     	 asrs r0,r3,#12
+ 691 0060 00FB01F3 	 mul r3,r0,r1
+ 692              	.LVL84:
+ 212:i2c.c         ****     x3 = x1 + x2;
+ 693              	 .loc 1 212 0
+ 694 0064 B4F90410 	 ldrsh r1,[r4,#4]
+ 695 0068 02FB01F1 	 mul r1,r2,r1
+ 696 006c C912     	 asrs r1,r1,#11
+ 697              	.LVL85:
+ 213:i2c.c         ****     B3 = ((((SL32)(temp->cal_param.AC1) * 4 + x3) << OSS) + 2) / 4;
+ 698              	 .loc 1 213 0
+ 699 006e 01EBE321 	 add r1,r1,r3,asr#11
+ 700              	.LVL86:
+ 214:i2c.c         ****     x1 = ((SL32)temp->cal_param.AC3) * B6 >> 13;
+ 701              	 .loc 1 214 0
+ 702 0072 B4F90230 	 ldrsh r3,[r4,#2]
+ 703              	.LVL87:
+ 704 0076 01EB8301 	 add r1,r1,r3,lsl#2
+ 705              	.LVL88:
+ 706 007a 8900     	 lsls r1,r1,#2
+ 707 007c 0231     	 adds r1,r1,#2
+ 708 007e 31D4     	 bmi .L37
+ 709              	.L33:
+ 710              	.LVL89:
+ 215:i2c.c         ****     x2 = ((SL32)(temp->cal_param.B1) * (B6 * B6 >> 12)) >> 16;
+ 711              	 .loc 1 215 0
+ 712 0080 B4F90630 	 ldrsh r3,[r4,#6]
+ 713 0084 02FB03F2 	 mul r2,r2,r3
+ 714              	.LVL90:
+ 216:i2c.c         ****     x3 = ((x1 + x2) + 2) >> 2;
+ARM GAS   			page 20
+
+
+ 715              	 .loc 1 216 0
+ 716 0088 B4F90E30 	 ldrsh r3,[r4,#14]
+ 717 008c 03FB00F3 	 mul r3,r3,r0
+ 718 0090 1B14     	 asrs r3,r3,#16
+ 719              	.LVL91:
+ 217:i2c.c         ****     b4 = ((SL32)(temp->cal_param.AC4) * (unsigned long)(x3 + 32768)) >> 15;
+ 720              	 .loc 1 217 0
+ 721 0092 03EB6233 	 add r3,r3,r2,asr#13
+ 722              	.LVL92:
+ 723 0096 0233     	 adds r3,r3,#2
+ 724 0098 9B10     	 asrs r3,r3,#2
+ 725              	.LVL93:
+ 218:i2c.c         ****     b7 = ((unsigned long)(temp->UnsetGasPress) - B3) * (50000 >> OSS);
+ 726              	 .loc 1 218 0
+ 727 009a 2289     	 ldrh r2,[r4,#8]
+ 728              	.LVL94:
+ 729 009c 03F50043 	 add r3,r3,#32768
+ 730              	.LVL95:
+ 731 00a0 03FB02F3 	 mul r3,r3,r2
+ 732              	.LVL96:
+ 733 00a4 DB0B     	 lsrs r3,r3,#15
+ 734              	.LVL97:
+ 219:i2c.c         ****     if (b7 < 0x80000000) {
+ 735              	 .loc 1 219 0
+ 736 00a6 E269     	 ldr r2,[r4,#28]
+ 737 00a8 A2EBA102 	 sub r2,r2,r1,asr#2
+ 738 00ac 43F2D401 	 movw r1,#12500
+ 739              	.LVL98:
+ 740 00b0 01FB02F1 	 mul r1,r1,r2
+ 741              	.LVL99:
+ 220:i2c.c         ****         p = (b7 * 2) / b4 ;
+ 742              	 .loc 1 220 0
+ 743 00b4 0029     	 cmp r1,#0
+ 744 00b6 17DB     	 blt .L34
+ 221:i2c.c         ****     } else {
+ 745              	 .loc 1 221 0
+ 746 00b8 4900     	 lsls r1,r1,#1
+ 747              	.LVL100:
+ 748 00ba B1FBF3F3 	 udiv r3,r1,r3
+ 749              	.LVL101:
+ 750              	.L35:
+ 225:i2c.c         ****     x1 = ((SL32)x1 * 3038) >> 16;
+ 751              	 .loc 1 225 0
+ 752 00be 1A12     	 asrs r2,r3,#8
+ 753              	.LVL102:
+ 754 00c0 02FB02F2 	 mul r2,r2,r2
+ 755              	.LVL103:
+ 226:i2c.c         ****     x2 = (-7357 * p) >> 16;
+ 756              	 .loc 1 226 0
+ 757 00c4 40F6DE31 	 movw r1,#3038
+ 758 00c8 01FB02F1 	 mul r1,r1,r2
+ 759              	.LVL104:
+ 227:i2c.c         ****     temp->GasPress = p + ((x1 + x2 + 3791) >> 4);
+ 760              	 .loc 1 227 0
+ 761 00cc 0A4A     	 ldr r2,.L38+8
+ 762 00ce 02FB03F2 	 mul r2,r2,r3
+ 763 00d2 1214     	 asrs r2,r2,#16
+ARM GAS   			page 21
+
+
+ 764              	.LVL105:
+ 228:i2c.c         **** }
+ 765              	 .loc 1 228 0
+ 766 00d4 02EB2142 	 add r2,r2,r1,asr#16
+ 767              	.LVL106:
+ 768 00d8 02F6CF62 	 addw r2,r2,#3791
+ 769 00dc 03EB2213 	 add r3,r3,r2,asr#4
+ 770              	.LVL107:
+ 771 00e0 6362     	 str r3,[r4,#36]
+ 229:i2c.c         **** 
+ 772              	 .loc 1 229 0
+ 773 00e2 10BD     	 pop {r4,pc}
+ 774              	.LVL108:
+ 775              	.L37:
+ 214:i2c.c         ****     x1 = ((SL32)temp->cal_param.AC3) * B6 >> 13;
+ 776              	 .loc 1 214 0
+ 777 00e4 0331     	 adds r1,r1,#3
+ 778 00e6 CBE7     	 b .L33
+ 779              	.LVL109:
+ 780              	.L34:
+ 223:i2c.c         ****     }
+ 781              	 .loc 1 223 0
+ 782 00e8 B1FBF3F3 	 udiv r3,r1,r3
+ 783              	.LVL110:
+ 784 00ec 5B00     	 lsls r3,r3,#1
+ 785              	.LVL111:
+ 786 00ee E6E7     	 b .L35
+ 787              	.L39:
+ 788              	 .align 2
+ 789              	.L38:
+ 790 00f0 00000000 	 .word .LC17
+ 791 00f4 08000000 	 .word .LC18
+ 792 00f8 43E3FFFF 	 .word -7357
+ 793              	 .cfi_endproc
+ 794              	.LFE23:
+ 796              	 .section .text.__io_puts,"ax",%progbits
+ 797              	 .align 1
+ 798              	 .global __io_puts
+ 799              	 .syntax unified
+ 800              	 .thumb
+ 801              	 .thumb_func
+ 802              	 .fpu fpv4-sp-d16
+ 804              	__io_puts:
+ 805              	.LFB19:
+ 103:i2c.c         ****     int ret = 0;
+ 806              	 .loc 1 103 0
+ 807              	 .cfi_startproc
+ 808              	 
+ 809              	 
+ 810              	.LVL112:
+ 811 0000 10B5     	 push {r4,lr}
+ 812              	 .cfi_def_cfa_offset 8
+ 813              	 .cfi_offset 4,-8
+ 814              	 .cfi_offset 14,-4
+ 815              	.LVL113:
+ 105:i2c.c         ****         ret = gsdk_uart_write(g_huart, (uint8_t *)data, len, 1000);
+ 816              	 .loc 1 105 0
+ARM GAS   			page 22
+
+
+ 817 0002 064B     	 ldr r3,.L44
+ 818 0004 1C68     	 ldr r4,[r3]
+ 819 0006 3CB1     	 cbz r4,.L42
+ 820 0008 0A46     	 mov r2,r1
+ 821 000a 0146     	 mov r1,r0
+ 822              	.LVL114:
+ 106:i2c.c         ****     }
+ 823              	 .loc 1 106 0
+ 824 000c 4FF47A73 	 mov r3,#1000
+ 825 0010 2046     	 mov r0,r4
+ 826              	.LVL115:
+ 827 0012 FFF7FEFF 	 bl gsdk_uart_write
+ 828              	.LVL116:
+ 829              	.L40:
+ 109:i2c.c         **** 
+ 830              	 .loc 1 109 0
+ 831 0016 10BD     	 pop {r4,pc}
+ 832              	.LVL117:
+ 833              	.L42:
+ 104:i2c.c         ****     if (g_huart) {
+ 834              	 .loc 1 104 0
+ 835 0018 0020     	 movs r0,#0
+ 836              	.LVL118:
+ 108:i2c.c         **** }
+ 837              	 .loc 1 108 0
+ 838 001a FCE7     	 b .L40
+ 839              	.L45:
+ 840              	 .align 2
+ 841              	.L44:
+ 842 001c 00000000 	 .word .LANCHOR4
+ 843              	 .cfi_endproc
+ 844              	.LFE19:
+ 846              	 .section .text.main,"ax",%progbits
+ 847              	 .align 1
+ 848              	 .global main
+ 849              	 .syntax unified
+ 850              	 .thumb
+ 851              	 .thumb_func
+ 852              	 .fpu fpv4-sp-d16
+ 854              	main:
+ 855              	.LFB27:
+ 291:i2c.c         **** 
+ 292:i2c.c         **** int main(void)
+ 293:i2c.c         **** {
+ 856              	 .loc 1 293 0
+ 857              	 .cfi_startproc
+ 858              	 
+ 859              	 
+ 860 0000 70B5     	 push {r4,r5,r6,lr}
+ 861              	 .cfi_def_cfa_offset 16
+ 862              	 .cfi_offset 4,-16
+ 863              	 .cfi_offset 5,-12
+ 864              	 .cfi_offset 6,-8
+ 865              	 .cfi_offset 14,-4
+ 866 0002 92B0     	 sub sp,sp,#72
+ 867              	 .cfi_def_cfa_offset 88
+ 294:i2c.c         ****     uart_config_t uart_config;
+ARM GAS   			page 23
+
+
+ 295:i2c.c         ****     gsdk_status_t status;
+ 296:i2c.c         ****     BMP180_info temp;
+ 297:i2c.c         **** 
+ 298:i2c.c         ****     uart_config.baudrate    = UART_BAUDRATE_115200;
+ 868              	 .loc 1 298 0
+ 869 0004 0923     	 movs r3,#9
+ 870 0006 8DF84430 	 strb r3,[sp,#68]
+ 299:i2c.c         ****     uart_config.parity      = UART_PARITY_NONE;
+ 871              	 .loc 1 299 0
+ 872 000a 0020     	 movs r0,#0
+ 873 000c 8DF84700 	 strb r0,[sp,#71]
+ 300:i2c.c         ****     uart_config.stop_bit    = UART_STOP_BIT_1;
+ 874              	 .loc 1 300 0
+ 875 0010 8DF84600 	 strb r0,[sp,#70]
+ 301:i2c.c         ****     uart_config.word_length = UART_WORD_LENGTH_8;
+ 876              	 .loc 1 301 0
+ 877 0014 0323     	 movs r3,#3
+ 878 0016 8DF84530 	 strb r3,[sp,#69]
+ 302:i2c.c         ****     status = gsdk_uart_open(UART_0, &uart_config, &g_huart);
+ 879              	 .loc 1 302 0
+ 880 001a 1E4A     	 ldr r2,.L54
+ 881 001c 11A9     	 add r1,sp,#68
+ 882 001e FFF7FEFF 	 bl gsdk_uart_open
+ 883              	.LVL119:
+ 303:i2c.c         ****     if (status != GSDK_SUCCESS) {
+ 884              	 .loc 1 303 0
+ 885 0022 50BB     	 cbnz r0,.L52
+ 304:i2c.c         ****         gsdk_syslog_printf("[PRINTF_DEMO]: failed to open uart %d\n", status);
+ 305:i2c.c         **** 		return -1;
+ 306:i2c.c         ****     }
+ 307:i2c.c         **** 
+ 308:i2c.c         ****     status = gsdk_i2c_master_init(I2C_MASTER_2, I2C_FREQUENCY_400K, &g_hi2c);//welinkopen only supp
+ 886              	 .loc 1 308 0
+ 887 0024 1C4A     	 ldr r2,.L54+4
+ 888 0026 0421     	 movs r1,#4
+ 889 0028 0220     	 movs r0,#2
+ 890              	.LVL120:
+ 891 002a FFF7FEFF 	 bl gsdk_i2c_master_init
+ 892              	.LVL121:
+ 309:i2c.c         ****     if (status != GSDK_SUCCESS){
+ 893              	 .loc 1 309 0
+ 894 002e 0146     	 mov r1,r0
+ 895 0030 50BB     	 cbnz r0,.L53
+ 310:i2c.c         **** 		gsdk_syslog_printf("[PRINTF_DEMO]: failed to open i2c %d\n", status);
+ 311:i2c.c         ****         return -1;
+ 312:i2c.c         ****     }
+ 313:i2c.c         **** 
+ 314:i2c.c         ****     BMP180_init(&temp);    //The bmp180 sensor init
+ 896              	 .loc 1 314 0
+ 897 0032 07A8     	 add r0,sp,#28
+ 898              	.LVL122:
+ 899 0034 FFF7FEFF 	 bl BMP180_init
+ 900              	.LVL123:
+ 901              	.L50:
+ 315:i2c.c         ****     while (1) {
+ 316:i2c.c         ****         if (temp.ExistFlag == BMP180_EXISTENCE) {
+ 902              	 .loc 1 316 0
+ARM GAS   			page 24
+
+
+ 903 0038 9DF81C30 	 ldrb r3,[sp,#28]
+ 904 003c 012B     	 cmp r3,#1
+ 905 003e FBD1     	 bne .L50
+ 317:i2c.c         ****             BMP180Convert(&temp);		
+ 906              	 .loc 1 317 0
+ 907 0040 07AE     	 add r6,sp,#28
+ 908 0042 3046     	 mov r0,r6
+ 909 0044 FFF7FEFF 	 bl BMP180Convert
+ 910              	.LVL124:
+ 318:i2c.c         ****             display(temp);				//display data
+ 911              	 .loc 1 318 0
+ 912 0048 6C46     	 mov r4,sp
+ 913 004a 0BAD     	 add r5,sp,#44
+ 914 004c 0FCD     	 ldmia r5!,{r0,r1,r2,r3}
+ 915 004e 0FC4     	 stmia r4!,{r0,r1,r2,r3}
+ 916 0050 95E80300 	 ldm r5,{r0,r1}
+ 917 0054 84E80300 	 stm r4,{r0,r1}
+ 918 0058 96E80F00 	 ldm r6,{r0,r1,r2,r3}
+ 919 005c FFF7FEFF 	 bl display
+ 920              	.LVL125:
+ 319:i2c.c         ****             break;
+ 320:i2c.c         ****         }
+ 321:i2c.c         ****     }
+ 322:i2c.c         **** 	
+ 323:i2c.c         ****     gsdk_i2c_master_close(g_hi2c);		//clsoe i2c master
+ 921              	 .loc 1 323 0
+ 922 0060 0D4D     	 ldr r5,.L54+4
+ 923 0062 2868     	 ldr r0,[r5]
+ 924 0064 FFF7FEFF 	 bl gsdk_i2c_master_close
+ 925              	.LVL126:
+ 324:i2c.c         ****     gsdk_uart_close(g_huart);	//close uart
+ 926              	 .loc 1 324 0
+ 927 0068 0A4C     	 ldr r4,.L54
+ 928 006a 2068     	 ldr r0,[r4]
+ 929 006c FFF7FEFF 	 bl gsdk_uart_close
+ 930              	.LVL127:
+ 325:i2c.c         **** 	g_hi2c = NULL;	
+ 931              	 .loc 1 325 0
+ 932 0070 0020     	 movs r0,#0
+ 933 0072 2860     	 str r0,[r5]
+ 326:i2c.c         ****     g_huart = NULL;
+ 934              	 .loc 1 326 0
+ 935 0074 2060     	 str r0,[r4]
+ 936              	.L46:
+ 327:i2c.c         **** 	
+ 328:i2c.c         ****     return 0;
+ 329:i2c.c         **** }
+ 937              	 .loc 1 329 0
+ 938 0076 12B0     	 add sp,sp,#72
+ 939              	 .cfi_remember_state
+ 940              	 .cfi_def_cfa_offset 16
+ 941              	 
+ 942 0078 70BD     	 pop {r4,r5,r6,pc}
+ 943              	.LVL128:
+ 944              	.L52:
+ 945              	 .cfi_restore_state
+ 946 007a 0146     	 mov r1,r0
+ARM GAS   			page 25
+
+
+ 304:i2c.c         **** 		return -1;
+ 947              	 .loc 1 304 0
+ 948 007c 0748     	 ldr r0,.L54+8
+ 949              	.LVL129:
+ 950 007e FFF7FEFF 	 bl gsdk_syslog_printf
+ 951              	.LVL130:
+ 305:i2c.c         ****     }
+ 952              	 .loc 1 305 0
+ 953 0082 4FF0FF30 	 mov r0,#-1
+ 954 0086 F6E7     	 b .L46
+ 955              	.LVL131:
+ 956              	.L53:
+ 310:i2c.c         ****         return -1;
+ 957              	 .loc 1 310 0
+ 958 0088 0548     	 ldr r0,.L54+12
+ 959              	.LVL132:
+ 960 008a FFF7FEFF 	 bl gsdk_syslog_printf
+ 961              	.LVL133:
+ 311:i2c.c         ****     }
+ 962              	 .loc 1 311 0
+ 963 008e 4FF0FF30 	 mov r0,#-1
+ 964 0092 F0E7     	 b .L46
+ 965              	.L55:
+ 966              	 .align 2
+ 967              	.L54:
+ 968 0094 00000000 	 .word .LANCHOR4
+ 969 0098 00000000 	 .word .LANCHOR1
+ 970 009c 00000000 	 .word .LC19
+ 971 00a0 28000000 	 .word .LC20
+ 972              	 .cfi_endproc
+ 973              	.LFE27:
+ 975              	 .section .rodata
+ 976              	 .align 2
+ 977              	 .set .LANCHOR3,.+0
+ 978              	.LC0:
+ 979 0000 F4       	 .byte -12
+ 980 0001 2E       	 .byte 46
+ 981 0002 0000     	 .space 2
+ 982              	.LC1:
+ 983 0004 F4       	 .byte -12
+ 984 0005 B4       	 .byte -76
+ 985              	 .section .bss.DEVICEID,"aw",%nobits
+ 986              	 .set .LANCHOR2,.+0
+ 989              	DEVICEID:
+ 990 0000 00       	 .space 1
+ 991              	 .section .bss.bmp180_reg_addr,"aw",%nobits
+ 992              	 .set .LANCHOR0,.+0
+ 995              	bmp180_reg_addr:
+ 996 0000 00       	 .space 1
+ 997              	 .section .bss.g_hi2c,"aw",%nobits
+ 998              	 .align 2
+ 999              	 .set .LANCHOR1,.+0
+ 1002              	g_hi2c:
+ 1003 0000 00000000 	 .space 4
+ 1004              	 .section .bss.g_huart,"aw",%nobits
+ 1005              	 .align 2
+ 1006              	 .set .LANCHOR4,.+0
+ARM GAS   			page 26
+
+
+ 1009              	g_huart:
+ 1010 0000 00000000 	 .space 4
+ 1011              	 .section .rodata.BMP180Convert.str1.4,"aMS",%progbits,1
+ 1012              	 .align 2
+ 1013              	.LC17:
+ 1014 0000 55543A25 	 .ascii "UT:%d\000"
+ 1014      6400
+ 1015 0006 0000     	 .space 2
+ 1016              	.LC18:
+ 1017 0008 55503A25 	 .ascii "UP:%d\000"
+ 1017      6400
+ 1018              	 .section .rodata.BMP180ReadCalibrateParam.str1.4,"aMS",%progbits,1
+ 1019              	 .align 2
+ 1020              	.LC5:
+ 1021 0000 54686520 	 .ascii "The p->cal_param.AC1:%d\012\000"
+ 1021      702D3E63 
+ 1021      616C5F70 
+ 1021      6172616D 
+ 1021      2E414331 
+ 1022 0019 000000   	 .space 3
+ 1023              	.LC6:
+ 1024 001c 54686520 	 .ascii "The p->cal_param.AC2:%d\012\000"
+ 1024      702D3E63 
+ 1024      616C5F70 
+ 1024      6172616D 
+ 1024      2E414332 
+ 1025 0035 000000   	 .space 3
+ 1026              	.LC7:
+ 1027 0038 54686520 	 .ascii "The p->cal_param.AC3:%d\012\000"
+ 1027      702D3E63 
+ 1027      616C5F70 
+ 1027      6172616D 
+ 1027      2E414333 
+ 1028 0051 000000   	 .space 3
+ 1029              	.LC8:
+ 1030 0054 54686520 	 .ascii "The p->cal_param.AC4:%d\012\000"
+ 1030      702D3E63 
+ 1030      616C5F70 
+ 1030      6172616D 
+ 1030      2E414334 
+ 1031 006d 000000   	 .space 3
+ 1032              	.LC9:
+ 1033 0070 54686520 	 .ascii "The p->cal_param.AC5:%d\012\000"
+ 1033      702D3E63 
+ 1033      616C5F70 
+ 1033      6172616D 
+ 1033      2E414335 
+ 1034 0089 000000   	 .space 3
+ 1035              	.LC10:
+ 1036 008c 54686520 	 .ascii "The p->cal_param.AC6:%d\012\000"
+ 1036      702D3E63 
+ 1036      616C5F70 
+ 1036      6172616D 
+ 1036      2E414336 
+ 1037 00a5 000000   	 .space 3
+ 1038              	.LC11:
+ 1039 00a8 54686520 	 .ascii "The p->cal_param.B1:%d\012\000"
+ARM GAS   			page 27
+
+
+ 1039      702D3E63 
+ 1039      616C5F70 
+ 1039      6172616D 
+ 1039      2E42313A 
+ 1040              	.LC12:
+ 1041 00c0 54686520 	 .ascii "The p->cal_param.B2:%d\012\000"
+ 1041      702D3E63 
+ 1041      616C5F70 
+ 1041      6172616D 
+ 1041      2E42323A 
+ 1042              	.LC13:
+ 1043 00d8 54686520 	 .ascii "The p->cal_param.MB:%d\012\000"
+ 1043      702D3E63 
+ 1043      616C5F70 
+ 1043      6172616D 
+ 1043      2E4D423A 
+ 1044              	.LC14:
+ 1045 00f0 54686520 	 .ascii "The p->cal_param.MC:%d\012\000"
+ 1045      702D3E63 
+ 1045      616C5F70 
+ 1045      6172616D 
+ 1045      2E4D433A 
+ 1046              	.LC15:
+ 1047 0108 54686520 	 .ascii "The p->cal_param.MD:%d\012\000"
+ 1047      702D3E63 
+ 1047      616C5F70 
+ 1047      6172616D 
+ 1047      2E4D443A 
+ 1048              	 .section .rodata.BMP180_init.str1.4,"aMS",%progbits,1
+ 1049              	 .align 2
+ 1050              	.LC16:
+ 1051 0000 54686520 	 .ascii "The BMP180 device id 0x%x\012\015\000"
+ 1051      424D5031 
+ 1051      38302064 
+ 1051      65766963 
+ 1051      65206964 
+ 1052              	 .section .rodata.bmp180_I2C_multi_read.str1.4,"aMS",%progbits,1
+ 1053              	 .align 2
+ 1054              	.LC3:
+ 1055 0000 49324320 	 .ascii "I2C Transmit error (%ld)\012\000"
+ 1055      5472616E 
+ 1055      736D6974 
+ 1055      20657272 
+ 1055      6F722028 
+ 1056 001a 0000     	 .space 2
+ 1057              	.LC4:
+ 1058 001c 49324320 	 .ascii "I2C Read error (%ld)\012\000"
+ 1058      52656164 
+ 1058      20657272 
+ 1058      6F722028 
+ 1058      256C6429 
+ 1059              	 .section .rodata.display.str1.4,"aMS",%progbits,1
+ 1060              	 .align 2
+ 1061              	.LC2:
+ 1062 0000 54686520 	 .ascii "The Pressure : %4.2f Kpa\012\015\000"
+ 1062      50726573 
+ 1062      73757265 
+ARM GAS   			page 28
+
+
+ 1062      203A2025 
+ 1062      342E3266 
+ 1063              	 .section .rodata.main.str1.4,"aMS",%progbits,1
+ 1064              	 .align 2
+ 1065              	.LC19:
+ 1066 0000 5B505249 	 .ascii "[PRINTF_DEMO]: failed to open uart %d\012\000"
+ 1066      4E54465F 
+ 1066      44454D4F 
+ 1066      5D3A2066 
+ 1066      61696C65 
+ 1067 0027 00       	 .space 1
+ 1068              	.LC20:
+ 1069 0028 5B505249 	 .ascii "[PRINTF_DEMO]: failed to open i2c %d\012\000"
+ 1069      4E54465F 
+ 1069      44454D4F 
+ 1069      5D3A2066 
+ 1069      61696C65 
+ 1070              	 .text
+ 1071              	.Letext0:
+ 1072              	 .file 2 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 1073              	 .file 3 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\lock.h"
+ 1074              	 .file 4 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\_types.h"
+ 1075              	 .file 5 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\lib\\gcc\\arm-none-eabi\\7.3.1\\include\\stddef.h"
+ 1076              	 .file 6 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\reent.h"
+ 1077              	 .file 7 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\_stdint.h"
+ 1078              	 .file 8 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\stdlib.h"
+ 1079              	 .file 9 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/include/FreeRTOSConfig.h"
+ 1080              	 .file 10 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\errno.h"
+ 1081              	 .file 11 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\time.h"
+ 1082              	 .file 12 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/ports/include/arch/cc.h"
+ 1083              	 .file 13 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/ip4_addr.h"
+ 1084              	 .file 14 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/ip6_addr.h"
+ 1085              	 .file 15 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/ip_addr.h"
+ 1086              	 .file 16 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/err.h"
+ 1087              	 .file 17 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/pbuf.h"
+ 1088              	 .file 18 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/netif.h"
+ 1089              	 .file 19 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/inet.h"
+ 1090              	 .file 20 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/ip4.h"
+ 1091              	 .file 21 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/ip6.h"
+ 1092              	 .file 22 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/ip.h"
+ 1093              	 .file 23 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_common.h"
+ 1094              	 .file 24 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_uart.h"
+ 1095              	 .file 25 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_flash.h"
+ 1096              	 .file 26 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_i2c.h"
+ 1097              	 .file 27 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_api.h"
+ 1098              	 .file 28 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/include/task.h"
+ARM GAS   			page 29
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 i2c.c
+    {standard input}:19     .text.display:00000000 $t
+    {standard input}:25     .text.display:00000000 display
+    {standard input}:64     .text.display:00000038 $d
+    {standard input}:70     .text.bmp180_I2C_multi_read:00000000 $t
+    {standard input}:76     .text.bmp180_I2C_multi_read:00000000 bmp180_I2C_multi_read
+    {standard input}:156    .text.bmp180_I2C_multi_read:00000050 $d
+    {standard input}:164    .text.BMP180ReadCalibrateParam:00000000 $t
+    {standard input}:170    .text.BMP180ReadCalibrateParam:00000000 BMP180ReadCalibrateParam
+    {standard input}:378    .text.BMP180ReadCalibrateParam:00000168 $d
+    {standard input}:393    .text.BMP180_init:00000000 $t
+    {standard input}:399    .text.BMP180_init:00000000 BMP180_init
+    {standard input}:448    .text.BMP180_init:00000030 $d
+    {standard input}:454    .text.BMP180ReadUnsetTemperature:00000000 $t
+    {standard input}:460    .text.BMP180ReadUnsetTemperature:00000000 BMP180ReadUnsetTemperature
+    {standard input}:530    .text.BMP180ReadUnsetTemperature:00000058 $d
+    {standard input}:536    .text.BMP180ReadUnsetPressure:00000000 $t
+    {standard input}:542    .text.BMP180ReadUnsetPressure:00000000 BMP180ReadUnsetPressure
+    {standard input}:616    .text.BMP180ReadUnsetPressure:00000060 $d
+    {standard input}:622    .text.BMP180Convert:00000000 $t
+    {standard input}:628    .text.BMP180Convert:00000000 BMP180Convert
+    {standard input}:790    .text.BMP180Convert:000000f0 $d
+    {standard input}:797    .text.__io_puts:00000000 $t
+    {standard input}:804    .text.__io_puts:00000000 __io_puts
+    {standard input}:842    .text.__io_puts:0000001c $d
+    {standard input}:847    .text.main:00000000 $t
+    {standard input}:854    .text.main:00000000 main
+    {standard input}:968    .text.main:00000094 $d
+    {standard input}:976    .rodata:00000000 $d
+    {standard input}:989    .bss.DEVICEID:00000000 DEVICEID
+    {standard input}:990    .bss.DEVICEID:00000000 $d
+    {standard input}:995    .bss.bmp180_reg_addr:00000000 bmp180_reg_addr
+    {standard input}:996    .bss.bmp180_reg_addr:00000000 $d
+    {standard input}:998    .bss.g_hi2c:00000000 $d
+    {standard input}:1002   .bss.g_hi2c:00000000 g_hi2c
+    {standard input}:1005   .bss.g_huart:00000000 $d
+    {standard input}:1009   .bss.g_huart:00000000 g_huart
+    {standard input}:1012   .rodata.BMP180Convert.str1.4:00000000 $d
+    {standard input}:1019   .rodata.BMP180ReadCalibrateParam.str1.4:00000000 $d
+    {standard input}:1049   .rodata.BMP180_init.str1.4:00000000 $d
+    {standard input}:1053   .rodata.bmp180_I2C_multi_read.str1.4:00000000 $d
+    {standard input}:1060   .rodata.display.str1.4:00000000 $d
+    {standard input}:1064   .rodata.main.str1.4:00000000 $d
+                           .group:00000000 wm4.0.8fab1e1450c2b74bdd5e2aed4c325bf1
+                           .group:00000000 wm4._newlib_version.h.4.875b979a44719054cd750d0952ad3fd6
+                           .group:00000000 wm4.newlib.h.18.5e5ca3429233af402d406a202f1fc1ac
+                           .group:00000000 wm4.ieeefp.h.77.220d9cccac42cd58761758bee2df4ce6
+                           .group:00000000 wm4.features.h.22.fad1cec3bc7ff06488171438dbdcfd02
+                           .group:00000000 wm4.config.h.220.6cac6a9685cfce5e83c17784171638d9
+                           .group:00000000 wm4._ansi.h.31.de524f58584151836e90d8620a16f8e8
+                           .group:00000000 wm4.stdio.h.31.7c0e28c411445f3f9c5b11accf882760
+                           .group:00000000 wm4._default_types.h.6.959254cf5f09734ea7516c89e8bb21bd
+                           .group:00000000 wm4.stddef.h.187.2ff233552538c6ff9b8575ca8ea52cb3
+                           .group:00000000 wm4.cdefs.h.47.0bcdf94cb40e176393dd1404056825b4
+                           .group:00000000 wm4.stddef.h.39.ec95e8feac892e292b69dc7ae75b0d64
+                           .group:00000000 wm4.stdarg.h.34.3a23a216c0c293b3d2ea2e89281481e6
+ARM GAS   			page 30
+
+
+                           .group:00000000 wm4.lock.h.2.1461d1fff82dffe8bfddc23307f6484f
+                           .group:00000000 wm4._types.h.125.5cf8a495f1f7ef36777ad868a1e32068
+                           .group:00000000 wm4.stddef.h.161.5349cb105733e8777bfb0cf53c4e3f34
+                           .group:00000000 wm4._types.h.184.03611d4f6b5bec9997bcf4279eceba07
+                           .group:00000000 wm4.reent.h.17.90c2574d4acdcfce933db5cb09ff35fe
+                           .group:00000000 wm4.types.h.40.e8c16e7ec36ba55f133d0616070e25fc
+                           .group:00000000 wm4._stdint.h.10.c24fa3af3bc1706662bb5593a907e841
+                           .group:00000000 wm4._endian.h.31.65a10590763c3dde1ac4a7f66d7d4891
+                           .group:00000000 wm4.endian.h.9.49f3a4695c1b61e8a0808de3c4a106cb
+                           .group:00000000 wm4._timeval.h.30.0e8bfd94e85db17dda3286ee81496fe6
+                           .group:00000000 wm4.timespec.h.41.d855182eb0e690443ab8651bcedca6e1
+                           .group:00000000 wm4.select.h.19.97ca6fd0c752a0f3b6719fd314d361e6
+                           .group:00000000 wm4.types.h.69.ed3eae3cf73030a737515151ebcab7a1
+                           .group:00000000 wm4.sched.h.22.c60982713a5c428609783c78f9c78d95
+                           .group:00000000 wm4._pthreadtypes.h.36.fcee9961c35163dde6267ef772ad1972
+                           .group:00000000 wm4.stdio.h.2.4aa87247282eca6c8f36f9de33d8df1a
+                           .group:00000000 wm4.stdio.h.81.932d0c162786b883f622b8d05c120c78
+                           .group:00000000 wm4.stdlib.h.13.4ed386f5c1a80d71e72172885d946ef2
+                           .group:00000000 wm4.stddef.h.161.19e15733342b50ead2919490b095303e
+                           .group:00000000 wm4.alloca.h.8.dfc0c703c47ec3e69746825b17d9e66d
+                           .group:00000000 wm4.stdlib.h.56.d4493cd3736e51e9d56335045f26df45
+                           .group:00000000 wm4.string.h.8.c4b8571ce60dff2817f43fec8b86aecd
+                           .group:00000000 wm4._intsup.h.10.cce27fed8484c08a33f522034c30d2b5
+                           .group:00000000 wm4.stdint.h.23.d53047a68f4a85177f80b422d52785ed
+                           .group:00000000 wm4.FreeRTOSConfig.h.68.1d0dd6b8cda279d0020827f5584733bd
+                           .group:00000000 wm4.projdefs.h.71.1734cd3501e070360596dd847bb9d813
+                           .group:00000000 wm4.portmacro.h.72.3d5d774f718d157a637f7eb960850f27
+                           .group:00000000 wm4.portable.h.98.f435842f50d7864fba6a318a13e72513
+                           .group:00000000 wm4.mpu_wrappers.h.71.dd245fe44d82bd40288b5a47f895c82c
+                           .group:00000000 wm4.FreeRTOS.h.175.3abf49eaca38658a192da8d7c86d5374
+                           .group:00000000 wm4.queue.h.72.3695320c7600effec3d17b83c99d3c0b
+                           .group:00000000 wm4.semphr.h.81.476996112f7cf2dd045dbdd37a9136bc
+                           .group:00000000 wm4.list.h.103.6a12b7b9a7a136c3cca0ee53675c5498
+                           .group:00000000 wm4.task.h.88.da474b04c368050657453c137d8efe45
+                           .group:00000000 wm4.timers.h.96.b62a20effad09455c0ed06e5f17e2a48
+                           .group:00000000 wm4.lwipopts.h.39.6b59604adf87dc94bbbda24564503740
+                           .group:00000000 wm4.errno.h.2.ba016d646105af6cad23be83630b6a3f
+                           .group:00000000 wm4.errno.h.9.1ecd7b1049497a0ab61da0f6cbd4b0c6
+                           .group:00000000 wm4.time.h.38.20beed93add9f31905d3a626e4660be9
+                           .group:00000000 wm4.time.h.8.db4619001f026d0b4874c029fef0e91f
+                           .group:00000000 wm4.time.h.2.4581ce0ffb6627cfc02162c94bf846c9
+                           .group:00000000 wm4.time.h.25.483ee9b7e27a5dcca3d222ded0e25e01
+                           .group:00000000 wm4.cc.h.48.d6d2c2bb4a8eeb217c55b9ca1943b7a0
+                           .group:00000000 wm4.arch.h.65.8829bb52e9eb86f038bc22f28844c005
+                           .group:00000000 wm4.debug.h.44.85dd174371aa97df303e04153d799135
+                           .group:00000000 wm4.opt.h.77.035e4f6feedd8c96216e0818f09a9265
+                           .group:00000000 wm4.def.h.33.687716bada84b2810fdf97c9d167aeeb
+                           .group:00000000 wm4.ip4_addr.h.33.1a8b96da9c9099dd4d4b421392c24416
+                           .group:00000000 wm4.ip6_addr.h.43.f0356dc1c9eb4011a6824b272ca0bdec
+                           .group:00000000 wm4.ip_addr.h.58.d7bcbad6cfa9a793708e54980ac1c34d
+                           .group:00000000 wm4.netif.h.33.379f236f9670aafd30086e50d1a89f89
+                           .group:00000000 wm4.err.h.33.f97d15a7862198a77a6b19a8b190fee7
+                           .group:00000000 wm4.pbuf.h.34.202868ef9162d4cb74cfc854b7b74f63
+                           .group:00000000 wm4.netif.h.67.da8672002bd78982c4ab50b84285a595
+                           .group:00000000 wm4.inet.h.41.0cf9f502d748021afadf1fe4fba638f4
+                           .group:00000000 wm4.sockets.h.72.bc82e899e862bc38df9aee17d977f9be
+                           .group:00000000 wm4.ip4.h.33.2db1e45313b1f472e08d288657c61499
+ARM GAS   			page 31
+
+
+                           .group:00000000 wm4.ip6.h.42.4c9fe14607f20e2a534215f8047124e1
+                           .group:00000000 wm4.ip.h.49.1a1fbae54cafc9b96064363517198239
+                           .group:00000000 wm4.gsdk_common.h.25.69f333dc5f5113dd7092f6831560754f
+                           .group:00000000 wm4.gsdk_flash.h.25.4d08791083e4af07d64570151ac0803c
+                           .group:00000000 wm4.app_loader.h.25.aa64c8d4536aca920728cda79a275eeb
+                           .group:00000000 wm4.gsdk_ril.h.43.ec5a175e110d1c70143139b168262c34
+                           .group:00000000 wm4.gsdk_ril_cmds.h.25.9576f30a39fa8fd69cc4f6c2fc4c8bd9
+
+UNDEFINED SYMBOLS
+__aeabi_f2d
+gsdk_syslog_printf
+gsdk_i2c_write
+gsdk_i2c_read
+malloc
+free
+vTaskDelay
+gsdk_uart_write
+gsdk_uart_open
+gsdk_i2c_master_init
+gsdk_i2c_master_close
+gsdk_uart_close

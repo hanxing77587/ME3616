@@ -1,0 +1,1 @@
+{"features/packageJSONContribution":["기본 package.json","NPM 리포지토리 요청 실패: {0}","NPM 리포지토리 요청 실패: {0}","NPM 리포지토리 요청 실패: {0}","패키지의 현재 최신 버전","최신 주 버전(1.x.x)을 일치시킵니다.","최신 부 버전(1.2.x)을 일치시킵니다.","최신 버전: {0}"],"features/bowerJSONContribution":["기본 bower.json","Bower 리포지토리 요청 실패: {0}","Bower 리포지토리 요청 실패: {0}","최신"],"main":["Npm 작업 검색: {0} 파일을 구문 분석하지 못했습니다. "]}

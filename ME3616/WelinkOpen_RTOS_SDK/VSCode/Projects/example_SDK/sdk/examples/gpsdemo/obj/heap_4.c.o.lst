@@ -1,0 +1,1251 @@
+ARM GAS   			page 1
+
+
+   1              	 .cpu cortex-m4
+   2              	 .eabi_attribute 27,1
+   3              	 .eabi_attribute 28,1
+   4              	 .eabi_attribute 20,1
+   5              	 .eabi_attribute 21,1
+   6              	 .eabi_attribute 23,3
+   7              	 .eabi_attribute 24,1
+   8              	 .eabi_attribute 25,1
+   9              	 .eabi_attribute 26,1
+  10              	 .eabi_attribute 30,1
+  11              	 .eabi_attribute 34,1
+  12              	 .eabi_attribute 18,4
+  13              	 .file "heap_4.c"
+  14              	 .text
+  15              	.Ltext0:
+  16              	 .cfi_sections .debug_frame
+  17              	 .section .text.prvHeapInit,"ax",%progbits
+  18              	 .align 1
+  19              	 .syntax unified
+  20              	 .thumb
+  21              	 .thumb_func
+  22              	 .fpu fpv4-sp-d16
+  24              	prvHeapInit:
+  25              	.LFB8:
+  26              	 .file 1 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang/heap_4.c"
+   1:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** /*
+   2:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c ****     FreeRTOS V8.2.0 - Copyright (C) 2015 Real Time Engineers Ltd.
+   3:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c ****     All rights reserved
+   4:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+   5:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c ****     VISIT http://www.FreeRTOS.org TO ENSURE YOU ARE USING THE LATEST VERSION.
+   6:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+   7:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c ****     This file is part of the FreeRTOS distribution.
+   8:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+   9:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c ****     FreeRTOS is free software; you can redistribute it and/or modify it under
+  10:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c ****     the terms of the GNU General Public License (version 2) as published by the
+  11:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c ****     Free Software Foundation >>!AND MODIFIED BY!<< the FreeRTOS exception.
+  12:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+  13:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	***************************************************************************
+  14:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c ****     >>!   NOTE: The modification to the GPL is included to allow you to     !<<
+  15:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c ****     >>!   distribute a combined work that includes FreeRTOS without being   !<<
+  16:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c ****     >>!   obliged to provide the source code for proprietary components     !<<
+  17:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c ****     >>!   outside of the FreeRTOS kernel.                                   !<<
+  18:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	***************************************************************************
+  19:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+  20:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c ****     FreeRTOS is distributed in the hope that it will be useful, but WITHOUT ANY
+  21:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c ****     WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+  22:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c ****     FOR A PARTICULAR PURPOSE.  Full license text is available on the following
+  23:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c ****     link: http://www.freertos.org/a00114.html
+  24:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+  25:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c ****     ***************************************************************************
+  26:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c ****      *                                                                       *
+  27:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c ****      *    FreeRTOS provides completely free yet professionally developed,    *
+  28:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c ****      *    robust, strictly quality controlled, supported, and cross          *
+  29:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c ****      *    platform software that is more than just the market leader, it     *
+  30:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c ****      *    is the industry's de facto standard.                               *
+  31:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c ****      *                                                                       *
+  32:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c ****      *    Help yourself get started quickly while simultaneously helping     *
+ARM GAS   			page 2
+
+
+  33:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c ****      *    to support the FreeRTOS project by purchasing a FreeRTOS           *
+  34:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c ****      *    tutorial book, reference manual, or both:                          *
+  35:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c ****      *    http://www.FreeRTOS.org/Documentation                              *
+  36:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c ****      *                                                                       *
+  37:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c ****     ***************************************************************************
+  38:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+  39:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c ****     http://www.FreeRTOS.org/FAQHelp.html - Having a problem?  Start by reading
+  40:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	the FAQ page "My application does not run, what could be wrong?".  Have you
+  41:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	defined configASSERT()?
+  42:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+  43:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	http://www.FreeRTOS.org/support - In return for receiving this top quality
+  44:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	embedded software for free we request you assist our global community by
+  45:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	participating in the support forum.
+  46:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+  47:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	http://www.FreeRTOS.org/training - Investing in training allows your team to
+  48:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	be as productive as possible as early as possible.  Now you can receive
+  49:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	FreeRTOS training directly from Richard Barry, CEO of Real Time Engineers
+  50:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	Ltd, and the world's leading authority on the world's leading RTOS.
+  51:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+  52:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c ****     http://www.FreeRTOS.org/plus - A selection of FreeRTOS ecosystem products,
+  53:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c ****     including FreeRTOS+Trace - an indispensable productivity tool, a DOS
+  54:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c ****     compatible FAT file system, and our tiny thread aware UDP/IP stack.
+  55:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+  56:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c ****     http://www.FreeRTOS.org/labs - Where new FreeRTOS products go to incubate.
+  57:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c ****     Come and try FreeRTOS+TCP, our new open source TCP/IP stack for FreeRTOS.
+  58:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+  59:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c ****     http://www.OpenRTOS.com - Real Time Engineers ltd. license FreeRTOS to High
+  60:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c ****     Integrity Systems ltd. to sell under the OpenRTOS brand.  Low cost OpenRTOS
+  61:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c ****     licenses offer ticketed support, indemnification and commercial middleware.
+  62:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+  63:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c ****     http://www.SafeRTOS.com - High Integrity Systems also provide a safety
+  64:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c ****     engineered and independently SIL3 certified version for use in safety and
+  65:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c ****     mission critical applications that require provable dependability.
+  66:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+  67:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c ****     1 tab == 4 spaces!
+  68:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** */
+  69:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+  70:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** /*
+  71:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c ****  * A sample implementation of pvPortMalloc() and vPortFree() that combines
+  72:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c ****  * (coalescences) adjacent memory blocks as they are freed, and in so doing
+  73:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c ****  * limits memory fragmentation.
+  74:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c ****  *
+  75:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c ****  * See heap_1.c, heap_2.c and heap_3.c for alternative implementations, and the
+  76:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c ****  * memory management pages of http://www.FreeRTOS.org for more information.
+  77:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c ****  */
+  78:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** #include <stdlib.h>
+  79:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+  80:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** /* Defining MPU_WRAPPERS_INCLUDED_FROM_API_FILE prevents task.h from redefining
+  81:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** all the API functions to use the MPU wrappers.  That should only be done when
+  82:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** task.h is included from an application file. */
+  83:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** #define MPU_WRAPPERS_INCLUDED_FROM_API_FILE
+  84:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+  85:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** #include "FreeRTOS.h"
+  86:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** #include "task.h"
+  87:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+  88:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** #undef MPU_WRAPPERS_INCLUDED_FROM_API_FILE
+  89:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+ARM GAS   			page 3
+
+
+  90:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** /* Block sizes must not get too small. */
+  91:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** #define heapMINIMUM_BLOCK_SIZE	( ( size_t ) ( xHeapStructSize * 2 ) )
+  92:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+  93:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** /* Assumes 8bit bytes! */
+  94:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** #define heapBITS_PER_BYTE		( ( size_t ) 8 )
+  95:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+  96:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** /* Allocate the memory for the heap. */
+  97:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** #if( configAPPLICATION_ALLOCATED_HEAP == 1 )
+  98:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	/* The application writer has already defined the array used for the RTOS
+  99:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	heap - probably so it can be placed in a special segment or address. */
+ 100:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	extern uint8_t ucHeap[ 0 ];
+ 101:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** #else
+ 102:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	static uint8_t ucHeap[ configTOTAL_HEAP_SIZE ] ;
+ 103:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** #endif /* configAPPLICATION_ALLOCATED_HEAP */
+ 104:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+ 105:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** /* Define the linked list structure.  This is used to link free blocks in order
+ 106:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** of their memory address. */
+ 107:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** typedef struct A_BLOCK_LINK
+ 108:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** {
+ 109:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	struct A_BLOCK_LINK *pxNextFreeBlock;	/*<< The next free block in the list. */
+ 110:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	size_t xBlockSize;						/*<< The size of the free block. */
+ 111:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** } BlockLink_t;
+ 112:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+ 113:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** /*-----------------------------------------------------------*/
+ 114:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+ 115:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** /*
+ 116:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c ****  * Inserts a block of memory that is being freed into the correct position in
+ 117:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c ****  * the list of free memory blocks.  The block being freed will be merged with
+ 118:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c ****  * the block in front it and/or the block behind it if the memory blocks are
+ 119:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c ****  * adjacent to each other.
+ 120:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c ****  */
+ 121:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** static void prvInsertBlockIntoFreeList( BlockLink_t *pxBlockToInsert );
+ 122:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+ 123:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** /*
+ 124:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c ****  * Called automatically to setup the required heap structures the first time
+ 125:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c ****  * pvPortMalloc() is called.
+ 126:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c ****  */
+ 127:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** static void prvHeapInit( void );
+ 128:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+ 129:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** /*-----------------------------------------------------------*/
+ 130:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+ 131:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** /* The size of the structure placed at the beginning of each allocated memory
+ 132:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** block must by correctly byte aligned. */
+ 133:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** static const size_t xHeapStructSize	= ( ( sizeof( BlockLink_t ) + ( portBYTE_ALIGNMENT - 1 ) ) & ~p
+ 134:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+ 135:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** /* Create a couple of list links to mark the start and end of the list. */
+ 136:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** static BlockLink_t xStart, *pxEnd = NULL;
+ 137:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+ 138:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** /* Keeps track of the number of free bytes remaining, but says nothing about
+ 139:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** fragmentation. */
+ 140:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** static size_t xFreeBytesRemaining = 0U;
+ 141:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** static size_t xMinimumEverFreeBytesRemaining = 0U;
+ 142:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+ 143:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** /* Gets set to the top bit of an size_t type.  When this bit in the xBlockSize
+ 144:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** member of an BlockLink_t structure is set then the block belongs to the
+ 145:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** application.  When the bit is free the block is still part of the free heap
+ 146:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** space. */
+ARM GAS   			page 4
+
+
+ 147:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** static size_t xBlockAllocatedBit = 0;
+ 148:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+ 149:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** /*-----------------------------------------------------------*/
+ 150:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+ 151:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** void *pvPortMalloc( size_t xWantedSize )
+ 152:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** {
+ 153:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** BlockLink_t *pxBlock, *pxPreviousBlock, *pxNewBlockLink;
+ 154:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** void *pvReturn = NULL;
+ 155:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+ 156:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	vTaskSuspendAll();
+ 157:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	{
+ 158:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 		/* If this is the first call to malloc then the heap will require
+ 159:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 		initialisation to setup the list of free blocks. */
+ 160:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 		if( pxEnd == NULL )
+ 161:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 		{
+ 162:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 			prvHeapInit();
+ 163:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 		}
+ 164:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 		else
+ 165:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 		{
+ 166:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 			mtCOVERAGE_TEST_MARKER();
+ 167:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 		}
+ 168:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+ 169:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 		/* Check the requested block size is not so large that the top bit is
+ 170:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 		set.  The top bit of the block size member of the BlockLink_t structure
+ 171:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 		is used to determine who owns the block - the application or the
+ 172:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 		kernel, so it must be free. */
+ 173:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 		if( ( xWantedSize & xBlockAllocatedBit ) == 0 )
+ 174:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 		{
+ 175:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 			/* The wanted size is increased so it can contain a BlockLink_t
+ 176:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 			structure in addition to the requested amount of bytes. */
+ 177:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 			if( xWantedSize > 0 )
+ 178:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 			{
+ 179:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 				xWantedSize += xHeapStructSize;
+ 180:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+ 181:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 				/* Ensure that blocks are always aligned to the required number
+ 182:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 				of bytes. */
+ 183:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 				if( ( xWantedSize & portBYTE_ALIGNMENT_MASK ) != 0x00 )
+ 184:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 				{
+ 185:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 					/* Byte alignment required. */
+ 186:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 					xWantedSize += ( portBYTE_ALIGNMENT - ( xWantedSize & portBYTE_ALIGNMENT_MASK ) );
+ 187:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 					configASSERT( ( xWantedSize & portBYTE_ALIGNMENT_MASK ) == 0 );
+ 188:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 				}
+ 189:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 				else
+ 190:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 				{
+ 191:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 					mtCOVERAGE_TEST_MARKER();
+ 192:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 				}
+ 193:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 			}
+ 194:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 			else
+ 195:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 			{
+ 196:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 				mtCOVERAGE_TEST_MARKER();
+ 197:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 			}
+ 198:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+ 199:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 			if( ( xWantedSize > 0 ) && ( xWantedSize <= xFreeBytesRemaining ) )
+ 200:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 			{
+ 201:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 				/* Traverse the list from the start	(lowest address) block until
+ 202:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 				one	of adequate size is found. */
+ 203:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 				pxPreviousBlock = &xStart;
+ARM GAS   			page 5
+
+
+ 204:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 				pxBlock = xStart.pxNextFreeBlock;
+ 205:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 				while( ( pxBlock->xBlockSize < xWantedSize ) && ( pxBlock->pxNextFreeBlock != NULL ) )
+ 206:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 				{
+ 207:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 					pxPreviousBlock = pxBlock;
+ 208:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 					pxBlock = pxBlock->pxNextFreeBlock;
+ 209:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 				}
+ 210:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+ 211:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 				/* If the end marker was reached then a block of adequate size
+ 212:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 				was	not found. */
+ 213:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 				if( pxBlock != pxEnd )
+ 214:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 				{
+ 215:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 					/* Return the memory space pointed to - jumping over the
+ 216:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 					BlockLink_t structure at its start. */
+ 217:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 					pvReturn = ( void * ) ( ( ( uint8_t * ) pxPreviousBlock->pxNextFreeBlock ) + xHeapStructSize )
+ 218:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+ 219:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 					/* This block is being returned for use so must be taken out
+ 220:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 					of the list of free blocks. */
+ 221:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 					pxPreviousBlock->pxNextFreeBlock = pxBlock->pxNextFreeBlock;
+ 222:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+ 223:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 					/* If the block is larger than required it can be split into
+ 224:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 					two. */
+ 225:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 					if( ( pxBlock->xBlockSize - xWantedSize ) > heapMINIMUM_BLOCK_SIZE )
+ 226:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 					{
+ 227:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 						/* This block is to be split into two.  Create a new
+ 228:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 						block following the number of bytes requested. The void
+ 229:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 						cast is used to prevent byte alignment warnings from the
+ 230:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 						compiler. */
+ 231:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 						pxNewBlockLink = ( void * ) ( ( ( uint8_t * ) pxBlock ) + xWantedSize );
+ 232:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 						configASSERT( ( ( ( uint32_t ) pxNewBlockLink ) & portBYTE_ALIGNMENT_MASK ) == 0 );
+ 233:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+ 234:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 						/* Calculate the sizes of two blocks split from the
+ 235:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 						single block. */
+ 236:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 						pxNewBlockLink->xBlockSize = pxBlock->xBlockSize - xWantedSize;
+ 237:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 						pxBlock->xBlockSize = xWantedSize;
+ 238:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+ 239:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 						/* Insert the new block into the list of free blocks. */
+ 240:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 						prvInsertBlockIntoFreeList( ( pxNewBlockLink ) );
+ 241:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 					}
+ 242:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 					else
+ 243:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 					{
+ 244:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 						mtCOVERAGE_TEST_MARKER();
+ 245:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 					}
+ 246:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+ 247:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 					xFreeBytesRemaining -= pxBlock->xBlockSize;
+ 248:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+ 249:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 					if( xFreeBytesRemaining < xMinimumEverFreeBytesRemaining )
+ 250:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 					{
+ 251:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 						xMinimumEverFreeBytesRemaining = xFreeBytesRemaining;
+ 252:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 					}
+ 253:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 					else
+ 254:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 					{
+ 255:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 						mtCOVERAGE_TEST_MARKER();
+ 256:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 					}
+ 257:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+ 258:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 					/* The block is being returned - it is allocated and owned
+ 259:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 					by the application and has no "next" block. */
+ 260:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 					pxBlock->xBlockSize |= xBlockAllocatedBit;
+ARM GAS   			page 6
+
+
+ 261:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 					pxBlock->pxNextFreeBlock = NULL;
+ 262:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 				}
+ 263:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 				else
+ 264:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 				{
+ 265:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 					mtCOVERAGE_TEST_MARKER();
+ 266:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 				}
+ 267:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 			}
+ 268:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 			else
+ 269:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 			{
+ 270:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 				mtCOVERAGE_TEST_MARKER();
+ 271:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 			}
+ 272:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 		}
+ 273:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 		else
+ 274:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 		{
+ 275:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 			mtCOVERAGE_TEST_MARKER();
+ 276:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 		}
+ 277:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+ 278:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 		traceMALLOC( pvReturn, xWantedSize );
+ 279:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	}
+ 280:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	( void ) xTaskResumeAll();
+ 281:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+ 282:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	#if( configUSE_MALLOC_FAILED_HOOK == 1 )
+ 283:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	{
+ 284:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 		if( pvReturn == NULL )
+ 285:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 		{
+ 286:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 			extern void vApplicationMallocFailedHook( void );
+ 287:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 			vApplicationMallocFailedHook();
+ 288:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 		}
+ 289:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 		else
+ 290:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 		{
+ 291:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 			mtCOVERAGE_TEST_MARKER();
+ 292:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 		}
+ 293:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	}
+ 294:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	#endif
+ 295:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+ 296:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	configASSERT( ( ( ( uint32_t ) pvReturn ) & portBYTE_ALIGNMENT_MASK ) == 0 );
+ 297:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	return pvReturn;
+ 298:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** }
+ 299:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** /*-----------------------------------------------------------*/
+ 300:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+ 301:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** void vPortFree( void *pv )
+ 302:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** {
+ 303:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** uint8_t *puc = ( uint8_t * ) pv;
+ 304:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** BlockLink_t *pxLink;
+ 305:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+ 306:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	if( pv != NULL )
+ 307:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	{
+ 308:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 		/* The memory being freed will have an BlockLink_t structure immediately
+ 309:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 		before it. */
+ 310:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 		puc -= xHeapStructSize;
+ 311:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+ 312:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 		/* This casting is to keep the compiler from issuing warnings. */
+ 313:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 		pxLink = ( void * ) puc;
+ 314:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+ 315:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 		/* Check the block is actually allocated. */
+ 316:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 		configASSERT( ( pxLink->xBlockSize & xBlockAllocatedBit ) != 0 );
+ 317:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 		configASSERT( pxLink->pxNextFreeBlock == NULL );
+ARM GAS   			page 7
+
+
+ 318:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+ 319:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 		if( ( pxLink->xBlockSize & xBlockAllocatedBit ) != 0 )
+ 320:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 		{
+ 321:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 			if( pxLink->pxNextFreeBlock == NULL )
+ 322:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 			{
+ 323:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 				/* The block is being returned to the heap - it is no longer
+ 324:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 				allocated. */
+ 325:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 				pxLink->xBlockSize &= ~xBlockAllocatedBit;
+ 326:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+ 327:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 				vTaskSuspendAll();
+ 328:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 				{
+ 329:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 					/* Add this block to the list of free blocks. */
+ 330:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 					xFreeBytesRemaining += pxLink->xBlockSize;
+ 331:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 					traceFREE( pv, pxLink->xBlockSize );
+ 332:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 					prvInsertBlockIntoFreeList( ( ( BlockLink_t * ) pxLink ) );
+ 333:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 				}
+ 334:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 				( void ) xTaskResumeAll();
+ 335:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 			}
+ 336:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 			else
+ 337:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 			{
+ 338:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 				mtCOVERAGE_TEST_MARKER();
+ 339:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 			}
+ 340:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 		}
+ 341:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 		else
+ 342:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 		{
+ 343:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 			mtCOVERAGE_TEST_MARKER();
+ 344:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 		}
+ 345:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	}
+ 346:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** }
+ 347:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** /*-----------------------------------------------------------*/
+ 348:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+ 349:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** size_t xPortGetFreeHeapSize( void )
+ 350:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** {
+ 351:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	return xFreeBytesRemaining;
+ 352:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** }
+ 353:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** /*-----------------------------------------------------------*/
+ 354:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+ 355:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** size_t xPortGetMinimumEverFreeHeapSize( void )
+ 356:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** {
+ 357:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	return xMinimumEverFreeBytesRemaining;
+ 358:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** }
+ 359:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** /*-----------------------------------------------------------*/
+ 360:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+ 361:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** void vPortInitialiseBlocks( void )
+ 362:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** {
+ 363:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	/* This just exists to keep the linker quiet. */
+ 364:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** }
+ 365:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** /*-----------------------------------------------------------*/
+ 366:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+ 367:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** static void prvHeapInit( void )
+ 368:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** {
+  27              	 .loc 1 368 0
+  28              	 .cfi_startproc
+  29              	 
+  30              	 
+  31              	 
+  32              	.LVL0:
+ARM GAS   			page 8
+
+
+ 369:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** BlockLink_t *pxFirstFreeBlock;
+ 370:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** uint8_t *pucAlignedHeap;
+ 371:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** uint32_t ulAddress;
+ 372:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** size_t xTotalHeapSize = configTOTAL_HEAP_SIZE;
+ 373:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+ 374:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	/* Ensure the heap starts on a correctly aligned boundary. */
+ 375:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	ulAddress = ( uint32_t ) ucHeap;
+  33              	 .loc 1 375 0
+  34 0000 124A     	 ldr r2,.L4
+  35              	.LVL1:
+ 376:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	if( ( ulAddress & portBYTE_ALIGNMENT_MASK ) != 0 )
+  36              	 .loc 1 376 0
+  37 0002 12F0070F 	 tst r2,#7
+  38 0006 1ED0     	 beq .L3
+ 377:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	{
+ 378:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 		ulAddress += ( portBYTE_ALIGNMENT - 1 );
+  39              	 .loc 1 378 0
+  40 0008 D11D     	 adds r1,r2,#7
+  41              	.LVL2:
+ 379:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 		ulAddress &= ~portBYTE_ALIGNMENT_MASK;
+  42              	 .loc 1 379 0
+  43 000a 21F00701 	 bic r1,r1,#7
+  44              	.LVL3:
+ 380:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 		xTotalHeapSize -= ulAddress - ( uint32_t ) ucHeap;
+  45              	 .loc 1 380 0
+  46 000e C1F54043 	 rsb r3,r1,#49152
+  47 0012 1344     	 add r3,r3,r2
+  48              	.LVL4:
+ 379:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 		ulAddress &= ~portBYTE_ALIGNMENT_MASK;
+  49              	 .loc 1 379 0
+  50 0014 0A46     	 mov r2,r1
+  51              	.LVL5:
+  52              	.L2:
+ 381:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	}
+ 382:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+ 383:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	pucAlignedHeap = ( uint8_t * ) ulAddress;
+ 384:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+ 385:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	/* xStart is used to hold a pointer to the first item in the list of free
+ 386:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	blocks.  The void cast is used to prevent compiler warnings. */
+ 387:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	xStart.pxNextFreeBlock = ( void * ) pucAlignedHeap;
+  53              	 .loc 1 387 0
+  54 0016 0E48     	 ldr r0,.L4+4
+  55 0018 0260     	 str r2,[r0]
+ 388:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	xStart.xBlockSize = ( size_t ) 0;
+  56              	 .loc 1 388 0
+  57 001a 0021     	 movs r1,#0
+  58 001c 4160     	 str r1,[r0,#4]
+ 389:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+ 390:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	/* pxEnd is used to mark the end of the list of free blocks and is inserted
+ 391:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	at the end of the heap space. */
+ 392:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	ulAddress = ( ( uint32_t ) pucAlignedHeap ) + xTotalHeapSize;
+  59              	 .loc 1 392 0
+  60 001e 1344     	 add r3,r3,r2
+  61              	.LVL6:
+ 393:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	ulAddress -= xHeapStructSize;
+  62              	 .loc 1 393 0
+  63 0020 083B     	 subs r3,r3,#8
+ARM GAS   			page 9
+
+
+  64              	.LVL7:
+ 394:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	ulAddress &= ~portBYTE_ALIGNMENT_MASK;
+  65              	 .loc 1 394 0
+  66 0022 23F00703 	 bic r3,r3,#7
+  67              	.LVL8:
+ 395:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	pxEnd = ( void * ) ulAddress;
+  68              	 .loc 1 395 0
+  69 0026 0B48     	 ldr r0,.L4+8
+  70 0028 0360     	 str r3,[r0]
+ 396:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	pxEnd->xBlockSize = 0;
+  71              	 .loc 1 396 0
+  72 002a 5960     	 str r1,[r3,#4]
+ 397:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	pxEnd->pxNextFreeBlock = NULL;
+  73              	 .loc 1 397 0
+  74 002c 1960     	 str r1,[r3]
+  75              	.LVL9:
+ 398:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+ 399:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	/* To start with there is a single free block that is sized to take up the
+ 400:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	entire heap space, minus the space taken by pxEnd. */
+ 401:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	pxFirstFreeBlock = ( void * ) pucAlignedHeap;
+ 402:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	pxFirstFreeBlock->xBlockSize = ulAddress - ( uint32_t ) pxFirstFreeBlock;
+  76              	 .loc 1 402 0
+  77 002e 991A     	 subs r1,r3,r2
+  78 0030 5160     	 str r1,[r2,#4]
+ 403:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	pxFirstFreeBlock->pxNextFreeBlock = pxEnd;
+  79              	 .loc 1 403 0
+  80 0032 1360     	 str r3,[r2]
+ 404:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+ 405:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	/* Only one block exists - and it covers the entire usable heap space. */
+ 406:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	xMinimumEverFreeBytesRemaining = pxFirstFreeBlock->xBlockSize;
+  81              	 .loc 1 406 0
+  82 0034 084B     	 ldr r3,.L4+12
+  83              	.LVL10:
+  84 0036 1960     	 str r1,[r3]
+ 407:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	xFreeBytesRemaining = pxFirstFreeBlock->xBlockSize;
+  85              	 .loc 1 407 0
+  86 0038 084B     	 ldr r3,.L4+16
+  87 003a 1960     	 str r1,[r3]
+ 408:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+ 409:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	/* Work out the position of the top bit in a size_t variable. */
+ 410:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	xBlockAllocatedBit = ( ( size_t ) 1 ) << ( ( sizeof( size_t ) * heapBITS_PER_BYTE ) - 1 );
+  88              	 .loc 1 410 0
+  89 003c 084B     	 ldr r3,.L4+20
+  90 003e 4FF00042 	 mov r2,#-2147483648
+  91              	.LVL11:
+  92 0042 1A60     	 str r2,[r3]
+ 411:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** }
+  93              	 .loc 1 411 0
+  94 0044 7047     	 bx lr
+  95              	.LVL12:
+  96              	.L3:
+ 372:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+  97              	 .loc 1 372 0
+  98 0046 4FF44043 	 mov r3,#49152
+  99 004a E4E7     	 b .L2
+ 100              	.L5:
+ 101              	 .align 2
+ARM GAS   			page 10
+
+
+ 102              	.L4:
+ 103 004c 00000000 	 .word ucHeap
+ 104 0050 00000000 	 .word .LANCHOR0
+ 105 0054 00000000 	 .word .LANCHOR1
+ 106 0058 00000000 	 .word .LANCHOR2
+ 107 005c 00000000 	 .word .LANCHOR3
+ 108 0060 00000000 	 .word .LANCHOR4
+ 109              	 .cfi_endproc
+ 110              	.LFE8:
+ 112              	 .section .text.prvInsertBlockIntoFreeList,"ax",%progbits
+ 113              	 .align 1
+ 114              	 .syntax unified
+ 115              	 .thumb
+ 116              	 .thumb_func
+ 117              	 .fpu fpv4-sp-d16
+ 119              	prvInsertBlockIntoFreeList:
+ 120              	.LFB9:
+ 412:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** /*-----------------------------------------------------------*/
+ 413:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+ 414:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** static void prvInsertBlockIntoFreeList( BlockLink_t *pxBlockToInsert )
+ 415:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** {
+ 121              	 .loc 1 415 0
+ 122              	 .cfi_startproc
+ 123              	 
+ 124              	 
+ 125              	 
+ 126              	.LVL13:
+ 127 0000 10B4     	 push {r4}
+ 128              	 .cfi_def_cfa_offset 4
+ 129              	 .cfi_offset 4,-4
+ 130              	.LVL14:
+ 416:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** BlockLink_t *pxIterator;
+ 417:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** uint8_t *puc;
+ 418:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+ 419:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	/* Iterate through the list until a block is found that has a higher address
+ 420:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	than the block being inserted. */
+ 421:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	for( pxIterator = &xStart; pxIterator->pxNextFreeBlock < pxBlockToInsert; pxIterator = pxIterator-
+ 131              	 .loc 1 421 0
+ 132 0002 134A     	 ldr r2,.L17
+ 133 0004 00E0     	 b .L7
+ 134              	.LVL15:
+ 135              	.L13:
+ 136 0006 1A46     	 mov r2,r3
+ 137              	.LVL16:
+ 138              	.L7:
+ 139              	 .loc 1 421 0 is_stmt 0 discriminator 1
+ 140 0008 1368     	 ldr r3,[r2]
+ 141 000a 8342     	 cmp r3,r0
+ 142 000c FBD3     	 bcc .L13
+ 143              	.LVL17:
+ 422:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	{
+ 423:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 		/* Nothing to do here, just iterate to the right position. */
+ 424:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	}
+ 425:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+ 426:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	/* Do the block being inserted, and the block it is being inserted after
+ 427:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	make a contiguous block of memory? */
+ 428:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	puc = ( uint8_t * ) pxIterator;
+ARM GAS   			page 11
+
+
+ 429:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	if( ( puc + pxIterator->xBlockSize ) == ( uint8_t * ) pxBlockToInsert )
+ 144              	 .loc 1 429 0 is_stmt 1
+ 145 000e 5168     	 ldr r1,[r2,#4]
+ 146 0010 5418     	 adds r4,r2,r1
+ 147 0012 8442     	 cmp r4,r0
+ 148 0014 0AD0     	 beq .L15
+ 149              	.L8:
+ 150              	.LVL18:
+ 430:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	{
+ 431:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 		pxIterator->xBlockSize += pxBlockToInsert->xBlockSize;
+ 432:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 		pxBlockToInsert = pxIterator;
+ 433:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	}
+ 434:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	else
+ 435:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	{
+ 436:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 		mtCOVERAGE_TEST_MARKER();
+ 437:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	}
+ 438:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+ 439:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	/* Do the block being inserted, and the block it is being inserted before
+ 440:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	make a contiguous block of memory? */
+ 441:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	puc = ( uint8_t * ) pxBlockToInsert;
+ 442:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	if( ( puc + pxBlockToInsert->xBlockSize ) == ( uint8_t * ) pxIterator->pxNextFreeBlock )
+ 151              	 .loc 1 442 0
+ 152 0016 4168     	 ldr r1,[r0,#4]
+ 153 0018 4418     	 adds r4,r0,r1
+ 154 001a A342     	 cmp r3,r4
+ 155 001c 0BD0     	 beq .L16
+ 443:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	{
+ 444:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 		if( pxIterator->pxNextFreeBlock != pxEnd )
+ 445:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 		{
+ 446:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 			/* Form one big block from the two blocks. */
+ 447:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 			pxBlockToInsert->xBlockSize += pxIterator->pxNextFreeBlock->xBlockSize;
+ 448:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 			pxBlockToInsert->pxNextFreeBlock = pxIterator->pxNextFreeBlock->pxNextFreeBlock;
+ 449:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 		}
+ 450:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 		else
+ 451:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 		{
+ 452:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 			pxBlockToInsert->pxNextFreeBlock = pxEnd;
+ 453:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 		}
+ 454:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	}
+ 455:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	else
+ 456:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	{
+ 457:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 		pxBlockToInsert->pxNextFreeBlock = pxIterator->pxNextFreeBlock;
+ 156              	 .loc 1 457 0
+ 157 001e 0360     	 str r3,[r0]
+ 158              	.L11:
+ 458:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	}
+ 459:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+ 460:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	/* If the block being inserted plugged a gab, so was merged with the block
+ 461:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	before and the block after, then it's pxNextFreeBlock pointer will have
+ 462:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	already been set, and should not be set here as that would make it point
+ 463:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	to itself. */
+ 464:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	if( pxIterator != pxBlockToInsert )
+ 159              	 .loc 1 464 0
+ 160 0020 9042     	 cmp r0,r2
+ 161 0022 00D0     	 beq .L6
+ 465:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	{
+ 466:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 		pxIterator->pxNextFreeBlock = pxBlockToInsert;
+ 162              	 .loc 1 466 0
+ARM GAS   			page 12
+
+
+ 163 0024 1060     	 str r0,[r2]
+ 164              	.L6:
+ 467:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	}
+ 468:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	else
+ 469:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	{
+ 470:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 		mtCOVERAGE_TEST_MARKER();
+ 471:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	}
+ 472:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** }
+ 165              	 .loc 1 472 0
+ 166 0026 5DF8044B 	 ldr r4,[sp],#4
+ 167              	 .cfi_remember_state
+ 168              	 .cfi_restore 4
+ 169              	 .cfi_def_cfa_offset 0
+ 170 002a 7047     	 bx lr
+ 171              	.LVL19:
+ 172              	.L15:
+ 173              	 .cfi_restore_state
+ 431:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 		pxBlockToInsert = pxIterator;
+ 174              	 .loc 1 431 0
+ 175 002c 4068     	 ldr r0,[r0,#4]
+ 176              	.LVL20:
+ 177 002e 0144     	 add r1,r1,r0
+ 178 0030 5160     	 str r1,[r2,#4]
+ 179              	.LVL21:
+ 432:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	}
+ 180              	 .loc 1 432 0
+ 181 0032 1046     	 mov r0,r2
+ 182 0034 EFE7     	 b .L8
+ 183              	.LVL22:
+ 184              	.L16:
+ 444:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 		{
+ 185              	 .loc 1 444 0
+ 186 0036 074C     	 ldr r4,.L17+4
+ 187 0038 2468     	 ldr r4,[r4]
+ 188 003a A342     	 cmp r3,r4
+ 189 003c 06D0     	 beq .L10
+ 447:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 			pxBlockToInsert->pxNextFreeBlock = pxIterator->pxNextFreeBlock->pxNextFreeBlock;
+ 190              	 .loc 1 447 0
+ 191 003e 5B68     	 ldr r3,[r3,#4]
+ 192 0040 1944     	 add r1,r1,r3
+ 193 0042 4160     	 str r1,[r0,#4]
+ 448:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 		}
+ 194              	 .loc 1 448 0
+ 195 0044 1368     	 ldr r3,[r2]
+ 196 0046 1B68     	 ldr r3,[r3]
+ 197 0048 0360     	 str r3,[r0]
+ 198 004a E9E7     	 b .L11
+ 199              	.L10:
+ 452:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 		}
+ 200              	 .loc 1 452 0
+ 201 004c 0460     	 str r4,[r0]
+ 202 004e E7E7     	 b .L11
+ 203              	.L18:
+ 204              	 .align 2
+ 205              	.L17:
+ 206 0050 00000000 	 .word .LANCHOR0
+ 207 0054 00000000 	 .word .LANCHOR1
+ARM GAS   			page 13
+
+
+ 208              	 .cfi_endproc
+ 209              	.LFE9:
+ 211              	 .section .text.pvPortMalloc,"ax",%progbits
+ 212              	 .align 1
+ 213              	 .global pvPortMalloc
+ 214              	 .syntax unified
+ 215              	 .thumb
+ 216              	 .thumb_func
+ 217              	 .fpu fpv4-sp-d16
+ 219              	pvPortMalloc:
+ 220              	.LFB3:
+ 152:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** BlockLink_t *pxBlock, *pxPreviousBlock, *pxNewBlockLink;
+ 221              	 .loc 1 152 0
+ 222              	 .cfi_startproc
+ 223              	 
+ 224              	 
+ 225              	.LVL23:
+ 226 0000 70B5     	 push {r4,r5,r6,lr}
+ 227              	 .cfi_def_cfa_offset 16
+ 228              	 .cfi_offset 4,-16
+ 229              	 .cfi_offset 5,-12
+ 230              	 .cfi_offset 6,-8
+ 231              	 .cfi_offset 14,-4
+ 232 0002 0546     	 mov r5,r0
+ 233              	.LVL24:
+ 156:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	{
+ 234              	 .loc 1 156 0
+ 235 0004 FFF7FEFF 	 bl vTaskSuspendAll
+ 236              	.LVL25:
+ 160:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 		{
+ 237              	 .loc 1 160 0
+ 238 0008 284B     	 ldr r3,.L35
+ 239 000a 1B68     	 ldr r3,[r3]
+ 240 000c A3B1     	 cbz r3,.L33
+ 241              	.L20:
+ 173:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 		{
+ 242              	 .loc 1 173 0
+ 243 000e 284B     	 ldr r3,.L35+4
+ 244 0010 1B68     	 ldr r3,[r3]
+ 245 0012 1D42     	 tst r5,r3
+ 246 0014 42D1     	 bne .L27
+ 177:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 			{
+ 247              	 .loc 1 177 0
+ 248 0016 35B1     	 cbz r5,.L22
+ 179:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+ 249              	 .loc 1 179 0
+ 250 0018 0835     	 adds r5,r5,#8
+ 251              	.LVL26:
+ 183:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 				{
+ 252              	 .loc 1 183 0
+ 253 001a 15F0070F 	 tst r5,#7
+ 254 001e 02D0     	 beq .L22
+ 186:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 					configASSERT( ( xWantedSize & portBYTE_ALIGNMENT_MASK ) == 0 );
+ 255              	 .loc 1 186 0
+ 256 0020 25F00705 	 bic r5,r5,#7
+ 257              	.LVL27:
+ 258 0024 0835     	 adds r5,r5,#8
+ARM GAS   			page 14
+
+
+ 259              	.LVL28:
+ 260              	.L22:
+ 199:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 			{
+ 261              	 .loc 1 199 0
+ 262 0026 002D     	 cmp r5,#0
+ 263 0028 3AD0     	 beq .L28
+ 199:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 			{
+ 264              	 .loc 1 199 0 is_stmt 0 discriminator 1
+ 265 002a 224B     	 ldr r3,.L35+8
+ 266 002c 1B68     	 ldr r3,[r3]
+ 267 002e AB42     	 cmp r3,r5
+ 268 0030 38D3     	 bcc .L29
+ 269              	.LVL29:
+ 204:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 				while( ( pxBlock->xBlockSize < xWantedSize ) && ( pxBlock->pxNextFreeBlock != NULL ) )
+ 270              	 .loc 1 204 0 is_stmt 1
+ 271 0032 214A     	 ldr r2,.L35+12
+ 272 0034 1468     	 ldr r4,[r2]
+ 273              	.LVL30:
+ 205:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 				{
+ 274              	 .loc 1 205 0
+ 275 0036 04E0     	 b .L24
+ 276              	.LVL31:
+ 277              	.L33:
+ 162:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 		}
+ 278              	 .loc 1 162 0
+ 279 0038 FFF7FEFF 	 bl prvHeapInit
+ 280              	.LVL32:
+ 281 003c E7E7     	 b .L20
+ 282              	.LVL33:
+ 283              	.L30:
+ 207:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 					pxBlock = pxBlock->pxNextFreeBlock;
+ 284              	 .loc 1 207 0
+ 285 003e 2246     	 mov r2,r4
+ 286              	.LVL34:
+ 208:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 				}
+ 287              	 .loc 1 208 0
+ 288 0040 1C46     	 mov r4,r3
+ 289              	.LVL35:
+ 290              	.L24:
+ 205:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 				{
+ 291              	 .loc 1 205 0
+ 292 0042 6368     	 ldr r3,[r4,#4]
+ 293 0044 AB42     	 cmp r3,r5
+ 294 0046 02D2     	 bcs .L23
+ 205:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 				{
+ 295              	 .loc 1 205 0 is_stmt 0 discriminator 1
+ 296 0048 2368     	 ldr r3,[r4]
+ 297 004a 002B     	 cmp r3,#0
+ 298 004c F7D1     	 bne .L30
+ 299              	.L23:
+ 213:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 				{
+ 300              	 .loc 1 213 0 is_stmt 1
+ 301 004e 174B     	 ldr r3,.L35
+ 302 0050 1B68     	 ldr r3,[r3]
+ 303 0052 A342     	 cmp r3,r4
+ 304 0054 28D0     	 beq .L31
+ 217:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+ARM GAS   			page 15
+
+
+ 305              	 .loc 1 217 0
+ 306 0056 1668     	 ldr r6,[r2]
+ 307 0058 0836     	 adds r6,r6,#8
+ 308              	.LVL36:
+ 221:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+ 309              	 .loc 1 221 0
+ 310 005a 2368     	 ldr r3,[r4]
+ 311 005c 1360     	 str r3,[r2]
+ 225:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 					{
+ 312              	 .loc 1 225 0
+ 313 005e 6368     	 ldr r3,[r4,#4]
+ 314 0060 5B1B     	 subs r3,r3,r5
+ 315 0062 102B     	 cmp r3,#16
+ 316 0064 14D8     	 bhi .L34
+ 317              	.LVL37:
+ 318              	.L25:
+ 247:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+ 319              	 .loc 1 247 0
+ 320 0066 6268     	 ldr r2,[r4,#4]
+ 321 0068 1249     	 ldr r1,.L35+8
+ 322 006a 0B68     	 ldr r3,[r1]
+ 323 006c 9B1A     	 subs r3,r3,r2
+ 324 006e 0B60     	 str r3,[r1]
+ 249:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 					{
+ 325              	 .loc 1 249 0
+ 326 0070 1249     	 ldr r1,.L35+16
+ 327 0072 0968     	 ldr r1,[r1]
+ 328 0074 8B42     	 cmp r3,r1
+ 329 0076 01D2     	 bcs .L26
+ 251:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 					}
+ 330              	 .loc 1 251 0
+ 331 0078 1049     	 ldr r1,.L35+16
+ 332 007a 0B60     	 str r3,[r1]
+ 333              	.L26:
+ 260:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 					pxBlock->pxNextFreeBlock = NULL;
+ 334              	 .loc 1 260 0
+ 335 007c 0C4B     	 ldr r3,.L35+4
+ 336 007e 1B68     	 ldr r3,[r3]
+ 337 0080 1343     	 orrs r3,r3,r2
+ 338 0082 6360     	 str r3,[r4,#4]
+ 261:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 				}
+ 339              	 .loc 1 261 0
+ 340 0084 0023     	 movs r3,#0
+ 341 0086 2360     	 str r3,[r4]
+ 342              	.LVL38:
+ 343              	.L21:
+ 280:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+ 344              	 .loc 1 280 0
+ 345 0088 FFF7FEFF 	 bl xTaskResumeAll
+ 346              	.LVL39:
+ 298:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** /*-----------------------------------------------------------*/
+ 347              	 .loc 1 298 0
+ 348 008c 3046     	 mov r0,r6
+ 349 008e 70BD     	 pop {r4,r5,r6,pc}
+ 350              	.LVL40:
+ 351              	.L34:
+ 231:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 						configASSERT( ( ( ( uint32_t ) pxNewBlockLink ) & portBYTE_ALIGNMENT_MASK ) == 0 );
+ARM GAS   			page 16
+
+
+ 352              	 .loc 1 231 0
+ 353 0090 6019     	 adds r0,r4,r5
+ 354              	.LVL41:
+ 236:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 						pxBlock->xBlockSize = xWantedSize;
+ 355              	 .loc 1 236 0
+ 356 0092 4360     	 str r3,[r0,#4]
+ 237:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+ 357              	 .loc 1 237 0
+ 358 0094 6560     	 str r5,[r4,#4]
+ 240:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 					}
+ 359              	 .loc 1 240 0
+ 360 0096 FFF7FEFF 	 bl prvInsertBlockIntoFreeList
+ 361              	.LVL42:
+ 362 009a E4E7     	 b .L25
+ 363              	.LVL43:
+ 364              	.L27:
+ 154:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+ 365              	 .loc 1 154 0
+ 366 009c 0026     	 movs r6,#0
+ 367 009e F3E7     	 b .L21
+ 368              	.L28:
+ 369 00a0 0026     	 movs r6,#0
+ 370 00a2 F1E7     	 b .L21
+ 371              	.L29:
+ 372 00a4 0026     	 movs r6,#0
+ 373 00a6 EFE7     	 b .L21
+ 374              	.LVL44:
+ 375              	.L31:
+ 376 00a8 0026     	 movs r6,#0
+ 377 00aa EDE7     	 b .L21
+ 378              	.L36:
+ 379              	 .align 2
+ 380              	.L35:
+ 381 00ac 00000000 	 .word .LANCHOR1
+ 382 00b0 00000000 	 .word .LANCHOR4
+ 383 00b4 00000000 	 .word .LANCHOR3
+ 384 00b8 00000000 	 .word .LANCHOR0
+ 385 00bc 00000000 	 .word .LANCHOR2
+ 386              	 .cfi_endproc
+ 387              	.LFE3:
+ 389              	 .section .text.vPortFree,"ax",%progbits
+ 390              	 .align 1
+ 391              	 .global vPortFree
+ 392              	 .syntax unified
+ 393              	 .thumb
+ 394              	 .thumb_func
+ 395              	 .fpu fpv4-sp-d16
+ 397              	vPortFree:
+ 398              	.LFB4:
+ 302:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** uint8_t *puc = ( uint8_t * ) pv;
+ 399              	 .loc 1 302 0
+ 400              	 .cfi_startproc
+ 401              	 
+ 402              	 
+ 403              	.LVL45:
+ 306:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	{
+ 404              	 .loc 1 306 0
+ARM GAS   			page 17
+
+
+ 405 0000 F8B1     	 cbz r0,.L40
+ 302:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** uint8_t *puc = ( uint8_t * ) pv;
+ 406              	 .loc 1 302 0
+ 407 0002 38B5     	 push {r3,r4,r5,lr}
+ 408              	 .cfi_def_cfa_offset 16
+ 409              	 .cfi_offset 3,-16
+ 410              	 .cfi_offset 4,-12
+ 411              	 .cfi_offset 5,-8
+ 412              	 .cfi_offset 14,-4
+ 413 0004 0446     	 mov r4,r0
+ 310:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+ 414              	 .loc 1 310 0
+ 415 0006 A0F10805 	 sub r5,r0,#8
+ 416              	.LVL46:
+ 319:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 		{
+ 417              	 .loc 1 319 0
+ 418 000a 50F8042C 	 ldr r2,[r0,#-4]
+ 419 000e 0D49     	 ldr r1,.L44
+ 420 0010 0968     	 ldr r1,[r1]
+ 421 0012 0A42     	 tst r2,r1
+ 422 0014 02D0     	 beq .L37
+ 321:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 			{
+ 423              	 .loc 1 321 0
+ 424 0016 50F8080C 	 ldr r0,[r0,#-8]
+ 425              	.LVL47:
+ 426 001a 00B1     	 cbz r0,.L43
+ 427              	.L37:
+ 346:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** /*-----------------------------------------------------------*/
+ 428              	 .loc 1 346 0
+ 429 001c 38BD     	 pop {r3,r4,r5,pc}
+ 430              	.LVL48:
+ 431              	.L43:
+ 325:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 
+ 432              	 .loc 1 325 0
+ 433 001e 22EA0102 	 bic r2,r2,r1
+ 434 0022 44F8042C 	 str r2,[r4,#-4]
+ 327:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 				{
+ 435              	 .loc 1 327 0
+ 436 0026 FFF7FEFF 	 bl vTaskSuspendAll
+ 437              	.LVL49:
+ 330:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 					traceFREE( pv, pxLink->xBlockSize );
+ 438              	 .loc 1 330 0
+ 439 002a 54F8041C 	 ldr r1,[r4,#-4]
+ 440 002e 064A     	 ldr r2,.L44+4
+ 441 0030 1368     	 ldr r3,[r2]
+ 442 0032 0B44     	 add r3,r3,r1
+ 443 0034 1360     	 str r3,[r2]
+ 332:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 				}
+ 444              	 .loc 1 332 0
+ 445 0036 2846     	 mov r0,r5
+ 446 0038 FFF7FEFF 	 bl prvInsertBlockIntoFreeList
+ 447              	.LVL50:
+ 334:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 			}
+ 448              	 .loc 1 334 0
+ 449 003c FFF7FEFF 	 bl xTaskResumeAll
+ 450              	.LVL51:
+ 346:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** /*-----------------------------------------------------------*/
+ARM GAS   			page 18
+
+
+ 451              	 .loc 1 346 0
+ 452 0040 ECE7     	 b .L37
+ 453              	.LVL52:
+ 454              	.L40:
+ 455              	 .cfi_def_cfa_offset 0
+ 456              	 .cfi_restore 3
+ 457              	 .cfi_restore 4
+ 458              	 .cfi_restore 5
+ 459              	 .cfi_restore 14
+ 460 0042 7047     	 bx lr
+ 461              	.L45:
+ 462              	 .align 2
+ 463              	.L44:
+ 464 0044 00000000 	 .word .LANCHOR4
+ 465 0048 00000000 	 .word .LANCHOR3
+ 466              	 .cfi_endproc
+ 467              	.LFE4:
+ 469              	 .section .text.xPortGetFreeHeapSize,"ax",%progbits
+ 470              	 .align 1
+ 471              	 .global xPortGetFreeHeapSize
+ 472              	 .syntax unified
+ 473              	 .thumb
+ 474              	 .thumb_func
+ 475              	 .fpu fpv4-sp-d16
+ 477              	xPortGetFreeHeapSize:
+ 478              	.LFB5:
+ 350:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	return xFreeBytesRemaining;
+ 479              	 .loc 1 350 0
+ 480              	 .cfi_startproc
+ 481              	 
+ 482              	 
+ 483              	 
+ 352:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** /*-----------------------------------------------------------*/
+ 484              	 .loc 1 352 0
+ 485 0000 014B     	 ldr r3,.L47
+ 486 0002 1868     	 ldr r0,[r3]
+ 487 0004 7047     	 bx lr
+ 488              	.L48:
+ 489 0006 00BF     	 .align 2
+ 490              	.L47:
+ 491 0008 00000000 	 .word .LANCHOR3
+ 492              	 .cfi_endproc
+ 493              	.LFE5:
+ 495              	 .section .text.xPortGetMinimumEverFreeHeapSize,"ax",%progbits
+ 496              	 .align 1
+ 497              	 .global xPortGetMinimumEverFreeHeapSize
+ 498              	 .syntax unified
+ 499              	 .thumb
+ 500              	 .thumb_func
+ 501              	 .fpu fpv4-sp-d16
+ 503              	xPortGetMinimumEverFreeHeapSize:
+ 504              	.LFB6:
+ 356:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	return xMinimumEverFreeBytesRemaining;
+ 505              	 .loc 1 356 0
+ 506              	 .cfi_startproc
+ 507              	 
+ 508              	 
+ARM GAS   			page 19
+
+
+ 509              	 
+ 358:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** /*-----------------------------------------------------------*/
+ 510              	 .loc 1 358 0
+ 511 0000 014B     	 ldr r3,.L50
+ 512 0002 1868     	 ldr r0,[r3]
+ 513 0004 7047     	 bx lr
+ 514              	.L51:
+ 515 0006 00BF     	 .align 2
+ 516              	.L50:
+ 517 0008 00000000 	 .word .LANCHOR2
+ 518              	 .cfi_endproc
+ 519              	.LFE6:
+ 521              	 .section .text.vPortInitialiseBlocks,"ax",%progbits
+ 522              	 .align 1
+ 523              	 .global vPortInitialiseBlocks
+ 524              	 .syntax unified
+ 525              	 .thumb
+ 526              	 .thumb_func
+ 527              	 .fpu fpv4-sp-d16
+ 529              	vPortInitialiseBlocks:
+ 530              	.LFB7:
+ 362:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** 	/* This just exists to keep the linker quiet. */
+ 531              	 .loc 1 362 0
+ 532              	 .cfi_startproc
+ 533              	 
+ 534              	 
+ 535              	 
+ 364:E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/MemMang\heap_4.c **** /*-----------------------------------------------------------*/
+ 536              	 .loc 1 364 0
+ 537 0000 7047     	 bx lr
+ 538              	 .cfi_endproc
+ 539              	.LFE7:
+ 541              	 .section .bss.pxEnd,"aw",%nobits
+ 542              	 .align 2
+ 543              	 .set .LANCHOR1,.+0
+ 546              	pxEnd:
+ 547 0000 00000000 	 .space 4
+ 548              	 .section .bss.ucHeap,"aw",%nobits
+ 549              	 .align 2
+ 552              	ucHeap:
+ 553 0000 00000000 	 .space 49152
+ 553      00000000 
+ 553      00000000 
+ 553      00000000 
+ 553      00000000 
+ 554              	 .section .bss.xBlockAllocatedBit,"aw",%nobits
+ 555              	 .align 2
+ 556              	 .set .LANCHOR4,.+0
+ 559              	xBlockAllocatedBit:
+ 560 0000 00000000 	 .space 4
+ 561              	 .section .bss.xFreeBytesRemaining,"aw",%nobits
+ 562              	 .align 2
+ 563              	 .set .LANCHOR3,.+0
+ 566              	xFreeBytesRemaining:
+ 567 0000 00000000 	 .space 4
+ 568              	 .section .bss.xMinimumEverFreeBytesRemaining,"aw",%nobits
+ 569              	 .align 2
+ARM GAS   			page 20
+
+
+ 570              	 .set .LANCHOR2,.+0
+ 573              	xMinimumEverFreeBytesRemaining:
+ 574 0000 00000000 	 .space 4
+ 575              	 .section .bss.xStart,"aw",%nobits
+ 576              	 .align 2
+ 577              	 .set .LANCHOR0,.+0
+ 580              	xStart:
+ 581 0000 00000000 	 .space 8
+ 581      00000000 
+ 582              	 .text
+ 583              	.Letext0:
+ 584              	 .file 2 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\lib\\gcc\\arm-none-eabi\\7.3.1\\include\\stddef.h"
+ 585              	 .file 3 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 586              	 .file 4 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\lock.h"
+ 587              	 .file 5 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\_types.h"
+ 588              	 .file 6 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\reent.h"
+ 589              	 .file 7 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\stdlib.h"
+ 590              	 .file 8 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\_stdint.h"
+ 591              	 .file 9 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/include/FreeRTOSConfig.h"
+ 592              	 .file 10 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/include/task.h"
+ARM GAS   			page 21
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 heap_4.c
+    {standard input}:18     .text.prvHeapInit:00000000 $t
+    {standard input}:24     .text.prvHeapInit:00000000 prvHeapInit
+    {standard input}:103    .text.prvHeapInit:0000004c $d
+    {standard input}:552    .bss.ucHeap:00000000 ucHeap
+    {standard input}:113    .text.prvInsertBlockIntoFreeList:00000000 $t
+    {standard input}:119    .text.prvInsertBlockIntoFreeList:00000000 prvInsertBlockIntoFreeList
+    {standard input}:206    .text.prvInsertBlockIntoFreeList:00000050 $d
+    {standard input}:212    .text.pvPortMalloc:00000000 $t
+    {standard input}:219    .text.pvPortMalloc:00000000 pvPortMalloc
+    {standard input}:381    .text.pvPortMalloc:000000ac $d
+    {standard input}:390    .text.vPortFree:00000000 $t
+    {standard input}:397    .text.vPortFree:00000000 vPortFree
+    {standard input}:464    .text.vPortFree:00000044 $d
+    {standard input}:470    .text.xPortGetFreeHeapSize:00000000 $t
+    {standard input}:477    .text.xPortGetFreeHeapSize:00000000 xPortGetFreeHeapSize
+    {standard input}:491    .text.xPortGetFreeHeapSize:00000008 $d
+    {standard input}:496    .text.xPortGetMinimumEverFreeHeapSize:00000000 $t
+    {standard input}:503    .text.xPortGetMinimumEverFreeHeapSize:00000000 xPortGetMinimumEverFreeHeapSize
+    {standard input}:517    .text.xPortGetMinimumEverFreeHeapSize:00000008 $d
+    {standard input}:522    .text.vPortInitialiseBlocks:00000000 $t
+    {standard input}:529    .text.vPortInitialiseBlocks:00000000 vPortInitialiseBlocks
+    {standard input}:542    .bss.pxEnd:00000000 $d
+    {standard input}:546    .bss.pxEnd:00000000 pxEnd
+    {standard input}:549    .bss.ucHeap:00000000 $d
+    {standard input}:555    .bss.xBlockAllocatedBit:00000000 $d
+    {standard input}:559    .bss.xBlockAllocatedBit:00000000 xBlockAllocatedBit
+    {standard input}:562    .bss.xFreeBytesRemaining:00000000 $d
+    {standard input}:566    .bss.xFreeBytesRemaining:00000000 xFreeBytesRemaining
+    {standard input}:569    .bss.xMinimumEverFreeBytesRemaining:00000000 $d
+    {standard input}:573    .bss.xMinimumEverFreeBytesRemaining:00000000 xMinimumEverFreeBytesRemaining
+    {standard input}:576    .bss.xStart:00000000 $d
+    {standard input}:580    .bss.xStart:00000000 xStart
+                           .group:00000000 wm4.0.8fab1e1450c2b74bdd5e2aed4c325bf1
+                           .group:00000000 wm4.ieeefp.h.77.220d9cccac42cd58761758bee2df4ce6
+                           .group:00000000 wm4._newlib_version.h.4.875b979a44719054cd750d0952ad3fd6
+                           .group:00000000 wm4.newlib.h.18.5e5ca3429233af402d406a202f1fc1ac
+                           .group:00000000 wm4.features.h.22.fad1cec3bc7ff06488171438dbdcfd02
+                           .group:00000000 wm4.config.h.220.6cac6a9685cfce5e83c17784171638d9
+                           .group:00000000 wm4._ansi.h.31.de524f58584151836e90d8620a16f8e8
+                           .group:00000000 wm4.stdlib.h.13.4ed386f5c1a80d71e72172885d946ef2
+                           .group:00000000 wm4.stddef.h.187.e1c83cba2098ce92b68f6311de19e6b1
+                           .group:00000000 wm4.stddef.h.39.57db33e786ccd422e31be63a26e19309
+                           .group:00000000 wm4._default_types.h.6.959254cf5f09734ea7516c89e8bb21bd
+                           .group:00000000 wm4.lock.h.2.1461d1fff82dffe8bfddc23307f6484f
+                           .group:00000000 wm4._types.h.125.5cf8a495f1f7ef36777ad868a1e32068
+                           .group:00000000 wm4.stddef.h.161.5349cb105733e8777bfb0cf53c4e3f34
+                           .group:00000000 wm4._types.h.184.03611d4f6b5bec9997bcf4279eceba07
+                           .group:00000000 wm4.reent.h.17.90c2574d4acdcfce933db5cb09ff35fe
+                           .group:00000000 wm4.cdefs.h.47.0bcdf94cb40e176393dd1404056825b4
+                           .group:00000000 wm4.alloca.h.8.dfc0c703c47ec3e69746825b17d9e66d
+                           .group:00000000 wm4.stdlib.h.56.d4493cd3736e51e9d56335045f26df45
+                           .group:00000000 wm4._intsup.h.10.cce27fed8484c08a33f522034c30d2b5
+                           .group:00000000 wm4._stdint.h.10.c24fa3af3bc1706662bb5593a907e841
+                           .group:00000000 wm4.stdint.h.23.d53047a68f4a85177f80b422d52785ed
+                           .group:00000000 wm4.stdio.h.27.3fc80220048df77954e38daec3bb9670
+ARM GAS   			page 22
+
+
+                           .group:00000000 wm4.stddef.h.161.19e15733342b50ead2919490b095303e
+                           .group:00000000 wm4.stdarg.h.34.3a23a216c0c293b3d2ea2e89281481e6
+                           .group:00000000 wm4.types.h.40.e8c16e7ec36ba55f133d0616070e25fc
+                           .group:00000000 wm4._endian.h.31.65a10590763c3dde1ac4a7f66d7d4891
+                           .group:00000000 wm4.endian.h.9.49f3a4695c1b61e8a0808de3c4a106cb
+                           .group:00000000 wm4._timeval.h.30.0e8bfd94e85db17dda3286ee81496fe6
+                           .group:00000000 wm4.timespec.h.41.d855182eb0e690443ab8651bcedca6e1
+                           .group:00000000 wm4.select.h.19.97ca6fd0c752a0f3b6719fd314d361e6
+                           .group:00000000 wm4.types.h.69.ed3eae3cf73030a737515151ebcab7a1
+                           .group:00000000 wm4.sched.h.22.c60982713a5c428609783c78f9c78d95
+                           .group:00000000 wm4._pthreadtypes.h.36.fcee9961c35163dde6267ef772ad1972
+                           .group:00000000 wm4.stdio.h.2.4aa87247282eca6c8f36f9de33d8df1a
+                           .group:00000000 wm4.stdio.h.81.932d0c162786b883f622b8d05c120c78
+                           .group:00000000 wm4.FreeRTOSConfig.h.89.919907aab4c1c0810b5ece1c5caf76e9
+                           .group:00000000 wm4.projdefs.h.71.1734cd3501e070360596dd847bb9d813
+                           .group:00000000 wm4.portmacro.h.72.3d5d774f718d157a637f7eb960850f27
+                           .group:00000000 wm4.portable.h.98.f435842f50d7864fba6a318a13e72513
+                           .group:00000000 wm4.mpu_wrappers.h.71.dd245fe44d82bd40288b5a47f895c82c
+                           .group:00000000 wm4.FreeRTOS.h.175.3abf49eaca38658a192da8d7c86d5374
+                           .group:00000000 wm4.list.h.103.6a12b7b9a7a136c3cca0ee53675c5498
+                           .group:00000000 wm4.task.h.88.da474b04c368050657453c137d8efe45
+
+UNDEFINED SYMBOLS
+vTaskSuspendAll
+xTaskResumeAll

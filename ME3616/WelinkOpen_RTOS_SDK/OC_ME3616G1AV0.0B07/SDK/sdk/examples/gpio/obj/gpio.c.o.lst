@@ -1,0 +1,598 @@
+ARM GAS   			page 1
+
+
+   1              	 .cpu cortex-m4
+   2              	 .eabi_attribute 27,1
+   3              	 .eabi_attribute 28,1
+   4              	 .eabi_attribute 20,1
+   5              	 .eabi_attribute 21,1
+   6              	 .eabi_attribute 23,3
+   7              	 .eabi_attribute 24,1
+   8              	 .eabi_attribute 25,1
+   9              	 .eabi_attribute 26,1
+  10              	 .eabi_attribute 30,1
+  11              	 .eabi_attribute 34,1
+  12              	 .eabi_attribute 18,4
+  13              	 .file "gpio.c"
+  14              	 .text
+  15              	.Ltext0:
+  16              	 .cfi_sections .debug_frame
+  17              	 .section .text.__io_puts,"ax",%progbits
+  18              	 .align 1
+  19              	 .global __io_puts
+  20              	 .syntax unified
+  21              	 .thumb
+  22              	 .thumb_func
+  23              	 .fpu fpv4-sp-d16
+  25              	__io_puts:
+  26              	.LFB3:
+  27              	 .file 1 "gpio.c"
+   1:gpio.c        **** /*
+   2:gpio.c        **** ** File   : gpio.c
+   3:gpio.c        **** **
+   4:gpio.c        **** ** Copyright (C) 2013-2018 Gosuncn. All rights reserved.
+   5:gpio.c        **** **
+   6:gpio.c        **** ** Licensed under the Apache License, Version 2.0 (the "License");
+   7:gpio.c        **** ** you may not use this file except in compliance with the License.
+   8:gpio.c        **** ** You may obtain a copy of the License at
+   9:gpio.c        **** **
+  10:gpio.c        **** **      http://www.apache.org/licenses/LICENSE-2.0
+  11:gpio.c        **** **
+  12:gpio.c        **** ** Unless required by applicable law or agreed to in writing, software
+  13:gpio.c        **** ** distributed under the License is distributed on an "AS IS" BASIS,
+  14:gpio.c        **** ** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  15:gpio.c        **** ** See the License for the specific language governing permissions and
+  16:gpio.c        **** ** limitations under the License.
+  17:gpio.c        **** **
+  18:gpio.c        **** ** Author : qubo@gosuncn.cn
+  19:gpio.c        **** **
+  20:gpio.c        **** **  $Date: 2018/03/16 08:45:36GMT+08:00 $
+  21:gpio.c        **** **
+  22:gpio.c        **** */
+  23:gpio.c        **** #include <stdio.h>
+  24:gpio.c        **** #include <stdlib.h>
+  25:gpio.c        **** #include <string.h>
+  26:gpio.c        **** #include "gsdk_api.h"
+  27:gpio.c        **** 
+  28:gpio.c        **** //#define TEST_INTERRUPT
+  29:gpio.c        **** 
+  30:gpio.c        **** static gsdk_handle_t g_huart;
+  31:gpio.c        **** 
+ARM GAS   			page 2
+
+
+  32:gpio.c        **** int __io_puts(char *data, int len)
+  33:gpio.c        **** {   
+  28              	 .loc 1 33 0
+  29              	 .cfi_startproc
+  30              	 
+  31              	 
+  32              	.LVL0:
+  33 0000 10B5     	 push {r4,lr}
+  34              	 .cfi_def_cfa_offset 8
+  35              	 .cfi_offset 4,-8
+  36              	 .cfi_offset 14,-4
+  37              	.LVL1:
+  34:gpio.c        ****     int ret = 0; 
+  35:gpio.c        ****     if (g_huart) {
+  38              	 .loc 1 35 0
+  39 0002 064B     	 ldr r3,.L5
+  40 0004 1C68     	 ldr r4,[r3]
+  41 0006 3CB1     	 cbz r4,.L3
+  42 0008 0A46     	 mov r2,r1
+  43 000a 0146     	 mov r1,r0
+  44              	.LVL2:
+  36:gpio.c        ****         ret = gsdk_uart_write(g_huart, (uint8_t *)data, len, 1000);
+  45              	 .loc 1 36 0
+  46 000c 4FF47A73 	 mov r3,#1000
+  47 0010 2046     	 mov r0,r4
+  48              	.LVL3:
+  49 0012 FFF7FEFF 	 bl gsdk_uart_write
+  50              	.LVL4:
+  51              	.L1:
+  37:gpio.c        ****     }
+  38:gpio.c        ****     return ret;
+  39:gpio.c        **** }
+  52              	 .loc 1 39 0
+  53 0016 10BD     	 pop {r4,pc}
+  54              	.LVL5:
+  55              	.L3:
+  34:gpio.c        ****     if (g_huart) {
+  56              	 .loc 1 34 0
+  57 0018 0020     	 movs r0,#0
+  58              	.LVL6:
+  38:gpio.c        **** }
+  59              	 .loc 1 38 0
+  60 001a FCE7     	 b .L1
+  61              	.L6:
+  62              	 .align 2
+  63              	.L5:
+  64 001c 00000000 	 .word .LANCHOR0
+  65              	 .cfi_endproc
+  66              	.LFE3:
+  68              	 .section .text.log_init,"ax",%progbits
+  69              	 .align 1
+  70              	 .global log_init
+  71              	 .syntax unified
+  72              	 .thumb
+  73              	 .thumb_func
+  74              	 .fpu fpv4-sp-d16
+  76              	log_init:
+ARM GAS   			page 3
+
+
+  77              	.LFB4:
+  40:gpio.c        **** 
+  41:gpio.c        **** int log_init(void)
+  42:gpio.c        **** {
+  78              	 .loc 1 42 0
+  79              	 .cfi_startproc
+  80              	 
+  81              	 
+  82 0000 00B5     	 push {lr}
+  83              	 .cfi_def_cfa_offset 4
+  84              	 .cfi_offset 14,-4
+  85 0002 83B0     	 sub sp,sp,#12
+  86              	 .cfi_def_cfa_offset 16
+  43:gpio.c        ****     uart_config_t uart_config;
+  44:gpio.c        ****     gsdk_status_t status;
+  45:gpio.c        **** 
+  46:gpio.c        ****     uart_config.baudrate    = UART_BAUDRATE_115200;
+  87              	 .loc 1 46 0
+  88 0004 0923     	 movs r3,#9
+  89 0006 8DF80430 	 strb r3,[sp,#4]
+  47:gpio.c        ****     uart_config.parity      = UART_PARITY_NONE;
+  90              	 .loc 1 47 0
+  91 000a 0020     	 movs r0,#0
+  92 000c 8DF80700 	 strb r0,[sp,#7]
+  48:gpio.c        ****     uart_config.stop_bit    = UART_STOP_BIT_1;
+  93              	 .loc 1 48 0
+  94 0010 8DF80600 	 strb r0,[sp,#6]
+  49:gpio.c        ****     uart_config.word_length = UART_WORD_LENGTH_8;
+  95              	 .loc 1 49 0
+  96 0014 0323     	 movs r3,#3
+  97 0016 8DF80530 	 strb r3,[sp,#5]
+  50:gpio.c        **** 
+  51:gpio.c        ****     status = gsdk_uart_open(UART_0, &uart_config, &g_huart);
+  98              	 .loc 1 51 0
+  99 001a 094A     	 ldr r2,.L12
+ 100 001c 01A9     	 add r1,sp,#4
+ 101 001e FFF7FEFF 	 bl gsdk_uart_open
+ 102              	.LVL7:
+  52:gpio.c        ****     if (status != GSDK_SUCCESS) {
+ 103              	 .loc 1 52 0
+ 104 0022 30B9     	 cbnz r0,.L11
+  53:gpio.c        ****         gsdk_syslog_printf("[GPIO_DEMO]: failed to open uart %d\n", status);
+  54:gpio.c        ****         return -1;
+  55:gpio.c        ****     }
+  56:gpio.c        **** 
+  57:gpio.c        ****     printf("[GPIO_DEMO] log init....OK\r\n");
+ 105              	 .loc 1 57 0
+ 106 0024 0748     	 ldr r0,.L12+4
+ 107              	.LVL8:
+ 108 0026 FFF7FEFF 	 bl puts
+ 109              	.LVL9:
+  58:gpio.c        **** 
+  59:gpio.c        ****     return 0;
+ 110              	 .loc 1 59 0
+ 111 002a 0020     	 movs r0,#0
+ 112              	.L7:
+  60:gpio.c        **** }
+ARM GAS   			page 4
+
+
+ 113              	 .loc 1 60 0
+ 114 002c 03B0     	 add sp,sp,#12
+ 115              	 .cfi_remember_state
+ 116              	 .cfi_def_cfa_offset 4
+ 117              	 
+ 118 002e 5DF804FB 	 ldr pc,[sp],#4
+ 119              	.LVL10:
+ 120              	.L11:
+ 121              	 .cfi_restore_state
+ 122 0032 0146     	 mov r1,r0
+  53:gpio.c        ****         gsdk_syslog_printf("[GPIO_DEMO]: failed to open uart %d\n", status);
+ 123              	 .loc 1 53 0
+ 124 0034 0448     	 ldr r0,.L12+8
+ 125              	.LVL11:
+ 126 0036 FFF7FEFF 	 bl gsdk_syslog_printf
+ 127              	.LVL12:
+  54:gpio.c        ****     }
+ 128              	 .loc 1 54 0
+ 129 003a 4FF0FF30 	 mov r0,#-1
+ 130 003e F5E7     	 b .L7
+ 131              	.L13:
+ 132              	 .align 2
+ 133              	.L12:
+ 134 0040 00000000 	 .word .LANCHOR0
+ 135 0044 28000000 	 .word .LC1
+ 136 0048 00000000 	 .word .LC0
+ 137              	 .cfi_endproc
+ 138              	.LFE4:
+ 140              	 .section .text.gpio_callback,"ax",%progbits
+ 141              	 .align 1
+ 142              	 .global gpio_callback
+ 143              	 .syntax unified
+ 144              	 .thumb
+ 145              	 .thumb_func
+ 146              	 .fpu fpv4-sp-d16
+ 148              	gpio_callback:
+ 149              	.LFB5:
+  61:gpio.c        **** 
+  62:gpio.c        **** void gpio_callback(void *user_data)
+  63:gpio.c        **** {
+ 150              	 .loc 1 63 0
+ 151              	 .cfi_startproc
+ 152              	 
+ 153              	 
+ 154              	.LVL13:
+ 155 0000 08B5     	 push {r3,lr}
+ 156              	 .cfi_def_cfa_offset 8
+ 157              	 .cfi_offset 3,-8
+ 158              	 .cfi_offset 14,-4
+  64:gpio.c        ****     printf("[GPIO_DEMO] gpio eint handle callback!\n");
+ 159              	 .loc 1 64 0
+ 160 0002 0248     	 ldr r0,.L16
+ 161              	.LVL14:
+ 162 0004 FFF7FEFF 	 bl puts
+ 163              	.LVL15:
+  65:gpio.c        **** }
+ 164              	 .loc 1 65 0
+ARM GAS   			page 5
+
+
+ 165 0008 08BD     	 pop {r3,pc}
+ 166              	.L17:
+ 167 000a 00BF     	 .align 2
+ 168              	.L16:
+ 169 000c 00000000 	 .word .LC2
+ 170              	 .cfi_endproc
+ 171              	.LFE5:
+ 173              	 .section .text.main,"ax",%progbits
+ 174              	 .align 1
+ 175              	 .global main
+ 176              	 .syntax unified
+ 177              	 .thumb
+ 178              	 .thumb_func
+ 179              	 .fpu fpv4-sp-d16
+ 181              	main:
+ 182              	.LFB6:
+  66:gpio.c        **** 
+  67:gpio.c        **** int main(void)
+  68:gpio.c        **** {
+ 183              	 .loc 1 68 0
+ 184              	 .cfi_startproc
+ 185              	 
+ 186              	 
+ 187 0000 00B5     	 push {lr}
+ 188              	 .cfi_def_cfa_offset 4
+ 189              	 .cfi_offset 14,-4
+ 190 0002 87B0     	 sub sp,sp,#28
+ 191              	 .cfi_def_cfa_offset 32
+ 192              	.LVL16:
+  69:gpio.c        ****     gsdk_status_t status;
+  70:gpio.c        ****     gsdk_handle_t hgpio;
+  71:gpio.c        ****     gpio_config_t gpio_config;
+  72:gpio.c        ****     gpio_pin_t    gpio_pin;
+  73:gpio.c        **** 
+  74:gpio.c        **** 	gpio_driving_current_t driving;		//GPIO_DRIVING_CURRENT_4MA    = 0,        /**< Defines GPIO drivi
+  75:gpio.c        ****     									//GPIO_DRIVING_CURRENT_8MA    = 1,        /**< Defines GPIO driving current as 8mA.  *
+  76:gpio.c        ****     									//GPIO_DRIVING_CURRENT_12MA   = 2,        /**< Defines GPIO driving current as 12mA. *
+  77:gpio.c        ****     									//GPIO_DRIVING_CURRENT_16MA   = 3         /**< Defines GPIO driving current as 16mA. *
+  78:gpio.c        **** 	
+  79:gpio.c        ****     gpio_pin = GPIO_PIN_26;
+  80:gpio.c        **** 
+  81:gpio.c        ****     log_init();
+ 193              	 .loc 1 81 0
+ 194 0004 FFF7FEFF 	 bl log_init
+ 195              	.LVL17:
+  82:gpio.c        **** 
+  83:gpio.c        **** #ifdef TEST_INTERRUPT
+  84:gpio.c        ****     gpio_config.direction     = 0;
+  85:gpio.c        ****     gpio_config.pull          = 0;
+  86:gpio.c        ****     gpio_config.debounce_time = 0;
+  87:gpio.c        ****     gpio_config.int_mode      = GPIO_INT_LEVEL_HIGH;
+  88:gpio.c        ****     gpio_config.callback      = gpio_callback;
+  89:gpio.c        ****     gpio_config.user_data     = NULL;
+  90:gpio.c        **** 
+  91:gpio.c        ****     status = gsdk_gpio_open(gpio_pin, &gpio_config, &hgpio);
+  92:gpio.c        ****     if (status != GSDK_SUCCESS)
+  93:gpio.c        ****         goto _fail;
+ARM GAS   			page 6
+
+
+  94:gpio.c        **** #else
+  95:gpio.c        ****     //led(demo board)
+  96:gpio.c        ****     gpio_config.direction     = GPIO_DIRECTION_OUTPUT;
+ 196              	 .loc 1 96 0
+ 197 0008 0123     	 movs r3,#1
+ 198 000a 8DF80430 	 strb r3,[sp,#4]
+  97:gpio.c        ****     gpio_config.pull          = GPIO_PULL_NONE;
+ 199              	 .loc 1 97 0
+ 200 000e 0023     	 movs r3,#0
+ 201 0010 8DF80530 	 strb r3,[sp,#5]
+  98:gpio.c        ****     gpio_config.int_mode      = GPIO_INT_DISABLE;
+ 202              	 .loc 1 98 0
+ 203 0014 8DF80630 	 strb r3,[sp,#6]
+  99:gpio.c        ****     gpio_config.debounce_time = 0;
+ 204              	 .loc 1 99 0
+ 205 0018 0293     	 str r3,[sp,#8]
+ 100:gpio.c        ****     gpio_config.callback      = NULL;
+ 206              	 .loc 1 100 0
+ 207 001a 0393     	 str r3,[sp,#12]
+ 101:gpio.c        **** 
+ 102:gpio.c        ****     status = gsdk_gpio_open(gpio_pin, &gpio_config, &hgpio);
+ 208              	 .loc 1 102 0
+ 209 001c 05AA     	 add r2,sp,#20
+ 210 001e 01A9     	 add r1,sp,#4
+ 211 0020 1A20     	 movs r0,#26
+ 212 0022 FFF7FEFF 	 bl gsdk_gpio_open
+ 213              	.LVL18:
+ 103:gpio.c        ****     if (status != GSDK_SUCCESS){
+ 214              	 .loc 1 103 0
+ 215 0026 30BB     	 cbnz r0,.L19
+ 104:gpio.c        ****         goto _fail;
+ 105:gpio.c        **** 	}
+ 106:gpio.c        **** 	status = gsdk_gpio_get_driving_current(hgpio,gpio_pin,&driving);
+ 216              	 .loc 1 106 0
+ 217 0028 0DF10302 	 add r2,sp,#3
+ 218 002c 1A21     	 movs r1,#26
+ 219 002e 0598     	 ldr r0,[sp,#20]
+ 220              	.LVL19:
+ 221 0030 FFF7FEFF 	 bl gsdk_gpio_get_driving_current
+ 222              	.LVL20:
+ 107:gpio.c        **** 	if (status != GSDK_SUCCESS){
+ 223              	 .loc 1 107 0
+ 224 0034 F8B9     	 cbnz r0,.L19
+ 108:gpio.c        ****         goto _fail;
+ 109:gpio.c        **** 	}
+ 110:gpio.c        **** 	printf("[GPIO_DEMO]Before set driving,Current driving:%d\r\n",driving);
+ 225              	 .loc 1 110 0
+ 226 0036 9DF80310 	 ldrb r1,[sp,#3]
+ 227 003a 1348     	 ldr r0,.L23
+ 228              	.LVL21:
+ 229 003c FFF7FEFF 	 bl printf
+ 230              	.LVL22:
+ 111:gpio.c        **** 	
+ 112:gpio.c        **** 	status = gsdk_gpio_set_driving_current(hgpio,gpio_pin,GPIO_DRIVING_CURRENT_16MA);
+ 231              	 .loc 1 112 0
+ 232 0040 0322     	 movs r2,#3
+ 233 0042 1A21     	 movs r1,#26
+ARM GAS   			page 7
+
+
+ 234 0044 0598     	 ldr r0,[sp,#20]
+ 235 0046 FFF7FEFF 	 bl gsdk_gpio_set_driving_current
+ 236              	.LVL23:
+ 113:gpio.c        **** 	if (status != GSDK_SUCCESS){
+ 237              	 .loc 1 113 0
+ 238 004a A0B9     	 cbnz r0,.L19
+ 114:gpio.c        ****         goto _fail;
+ 115:gpio.c        **** 	}
+ 116:gpio.c        **** 	status = gsdk_gpio_get_driving_current(hgpio,gpio_pin,&driving);
+ 239              	 .loc 1 116 0
+ 240 004c 0DF10302 	 add r2,sp,#3
+ 241 0050 1A21     	 movs r1,#26
+ 242 0052 0598     	 ldr r0,[sp,#20]
+ 243              	.LVL24:
+ 244 0054 FFF7FEFF 	 bl gsdk_gpio_get_driving_current
+ 245              	.LVL25:
+ 117:gpio.c        **** 	if (status != GSDK_SUCCESS){
+ 246              	 .loc 1 117 0
+ 247 0058 68B9     	 cbnz r0,.L19
+ 118:gpio.c        ****         goto _fail;
+ 119:gpio.c        **** 	}
+ 120:gpio.c        **** 	printf("[GPIO_DEMO]After set driving,Current driving:%d\r\n", driving);
+ 248              	 .loc 1 120 0
+ 249 005a 9DF80310 	 ldrb r1,[sp,#3]
+ 250 005e 0B48     	 ldr r0,.L23+4
+ 251              	.LVL26:
+ 252 0060 FFF7FEFF 	 bl printf
+ 253              	.LVL27:
+ 121:gpio.c        **** 	
+ 122:gpio.c        ****     status = gsdk_gpio_write(hgpio, GPIO_DATA_HIGH);
+ 254              	 .loc 1 122 0
+ 255 0064 0121     	 movs r1,#1
+ 256 0066 0598     	 ldr r0,[sp,#20]
+ 257 0068 FFF7FEFF 	 bl gsdk_gpio_write
+ 258              	.LVL28:
+ 123:gpio.c        ****     if (status != GSDK_SUCCESS){
+ 259              	 .loc 1 123 0
+ 260 006c 18B9     	 cbnz r0,.L19
+ 124:gpio.c        ****         goto _fail;
+ 125:gpio.c        **** 	}
+ 126:gpio.c        **** #endif
+ 127:gpio.c        ****     return 0;
+ 261              	 .loc 1 127 0
+ 262 006e 0020     	 movs r0,#0
+ 263              	.LVL29:
+ 264              	.L18:
+ 128:gpio.c        **** 
+ 129:gpio.c        **** _fail:
+ 130:gpio.c        ****     gsdk_gpio_close(hgpio);
+ 131:gpio.c        ****     printf("[GPIO_DEMO] Gpio test failed!\n");
+ 132:gpio.c        ****     return -1;
+ 133:gpio.c        **** }
+ 265              	 .loc 1 133 0
+ 266 0070 07B0     	 add sp,sp,#28
+ 267              	 .cfi_remember_state
+ 268              	 .cfi_def_cfa_offset 4
+ 269              	 
+ARM GAS   			page 8
+
+
+ 270 0072 5DF804FB 	 ldr pc,[sp],#4
+ 271              	.LVL30:
+ 272              	.L19:
+ 273              	 .cfi_restore_state
+ 130:gpio.c        ****     printf("[GPIO_DEMO] Gpio test failed!\n");
+ 274              	 .loc 1 130 0
+ 275 0076 0598     	 ldr r0,[sp,#20]
+ 276              	.LVL31:
+ 277 0078 FFF7FEFF 	 bl gsdk_gpio_close
+ 278              	.LVL32:
+ 131:gpio.c        ****     return -1;
+ 279              	 .loc 1 131 0
+ 280 007c 0448     	 ldr r0,.L23+8
+ 281 007e FFF7FEFF 	 bl puts
+ 282              	.LVL33:
+ 132:gpio.c        **** }
+ 283              	 .loc 1 132 0
+ 284 0082 4FF0FF30 	 mov r0,#-1
+ 285 0086 F3E7     	 b .L18
+ 286              	.L24:
+ 287              	 .align 2
+ 288              	.L23:
+ 289 0088 00000000 	 .word .LC3
+ 290 008c 34000000 	 .word .LC4
+ 291 0090 68000000 	 .word .LC5
+ 292              	 .cfi_endproc
+ 293              	.LFE6:
+ 295              	 .section .bss.g_huart,"aw",%nobits
+ 296              	 .align 2
+ 297              	 .set .LANCHOR0,.+0
+ 300              	g_huart:
+ 301 0000 00000000 	 .space 4
+ 302              	 .section .rodata.gpio_callback.str1.4,"aMS",%progbits,1
+ 303              	 .align 2
+ 304              	.LC2:
+ 305 0000 5B475049 	 .ascii "[GPIO_DEMO] gpio eint handle callback!\000"
+ 305      4F5F4445 
+ 305      4D4F5D20 
+ 305      6770696F 
+ 305      2065696E 
+ 306              	 .section .rodata.log_init.str1.4,"aMS",%progbits,1
+ 307              	 .align 2
+ 308              	.LC0:
+ 309 0000 5B475049 	 .ascii "[GPIO_DEMO]: failed to open uart %d\012\000"
+ 309      4F5F4445 
+ 309      4D4F5D3A 
+ 309      20666169 
+ 309      6C656420 
+ 310 0025 000000   	 .space 3
+ 311              	.LC1:
+ 312 0028 5B475049 	 .ascii "[GPIO_DEMO] log init....OK\015\000"
+ 312      4F5F4445 
+ 312      4D4F5D20 
+ 312      6C6F6720 
+ 312      696E6974 
+ 313              	 .section .rodata.main.str1.4,"aMS",%progbits,1
+ 314              	 .align 2
+ARM GAS   			page 9
+
+
+ 315              	.LC3:
+ 316 0000 5B475049 	 .ascii "[GPIO_DEMO]Before set driving,Current driving:%d\015"
+ 316      4F5F4445 
+ 316      4D4F5D42 
+ 316      65666F72 
+ 316      65207365 
+ 317 0031 0A00     	 .ascii "\012\000"
+ 318 0033 00       	 .space 1
+ 319              	.LC4:
+ 320 0034 5B475049 	 .ascii "[GPIO_DEMO]After set driving,Current driving:%d\015"
+ 320      4F5F4445 
+ 320      4D4F5D41 
+ 320      66746572 
+ 320      20736574 
+ 321 0064 0A00     	 .ascii "\012\000"
+ 322 0066 0000     	 .space 2
+ 323              	.LC5:
+ 324 0068 5B475049 	 .ascii "[GPIO_DEMO] Gpio test failed!\000"
+ 324      4F5F4445 
+ 324      4D4F5D20 
+ 324      4770696F 
+ 324      20746573 
+ 325              	 .text
+ 326              	.Letext0:
+ 327              	 .file 2 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 328              	 .file 3 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\lock.h"
+ 329              	 .file 4 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\_types.h"
+ 330              	 .file 5 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\lib\\gcc\\arm-none-eabi\\7.3.1\\include\\stddef.h"
+ 331              	 .file 6 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\reent.h"
+ 332              	 .file 7 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\_stdint.h"
+ 333              	 .file 8 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\stdlib.h"
+ 334              	 .file 9 "E:/WorkDir/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_common.h"
+ 335              	 .file 10 "E:/WorkDir/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_uart.h"
+ 336              	 .file 11 "E:/WorkDir/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_flash.h"
+ 337              	 .file 12 "E:/WorkDir/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_gpio.h"
+ 338              	 .file 13 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\stdio.h"
+ 339              	 .file 14 "E:/WorkDir/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_api.h"
+ 340              	 .file 15 "<built-in>"
+ARM GAS   			page 10
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 gpio.c
+    {standard input}:18     .text.__io_puts:00000000 $t
+    {standard input}:25     .text.__io_puts:00000000 __io_puts
+    {standard input}:64     .text.__io_puts:0000001c $d
+    {standard input}:69     .text.log_init:00000000 $t
+    {standard input}:76     .text.log_init:00000000 log_init
+    {standard input}:134    .text.log_init:00000040 $d
+    {standard input}:141    .text.gpio_callback:00000000 $t
+    {standard input}:148    .text.gpio_callback:00000000 gpio_callback
+    {standard input}:169    .text.gpio_callback:0000000c $d
+    {standard input}:174    .text.main:00000000 $t
+    {standard input}:181    .text.main:00000000 main
+    {standard input}:289    .text.main:00000088 $d
+    {standard input}:296    .bss.g_huart:00000000 $d
+    {standard input}:300    .bss.g_huart:00000000 g_huart
+    {standard input}:303    .rodata.gpio_callback.str1.4:00000000 $d
+    {standard input}:307    .rodata.log_init.str1.4:00000000 $d
+    {standard input}:314    .rodata.main.str1.4:00000000 $d
+                           .group:00000000 wm4.0.8fab1e1450c2b74bdd5e2aed4c325bf1
+                           .group:00000000 wm4._newlib_version.h.4.875b979a44719054cd750d0952ad3fd6
+                           .group:00000000 wm4.newlib.h.18.5e5ca3429233af402d406a202f1fc1ac
+                           .group:00000000 wm4.ieeefp.h.77.220d9cccac42cd58761758bee2df4ce6
+                           .group:00000000 wm4.features.h.22.fad1cec3bc7ff06488171438dbdcfd02
+                           .group:00000000 wm4.config.h.220.6cac6a9685cfce5e83c17784171638d9
+                           .group:00000000 wm4._ansi.h.31.de524f58584151836e90d8620a16f8e8
+                           .group:00000000 wm4.stdio.h.31.7c0e28c411445f3f9c5b11accf882760
+                           .group:00000000 wm4._default_types.h.6.959254cf5f09734ea7516c89e8bb21bd
+                           .group:00000000 wm4.stddef.h.187.2ff233552538c6ff9b8575ca8ea52cb3
+                           .group:00000000 wm4.cdefs.h.47.0bcdf94cb40e176393dd1404056825b4
+                           .group:00000000 wm4.stddef.h.39.ec95e8feac892e292b69dc7ae75b0d64
+                           .group:00000000 wm4.stdarg.h.34.3a23a216c0c293b3d2ea2e89281481e6
+                           .group:00000000 wm4.lock.h.2.1461d1fff82dffe8bfddc23307f6484f
+                           .group:00000000 wm4._types.h.125.5cf8a495f1f7ef36777ad868a1e32068
+                           .group:00000000 wm4.stddef.h.161.5349cb105733e8777bfb0cf53c4e3f34
+                           .group:00000000 wm4._types.h.184.03611d4f6b5bec9997bcf4279eceba07
+                           .group:00000000 wm4.reent.h.17.90c2574d4acdcfce933db5cb09ff35fe
+                           .group:00000000 wm4.types.h.40.e8c16e7ec36ba55f133d0616070e25fc
+                           .group:00000000 wm4._stdint.h.10.c24fa3af3bc1706662bb5593a907e841
+                           .group:00000000 wm4._endian.h.31.65a10590763c3dde1ac4a7f66d7d4891
+                           .group:00000000 wm4.endian.h.9.49f3a4695c1b61e8a0808de3c4a106cb
+                           .group:00000000 wm4._timeval.h.30.0e8bfd94e85db17dda3286ee81496fe6
+                           .group:00000000 wm4.timespec.h.41.d855182eb0e690443ab8651bcedca6e1
+                           .group:00000000 wm4.select.h.19.97ca6fd0c752a0f3b6719fd314d361e6
+                           .group:00000000 wm4.types.h.69.ed3eae3cf73030a737515151ebcab7a1
+                           .group:00000000 wm4.sched.h.22.c60982713a5c428609783c78f9c78d95
+                           .group:00000000 wm4._pthreadtypes.h.36.fcee9961c35163dde6267ef772ad1972
+                           .group:00000000 wm4.stdio.h.2.4aa87247282eca6c8f36f9de33d8df1a
+                           .group:00000000 wm4.stdio.h.81.932d0c162786b883f622b8d05c120c78
+                           .group:00000000 wm4.stdlib.h.13.4ed386f5c1a80d71e72172885d946ef2
+                           .group:00000000 wm4.stddef.h.161.19e15733342b50ead2919490b095303e
+                           .group:00000000 wm4.alloca.h.8.dfc0c703c47ec3e69746825b17d9e66d
+                           .group:00000000 wm4.stdlib.h.56.d4493cd3736e51e9d56335045f26df45
+                           .group:00000000 wm4.string.h.8.c4b8571ce60dff2817f43fec8b86aecd
+                           .group:00000000 wm4._intsup.h.10.cce27fed8484c08a33f522034c30d2b5
+                           .group:00000000 wm4.stdint.h.23.d53047a68f4a85177f80b422d52785ed
+                           .group:00000000 wm4.gsdk_common.h.47.22de8ea3659fbd5af0e08ced1ae1b062
+ARM GAS   			page 11
+
+
+                           .group:00000000 wm4.gsdk_flash.h.25.4d08791083e4af07d64570151ac0803c
+                           .group:00000000 wm4.app_loader.h.25.aa64c8d4536aca920728cda79a275eeb
+
+UNDEFINED SYMBOLS
+gsdk_uart_write
+gsdk_uart_open
+puts
+gsdk_syslog_printf
+gsdk_gpio_open
+gsdk_gpio_get_driving_current
+printf
+gsdk_gpio_set_driving_current
+gsdk_gpio_write
+gsdk_gpio_close

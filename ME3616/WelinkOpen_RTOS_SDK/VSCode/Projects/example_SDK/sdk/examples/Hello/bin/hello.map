@@ -1,0 +1,1808 @@
+Archive member included to satisfy reference by file (symbol)
+
+E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(head.s.o)
+                              (Main_Entry)
+E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+                              obj/hello.c.o (gsdk_uart_close)
+E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+                              E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(head.s.o) (_start)
+E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+                              E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o) (_exit)
+c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-errno.o)
+                              E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o) (__errno)
+c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-impure.o)
+                              c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-errno.o) (_impure_ptr)
+c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-puts.o)
+                              obj/hello.c.o (puts)
+c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-wbuf.o)
+                              c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-puts.o) (__swbuf_r)
+c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-wsetup.o)
+                              c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-puts.o) (__swsetup_r)
+c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fflush.o)
+                              c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-wbuf.o) (_fflush_r)
+c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+                              c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-puts.o) (__sinit)
+c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fwalk.o)
+                              c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o) (_fwalk)
+c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-makebuf.o)
+                              c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-wsetup.o) (__smakebuf_r)
+c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-memset.o)
+                              c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o) (memset)
+c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-nano-freer.o)
+                              c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-wsetup.o) (_free_r)
+c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-nano-mallocr.o)
+                              c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o) (_malloc_r)
+c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-sbrkr.o)
+                              c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-nano-mallocr.o) (_sbrk_r)
+c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-stdio.o)
+                              c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o) (__sread)
+c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-writer.o)
+                              c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-stdio.o) (_write_r)
+c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-closer.o)
+                              c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-stdio.o) (_close_r)
+c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fstatr.o)
+                              c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-makebuf.o) (_fstat_r)
+c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-isattyr.o)
+                              c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-makebuf.o) (_isatty_r)
+c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-lseekr.o)
+                              c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-stdio.o) (_lseek_r)
+c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-readr.o)
+                              c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-stdio.o) (_read_r)
+c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-reent.o)
+                              c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-sbrkr.o) (errno)
+
+Allocating common symbols
+Common symbol       size              file
+
+errno               0x4               c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-reent.o)
+
+Discarded input sections
+
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .group         0x00000000        0xc obj/hello.c.o
+ .text          0x00000000        0x0 obj/hello.c.o
+ .data          0x00000000        0x0 obj/hello.c.o
+ .bss           0x00000000        0x0 obj/hello.c.o
+ .text          0x00000000        0x0 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(head.s.o)
+ .data          0x00000000        0x0 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(head.s.o)
+ .bss           0x00000000        0x0 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(head.s.o)
+ .text          0x00000000        0x0 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .data          0x00000000        0x0 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .bss           0x00000000        0x0 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_flash_read
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.vTaskMissedYield
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.xTaskPriorityDisinherit
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_log_printf
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.vTaskSwitchContext
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.xTaskGetTickCount
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.lwip_gethostbyname_r
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.lwip_htonl
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.lwip_ioctl
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.vTaskGetRunTimeStats
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_adc_read
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_sleeplock_close
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_pwm_open
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_atport_write
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_gpt_timer_open
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.uxTaskGetTaskNumber
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.vTaskSetTaskNumber
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_rtc_time_write
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.vTaskPlaceOnEventListRestricted
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_pwm_start
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_gpio_interrupt_enable
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.lwip_write
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_i2c_master_close
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.uxListRemove
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.uxEventGroupGetNumber
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_atport_status
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.lwip_fcntl
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.uxTaskGetSystemState
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.lwip_connect
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_uart_ioctl
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.ipaddr_addr
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_rtc_close
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.uxQueueSpacesAvailable
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.xTaskGetCurrentTaskHandle
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.vQueueSetQueueNumber
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_uart_read
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_rtc_cal_alarm_enable
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_gpio_write
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_gpio_set_driving_current
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.lwip_socket
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.vTaskPrioritySet
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.lwip_htons
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.vTaskPriorityInherit
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_gpt_timer_close
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.xEventGroupClearBits
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.ulTaskNotifyTake
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.ip4addr_aton
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_rtc_time_read
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_gpt_timer_start
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_rtc_open
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.xQueueGenericReset
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.xTaskRemoveFromUnorderedEventList
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_sleep_islocked
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_spi_transmit_and_receive
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.ucQueueGetQueueType
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.vEventGroupSetBitsCallback
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.ip4_addr_isbroadcast_u32
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_alarm_start
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_wakeup_in_open
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.xEventGroupSync
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.pvTimerGetTimerID
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.lwip_bind
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_sleeplock_release
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.vTaskResume
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.xQueueGenericCreate
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.syslog_write
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.uxTaskGetStackHighWaterMark
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_log_vprintf
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.xEventGroupSetBits
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.print_hex_dump_bytes
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_rtc_alarm_disable
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.uxTaskGetBottomOfStack
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.vEventGroupDelete
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.xQueueAddToSet
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.pvTaskIncrementMutexHeldCount
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.lwip_getsockname
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.xTimerPendFunctionCall
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.xQueueGenericSend
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_spi_close
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.lwip_freeaddrinfo
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_alarm_stop
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.ip4_addr_netmask_valid
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.vQueueUnregisterQueue
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_i2c_read
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_gpio_set_high_impedance
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.vTaskEndScheduler
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.vListInitialise
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.lwip_ntohl
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_flash_open
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_pwm_stop
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_gpio_close
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.xTaskCheckForTimeOut
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.xQueueCreateCountingSemaphore
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.uxQueueMessagesWaiting
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_gpio_set_pinmux
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.xTaskGetSchedulerState
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.xEventGroupCreate
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.xTimerGenericCommand
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.xQueueTakeMutexRecursive
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_pwm_get_duty_cycle
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.vListInitialiseItem
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_atport_open
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.vTaskDelayUntil
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.uxQueueGetQueueNumber
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_flash_close
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.lwip_recvfrom_ext
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.lwip_recv
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.vListInsert
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.vTaskPlaceOnUnorderedEventList
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_flash_write
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.vTaskSetTimeOutState
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_gpio_open
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.uxTaskResetEventItemValue
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_i2c_write
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_atport_read
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.vTaskPlaceOnEventList
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.xQueueRemoveFromSet
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_gpio_clear_high_impedance
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.xQueueCreateSet
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.vQueueAddToRegistry
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.xQueueGenericReceive
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_sleeplock_acquire
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.vTaskClearTaskRunTimeCounter
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.xTimerCreateTimerTask
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_gpio_toggle
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.xTimerIsTimerActive
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.vTaskDelay
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.vListInsertEnd
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.xEventGroupWaitBits
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_alarm_open
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.lwip_read
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.vTaskStepTick
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.xTimerCreate
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.lwip_getpeername
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.xTaskNotify
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.vTaskList
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.lwip_close
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.uxTaskGetNumberOfTasks
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_atport_close
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.lwip_getsockopt
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.eTaskConfirmSleepModeStatus
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.ip4addr_ntoa_r
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.lwip_shutdown
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_spi_open
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.xQueueCreateMutex
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.lwip_ntohs
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.lwip_recvfrom
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.xTaskNotifyWait
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.vQueueDelete
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.xQueueGiveMutexRecursive
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_flash_erase
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_sys_get_boot_mode
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_alarm_close
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.lwip_send
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.vTaskSuspend
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.lwip_sendto
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.lwip_listen
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.vTaskStartScheduler
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_gpt_timer_stop
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.pcTaskGetTaskName
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.uxTaskPriorityGet
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_i2c_master_init
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.vEventGroupClearBitsCallback
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_pwm_get_frequency
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.xTaskIncrementTick
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.lwip_select
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.lwip_setsockopt
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_pwm_close
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_gpio_get_driving_current
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.xQueueSelectFromSet
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_wakeup_in_close
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_sleeplock_open
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.lwip_accept
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.xTaskRemoveFromEventList
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.xTaskGenericCreate
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.lwip_gethostbyname
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.eTaskGetState
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.vQueueWaitForMessageRestricted
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_gpio_read
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.ip4addr_ntoa
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.lwip_getaddrinfo
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.pcTimerGetTimerName
+                0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .text          0x00000000        0x0 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .data          0x00000000        0x0 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .bss           0x00000000        0x0 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .debug_macro   0x00000000      0xa4e E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .debug_macro   0x00000000       0x22 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .debug_macro   0x00000000       0xef E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .debug_macro   0x00000000       0x6a E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .debug_macro   0x00000000      0x1df E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .debug_macro   0x00000000       0x18 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .debug_macro   0x00000000       0x35 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .debug_macro   0x00000000       0x34 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .debug_macro   0x00000000      0x330 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .debug_macro   0x00000000       0x10 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .debug_macro   0x00000000       0x58 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .debug_macro   0x00000000       0x1f E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .debug_macro   0x00000000       0x43 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .debug_macro   0x00000000       0x20 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .debug_macro   0x00000000       0x1c E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .debug_macro   0x00000000       0x52 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .debug_macro   0x00000000       0x40 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .debug_macro   0x00000000       0x10 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .debug_macro   0x00000000       0x40 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .debug_macro   0x00000000       0xd7 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .debug_macro   0x00000000       0x1c E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .debug_macro   0x00000000       0x3d E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .text          0x00000000        0x0 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .data          0x00000000        0x0 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .bss           0x00000000        0x0 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .text._chown   0x00000000       0x10 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .text._execve  0x00000000       0x10 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .text._fork    0x00000000       0x10 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .text._getpid  0x00000000       0x10 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .text._gettimeofday
+                0x00000000       0x10 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .text._kill    0x00000000       0x10 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .text._link    0x00000000       0x10 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .text._open    0x00000000       0x10 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .text._readlink
+                0x00000000       0x10 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .text._stat    0x00000000       0x10 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .text._symlink
+                0x00000000       0x10 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .text._times   0x00000000       0x10 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .text._unlink  0x00000000       0x10 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .text._wait    0x00000000       0x10 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .text.abort    0x00000000        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .bss.__dso_handle
+                0x00000000        0x4 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .bss.__env     0x00000000        0x4 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .data.environ  0x00000000        0x4 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000      0xa4e E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000       0x22 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000       0x58 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000       0x18 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000       0x94 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000       0x35 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000       0x34 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000       0x10 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000      0x174 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000       0x57 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000       0x58 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000       0x1f E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000       0x43 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000       0x20 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000      0x18e E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000      0x330 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000       0x10 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000       0x6a E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000       0x1c E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000       0x52 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000       0x40 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000       0x10 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000       0x40 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000       0xd7 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000       0x1c E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000       0x3d E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000       0x35 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000       0x10 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000       0x88 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000       0x16 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000       0x16 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000       0x29 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000       0xef E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000      0x1df E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000       0x10 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000       0x16 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000      0x16f E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000       0x52 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000       0xba E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000       0x10 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000       0x1f E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000      0x35a E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000       0xc0 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000       0x69 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .text          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-errno.o)
+ .data          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-errno.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-errno.o)
+ .text          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-impure.o)
+ .data          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-impure.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-impure.o)
+ .text          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-puts.o)
+ .data          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-puts.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-puts.o)
+ .text          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-wbuf.o)
+ .data          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-wbuf.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-wbuf.o)
+ .text.__swbuf  0x00000000       0x10 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-wbuf.o)
+ .text          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-wsetup.o)
+ .data          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-wsetup.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-wsetup.o)
+ .text          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fflush.o)
+ .data          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fflush.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fflush.o)
+ .text.fflush   0x00000000       0x24 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fflush.o)
+ .text          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+ .data          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+ .text.__fp_lock
+                0x00000000        0x4 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+ .text.__fp_unlock
+                0x00000000        0x4 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+ .text._cleanup
+                0x00000000        0xc c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+ .text.__sfp_lock_acquire
+                0x00000000        0x2 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+ .text.__sfp_lock_release
+                0x00000000        0x2 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+ .text.__sinit_lock_acquire
+                0x00000000        0x2 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+ .text.__sinit_lock_release
+                0x00000000        0x2 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+ .text.__fp_lock_all
+                0x00000000       0x14 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+ .text.__fp_unlock_all
+                0x00000000       0x14 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+ .text          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fwalk.o)
+ .data          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fwalk.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fwalk.o)
+ .text._fwalk   0x00000000       0x38 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fwalk.o)
+ .text          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-makebuf.o)
+ .data          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-makebuf.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-makebuf.o)
+ .text          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-memset.o)
+ .data          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-memset.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-memset.o)
+ .text          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-nano-freer.o)
+ .data          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-nano-freer.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-nano-freer.o)
+ .text          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-nano-mallocr.o)
+ .data          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-nano-mallocr.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-nano-mallocr.o)
+ .text          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-sbrkr.o)
+ .data          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-sbrkr.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-sbrkr.o)
+ .text          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-stdio.o)
+ .data          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-stdio.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-stdio.o)
+ .text.__seofread
+                0x00000000        0x4 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-stdio.o)
+ .text          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-writer.o)
+ .data          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-writer.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-writer.o)
+ .text          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-closer.o)
+ .data          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-closer.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-closer.o)
+ .text          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fstatr.o)
+ .data          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fstatr.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fstatr.o)
+ .text          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-isattyr.o)
+ .data          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-isattyr.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-isattyr.o)
+ .text          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-lseekr.o)
+ .data          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-lseekr.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-lseekr.o)
+ .text          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-readr.o)
+ .data          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-readr.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-readr.o)
+ .text          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-reent.o)
+ .data          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-reent.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-reent.o)
+ .text.cleanup_glue
+                0x00000000       0x1a c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-reent.o)
+ .text._reclaim_reent
+                0x00000000       0xb8 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-reent.o)
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+FLASH            0x08277800         0x00020000         xr
+RAM              0x10174000         0x00040000         rw
+RETSRAM          0x04300700         0x00000080         rw
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+LOAD obj/hello.c.o
+LOAD E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a
+START GROUP
+LOAD c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v7e-m/fpv4-sp/hard\libgcc.a
+LOAD c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a
+END GROUP
+START GROUP
+LOAD c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v7e-m/fpv4-sp/hard\libgcc.a
+LOAD c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a
+END GROUP
+                0x00001000                _main_stack_size = 0x1000
+                0x00001000                _callback_stack_size = 0x1000
+                0x00000000                _main_task_priority = 0x0
+                0x00000000                _callback_task_priority = 0x0
+                0x00000001                _api_version = 0x1
+                0xa5a5a5a5                _app_properties = 0xa5a5a5a5
+                0x00000001                _app_version = 0x1
+                0x5a5a5a5a                _app_id = 0x5a5a5a5a
+                0x08277800                _load_address = ORIGIN (FLASH)
+                0x00001000                _Minimum_Heap_Size = 0x1000
+                0x10176098                PROVIDE (_Heap_Begin = _end_noinit)
+                0x101b4000                PROVIDE (_Heap_Limit = (ORIGIN (RAM) + LENGTH (RAM)))
+
+.preamble       0x08277800      0x100
+                0x08277800                . = ALIGN (0x4)
+ FILL mask 0xff
+ *(.preamble .preamble.*)
+ .preamble      0x08277800       0x50 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(head.s.o)
+                0x08277900                . = ALIGN (0x100)
+ *fill*         0x08277850       0xb0 ff
+                0x08277900                _preamble_limit = .
+
+.inits          0x08277900       0x14
+                0x08277900                __data_regions_array_start = .
+                0x08277900        0x4 LONG 0x8278614 LOADADDR (.data)
+                0x08277904        0x4 LONG 0x10176004 ADDR (.data)
+                0x08277908        0x4 LONG 0x10176078 (ADDR (.data) + SIZEOF (.data))
+                0x0827790c                __data_regions_array_end = .
+                0x0827790c                __bss_regions_array_start = .
+                0x0827790c        0x4 LONG 0x10176078 ADDR (.bss)
+                0x08277910        0x4 LONG 0x10176098 (ADDR (.bss) + SIZEOF (.bss))
+                0x08277914                __bss_regions_array_end = .
+ *(.init)
+ *(.fini)
+                0x08277914                . = ALIGN (0x4)
+                0x08277914                PROVIDE (__preinit_array_start = .)
+ *(.preinit_array_sysinit .preinit_array_sysinit.*)
+ *(.preinit_array_platform .preinit_array_platform.*)
+ *(.preinit_array .preinit_array.*)
+                0x08277914                PROVIDE (__preinit_array_end = .)
+                0x08277914                . = ALIGN (0x4)
+                0x08277914                PROVIDE (__init_array_start = .)
+ *(SORT_BY_NAME(.init_array.*))
+ *(.init_array)
+                0x08277914                PROVIDE (__init_array_end = .)
+                0x08277914                . = ALIGN (0x4)
+                0x08277914                PROVIDE (__fini_array_start = .)
+ *(SORT_BY_NAME(.fini_array.*))
+ *(.fini_array)
+                0x08277914                PROVIDE (__fini_array_end = .)
+
+.text           0x08277914      0xd00
+ *(.text .text.*)
+ .text.__io_puts
+                0x08277914       0x20 obj/hello.c.o
+                0x08277914                __io_puts
+ .text.main     0x08277934       0x70 obj/hello.c.o
+                0x08277934                main
+ .text.Main_Entry
+                0x082779a4       0x14 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(head.s.o)
+                0x082779a4                Main_Entry
+ .text.__asm_exit
+                0x082779b8        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(head.s.o)
+                0x082779b8                __asm_exit
+ .text.Default_Callback_Entry
+                0x082779c4        0x2 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(head.s.o)
+                0x082779c4                Callback_Entry
+ *fill*         0x082779c6        0x2 
+ .text.vTaskSuspendAll
+                0x082779c8        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+                0x082779c8                vTaskSuspendAll
+ .text.gsdk_uart_close
+                0x082779d0        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+                0x082779d0                gsdk_uart_close
+ .text.gsdk_uart_write
+                0x082779d8        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+                0x082779d8                gsdk_uart_write
+ .text.gsdk_uart_open
+                0x082779e0        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+                0x082779e0                gsdk_uart_open
+ .text.xTaskResumeAll
+                0x082779e8        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+                0x082779e8                xTaskResumeAll
+ .text.gsdk_syslog_printf
+                0x082779f0        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+                0x082779f0                gsdk_syslog_printf
+ .text.__initialize_args
+                0x082779f8       0x10 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .text._start   0x08277a08      0x134 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+                0x08277a08                _start
+ .text._close   0x08277b3c       0x10 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+                0x08277b3c                _close
+ .text._fstat   0x08277b4c       0x10 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+                0x08277b4c                _fstat
+ .text._isatty  0x08277b5c        0xe E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+                0x08277b5c                _isatty
+ .text._lseek   0x08277b6a       0x10 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+                0x08277b6a                _lseek
+ .text._read    0x08277b7a        0xc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+                0x08277b7a                _read
+ .text._write   0x08277b86       0x10 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+                0x08277b86                _write
+ .text._exit    0x08277b96        0x6 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+                0x08277b96                _exit
+ .text._sbrk    0x08277b9c       0x44 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+                0x08277b9c                _sbrk
+ .text.__malloc_lock
+                0x08277be0        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+                0x08277be0                __malloc_lock
+ .text.__malloc_unlock
+                0x08277be8        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+                0x08277be8                __malloc_unlock
+ .text.__errno  0x08277bf0        0xc c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-errno.o)
+                0x08277bf0                __errno
+ .text._puts_r  0x08277bfc       0xb8 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-puts.o)
+                0x08277bfc                _puts_r
+ .text.puts     0x08277cb4       0x10 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-puts.o)
+                0x08277cb4                puts
+ .text.__swbuf_r
+                0x08277cc4       0xa4 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-wbuf.o)
+                0x08277cc4                __swbuf_r
+ .text.__swsetup_r
+                0x08277d68       0xdc c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-wsetup.o)
+                0x08277d68                __swsetup_r
+ .text.__sflush_r
+                0x08277e44      0x10c c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fflush.o)
+                0x08277e44                __sflush_r
+ .text._fflush_r
+                0x08277f50       0x54 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fflush.o)
+                0x08277f50                _fflush_r
+ .text.std      0x08277fa4       0x48 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+ .text._cleanup_r
+                0x08277fec        0xc c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+                0x08277fec                _cleanup_r
+ .text.__sfmoreglue
+                0x08277ff8       0x2c c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+                0x08277ff8                __sfmoreglue
+ .text.__sinit  0x08278024       0x60 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+                0x08278024                __sinit
+ .text.__sfp    0x08278084       0x78 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+                0x08278084                __sfp
+ .text._fwalk_reent
+                0x082780fc       0x3c c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fwalk.o)
+                0x082780fc                _fwalk_reent
+ .text.__swhatbuf_r
+                0x08278138       0x48 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-makebuf.o)
+                0x08278138                __swhatbuf_r
+ .text.__smakebuf_r
+                0x08278180       0x80 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-makebuf.o)
+                0x08278180                __smakebuf_r
+ .text.memset   0x08278200       0x10 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-memset.o)
+                0x08278200                memset
+ .text._free_r  0x08278210       0x9c c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-nano-freer.o)
+                0x08278210                _free_r
+ .text._malloc_r
+                0x082782ac       0xb4 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-nano-mallocr.o)
+                0x082782ac                _malloc_r
+ .text._sbrk_r  0x08278360       0x20 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-sbrkr.o)
+                0x08278360                _sbrk_r
+ .text.__sread  0x08278380       0x22 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-stdio.o)
+                0x08278380                __sread
+ .text.__swrite
+                0x082783a2       0x38 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-stdio.o)
+                0x082783a2                __swrite
+ .text.__sseek  0x082783da       0x24 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-stdio.o)
+                0x082783da                __sseek
+ .text.__sclose
+                0x082783fe        0x8 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-stdio.o)
+                0x082783fe                __sclose
+ *fill*         0x08278406        0x2 
+ .text._write_r
+                0x08278408       0x24 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-writer.o)
+                0x08278408                _write_r
+ .text._close_r
+                0x0827842c       0x20 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-closer.o)
+                0x0827842c                _close_r
+ .text._fstat_r
+                0x0827844c       0x24 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fstatr.o)
+                0x0827844c                _fstat_r
+ .text._isatty_r
+                0x08278470       0x20 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-isattyr.o)
+                0x08278470                _isatty_r
+ .text._lseek_r
+                0x08278490       0x24 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-lseekr.o)
+                0x08278490                _lseek_r
+ .text._read_r  0x082784b4       0x24 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-readr.o)
+                0x082784b4                _read_r
+ *(.rodata .rodata.* .constdata .constdata.*)
+ .rodata.main.str1.4
+                0x082784d8       0xc8 obj/hello.c.o
+                                 0xc6 (size before relaxing)
+ .rodata._default_gpio_init_table
+                0x082785a0       0x10 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(head.s.o)
+                0x082785a0                _headware_init_table
+ .rodata._global_impure_ptr
+                0x082785b0        0x4 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-impure.o)
+                0x082785b0                _global_impure_ptr
+ .rodata.__sf_fake_stderr
+                0x082785b4       0x20 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+                0x082785b4                __sf_fake_stderr
+ .rodata.__sf_fake_stdin
+                0x082785d4       0x20 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+                0x082785d4                __sf_fake_stdin
+ .rodata.__sf_fake_stdout
+                0x082785f4       0x20 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+                0x082785f4                __sf_fake_stdout
+ *(vtable)
+ *(.eh_frame*)
+ *(.glue_7)
+ .glue_7        0x08278614        0x0 linker stubs
+ *(.glue_7t)
+ .glue_7t       0x08278614        0x0 linker stubs
+
+.vfp11_veneer   0x08278614        0x0
+ .vfp11_veneer  0x08278614        0x0 linker stubs
+
+.v4_bx          0x08278614        0x0
+ .v4_bx         0x08278614        0x0 linker stubs
+
+.iplt           0x08278614        0x0
+ .iplt          0x08278614        0x0 obj/hello.c.o
+
+.rel.dyn        0x08278614        0x0
+ .rel.iplt      0x08278614        0x0 obj/hello.c.o
+
+.ARM.extab
+ *(.ARM.extab* .gnu.linkonce.armextab.*)
+                0x08278614                . = ALIGN (0x4)
+                0x08278614                __exidx_start = .
+
+.ARM.exidx
+ *(.ARM.exidx* .gnu.linkonce.armexidx.*)
+                0x08278614                __exidx_end = .
+                0x08278614                . = ALIGN (0x4)
+                0x08278614                _etext = .
+                0x08278614                __etext = .
+
+.stacks         0x10174000     0x2000
+                0x10174000                . = ALIGN (0x8)
+                0x10174000                _main_stack_base = .
+                0x10175000                . = (. + _main_stack_size)
+ *fill*         0x10174000     0x1000 
+                0x10175000                . = ALIGN (0x8)
+                0x10175000                _callback_stack_base = .
+                0x10176000                . = (. + _callback_stack_size)
+ *fill*         0x10175000     0x1000 
+
+.init_data      0x10176000        0x4
+                0x10176000                . = ALIGN (0x4)
+ *(.init_data .init_data.*)
+ .init_data._exit_stack_pointer
+                0x10176000        0x4 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(head.s.o)
+                0x08278614                _sidata = LOADADDR (.data)
+
+.data           0x10176004       0x74 load address 0x08278614
+ FILL mask 0xff
+                0x10176004                __data_start__ = .
+ *(.data_begin .data_begin.*)
+ .data_begin    0x10176004        0x4 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+ *(.data .data.*)
+ .data.argv.5618
+                0x10176008        0x8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .data._impure_ptr
+                0x10176010        0x4 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-impure.o)
+                0x10176010                _impure_ptr
+ .data.impure_data
+                0x10176014       0x60 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-impure.o)
+ *(.data_end .data_end.*)
+ .data_end      0x10176074        0x4 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+                0x10176078                . = ALIGN (0x4)
+                0x10176078                __data_end__ = .
+
+.igot.plt       0x10176078        0x0 load address 0x08278688
+ .igot.plt      0x10176078        0x0 obj/hello.c.o
+
+.bss            0x10176078       0x20 load address 0x08278688
+                0x10176078                __bss_start__ = .
+ *(.bss_begin .bss_begin.*)
+ .bss_begin     0x10176078        0x4 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+ *(.bss .bss.*)
+ .bss.g_huart   0x1017607c        0x4 obj/hello.c.o
+ .bss.name.5617
+                0x10176080        0x1 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+ *fill*         0x10176081        0x3 
+ .bss.current_heap_end.7662
+                0x10176084        0x4 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .bss.__malloc_free_list
+                0x10176088        0x4 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-nano-mallocr.o)
+                0x10176088                __malloc_free_list
+ .bss.__malloc_sbrk_start
+                0x1017608c        0x4 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-nano-mallocr.o)
+                0x1017608c                __malloc_sbrk_start
+ *(COMMON)
+ COMMON         0x10176090        0x4 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-reent.o)
+                0x10176090                errno
+ *(.bss_end .bss_end.*)
+ .bss_end       0x10176094        0x4 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+                0x10176098                . = ALIGN (0x4)
+                0x10176098                __bss_end__ = .
+
+.noinit         0x10176098        0x0 load address 0x08278688
+                0x10176098                _noinit = .
+ *(.noinit .noinit.*)
+                0x10176098                . = ALIGN (0x4)
+                0x10176098                _end_noinit = .
+                [!provide]                PROVIDE (end = _end_noinit)
+                [!provide]                PROVIDE (_end = _end_noinit)
+                [!provide]                PROVIDE (__end = _end_noinit)
+                [!provide]                PROVIDE (__end__ = _end_noinit)
+                0x00000001                ASSERT ((_Minimum_Heap_Size <= (_end_noinit - ORIGIN (RAM))), RAM expired)
+
+.retsram_data   0x04300700        0x0
+                0x04300700                . = ALIGN (0x4)
+                0x04300700                _retsram_start = .
+ *(.retsram_data)
+                0x04300700                . = ALIGN (0x4)
+                0x04300700                _retsram_limit = .
+
+.end            0x08278688        0x0
+                0x08278688                . = ALIGN (0x4)
+                0x08278688                _app_limit = .
+
+.stab
+ *(.stab)
+
+.stabstr
+ *(.stabstr)
+
+.stab.excl
+ *(.stab.excl)
+
+.stab.exclstr
+ *(.stab.exclstr)
+
+.stab.index
+ *(.stab.index)
+
+.stab.indexstr
+ *(.stab.indexstr)
+
+.comment        0x00000000       0x7f
+ *(.comment)
+ .comment       0x00000000       0x7f obj/hello.c.o
+                                 0x80 (size before relaxing)
+ .comment       0x0000007f       0x80 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .comment       0x0000007f       0x80 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+
+.ARM.attributes
+                0x00000000       0x37
+ .ARM.attributes
+                0x00000000       0x39 obj/hello.c.o
+ .ARM.attributes
+                0x00000039       0x21 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(head.s.o)
+ .ARM.attributes
+                0x0000005a       0x21 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .ARM.attributes
+                0x0000007b       0x39 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .ARM.attributes
+                0x000000b4       0x39 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .ARM.attributes
+                0x000000ed       0x34 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-errno.o)
+ .ARM.attributes
+                0x00000121       0x34 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-impure.o)
+ .ARM.attributes
+                0x00000155       0x34 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-puts.o)
+ .ARM.attributes
+                0x00000189       0x34 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-wbuf.o)
+ .ARM.attributes
+                0x000001bd       0x34 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-wsetup.o)
+ .ARM.attributes
+                0x000001f1       0x34 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fflush.o)
+ .ARM.attributes
+                0x00000225       0x34 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+ .ARM.attributes
+                0x00000259       0x34 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fwalk.o)
+ .ARM.attributes
+                0x0000028d       0x34 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-makebuf.o)
+ .ARM.attributes
+                0x000002c1       0x34 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-memset.o)
+ .ARM.attributes
+                0x000002f5       0x34 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-nano-freer.o)
+ .ARM.attributes
+                0x00000329       0x34 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-nano-mallocr.o)
+ .ARM.attributes
+                0x0000035d       0x34 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-sbrkr.o)
+ .ARM.attributes
+                0x00000391       0x34 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-stdio.o)
+ .ARM.attributes
+                0x000003c5       0x34 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-writer.o)
+ .ARM.attributes
+                0x000003f9       0x34 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-closer.o)
+ .ARM.attributes
+                0x0000042d       0x34 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fstatr.o)
+ .ARM.attributes
+                0x00000461       0x34 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-isattyr.o)
+ .ARM.attributes
+                0x00000495       0x34 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-lseekr.o)
+ .ARM.attributes
+                0x000004c9       0x34 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-readr.o)
+ .ARM.attributes
+                0x000004fd       0x34 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-reent.o)
+
+.debug
+ *(.debug)
+
+.line
+ *(.line)
+
+.debug_srcinfo
+ *(.debug_srcinfo)
+
+.debug_sfnames
+ *(.debug_sfnames)
+
+.debug_aranges  0x00000000      0x758
+ *(.debug_aranges)
+ .debug_aranges
+                0x00000000       0x28 obj/hello.c.o
+ .debug_aranges
+                0x00000028       0x30 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(head.s.o)
+ .debug_aranges
+                0x00000058      0x5f8 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .debug_aranges
+                0x00000650       0x28 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .debug_aranges
+                0x00000678       0xe0 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+
+.debug_pubnames
+ *(.debug_pubnames)
+
+.debug_info     0x00000000     0x29cd
+ *(.debug_info .gnu.linkonce.wi.*)
+ .debug_info    0x00000000     0x12a9 obj/hello.c.o
+ .debug_info    0x000012a9       0x22 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(head.s.o)
+ .debug_info    0x000012cb       0x22 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .debug_info    0x000012ed      0x49b E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .debug_info    0x00001788     0x1245 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+
+.debug_abbrev   0x00000000      0x761
+ *(.debug_abbrev)
+ .debug_abbrev  0x00000000      0x290 obj/hello.c.o
+ .debug_abbrev  0x00000290       0x12 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(head.s.o)
+ .debug_abbrev  0x000002a2       0x12 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .debug_abbrev  0x000002b4      0x1cc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .debug_abbrev  0x00000480      0x2e1 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+
+.debug_line     0x00000000     0x21f9
+ *(.debug_line)
+ .debug_line    0x00000000      0x8fe obj/hello.c.o
+ .debug_line    0x000008fe       0x86 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(head.s.o)
+ .debug_line    0x00000984      0xcdd E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .debug_line    0x00001661      0x3de E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .debug_line    0x00001a3f      0x7ba E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+
+.debug_frame    0x00000000      0x8ec
+ *(.debug_frame)
+ .debug_frame   0x00000000       0x50 obj/hello.c.o
+ .debug_frame   0x00000050       0x3c E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .debug_frame   0x0000008c      0x2cc E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_frame   0x00000358       0x20 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-errno.o)
+ .debug_frame   0x00000378       0x3c c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-puts.o)
+ .debug_frame   0x000003b4       0x40 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-wbuf.o)
+ .debug_frame   0x000003f4       0x2c c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-wsetup.o)
+ .debug_frame   0x00000420       0x68 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fflush.o)
+ .debug_frame   0x00000488      0x11c c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+ .debug_frame   0x000005a4       0x54 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fwalk.o)
+ .debug_frame   0x000005f8       0x58 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-makebuf.o)
+ .debug_frame   0x00000650       0x20 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-memset.o)
+ .debug_frame   0x00000670       0x38 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-nano-freer.o)
+ .debug_frame   0x000006a8       0x2c c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-nano-mallocr.o)
+ .debug_frame   0x000006d4       0x2c c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-sbrkr.o)
+ .debug_frame   0x00000700       0x88 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-stdio.o)
+ .debug_frame   0x00000788       0x2c c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-writer.o)
+ .debug_frame   0x000007b4       0x2c c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-closer.o)
+ .debug_frame   0x000007e0       0x2c c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fstatr.o)
+ .debug_frame   0x0000080c       0x2c c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-isattyr.o)
+ .debug_frame   0x00000838       0x2c c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-lseekr.o)
+ .debug_frame   0x00000864       0x2c c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-readr.o)
+ .debug_frame   0x00000890       0x5c c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-reent.o)
+
+.debug_str      0x00000000    0x18152
+ *(.debug_str)
+ .debug_str     0x00000000    0x16f48 obj/hello.c.o
+                              0x17279 (size before relaxing)
+ .debug_str     0x00016f48       0x61 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(head.s.o)
+ .debug_str     0x00016fa9       0x49 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+                                 0x7b (size before relaxing)
+ .debug_str     0x00016ff2      0x2ef E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+                               0x6895 (size before relaxing)
+ .debug_str     0x000172e1      0xe71 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+                               0xbe46 (size before relaxing)
+
+.debug_loc      0x00000000      0x8a4
+ *(.debug_loc)
+ .debug_loc     0x00000000       0xba obj/hello.c.o
+ .debug_loc     0x000000ba      0x24b E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .debug_loc     0x00000305      0x59f E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+
+.debug_macinfo
+ *(.debug_macinfo)
+
+.debug_weaknames
+ *(.debug_weaknames)
+
+.debug_funcnames
+ *(.debug_funcnames)
+
+.debug_typenames
+ *(.debug_typenames)
+
+.debug_varnames
+ *(.debug_varnames)
+OUTPUT(bin/hello.elf elf32-littlearm)
+
+.debug_ranges   0x00000000      0x778
+ .debug_ranges  0x00000000       0x18 obj/hello.c.o
+ .debug_ranges  0x00000018       0x28 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(head.s.o)
+ .debug_ranges  0x00000040      0x5f0 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .debug_ranges  0x00000630       0x78 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .debug_ranges  0x000006a8       0xd0 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+
+.debug_macro    0x00000000     0x52e5
+ .debug_macro   0x00000000      0x49f obj/hello.c.o
+ .debug_macro   0x0000049f      0xa4e obj/hello.c.o
+ .debug_macro   0x00000eed       0x22 obj/hello.c.o
+ .debug_macro   0x00000f0f       0x58 obj/hello.c.o
+ .debug_macro   0x00000f67       0x18 obj/hello.c.o
+ .debug_macro   0x00000f7f       0x94 obj/hello.c.o
+ .debug_macro   0x00001013       0x35 obj/hello.c.o
+ .debug_macro   0x00001048       0x34 obj/hello.c.o
+ .debug_macro   0x0000107c       0x16 obj/hello.c.o
+ .debug_macro   0x00001092       0x57 obj/hello.c.o
+ .debug_macro   0x000010e9       0x97 obj/hello.c.o
+ .debug_macro   0x00001180      0x330 obj/hello.c.o
+ .debug_macro   0x000014b0       0xfd obj/hello.c.o
+ .debug_macro   0x000015ad       0x10 obj/hello.c.o
+ .debug_macro   0x000015bd       0x58 obj/hello.c.o
+ .debug_macro   0x00001615       0x1f obj/hello.c.o
+ .debug_macro   0x00001634       0x43 obj/hello.c.o
+ .debug_macro   0x00001677       0x20 obj/hello.c.o
+ .debug_macro   0x00001697      0x18e obj/hello.c.o
+ .debug_macro   0x00001825       0x10 obj/hello.c.o
+ .debug_macro   0x00001835       0x6a obj/hello.c.o
+ .debug_macro   0x0000189f       0x1c obj/hello.c.o
+ .debug_macro   0x000018bb       0x52 obj/hello.c.o
+ .debug_macro   0x0000190d       0x40 obj/hello.c.o
+ .debug_macro   0x0000194d       0x10 obj/hello.c.o
+ .debug_macro   0x0000195d       0x40 obj/hello.c.o
+ .debug_macro   0x0000199d       0xd7 obj/hello.c.o
+ .debug_macro   0x00001a74       0x1c obj/hello.c.o
+ .debug_macro   0x00001a90       0x3d obj/hello.c.o
+ .debug_macro   0x00001acd       0x16 obj/hello.c.o
+ .debug_macro   0x00001ae3      0x16f obj/hello.c.o
+ .debug_macro   0x00001c52       0x16 obj/hello.c.o
+ .debug_macro   0x00001c68       0x35 obj/hello.c.o
+ .debug_macro   0x00001c9d       0x16 obj/hello.c.o
+ .debug_macro   0x00001cb3       0x29 obj/hello.c.o
+ .debug_macro   0x00001cdc       0x16 obj/hello.c.o
+ .debug_macro   0x00001cf2       0xef obj/hello.c.o
+ .debug_macro   0x00001de1      0x1df obj/hello.c.o
+ .debug_macro   0x00001fc0      0x10a obj/hello.c.o
+ .debug_macro   0x000020ca       0x52 obj/hello.c.o
+ .debug_macro   0x0000211c       0xba obj/hello.c.o
+ .debug_macro   0x000021d6       0x10 obj/hello.c.o
+ .debug_macro   0x000021e6       0x1f obj/hello.c.o
+ .debug_macro   0x00002205      0x35a obj/hello.c.o
+ .debug_macro   0x0000255f       0xb0 obj/hello.c.o
+ .debug_macro   0x0000260f       0x7f obj/hello.c.o
+ .debug_macro   0x0000268e       0xc0 obj/hello.c.o
+ .debug_macro   0x0000274e       0x69 obj/hello.c.o
+ .debug_macro   0x000027b7       0x91 obj/hello.c.o
+ .debug_macro   0x00002848      0x1c2 obj/hello.c.o
+ .debug_macro   0x00002a0a       0x10 obj/hello.c.o
+ .debug_macro   0x00002a1a      0x241 obj/hello.c.o
+ .debug_macro   0x00002c5b       0x88 obj/hello.c.o
+ .debug_macro   0x00002ce3       0x16 obj/hello.c.o
+ .debug_macro   0x00002cf9       0x10 obj/hello.c.o
+ .debug_macro   0x00002d09       0x41 obj/hello.c.o
+ .debug_macro   0x00002d4a       0x6c obj/hello.c.o
+ .debug_macro   0x00002db6       0x28 obj/hello.c.o
+ .debug_macro   0x00002dde       0x4c obj/hello.c.o
+ .debug_macro   0x00002e2a      0x60a obj/hello.c.o
+ .debug_macro   0x00003434       0x58 obj/hello.c.o
+ .debug_macro   0x0000348c      0x194 obj/hello.c.o
+ .debug_macro   0x00003620      0x234 obj/hello.c.o
+ .debug_macro   0x00003854      0x11c obj/hello.c.o
+ .debug_macro   0x00003970       0x10 obj/hello.c.o
+ .debug_macro   0x00003980       0x76 obj/hello.c.o
+ .debug_macro   0x000039f6       0x4e obj/hello.c.o
+ .debug_macro   0x00003a44       0x95 obj/hello.c.o
+ .debug_macro   0x00003ad9      0x12c obj/hello.c.o
+ .debug_macro   0x00003c05      0x366 obj/hello.c.o
+ .debug_macro   0x00003f6b       0xb4 obj/hello.c.o
+ .debug_macro   0x0000401f      0x11d obj/hello.c.o
+ .debug_macro   0x0000413c      0x142 obj/hello.c.o
+ .debug_macro   0x0000427e       0x28 obj/hello.c.o
+ .debug_macro   0x000042a6       0x34 obj/hello.c.o
+ .debug_macro   0x000042da       0x72 obj/hello.c.o
+ .debug_macro   0x0000434c       0x10 obj/hello.c.o
+ .debug_macro   0x0000435c       0x55 obj/hello.c.o
+ .debug_macro   0x000043b1      0x194 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .debug_macro   0x00004545       0x8e E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .debug_macro   0x000045d3       0x51 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .debug_macro   0x00004624       0x5e E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .debug_macro   0x00004682      0x174 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .debug_macro   0x000047f6      0x30f E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00004b05       0x1c E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00004b21      0x23b E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00004d5c       0x10 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00004d6c       0x10 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00004d7c       0x35 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00004db1      0x122 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00004ed3       0x2b E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00004efe      0x118 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00005016      0x189 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x0000519f       0x16 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x000051b5       0x1c E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x000051d1       0x10 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x000051e1      0x104 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+
+Cross Reference Table
+
+Symbol                                            File
+Callback_Entry                                    E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(head.s.o)
+Main_Entry                                        E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(head.s.o)
+_Heap_Begin                                       E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+_Heap_Limit                                       E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+__asm_exit                                        E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(head.s.o)
+                                                  E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+__bss_regions_array_end                           E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+__bss_regions_array_start                         E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+__data_regions_array_end                          E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+__data_regions_array_start                        E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+__dso_handle                                      E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+__env                                             E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+__errno                                           c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-errno.o)
+                                                  E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+__fini_array_end                                  E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+__fini_array_start                                E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+__fp_lock_all                                     c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+__fp_unlock_all                                   c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+__init_array_end                                  E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+__init_array_start                                E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+__initialize_hardware                             E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+__initialize_hardware_early                       E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+__io_gets                                         E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+__io_puts                                         obj/hello.c.o
+                                                  E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+__malloc_free_list                                c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-nano-mallocr.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-nano-freer.o)
+__malloc_lock                                     E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-nano-mallocr.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-nano-freer.o)
+__malloc_sbrk_start                               c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-nano-mallocr.o)
+__malloc_unlock                                   E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-nano-mallocr.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-nano-freer.o)
+__preinit_array_end                               E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+__preinit_array_start                             E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+__sclose                                          c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-stdio.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+__seofread                                        c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-stdio.o)
+__sf_fake_stderr                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fflush.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-wsetup.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-wbuf.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-puts.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-impure.o)
+__sf_fake_stdin                                   c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fflush.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-wsetup.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-wbuf.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-puts.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-impure.o)
+__sf_fake_stdout                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fflush.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-wsetup.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-wbuf.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-puts.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-impure.o)
+__sflush_r                                        c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fflush.o)
+__sfmoreglue                                      c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+__sfp                                             c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+__sfp_lock_acquire                                c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+__sfp_lock_release                                c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+__sinit                                           c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fflush.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-wsetup.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-wbuf.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-puts.o)
+__sinit_lock_acquire                              c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+__sinit_lock_release                              c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+__smakebuf_r                                      c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-makebuf.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-wsetup.o)
+__sread                                           c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-stdio.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+__sseek                                           c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-stdio.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+__swbuf                                           c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-wbuf.o)
+__swbuf_r                                         c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-wbuf.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-puts.o)
+__swhatbuf_r                                      c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-makebuf.o)
+__swrite                                          c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-stdio.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+__swsetup_r                                       c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-wsetup.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-wbuf.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-puts.o)
+_api_version                                      E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(head.s.o)
+_app_id                                           E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(head.s.o)
+_app_limit                                        E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(head.s.o)
+_app_properties                                   E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(head.s.o)
+_app_version                                      E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(head.s.o)
+_callback_stack_base                              E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(head.s.o)
+_callback_stack_size                              E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(head.s.o)
+_callback_task_priority                           E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(head.s.o)
+_chown                                            E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+_cleanup                                          c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+_cleanup_r                                        c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-makebuf.o)
+_close                                            E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-closer.o)
+_close_r                                          c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-closer.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-stdio.o)
+_execve                                           E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+_exit                                             E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+                                                  E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+_fflush_r                                         c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fflush.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-wbuf.o)
+_fork                                             E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+_free_r                                           c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-nano-freer.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-reent.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fflush.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-wsetup.o)
+_fstat                                            E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fstatr.o)
+_fstat_r                                          c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fstatr.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-makebuf.o)
+_fwalk                                            c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fwalk.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+_fwalk_reent                                      c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fwalk.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fflush.o)
+_getpid                                           E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+_gettimeofday                                     E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+_global_impure_ptr                                c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-impure.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fflush.o)
+_headware_init_table                              E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(head.s.o)
+_impure_ptr                                       c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-impure.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-reent.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fflush.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-wsetup.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-wbuf.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-puts.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-errno.o)
+_isatty                                           E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-isattyr.o)
+_isatty_r                                         c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-isattyr.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-makebuf.o)
+_kill                                             E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+_link                                             E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+_load_address                                     E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(head.s.o)
+_lseek                                            E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-lseekr.o)
+_lseek_r                                          c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-lseekr.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-stdio.o)
+_main_stack_base                                  E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(head.s.o)
+_main_stack_size                                  E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(head.s.o)
+_main_task_priority                               E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(head.s.o)
+_malloc_r                                         c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-nano-mallocr.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-makebuf.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+_open                                             E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+_preamble_limit                                   E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(head.s.o)
+_puts_r                                           c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-puts.o)
+_read                                             E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-readr.o)
+_read_r                                           c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-readr.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-stdio.o)
+_readlink                                         E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+_reclaim_reent                                    c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-reent.o)
+_sbrk                                             E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-sbrkr.o)
+_sbrk_r                                           c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-sbrkr.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-nano-mallocr.o)
+_start                                            E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+                                                  E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(head.s.o)
+_stat                                             E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+_symlink                                          E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+_times                                            E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+_unlink                                           E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+_wait                                             E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+_write                                            E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-writer.o)
+_write_r                                          c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-writer.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-stdio.o)
+abort                                             E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+cleanup_glue                                      c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-reent.o)
+eTaskConfirmSleepModeStatus                       E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+eTaskGetState                                     E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+environ                                           E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+errno                                             c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-reent.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-readr.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-lseekr.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-isattyr.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fstatr.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-closer.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-writer.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-sbrkr.o)
+fflush                                            c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fflush.o)
+gsdk_adc_read                                     E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_alarm_close                                  E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_alarm_open                                   E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_alarm_start                                  E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_alarm_stop                                   E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_atport_close                                 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_atport_open                                  E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_atport_read                                  E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_atport_status                                E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_atport_write                                 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_flash_close                                  E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_flash_erase                                  E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_flash_open                                   E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_flash_read                                   E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_flash_write                                  E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_gpio_clear_high_impedance                    E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_gpio_close                                   E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_gpio_get_driving_current                     E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_gpio_interrupt_enable                        E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_gpio_open                                    E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_gpio_read                                    E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_gpio_set_driving_current                     E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_gpio_set_high_impedance                      E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_gpio_set_pinmux                              E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_gpio_toggle                                  E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_gpio_write                                   E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_gpt_timer_close                              E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_gpt_timer_open                               E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_gpt_timer_start                              E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_gpt_timer_stop                               E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_i2c_master_close                             E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_i2c_master_init                              E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_i2c_read                                     E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_i2c_write                                    E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_log_printf                                   E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_log_vprintf                                  E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_pwm_close                                    E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_pwm_get_duty_cycle                           E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_pwm_get_frequency                            E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_pwm_open                                     E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_pwm_start                                    E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_pwm_stop                                     E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_rtc_alarm_disable                            E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_rtc_cal_alarm_enable                         E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_rtc_close                                    E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_rtc_open                                     E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_rtc_time_read                                E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_rtc_time_write                               E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_sleep_islocked                               E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_sleeplock_acquire                            E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_sleeplock_close                              E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_sleeplock_open                               E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_sleeplock_release                            E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_spi_close                                    E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_spi_open                                     E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_spi_transmit_and_receive                     E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_sys_get_boot_mode                            E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_syslog_printf                                E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+                                                  obj/hello.c.o
+gsdk_uart_close                                   E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+                                                  obj/hello.c.o
+gsdk_uart_ioctl                                   E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_uart_open                                    E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+                                                  obj/hello.c.o
+gsdk_uart_read                                    E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_uart_write                                   E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+                                                  obj/hello.c.o
+gsdk_wakeup_in_close                              E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_wakeup_in_open                               E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ip4_addr_isbroadcast_u32                          E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ip4_addr_netmask_valid                            E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ip4addr_aton                                      E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ip4addr_ntoa                                      E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ip4addr_ntoa_r                                    E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ipaddr_addr                                       E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+lwip_accept                                       E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+lwip_bind                                         E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+lwip_close                                        E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+lwip_connect                                      E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+lwip_fcntl                                        E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+lwip_freeaddrinfo                                 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+lwip_getaddrinfo                                  E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+lwip_gethostbyname                                E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+lwip_gethostbyname_r                              E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+lwip_getpeername                                  E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+lwip_getsockname                                  E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+lwip_getsockopt                                   E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+lwip_htonl                                        E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+lwip_htons                                        E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+lwip_ioctl                                        E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+lwip_listen                                       E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+lwip_ntohl                                        E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+lwip_ntohs                                        E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+lwip_read                                         E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+lwip_recv                                         E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+lwip_recvfrom                                     E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+lwip_recvfrom_ext                                 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+lwip_select                                       E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+lwip_send                                         E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+lwip_sendto                                       E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+lwip_setsockopt                                   E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+lwip_shutdown                                     E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+lwip_socket                                       E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+lwip_write                                        E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+main                                              obj/hello.c.o
+                                                  E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(startup.c.o)
+memset                                            c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-memset.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+pcTaskGetTaskName                                 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+pcTimerGetTimerName                               E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+print_hex_dump_bytes                              E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+puts                                              c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-puts.o)
+                                                  obj/hello.c.o
+pvTaskIncrementMutexHeldCount                     E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+pvTimerGetTimerID                                 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+syslog_write                                      E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ucQueueGetQueueType                               E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ulTaskNotifyTake                                  E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+uxEventGroupGetNumber                             E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+uxListRemove                                      E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+uxQueueGetQueueNumber                             E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+uxQueueMessagesWaiting                            E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+uxQueueSpacesAvailable                            E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+uxTaskGetBottomOfStack                            E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+uxTaskGetNumberOfTasks                            E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+uxTaskGetStackHighWaterMark                       E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+uxTaskGetSystemState                              E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+uxTaskGetTaskNumber                               E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+uxTaskPriorityGet                                 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+uxTaskResetEventItemValue                         E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+vEventGroupClearBitsCallback                      E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+vEventGroupDelete                                 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+vEventGroupSetBitsCallback                        E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+vListInitialise                                   E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+vListInitialiseItem                               E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+vListInsert                                       E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+vListInsertEnd                                    E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+vQueueAddToRegistry                               E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+vQueueDelete                                      E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+vQueueSetQueueNumber                              E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+vQueueUnregisterQueue                             E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+vQueueWaitForMessageRestricted                    E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+vTaskClearTaskRunTimeCounter                      E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+vTaskDelay                                        E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+vTaskDelayUntil                                   E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+vTaskEndScheduler                                 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+vTaskGetRunTimeStats                              E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+vTaskList                                         E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+vTaskMissedYield                                  E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+vTaskPlaceOnEventList                             E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+vTaskPlaceOnEventListRestricted                   E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+vTaskPlaceOnUnorderedEventList                    E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+vTaskPriorityInherit                              E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+vTaskPrioritySet                                  E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+vTaskResume                                       E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+vTaskSetTaskNumber                                E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+vTaskSetTimeOutState                              E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+vTaskStartScheduler                               E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+vTaskStepTick                                     E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+vTaskSuspend                                      E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+vTaskSuspendAll                                   E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+                                                  E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+vTaskSwitchContext                                E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+xEventGroupClearBits                              E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+xEventGroupCreate                                 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+xEventGroupSetBits                                E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+xEventGroupSync                                   E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+xEventGroupWaitBits                               E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+xQueueAddToSet                                    E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+xQueueCreateCountingSemaphore                     E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+xQueueCreateMutex                                 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+xQueueCreateSet                                   E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+xQueueGenericCreate                               E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+xQueueGenericReceive                              E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+xQueueGenericReset                                E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+xQueueGenericSend                                 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+xQueueGiveMutexRecursive                          E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+xQueueRemoveFromSet                               E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+xQueueSelectFromSet                               E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+xQueueTakeMutexRecursive                          E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+xTaskCheckForTimeOut                              E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+xTaskGenericCreate                                E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+xTaskGetCurrentTaskHandle                         E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+xTaskGetSchedulerState                            E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+xTaskGetTickCount                                 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+xTaskIncrementTick                                E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+xTaskNotify                                       E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+xTaskNotifyWait                                   E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+xTaskPriorityDisinherit                           E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+xTaskRemoveFromEventList                          E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+xTaskRemoveFromUnorderedEventList                 E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+xTaskResumeAll                                    E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+                                                  E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+xTimerCreate                                      E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+xTimerCreateTimerTask                             E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+xTimerGenericCommand                              E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+xTimerIsTimerActive                               E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+xTimerPendFunctionCall                            E:/WorkDir/WelinkOpen_RTOS_SDK/VSCode/Projects/example_SDK/sdk/lib\libgsdk.a(api_stub.s.o)

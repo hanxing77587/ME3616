@@ -1,0 +1,11 @@
+.\ONENET.exe
+.\ONENET.exe
+clear
+.\ONENET.exe
+clear
+.\ONENET.exe
+.\ONENET.exe
+DELETE ONENET.EXE
+delete onenet.exe
+clear
+.\ONENET.exe

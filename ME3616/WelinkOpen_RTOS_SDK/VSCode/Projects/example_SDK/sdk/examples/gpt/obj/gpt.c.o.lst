@@ -1,0 +1,825 @@
+ARM GAS   			page 1
+
+
+   1              	 .cpu cortex-m4
+   2              	 .eabi_attribute 27,1
+   3              	 .eabi_attribute 28,1
+   4              	 .eabi_attribute 20,1
+   5              	 .eabi_attribute 21,1
+   6              	 .eabi_attribute 23,3
+   7              	 .eabi_attribute 24,1
+   8              	 .eabi_attribute 25,1
+   9              	 .eabi_attribute 26,1
+  10              	 .eabi_attribute 30,1
+  11              	 .eabi_attribute 34,1
+  12              	 .eabi_attribute 18,4
+  13              	 .file "gpt.c"
+  14              	 .text
+  15              	.Ltext0:
+  16              	 .cfi_sections .debug_frame
+  17              	 .section .text.gpt_callback,"ax",%progbits
+  18              	 .align 1
+  19              	 .global gpt_callback
+  20              	 .syntax unified
+  21              	 .thumb
+  22              	 .thumb_func
+  23              	 .fpu fpv4-sp-d16
+  25              	gpt_callback:
+  26              	.LFB21:
+  27              	 .file 1 "gpt.c"
+   1:gpt.c         **** /*
+   2:gpt.c         **** ** File   : gpt.c
+   3:gpt.c         **** **
+   4:gpt.c         **** ** Copyright (C) 2013-2018 Gosuncn. All rights reserved.
+   5:gpt.c         **** **
+   6:gpt.c         **** ** Licensed under the Apache License, Version 2.0 (the "License");
+   7:gpt.c         **** ** you may not use this file except in compliance with the License.
+   8:gpt.c         **** ** You may obtain a copy of the License at
+   9:gpt.c         **** **
+  10:gpt.c         **** **      http://www.apache.org/licenses/LICENSE-2.0
+  11:gpt.c         **** **
+  12:gpt.c         **** ** Unless required by applicable law or agreed to in writing, software
+  13:gpt.c         **** ** distributed under the License is distributed on an "AS IS" BASIS,
+  14:gpt.c         **** ** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  15:gpt.c         **** ** See the License for the specific language governing permissions and
+  16:gpt.c         **** ** limitations under the License.
+  17:gpt.c         **** **
+  18:gpt.c         **** ** Author : zhanglei3@gosuncn.cn
+  19:gpt.c         **** **
+  20:gpt.c         **** **  $Date: 2018/08/20 08:45:36GMT+08:00 $
+  21:gpt.c         **** **
+  22:gpt.c         **** */
+  23:gpt.c         **** 
+  24:gpt.c         **** /* this example shows how to use gpt timer */
+  25:gpt.c         **** 
+  26:gpt.c         **** #include "gsdk_sdk.h"
+  27:gpt.c         **** 
+  28:gpt.c         **** static gsdk_handle_t g_huart;
+  29:gpt.c         **** 
+  30:gpt.c         **** int __io_puts(char *data, int len)
+  31:gpt.c         **** {
+ARM GAS   			page 2
+
+
+  32:gpt.c         ****     int ret = 0;
+  33:gpt.c         ****     if (g_huart) {
+  34:gpt.c         ****         ret = gsdk_uart_write(g_huart, (uint8_t *)data, len, 1000);
+  35:gpt.c         ****     }
+  36:gpt.c         ****     return ret;
+  37:gpt.c         **** }
+  38:gpt.c         **** 
+  39:gpt.c         **** int log_init(void)
+  40:gpt.c         **** {
+  41:gpt.c         ****     uart_config_t uart_config;
+  42:gpt.c         ****     gsdk_status_t status;
+  43:gpt.c         **** 
+  44:gpt.c         ****     uart_config.baudrate    = UART_BAUDRATE_115200;
+  45:gpt.c         ****     uart_config.parity      = UART_PARITY_NONE;
+  46:gpt.c         ****     uart_config.stop_bit    = UART_STOP_BIT_1;
+  47:gpt.c         ****     uart_config.word_length = UART_WORD_LENGTH_8;
+  48:gpt.c         **** 
+  49:gpt.c         ****     status = gsdk_uart_open(UART_0, &uart_config, &g_huart);
+  50:gpt.c         ****     if (status != GSDK_SUCCESS) {
+  51:gpt.c         ****         gsdk_syslog_printf("[GPT_DEMO]: failed to open uart %d\r\n", status);
+  52:gpt.c         ****         return -1;
+  53:gpt.c         ****     }
+  54:gpt.c         **** 
+  55:gpt.c         ****     printf("[GPT_DEMO] log init....OK\r\n");
+  56:gpt.c         **** 
+  57:gpt.c         ****     return 0;
+  58:gpt.c         **** }
+  59:gpt.c         **** 
+  60:gpt.c         **** /* timer callback function */
+  61:gpt.c         **** void gpt_callback(void *user_data)
+  62:gpt.c         **** {
+  28              	 .loc 1 62 0
+  29              	 .cfi_startproc
+  30              	 
+  31              	 
+  32              	.LVL0:
+  33 0000 08B5     	 push {r3,lr}
+  34              	 .cfi_def_cfa_offset 8
+  35              	 .cfi_offset 3,-8
+  36              	 .cfi_offset 14,-4
+  63:gpt.c         ****     printf("[GPT_DEMO] echo user_data: %s!\r\n", (char *)user_data);
+  37              	 .loc 1 63 0
+  38 0002 0146     	 mov r1,r0
+  39 0004 0148     	 ldr r0,.L3
+  40              	.LVL1:
+  41 0006 FFF7FEFF 	 bl printf
+  42              	.LVL2:
+  64:gpt.c         **** }
+  43              	 .loc 1 64 0
+  44 000a 08BD     	 pop {r3,pc}
+  45              	.L4:
+  46              	 .align 2
+  47              	.L3:
+  48 000c 00000000 	 .word .LC0
+  49              	 .cfi_endproc
+  50              	.LFE21:
+  52              	 .section .text.__io_puts,"ax",%progbits
+ARM GAS   			page 3
+
+
+  53              	 .align 1
+  54              	 .global __io_puts
+  55              	 .syntax unified
+  56              	 .thumb
+  57              	 .thumb_func
+  58              	 .fpu fpv4-sp-d16
+  60              	__io_puts:
+  61              	.LFB19:
+  31:gpt.c         ****     int ret = 0;
+  62              	 .loc 1 31 0
+  63              	 .cfi_startproc
+  64              	 
+  65              	 
+  66              	.LVL3:
+  67 0000 10B5     	 push {r4,lr}
+  68              	 .cfi_def_cfa_offset 8
+  69              	 .cfi_offset 4,-8
+  70              	 .cfi_offset 14,-4
+  71              	.LVL4:
+  33:gpt.c         ****         ret = gsdk_uart_write(g_huart, (uint8_t *)data, len, 1000);
+  72              	 .loc 1 33 0
+  73 0002 064B     	 ldr r3,.L9
+  74 0004 1C68     	 ldr r4,[r3]
+  75 0006 3CB1     	 cbz r4,.L7
+  76 0008 0A46     	 mov r2,r1
+  77 000a 0146     	 mov r1,r0
+  78              	.LVL5:
+  34:gpt.c         ****     }
+  79              	 .loc 1 34 0
+  80 000c 4FF47A73 	 mov r3,#1000
+  81 0010 2046     	 mov r0,r4
+  82              	.LVL6:
+  83 0012 FFF7FEFF 	 bl gsdk_uart_write
+  84              	.LVL7:
+  85              	.L5:
+  37:gpt.c         **** 
+  86              	 .loc 1 37 0
+  87 0016 10BD     	 pop {r4,pc}
+  88              	.LVL8:
+  89              	.L7:
+  32:gpt.c         ****     if (g_huart) {
+  90              	 .loc 1 32 0
+  91 0018 0020     	 movs r0,#0
+  92              	.LVL9:
+  36:gpt.c         **** }
+  93              	 .loc 1 36 0
+  94 001a FCE7     	 b .L5
+  95              	.L10:
+  96              	 .align 2
+  97              	.L9:
+  98 001c 00000000 	 .word .LANCHOR0
+  99              	 .cfi_endproc
+ 100              	.LFE19:
+ 102              	 .section .text.log_init,"ax",%progbits
+ 103              	 .align 1
+ 104              	 .global log_init
+ 105              	 .syntax unified
+ARM GAS   			page 4
+
+
+ 106              	 .thumb
+ 107              	 .thumb_func
+ 108              	 .fpu fpv4-sp-d16
+ 110              	log_init:
+ 111              	.LFB20:
+  40:gpt.c         ****     uart_config_t uart_config;
+ 112              	 .loc 1 40 0
+ 113              	 .cfi_startproc
+ 114              	 
+ 115              	 
+ 116 0000 00B5     	 push {lr}
+ 117              	 .cfi_def_cfa_offset 4
+ 118              	 .cfi_offset 14,-4
+ 119 0002 83B0     	 sub sp,sp,#12
+ 120              	 .cfi_def_cfa_offset 16
+  44:gpt.c         ****     uart_config.parity      = UART_PARITY_NONE;
+ 121              	 .loc 1 44 0
+ 122 0004 0923     	 movs r3,#9
+ 123 0006 8DF80430 	 strb r3,[sp,#4]
+  45:gpt.c         ****     uart_config.stop_bit    = UART_STOP_BIT_1;
+ 124              	 .loc 1 45 0
+ 125 000a 0020     	 movs r0,#0
+ 126 000c 8DF80700 	 strb r0,[sp,#7]
+  46:gpt.c         ****     uart_config.word_length = UART_WORD_LENGTH_8;
+ 127              	 .loc 1 46 0
+ 128 0010 8DF80600 	 strb r0,[sp,#6]
+  47:gpt.c         **** 
+ 129              	 .loc 1 47 0
+ 130 0014 0323     	 movs r3,#3
+ 131 0016 8DF80530 	 strb r3,[sp,#5]
+  49:gpt.c         ****     if (status != GSDK_SUCCESS) {
+ 132              	 .loc 1 49 0
+ 133 001a 094A     	 ldr r2,.L16
+ 134 001c 01A9     	 add r1,sp,#4
+ 135 001e FFF7FEFF 	 bl gsdk_uart_open
+ 136              	.LVL10:
+  50:gpt.c         ****         gsdk_syslog_printf("[GPT_DEMO]: failed to open uart %d\r\n", status);
+ 137              	 .loc 1 50 0
+ 138 0022 30B9     	 cbnz r0,.L15
+  55:gpt.c         **** 
+ 139              	 .loc 1 55 0
+ 140 0024 0748     	 ldr r0,.L16+4
+ 141              	.LVL11:
+ 142 0026 FFF7FEFF 	 bl puts
+ 143              	.LVL12:
+  57:gpt.c         **** }
+ 144              	 .loc 1 57 0
+ 145 002a 0020     	 movs r0,#0
+ 146              	.L11:
+  58:gpt.c         **** 
+ 147              	 .loc 1 58 0
+ 148 002c 03B0     	 add sp,sp,#12
+ 149              	 .cfi_remember_state
+ 150              	 .cfi_def_cfa_offset 4
+ 151              	 
+ 152 002e 5DF804FB 	 ldr pc,[sp],#4
+ 153              	.LVL13:
+ARM GAS   			page 5
+
+
+ 154              	.L15:
+ 155              	 .cfi_restore_state
+ 156 0032 0146     	 mov r1,r0
+  51:gpt.c         ****         return -1;
+ 157              	 .loc 1 51 0
+ 158 0034 0448     	 ldr r0,.L16+8
+ 159              	.LVL14:
+ 160 0036 FFF7FEFF 	 bl gsdk_syslog_printf
+ 161              	.LVL15:
+  52:gpt.c         ****     }
+ 162              	 .loc 1 52 0
+ 163 003a 4FF0FF30 	 mov r0,#-1
+ 164 003e F5E7     	 b .L11
+ 165              	.L17:
+ 166              	 .align 2
+ 167              	.L16:
+ 168 0040 00000000 	 .word .LANCHOR0
+ 169 0044 28000000 	 .word .LC2
+ 170 0048 00000000 	 .word .LC1
+ 171              	 .cfi_endproc
+ 172              	.LFE20:
+ 174              	 .section .text.main,"ax",%progbits
+ 175              	 .align 1
+ 176              	 .global main
+ 177              	 .syntax unified
+ 178              	 .thumb
+ 179              	 .thumb_func
+ 180              	 .fpu fpv4-sp-d16
+ 182              	main:
+ 183              	.LFB22:
+  65:gpt.c         **** 
+  66:gpt.c         **** /************************************************************
+  67:gpt.c         ****   * first: open gpt timer
+  68:gpt.c         ****   * second: start gpt timer
+  69:gpt.c         ****   * last: close gpt timer
+  70:gpt.c         ****   **********************************************************/
+  71:gpt.c         **** int main(void)
+  72:gpt.c         **** {
+ 184              	 .loc 1 72 0
+ 185              	 .cfi_startproc
+ 186              	 
+ 187              	 
+ 188 0000 10B5     	 push {r4,lr}
+ 189              	 .cfi_def_cfa_offset 8
+ 190              	 .cfi_offset 4,-8
+ 191              	 .cfi_offset 14,-4
+ 192 0002 86B0     	 sub sp,sp,#24
+ 193              	 .cfi_def_cfa_offset 32
+ 194              	.LVL16:
+  73:gpt.c         ****     gsdk_status_t   status;
+  74:gpt.c         ****     gsdk_handle_t   hgpt;
+  75:gpt.c         ****     gpt_config_t    gpt_config;
+  76:gpt.c         ****     gpt_port_t      gpt_port;
+  77:gpt.c         ****     char *param = "abcdef";
+  78:gpt.c         ****     int i = 5;
+  79:gpt.c         **** 
+  80:gpt.c         ****     log_init();
+ARM GAS   			page 6
+
+
+ 195              	 .loc 1 80 0
+ 196 0004 FFF7FEFF 	 bl log_init
+ 197              	.LVL17:
+  81:gpt.c         **** 
+  82:gpt.c         ****     /*********************************************************
+  83:gpt.c         ****       * only gpt_timer1 and gpt_timer2 can be supported
+  84:gpt.c         ****       * gpt_port = GPT_PORT_1;
+  85:gpt.c         ****       * gpt_port = GPT_PORT_2;
+  86:gpt.c         ****       *******************************************************/
+  87:gpt.c         ****     gpt_port = GPT_PORT_1;
+  88:gpt.c         **** 
+  89:gpt.c         ****     /*********************************************************
+  90:gpt.c         ****       * only us level and ms level can be supported
+  91:gpt.c         ****       * gpt_config.um = GSDK_GPT_US;
+  92:gpt.c         ****       * gpt_config.um = GSDK_GPT_MS;
+  93:gpt.c         ****       *******************************************************/
+  94:gpt.c         ****     gpt_config.um = GSDK_GPT_MS;
+ 198              	 .loc 1 94 0
+ 199 0008 0123     	 movs r3,#1
+ 200 000a 8DF80530 	 strb r3,[sp,#5]
+  95:gpt.c         **** 
+  96:gpt.c         ****     /*********************************************************
+  97:gpt.c         ****       * gpt_timer can support repeat trigger or one shot type
+  98:gpt.c         ****       * gpt_config.timer_type = GSDK_GPT_TYPE_ONE_SHOT;
+  99:gpt.c         ****       * gpt_config.timer_type = GSDK_GPT_TYPE_REPEAT;
+ 100:gpt.c         ****       *******************************************************/
+ 101:gpt.c         ****     gpt_config.timer_type = GSDK_GPT_TYPE_REPEAT;
+ 201              	 .loc 1 101 0
+ 202 000e 8DF80430 	 strb r3,[sp,#4]
+ 102:gpt.c         **** 
+ 103:gpt.c         ****     gpt_config.timer_out = 1000;
+ 203              	 .loc 1 103 0
+ 204 0012 4FF47A73 	 mov r3,#1000
+ 205 0016 0293     	 str r3,[sp,#8]
+ 104:gpt.c         ****     gpt_config.function = &gpt_callback;
+ 206              	 .loc 1 104 0
+ 207 0018 304B     	 ldr r3,.L33
+ 208 001a 0393     	 str r3,[sp,#12]
+ 105:gpt.c         ****     gpt_config.data = param;
+ 209              	 .loc 1 105 0
+ 210 001c 304B     	 ldr r3,.L33+4
+ 211 001e 0493     	 str r3,[sp,#16]
+  78:gpt.c         **** 
+ 212              	 .loc 1 78 0
+ 213 0020 0524     	 movs r4,#5
+ 214              	.LVL18:
+ 215              	.L19:
+ 106:gpt.c         **** 
+ 107:gpt.c         ****     /*************************************************************
+ 108:gpt.c         ****       * timer instruction
+ 109:gpt.c         ****       * open, start, stop, start, close
+ 110:gpt.c         ****       *repeat 5 times
+ 111:gpt.c         ****       ***********************************************************/
+ 112:gpt.c         ****     while (i) {
+ 216              	 .loc 1 112 0
+ 217 0022 002C     	 cmp r4,#0
+ 218 0024 43D0     	 beq .L18
+ARM GAS   			page 7
+
+
+ 113:gpt.c         ****         printf("open GPT_PORT_%d\r\n", gpt_port);
+ 219              	 .loc 1 113 0
+ 220 0026 0121     	 movs r1,#1
+ 221 0028 2E48     	 ldr r0,.L33+8
+ 222 002a FFF7FEFF 	 bl printf
+ 223              	.LVL19:
+ 114:gpt.c         ****         status = gsdk_gpt_timer_open(gpt_port, &gpt_config, &hgpt);
+ 224              	 .loc 1 114 0
+ 225 002e 05AA     	 add r2,sp,#20
+ 226 0030 01A9     	 add r1,sp,#4
+ 227 0032 0120     	 movs r0,#1
+ 228 0034 FFF7FEFF 	 bl gsdk_gpt_timer_open
+ 229              	.LVL20:
+ 115:gpt.c         ****         if (status != GSDK_SUCCESS) {
+ 230              	 .loc 1 115 0
+ 231 0038 0146     	 mov r1,r0
+ 232 003a A0BB     	 cbnz r0,.L28
+ 116:gpt.c         ****             printf("[GPT_DEMO] gpt open failed %d!\n", status);
+ 117:gpt.c         ****             return status;
+ 118:gpt.c         ****         }
+ 119:gpt.c         **** 
+ 120:gpt.c         ****         printf("start GPT_PORT_%d\r\n", gpt_port);
+ 233              	 .loc 1 120 0
+ 234 003c 0121     	 movs r1,#1
+ 235 003e 2A48     	 ldr r0,.L33+12
+ 236              	.LVL21:
+ 237 0040 FFF7FEFF 	 bl printf
+ 238              	.LVL22:
+ 121:gpt.c         ****         status = gsdk_gpt_timer_start(hgpt);
+ 239              	 .loc 1 121 0
+ 240 0044 0598     	 ldr r0,[sp,#20]
+ 241 0046 FFF7FEFF 	 bl gsdk_gpt_timer_start
+ 242              	.LVL23:
+ 122:gpt.c         ****         if (status != GSDK_SUCCESS) {
+ 243              	 .loc 1 122 0
+ 244 004a 0146     	 mov r1,r0
+ 245 004c 90BB     	 cbnz r0,.L29
+ 123:gpt.c         ****             printf("[GPT_DEMO] gpt start failed %d!\n", status);
+ 124:gpt.c         ****             return status;
+ 125:gpt.c         ****         }
+ 126:gpt.c         ****         vTaskDelay(500);
+ 246              	 .loc 1 126 0
+ 247 004e 4FF4FA70 	 mov r0,#500
+ 248              	.LVL24:
+ 249 0052 FFF7FEFF 	 bl vTaskDelay
+ 250              	.LVL25:
+ 127:gpt.c         **** 
+ 128:gpt.c         ****         printf("stop GPT_PORT_%d\r\n", gpt_port);
+ 251              	 .loc 1 128 0
+ 252 0056 0121     	 movs r1,#1
+ 253 0058 2448     	 ldr r0,.L33+16
+ 254 005a FFF7FEFF 	 bl printf
+ 255              	.LVL26:
+ 129:gpt.c         ****         status = gsdk_gpt_timer_stop(hgpt);
+ 256              	 .loc 1 129 0
+ 257 005e 0598     	 ldr r0,[sp,#20]
+ 258 0060 FFF7FEFF 	 bl gsdk_gpt_timer_stop
+ARM GAS   			page 8
+
+
+ 259              	.LVL27:
+ 130:gpt.c         ****         if (status != GSDK_SUCCESS) {
+ 260              	 .loc 1 130 0
+ 261 0064 0146     	 mov r1,r0
+ 262 0066 50BB     	 cbnz r0,.L30
+ 131:gpt.c         ****             printf("[GPT_DEMO] gpt stop failed %d!\n", status);
+ 132:gpt.c         ****             return status;
+ 133:gpt.c         ****         }
+ 134:gpt.c         ****         vTaskDelay(100);
+ 263              	 .loc 1 134 0
+ 264 0068 6420     	 movs r0,#100
+ 265              	.LVL28:
+ 266 006a FFF7FEFF 	 bl vTaskDelay
+ 267              	.LVL29:
+ 135:gpt.c         **** 
+ 136:gpt.c         ****         printf("start GPT_PORT_%d\r\n", gpt_port);
+ 268              	 .loc 1 136 0
+ 269 006e 0121     	 movs r1,#1
+ 270 0070 1D48     	 ldr r0,.L33+12
+ 271 0072 FFF7FEFF 	 bl printf
+ 272              	.LVL30:
+ 137:gpt.c         ****         /* the timer must be in open or close state before starting */
+ 138:gpt.c         ****         status = gsdk_gpt_timer_start(hgpt);
+ 273              	 .loc 1 138 0
+ 274 0076 0598     	 ldr r0,[sp,#20]
+ 275 0078 FFF7FEFF 	 bl gsdk_gpt_timer_start
+ 276              	.LVL31:
+ 139:gpt.c         ****         if (status != GSDK_SUCCESS) {
+ 277              	 .loc 1 139 0
+ 278 007c 0146     	 mov r1,r0
+ 279 007e 18BB     	 cbnz r0,.L31
+ 140:gpt.c         ****             printf("[GPT_DEMO] gpt start failed %d!\n", status);
+ 141:gpt.c         ****             return status;
+ 142:gpt.c         ****         }
+ 143:gpt.c         ****         vTaskDelay(500);
+ 280              	 .loc 1 143 0
+ 281 0080 4FF4FA70 	 mov r0,#500
+ 282              	.LVL32:
+ 283 0084 FFF7FEFF 	 bl vTaskDelay
+ 284              	.LVL33:
+ 144:gpt.c         **** 
+ 145:gpt.c         ****         printf("close GPT_PORT_%d\r\n", gpt_port);
+ 285              	 .loc 1 145 0
+ 286 0088 0121     	 movs r1,#1
+ 287 008a 1948     	 ldr r0,.L33+20
+ 288 008c FFF7FEFF 	 bl printf
+ 289              	.LVL34:
+ 146:gpt.c         ****         status = gsdk_gpt_timer_close(hgpt);
+ 290              	 .loc 1 146 0
+ 291 0090 0598     	 ldr r0,[sp,#20]
+ 292 0092 FFF7FEFF 	 bl gsdk_gpt_timer_close
+ 293              	.LVL35:
+ 147:gpt.c         ****         if (status != GSDK_SUCCESS) {
+ 294              	 .loc 1 147 0
+ 295 0096 0146     	 mov r1,r0
+ 296 0098 D8B9     	 cbnz r0,.L32
+ 148:gpt.c         ****             printf("[GPT_DEMO] gpt close failed %d!\n", status);
+ARM GAS   			page 9
+
+
+ 149:gpt.c         ****             return status;
+ 150:gpt.c         ****         }
+ 151:gpt.c         ****         vTaskDelay(1000);
+ 297              	 .loc 1 151 0
+ 298 009a 4FF47A70 	 mov r0,#1000
+ 299              	.LVL36:
+ 300 009e FFF7FEFF 	 bl vTaskDelay
+ 301              	.LVL37:
+ 152:gpt.c         **** 
+ 153:gpt.c         ****         i--;
+ 302              	 .loc 1 153 0
+ 303 00a2 013C     	 subs r4,r4,#1
+ 304              	.LVL38:
+ 305 00a4 BDE7     	 b .L19
+ 306              	.LVL39:
+ 307              	.L28:
+ 116:gpt.c         ****             return status;
+ 308              	 .loc 1 116 0
+ 309 00a6 0446     	 mov r4,r0
+ 310              	.LVL40:
+ 311 00a8 1248     	 ldr r0,.L33+24
+ 312              	.LVL41:
+ 313 00aa FFF7FEFF 	 bl printf
+ 314              	.LVL42:
+ 315              	.L18:
+ 154:gpt.c         ****     }
+ 155:gpt.c         ****     return 0;
+ 156:gpt.c         **** }
+ 316              	 .loc 1 156 0
+ 317 00ae 2046     	 mov r0,r4
+ 318 00b0 06B0     	 add sp,sp,#24
+ 319              	 .cfi_remember_state
+ 320              	 .cfi_def_cfa_offset 8
+ 321              	 
+ 322 00b2 10BD     	 pop {r4,pc}
+ 323              	.LVL43:
+ 324              	.L29:
+ 325              	 .cfi_restore_state
+ 123:gpt.c         ****             return status;
+ 326              	 .loc 1 123 0
+ 327 00b4 0446     	 mov r4,r0
+ 328              	.LVL44:
+ 329 00b6 1048     	 ldr r0,.L33+28
+ 330              	.LVL45:
+ 331 00b8 FFF7FEFF 	 bl printf
+ 332              	.LVL46:
+ 124:gpt.c         ****         }
+ 333              	 .loc 1 124 0
+ 334 00bc F7E7     	 b .L18
+ 335              	.LVL47:
+ 336              	.L30:
+ 131:gpt.c         ****             return status;
+ 337              	 .loc 1 131 0
+ 338 00be 0446     	 mov r4,r0
+ 339              	.LVL48:
+ 340 00c0 0E48     	 ldr r0,.L33+32
+ 341              	.LVL49:
+ARM GAS   			page 10
+
+
+ 342 00c2 FFF7FEFF 	 bl printf
+ 343              	.LVL50:
+ 132:gpt.c         ****         }
+ 344              	 .loc 1 132 0
+ 345 00c6 F2E7     	 b .L18
+ 346              	.LVL51:
+ 347              	.L31:
+ 140:gpt.c         ****             return status;
+ 348              	 .loc 1 140 0
+ 349 00c8 0446     	 mov r4,r0
+ 350              	.LVL52:
+ 351 00ca 0B48     	 ldr r0,.L33+28
+ 352              	.LVL53:
+ 353 00cc FFF7FEFF 	 bl printf
+ 354              	.LVL54:
+ 141:gpt.c         ****         }
+ 355              	 .loc 1 141 0
+ 356 00d0 EDE7     	 b .L18
+ 357              	.LVL55:
+ 358              	.L32:
+ 148:gpt.c         ****             return status;
+ 359              	 .loc 1 148 0
+ 360 00d2 0446     	 mov r4,r0
+ 361              	.LVL56:
+ 362 00d4 0A48     	 ldr r0,.L33+36
+ 363              	.LVL57:
+ 364 00d6 FFF7FEFF 	 bl printf
+ 365              	.LVL58:
+ 149:gpt.c         ****         }
+ 366              	 .loc 1 149 0
+ 367 00da E8E7     	 b .L18
+ 368              	.L34:
+ 369              	 .align 2
+ 370              	.L33:
+ 371 00dc 00000000 	 .word gpt_callback
+ 372 00e0 00000000 	 .word .LC3
+ 373 00e4 08000000 	 .word .LC4
+ 374 00e8 3C000000 	 .word .LC6
+ 375 00ec 74000000 	 .word .LC8
+ 376 00f0 A8000000 	 .word .LC10
+ 377 00f4 1C000000 	 .word .LC5
+ 378 00f8 50000000 	 .word .LC7
+ 379 00fc 88000000 	 .word .LC9
+ 380 0100 BC000000 	 .word .LC11
+ 381              	 .cfi_endproc
+ 382              	.LFE22:
+ 384              	 .section .bss.g_huart,"aw",%nobits
+ 385              	 .align 2
+ 386              	 .set .LANCHOR0,.+0
+ 389              	g_huart:
+ 390 0000 00000000 	 .space 4
+ 391              	 .section .rodata.gpt_callback.str1.4,"aMS",%progbits,1
+ 392              	 .align 2
+ 393              	.LC0:
+ 394 0000 5B475054 	 .ascii "[GPT_DEMO] echo user_data: %s!\015\012\000"
+ 394      5F44454D 
+ 394      4F5D2065 
+ARM GAS   			page 11
+
+
+ 394      63686F20 
+ 394      75736572 
+ 395              	 .section .rodata.log_init.str1.4,"aMS",%progbits,1
+ 396              	 .align 2
+ 397              	.LC1:
+ 398 0000 5B475054 	 .ascii "[GPT_DEMO]: failed to open uart %d\015\012\000"
+ 398      5F44454D 
+ 398      4F5D3A20 
+ 398      6661696C 
+ 398      65642074 
+ 399 0025 000000   	 .space 3
+ 400              	.LC2:
+ 401 0028 5B475054 	 .ascii "[GPT_DEMO] log init....OK\015\000"
+ 401      5F44454D 
+ 401      4F5D206C 
+ 401      6F672069 
+ 401      6E69742E 
+ 402              	 .section .rodata.main.str1.4,"aMS",%progbits,1
+ 403              	 .align 2
+ 404              	.LC3:
+ 405 0000 61626364 	 .ascii "abcdef\000"
+ 405      656600
+ 406 0007 00       	 .space 1
+ 407              	.LC4:
+ 408 0008 6F70656E 	 .ascii "open GPT_PORT_%d\015\012\000"
+ 408      20475054 
+ 408      5F504F52 
+ 408      545F2564 
+ 408      0D0A00
+ 409 001b 00       	 .space 1
+ 410              	.LC5:
+ 411 001c 5B475054 	 .ascii "[GPT_DEMO] gpt open failed %d!\012\000"
+ 411      5F44454D 
+ 411      4F5D2067 
+ 411      7074206F 
+ 411      70656E20 
+ 412              	.LC6:
+ 413 003c 73746172 	 .ascii "start GPT_PORT_%d\015\012\000"
+ 413      74204750 
+ 413      545F504F 
+ 413      52545F25 
+ 413      640D0A00 
+ 414              	.LC7:
+ 415 0050 5B475054 	 .ascii "[GPT_DEMO] gpt start failed %d!\012\000"
+ 415      5F44454D 
+ 415      4F5D2067 
+ 415      70742073 
+ 415      74617274 
+ 416 0071 000000   	 .space 3
+ 417              	.LC8:
+ 418 0074 73746F70 	 .ascii "stop GPT_PORT_%d\015\012\000"
+ 418      20475054 
+ 418      5F504F52 
+ 418      545F2564 
+ 418      0D0A00
+ 419 0087 00       	 .space 1
+ 420              	.LC9:
+ARM GAS   			page 12
+
+
+ 421 0088 5B475054 	 .ascii "[GPT_DEMO] gpt stop failed %d!\012\000"
+ 421      5F44454D 
+ 421      4F5D2067 
+ 421      70742073 
+ 421      746F7020 
+ 422              	.LC10:
+ 423 00a8 636C6F73 	 .ascii "close GPT_PORT_%d\015\012\000"
+ 423      65204750 
+ 423      545F504F 
+ 423      52545F25 
+ 423      640D0A00 
+ 424              	.LC11:
+ 425 00bc 5B475054 	 .ascii "[GPT_DEMO] gpt close failed %d!\012\000"
+ 425      5F44454D 
+ 425      4F5D2067 
+ 425      70742063 
+ 425      6C6F7365 
+ 426              	 .text
+ 427              	.Letext0:
+ 428              	 .file 2 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 429              	 .file 3 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\lock.h"
+ 430              	 .file 4 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\_types.h"
+ 431              	 .file 5 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\lib\\gcc\\arm-none-eabi\\7.3.1\\include\\stddef.h"
+ 432              	 .file 6 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\reent.h"
+ 433              	 .file 7 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\_stdint.h"
+ 434              	 .file 8 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\stdlib.h"
+ 435              	 .file 9 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/include/FreeRTOSConfig.h"
+ 436              	 .file 10 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\errno.h"
+ 437              	 .file 11 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\time.h"
+ 438              	 .file 12 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/ports/include/arch/cc.h"
+ 439              	 .file 13 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/ip4_addr.h"
+ 440              	 .file 14 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/ip6_addr.h"
+ 441              	 .file 15 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/ip_addr.h"
+ 442              	 .file 16 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/err.h"
+ 443              	 .file 17 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/pbuf.h"
+ 444              	 .file 18 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/netif.h"
+ 445              	 .file 19 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/inet.h"
+ 446              	 .file 20 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/ip4.h"
+ 447              	 .file 21 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/ip6.h"
+ 448              	 .file 22 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/ip.h"
+ 449              	 .file 23 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_common.h"
+ 450              	 .file 24 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_uart.h"
+ 451              	 .file 25 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_flash.h"
+ 452              	 .file 26 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_gpt.h"
+ 453              	 .file 27 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\stdio.h"
+ 454              	 .file 28 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/include/task.h"
+ 455              	 .file 29 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_api.h"
+ 456              	 .file 30 "<built-in>"
+ARM GAS   			page 13
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 gpt.c
+    {standard input}:18     .text.gpt_callback:00000000 $t
+    {standard input}:25     .text.gpt_callback:00000000 gpt_callback
+    {standard input}:48     .text.gpt_callback:0000000c $d
+    {standard input}:53     .text.__io_puts:00000000 $t
+    {standard input}:60     .text.__io_puts:00000000 __io_puts
+    {standard input}:98     .text.__io_puts:0000001c $d
+    {standard input}:103    .text.log_init:00000000 $t
+    {standard input}:110    .text.log_init:00000000 log_init
+    {standard input}:168    .text.log_init:00000040 $d
+    {standard input}:175    .text.main:00000000 $t
+    {standard input}:182    .text.main:00000000 main
+    {standard input}:371    .text.main:000000dc $d
+    {standard input}:385    .bss.g_huart:00000000 $d
+    {standard input}:389    .bss.g_huart:00000000 g_huart
+    {standard input}:392    .rodata.gpt_callback.str1.4:00000000 $d
+    {standard input}:396    .rodata.log_init.str1.4:00000000 $d
+    {standard input}:403    .rodata.main.str1.4:00000000 $d
+                           .group:00000000 wm4.0.8fab1e1450c2b74bdd5e2aed4c325bf1
+                           .group:00000000 wm4._newlib_version.h.4.875b979a44719054cd750d0952ad3fd6
+                           .group:00000000 wm4.newlib.h.18.5e5ca3429233af402d406a202f1fc1ac
+                           .group:00000000 wm4.ieeefp.h.77.220d9cccac42cd58761758bee2df4ce6
+                           .group:00000000 wm4.features.h.22.fad1cec3bc7ff06488171438dbdcfd02
+                           .group:00000000 wm4.config.h.220.6cac6a9685cfce5e83c17784171638d9
+                           .group:00000000 wm4._ansi.h.31.de524f58584151836e90d8620a16f8e8
+                           .group:00000000 wm4.stdio.h.31.7c0e28c411445f3f9c5b11accf882760
+                           .group:00000000 wm4._default_types.h.6.959254cf5f09734ea7516c89e8bb21bd
+                           .group:00000000 wm4.stddef.h.187.2ff233552538c6ff9b8575ca8ea52cb3
+                           .group:00000000 wm4.cdefs.h.47.0bcdf94cb40e176393dd1404056825b4
+                           .group:00000000 wm4.stddef.h.39.ec95e8feac892e292b69dc7ae75b0d64
+                           .group:00000000 wm4.stdarg.h.34.3a23a216c0c293b3d2ea2e89281481e6
+                           .group:00000000 wm4.lock.h.2.1461d1fff82dffe8bfddc23307f6484f
+                           .group:00000000 wm4._types.h.125.5cf8a495f1f7ef36777ad868a1e32068
+                           .group:00000000 wm4.stddef.h.161.5349cb105733e8777bfb0cf53c4e3f34
+                           .group:00000000 wm4._types.h.184.03611d4f6b5bec9997bcf4279eceba07
+                           .group:00000000 wm4.reent.h.17.90c2574d4acdcfce933db5cb09ff35fe
+                           .group:00000000 wm4.types.h.40.e8c16e7ec36ba55f133d0616070e25fc
+                           .group:00000000 wm4._stdint.h.10.c24fa3af3bc1706662bb5593a907e841
+                           .group:00000000 wm4._endian.h.31.65a10590763c3dde1ac4a7f66d7d4891
+                           .group:00000000 wm4.endian.h.9.49f3a4695c1b61e8a0808de3c4a106cb
+                           .group:00000000 wm4._timeval.h.30.0e8bfd94e85db17dda3286ee81496fe6
+                           .group:00000000 wm4.timespec.h.41.d855182eb0e690443ab8651bcedca6e1
+                           .group:00000000 wm4.select.h.19.97ca6fd0c752a0f3b6719fd314d361e6
+                           .group:00000000 wm4.types.h.69.ed3eae3cf73030a737515151ebcab7a1
+                           .group:00000000 wm4.sched.h.22.c60982713a5c428609783c78f9c78d95
+                           .group:00000000 wm4._pthreadtypes.h.36.fcee9961c35163dde6267ef772ad1972
+                           .group:00000000 wm4.stdio.h.2.4aa87247282eca6c8f36f9de33d8df1a
+                           .group:00000000 wm4.stdio.h.81.932d0c162786b883f622b8d05c120c78
+                           .group:00000000 wm4.stdlib.h.13.4ed386f5c1a80d71e72172885d946ef2
+                           .group:00000000 wm4.stddef.h.161.19e15733342b50ead2919490b095303e
+                           .group:00000000 wm4.alloca.h.8.dfc0c703c47ec3e69746825b17d9e66d
+                           .group:00000000 wm4.stdlib.h.56.d4493cd3736e51e9d56335045f26df45
+                           .group:00000000 wm4.string.h.8.c4b8571ce60dff2817f43fec8b86aecd
+                           .group:00000000 wm4._intsup.h.10.cce27fed8484c08a33f522034c30d2b5
+                           .group:00000000 wm4.stdint.h.23.d53047a68f4a85177f80b422d52785ed
+                           .group:00000000 wm4.FreeRTOSConfig.h.68.1d0dd6b8cda279d0020827f5584733bd
+ARM GAS   			page 14
+
+
+                           .group:00000000 wm4.projdefs.h.71.1734cd3501e070360596dd847bb9d813
+                           .group:00000000 wm4.portmacro.h.72.3d5d774f718d157a637f7eb960850f27
+                           .group:00000000 wm4.portable.h.98.f435842f50d7864fba6a318a13e72513
+                           .group:00000000 wm4.mpu_wrappers.h.71.dd245fe44d82bd40288b5a47f895c82c
+                           .group:00000000 wm4.FreeRTOS.h.175.3abf49eaca38658a192da8d7c86d5374
+                           .group:00000000 wm4.queue.h.72.3695320c7600effec3d17b83c99d3c0b
+                           .group:00000000 wm4.semphr.h.81.476996112f7cf2dd045dbdd37a9136bc
+                           .group:00000000 wm4.list.h.103.6a12b7b9a7a136c3cca0ee53675c5498
+                           .group:00000000 wm4.task.h.88.da474b04c368050657453c137d8efe45
+                           .group:00000000 wm4.timers.h.96.b62a20effad09455c0ed06e5f17e2a48
+                           .group:00000000 wm4.lwipopts.h.39.6b59604adf87dc94bbbda24564503740
+                           .group:00000000 wm4.errno.h.2.ba016d646105af6cad23be83630b6a3f
+                           .group:00000000 wm4.errno.h.9.1ecd7b1049497a0ab61da0f6cbd4b0c6
+                           .group:00000000 wm4.time.h.38.20beed93add9f31905d3a626e4660be9
+                           .group:00000000 wm4.time.h.8.db4619001f026d0b4874c029fef0e91f
+                           .group:00000000 wm4.time.h.2.4581ce0ffb6627cfc02162c94bf846c9
+                           .group:00000000 wm4.time.h.25.483ee9b7e27a5dcca3d222ded0e25e01
+                           .group:00000000 wm4.cc.h.48.d6d2c2bb4a8eeb217c55b9ca1943b7a0
+                           .group:00000000 wm4.arch.h.65.8829bb52e9eb86f038bc22f28844c005
+                           .group:00000000 wm4.debug.h.44.85dd174371aa97df303e04153d799135
+                           .group:00000000 wm4.opt.h.77.035e4f6feedd8c96216e0818f09a9265
+                           .group:00000000 wm4.def.h.33.687716bada84b2810fdf97c9d167aeeb
+                           .group:00000000 wm4.ip4_addr.h.33.1a8b96da9c9099dd4d4b421392c24416
+                           .group:00000000 wm4.ip6_addr.h.43.f0356dc1c9eb4011a6824b272ca0bdec
+                           .group:00000000 wm4.ip_addr.h.58.d7bcbad6cfa9a793708e54980ac1c34d
+                           .group:00000000 wm4.netif.h.33.379f236f9670aafd30086e50d1a89f89
+                           .group:00000000 wm4.err.h.33.f97d15a7862198a77a6b19a8b190fee7
+                           .group:00000000 wm4.pbuf.h.34.202868ef9162d4cb74cfc854b7b74f63
+                           .group:00000000 wm4.netif.h.67.da8672002bd78982c4ab50b84285a595
+                           .group:00000000 wm4.inet.h.41.0cf9f502d748021afadf1fe4fba638f4
+                           .group:00000000 wm4.sockets.h.72.bc82e899e862bc38df9aee17d977f9be
+                           .group:00000000 wm4.ip4.h.33.2db1e45313b1f472e08d288657c61499
+                           .group:00000000 wm4.ip6.h.42.4c9fe14607f20e2a534215f8047124e1
+                           .group:00000000 wm4.ip.h.49.1a1fbae54cafc9b96064363517198239
+                           .group:00000000 wm4.gsdk_common.h.25.69f333dc5f5113dd7092f6831560754f
+                           .group:00000000 wm4.gsdk_flash.h.25.4d08791083e4af07d64570151ac0803c
+                           .group:00000000 wm4.app_loader.h.25.aa64c8d4536aca920728cda79a275eeb
+                           .group:00000000 wm4.gsdk_ril.h.43.ec5a175e110d1c70143139b168262c34
+                           .group:00000000 wm4.gsdk_ril_cmds.h.25.9576f30a39fa8fd69cc4f6c2fc4c8bd9
+
+UNDEFINED SYMBOLS
+printf
+gsdk_uart_write
+gsdk_uart_open
+puts
+gsdk_syslog_printf
+gsdk_gpt_timer_open
+gsdk_gpt_timer_start
+vTaskDelay
+gsdk_gpt_timer_stop
+gsdk_gpt_timer_close

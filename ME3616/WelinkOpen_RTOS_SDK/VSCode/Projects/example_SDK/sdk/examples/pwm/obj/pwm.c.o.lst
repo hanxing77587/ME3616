@@ -1,0 +1,643 @@
+ARM GAS   			page 1
+
+
+   1              	 .cpu cortex-m4
+   2              	 .eabi_attribute 27,1
+   3              	 .eabi_attribute 28,1
+   4              	 .eabi_attribute 20,1
+   5              	 .eabi_attribute 21,1
+   6              	 .eabi_attribute 23,3
+   7              	 .eabi_attribute 24,1
+   8              	 .eabi_attribute 25,1
+   9              	 .eabi_attribute 26,1
+  10              	 .eabi_attribute 30,1
+  11              	 .eabi_attribute 34,1
+  12              	 .eabi_attribute 18,4
+  13              	 .file "pwm.c"
+  14              	 .text
+  15              	.Ltext0:
+  16              	 .cfi_sections .debug_frame
+  17              	 .section .text.gpio_callback,"ax",%progbits
+  18              	 .align 1
+  19              	 .global gpio_callback
+  20              	 .syntax unified
+  21              	 .thumb
+  22              	 .thumb_func
+  23              	 .fpu fpv4-sp-d16
+  25              	gpio_callback:
+  26              	.LFB3:
+  27              	 .file 1 "pwm.c"
+   1:pwm.c         **** /*
+   2:pwm.c         **** ** File   : pwm.c
+   3:pwm.c         **** **
+   4:pwm.c         **** ** Copyright (C) 2013-2018 Gosuncn. All rights reserved.
+   5:pwm.c         **** **
+   6:pwm.c         **** ** Licensed under the Apache License, Version 2.0 (the "License");
+   7:pwm.c         **** ** you may not use this file except in compliance with the License.
+   8:pwm.c         **** ** You may obtain a copy of the License at
+   9:pwm.c         **** **
+  10:pwm.c         **** **      http://www.apache.org/licenses/LICENSE-2.0
+  11:pwm.c         **** **
+  12:pwm.c         **** ** Unless required by applicable law or agreed to in writing, software
+  13:pwm.c         **** ** distributed under the License is distributed on an "AS IS" BASIS,
+  14:pwm.c         **** ** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  15:pwm.c         **** ** See the License for the specific language governing permissions and
+  16:pwm.c         **** ** limitations under the License.
+  17:pwm.c         **** **
+  18:pwm.c         **** ** Author : qubo@gosuncn.cn
+  19:pwm.c         **** **
+  20:pwm.c         **** **  $Date: 2018/03/16 08:45:36GMT+08:00 $
+  21:pwm.c         **** **
+  22:pwm.c         **** */
+  23:pwm.c         **** #include <stdio.h>
+  24:pwm.c         **** #include <stdlib.h>
+  25:pwm.c         **** #include <string.h>
+  26:pwm.c         **** #include "gsdk_api.h"
+  27:pwm.c         **** #include "FreeRTOS.h"
+  28:pwm.c         **** #include "task.h"
+  29:pwm.c         **** 
+  30:pwm.c         **** static gsdk_handle_t g_huart;
+  31:pwm.c         **** 
+ARM GAS   			page 2
+
+
+  32:pwm.c         **** void gpio_callback(void *user_data)
+  33:pwm.c         **** {
+  28              	 .loc 1 33 0
+  29              	 .cfi_startproc
+  30              	 
+  31              	 
+  32              	.LVL0:
+  33 0000 08B5     	 push {r3,lr}
+  34              	 .cfi_def_cfa_offset 8
+  35              	 .cfi_offset 3,-8
+  36              	 .cfi_offset 14,-4
+  34:pwm.c         ****     printf("[PWM_DEMO] gpio eint handle callback!\n");
+  37              	 .loc 1 34 0
+  38 0002 0248     	 ldr r0,.L3
+  39              	.LVL1:
+  40 0004 FFF7FEFF 	 bl puts
+  41              	.LVL2:
+  35:pwm.c         **** }
+  42              	 .loc 1 35 0
+  43 0008 08BD     	 pop {r3,pc}
+  44              	.L4:
+  45 000a 00BF     	 .align 2
+  46              	.L3:
+  47 000c 00000000 	 .word .LC0
+  48              	 .cfi_endproc
+  49              	.LFE3:
+  51              	 .section .text.__io_puts,"ax",%progbits
+  52              	 .align 1
+  53              	 .global __io_puts
+  54              	 .syntax unified
+  55              	 .thumb
+  56              	 .thumb_func
+  57              	 .fpu fpv4-sp-d16
+  59              	__io_puts:
+  60              	.LFB4:
+  36:pwm.c         **** 
+  37:pwm.c         **** int __io_puts(char *data, int len)
+  38:pwm.c         **** {
+  61              	 .loc 1 38 0
+  62              	 .cfi_startproc
+  63              	 
+  64              	 
+  65              	.LVL3:
+  66 0000 10B5     	 push {r4,lr}
+  67              	 .cfi_def_cfa_offset 8
+  68              	 .cfi_offset 4,-8
+  69              	 .cfi_offset 14,-4
+  70              	.LVL4:
+  39:pwm.c         ****     int ret = 0;
+  40:pwm.c         ****     if (g_huart) {
+  71              	 .loc 1 40 0
+  72 0002 064B     	 ldr r3,.L9
+  73 0004 1C68     	 ldr r4,[r3]
+  74 0006 3CB1     	 cbz r4,.L7
+  75 0008 0A46     	 mov r2,r1
+  76 000a 0146     	 mov r1,r0
+  77              	.LVL5:
+ARM GAS   			page 3
+
+
+  41:pwm.c         ****         ret = gsdk_uart_write(g_huart, (uint8_t *)data, len, 1000);
+  78              	 .loc 1 41 0
+  79 000c 4FF47A73 	 mov r3,#1000
+  80 0010 2046     	 mov r0,r4
+  81              	.LVL6:
+  82 0012 FFF7FEFF 	 bl gsdk_uart_write
+  83              	.LVL7:
+  84              	.L5:
+  42:pwm.c         ****     }
+  43:pwm.c         ****     return ret;
+  44:pwm.c         **** }
+  85              	 .loc 1 44 0
+  86 0016 10BD     	 pop {r4,pc}
+  87              	.LVL8:
+  88              	.L7:
+  39:pwm.c         ****     if (g_huart) {
+  89              	 .loc 1 39 0
+  90 0018 0020     	 movs r0,#0
+  91              	.LVL9:
+  43:pwm.c         **** }
+  92              	 .loc 1 43 0
+  93 001a FCE7     	 b .L5
+  94              	.L10:
+  95              	 .align 2
+  96              	.L9:
+  97 001c 00000000 	 .word .LANCHOR0
+  98              	 .cfi_endproc
+  99              	.LFE4:
+ 101              	 .section .text.log_init,"ax",%progbits
+ 102              	 .align 1
+ 103              	 .global log_init
+ 104              	 .syntax unified
+ 105              	 .thumb
+ 106              	 .thumb_func
+ 107              	 .fpu fpv4-sp-d16
+ 109              	log_init:
+ 110              	.LFB5:
+  45:pwm.c         **** 
+  46:pwm.c         **** int log_init(void)
+  47:pwm.c         **** {
+ 111              	 .loc 1 47 0
+ 112              	 .cfi_startproc
+ 113              	 
+ 114              	 
+ 115 0000 00B5     	 push {lr}
+ 116              	 .cfi_def_cfa_offset 4
+ 117              	 .cfi_offset 14,-4
+ 118 0002 83B0     	 sub sp,sp,#12
+ 119              	 .cfi_def_cfa_offset 16
+  48:pwm.c         ****     uart_config_t uart_config;
+  49:pwm.c         ****     gsdk_status_t status;
+  50:pwm.c         **** 
+  51:pwm.c         ****     uart_config.baudrate    = UART_BAUDRATE_115200;
+ 120              	 .loc 1 51 0
+ 121 0004 0923     	 movs r3,#9
+ 122 0006 8DF80430 	 strb r3,[sp,#4]
+  52:pwm.c         ****     uart_config.parity      = UART_PARITY_NONE;
+ARM GAS   			page 4
+
+
+ 123              	 .loc 1 52 0
+ 124 000a 0020     	 movs r0,#0
+ 125 000c 8DF80700 	 strb r0,[sp,#7]
+  53:pwm.c         ****     uart_config.stop_bit    = UART_STOP_BIT_1;
+ 126              	 .loc 1 53 0
+ 127 0010 8DF80600 	 strb r0,[sp,#6]
+  54:pwm.c         ****     uart_config.word_length = UART_WORD_LENGTH_8;
+ 128              	 .loc 1 54 0
+ 129 0014 0323     	 movs r3,#3
+ 130 0016 8DF80530 	 strb r3,[sp,#5]
+  55:pwm.c         **** 
+  56:pwm.c         ****     status = gsdk_uart_open(UART_0, &uart_config, &g_huart);
+ 131              	 .loc 1 56 0
+ 132 001a 094A     	 ldr r2,.L16
+ 133 001c 01A9     	 add r1,sp,#4
+ 134 001e FFF7FEFF 	 bl gsdk_uart_open
+ 135              	.LVL10:
+  57:pwm.c         ****     if (status != GSDK_SUCCESS) {
+ 136              	 .loc 1 57 0
+ 137 0022 30B9     	 cbnz r0,.L15
+  58:pwm.c         ****         gsdk_syslog_printf("[PWM_DEMO]: failed to open uart %d\n\r", status);
+  59:pwm.c         ****         return -1;
+  60:pwm.c         ****     }
+  61:pwm.c         **** 
+  62:pwm.c         ****     printf("[PWM_DEMO] log init....OK\n\r");
+ 138              	 .loc 1 62 0
+ 139 0024 0748     	 ldr r0,.L16+4
+ 140              	.LVL11:
+ 141 0026 FFF7FEFF 	 bl printf
+ 142              	.LVL12:
+  63:pwm.c         **** 
+  64:pwm.c         ****     return 0;
+ 143              	 .loc 1 64 0
+ 144 002a 0020     	 movs r0,#0
+ 145              	.L11:
+  65:pwm.c         **** }
+ 146              	 .loc 1 65 0
+ 147 002c 03B0     	 add sp,sp,#12
+ 148              	 .cfi_remember_state
+ 149              	 .cfi_def_cfa_offset 4
+ 150              	 
+ 151 002e 5DF804FB 	 ldr pc,[sp],#4
+ 152              	.LVL13:
+ 153              	.L15:
+ 154              	 .cfi_restore_state
+ 155 0032 0146     	 mov r1,r0
+  58:pwm.c         ****         gsdk_syslog_printf("[PWM_DEMO]: failed to open uart %d\n\r", status);
+ 156              	 .loc 1 58 0
+ 157 0034 0448     	 ldr r0,.L16+8
+ 158              	.LVL14:
+ 159 0036 FFF7FEFF 	 bl gsdk_syslog_printf
+ 160              	.LVL15:
+  59:pwm.c         ****     }
+ 161              	 .loc 1 59 0
+ 162 003a 4FF0FF30 	 mov r0,#-1
+ 163 003e F5E7     	 b .L11
+ 164              	.L17:
+ARM GAS   			page 5
+
+
+ 165              	 .align 2
+ 166              	.L16:
+ 167 0040 00000000 	 .word .LANCHOR0
+ 168 0044 28000000 	 .word .LC2
+ 169 0048 00000000 	 .word .LC1
+ 170              	 .cfi_endproc
+ 171              	.LFE5:
+ 173              	 .section .text.main,"ax",%progbits
+ 174              	 .align 1
+ 175              	 .global main
+ 176              	 .syntax unified
+ 177              	 .thumb
+ 178              	 .thumb_func
+ 179              	 .fpu fpv4-sp-d16
+ 181              	main:
+ 182              	.LFB6:
+  66:pwm.c         **** 
+  67:pwm.c         **** int main(void)
+  68:pwm.c         **** {
+ 183              	 .loc 1 68 0
+ 184              	 .cfi_startproc
+ 185              	 
+ 186              	 
+ 187 0000 10B5     	 push {r4,lr}
+ 188              	 .cfi_def_cfa_offset 8
+ 189              	 .cfi_offset 4,-8
+ 190              	 .cfi_offset 14,-4
+ 191 0002 8AB0     	 sub sp,sp,#40
+ 192              	 .cfi_def_cfa_offset 48
+ 193              	.LVL16:
+  69:pwm.c         ****     //GPIO settings
+  70:pwm.c         ****     gsdk_handle_t hgpio;
+  71:pwm.c         ****     gpio_config_t gpio_config;
+  72:pwm.c         ****     gpio_pin_t    gpio_pin;
+  73:pwm.c         ****     gpio_pin = GPIO_PIN_19;
+  74:pwm.c         **** 
+  75:pwm.c         ****     log_init();
+ 194              	 .loc 1 75 0
+ 195 0004 FFF7FEFF 	 bl log_init
+ 196              	.LVL17:
+  76:pwm.c         **** 
+  77:pwm.c         ****     gpio_config.direction     = GPIO_DIRECTION_INPUT;
+ 197              	 .loc 1 77 0
+ 198 0008 0023     	 movs r3,#0
+ 199 000a 8DF81430 	 strb r3,[sp,#20]
+  78:pwm.c         ****     gpio_config.pull          = GPIO_PULL_UP;
+ 200              	 .loc 1 78 0
+ 201 000e 0124     	 movs r4,#1
+ 202 0010 8DF81540 	 strb r4,[sp,#21]
+  79:pwm.c         ****     gpio_config.int_mode      = GPIO_INT_EDGE_FALLING;
+ 203              	 .loc 1 79 0
+ 204 0014 0323     	 movs r3,#3
+ 205 0016 8DF81630 	 strb r3,[sp,#22]
+  80:pwm.c         ****     gpio_config.debounce_time = 10;
+ 206              	 .loc 1 80 0
+ 207 001a 0A23     	 movs r3,#10
+ 208 001c 0693     	 str r3,[sp,#24]
+ARM GAS   			page 6
+
+
+  81:pwm.c         ****     gpio_config.callback      = gpio_callback;
+ 209              	 .loc 1 81 0
+ 210 001e 204B     	 ldr r3,.L25
+ 211 0020 0793     	 str r3,[sp,#28]
+  82:pwm.c         **** 
+  83:pwm.c         ****     printf("[PWM_DEMO] Ready to open gpio!\n");
+ 212              	 .loc 1 83 0
+ 213 0022 2048     	 ldr r0,.L25+4
+ 214 0024 FFF7FEFF 	 bl puts
+ 215              	.LVL18:
+  84:pwm.c         **** 
+  85:pwm.c         ****     //PWM settings
+  86:pwm.c         ****     gsdk_status_t status;
+  87:pwm.c         ****     gsdk_handle_t hpwm;
+  88:pwm.c         ****     pwm_config_t config;
+  89:pwm.c         ****     pwm_channel_t channel = PWM_CHANNEL_3;
+  90:pwm.c         **** 
+  91:pwm.c         ****     config.pwm_pin = GPIO_PIN_26;
+ 216              	 .loc 1 91 0
+ 217 0028 1A23     	 movs r3,#26
+ 218 002a 8DF80D30 	 strb r3,[sp,#13]
+  92:pwm.c         ****     config.duty_ratio = 50;
+ 219              	 .loc 1 92 0
+ 220 002e 3223     	 movs r3,#50
+ 221 0030 0193     	 str r3,[sp,#4]
+  93:pwm.c         ****     config.frequency = 4;
+ 222              	 .loc 1 93 0
+ 223 0032 0423     	 movs r3,#4
+ 224 0034 0293     	 str r3,[sp,#8]
+  94:pwm.c         ****     config.src_clock = PWM_CLOCK_32KHZ;
+ 225              	 .loc 1 94 0
+ 226 0036 8DF80C40 	 strb r4,[sp,#12]
+  95:pwm.c         **** 
+  96:pwm.c         ****     status = gsdk_gpio_open(gpio_pin, &gpio_config, &hgpio);
+ 227              	 .loc 1 96 0
+ 228 003a 09AA     	 add r2,sp,#36
+ 229 003c 05A9     	 add r1,sp,#20
+ 230 003e 1320     	 movs r0,#19
+ 231 0040 FFF7FEFF 	 bl gsdk_gpio_open
+ 232              	.LVL19:
+  97:pwm.c         ****     if (status != GSDK_SUCCESS)
+ 233              	 .loc 1 97 0
+ 234 0044 10B1     	 cbz r0,.L23
+ 235              	.LVL20:
+ 236              	.L19:
+  98:pwm.c         ****         goto _fail;
+  99:pwm.c         **** 
+ 100:pwm.c         ****     status = gsdk_pwm_open(channel, &config, &hpwm);
+ 101:pwm.c         ****     if (status != GSDK_SUCCESS)
+ 102:pwm.c         ****         goto _fail_gpio;
+ 103:pwm.c         **** 
+ 104:pwm.c         ****     status = gsdk_pwm_start(hpwm);
+ 105:pwm.c         ****     if (status != GSDK_SUCCESS)
+ 106:pwm.c         ****         goto _fail_pwm;
+ 107:pwm.c         **** 
+ 108:pwm.c         ****     vTaskDelay(1000);
+ 109:pwm.c         **** 
+ARM GAS   			page 7
+
+
+ 110:pwm.c         ****     status = gsdk_pwm_stop(hpwm);
+ 111:pwm.c         ****     if (status != GSDK_SUCCESS)
+ 112:pwm.c         ****         goto _fail_pwm;
+ 113:pwm.c         **** 
+ 114:pwm.c         ****     vTaskDelay(500);
+ 115:pwm.c         **** 
+ 116:pwm.c         ****     status = gsdk_pwm_start(hpwm);
+ 117:pwm.c         ****     if (status != GSDK_SUCCESS)
+ 118:pwm.c         ****         goto _fail_pwm;
+ 119:pwm.c         **** 
+ 120:pwm.c         ****     return 0;
+ 121:pwm.c         **** 
+ 122:pwm.c         **** _fail_pwm:
+ 123:pwm.c         ****     gsdk_pwm_close(hpwm);
+ 124:pwm.c         ****     printf("[PWM_DEMO] PWM test failed!\n");
+ 125:pwm.c         **** _fail_gpio:
+ 126:pwm.c         ****     gsdk_gpio_close(hgpio);
+ 127:pwm.c         ****     printf("[PWM_DEMO] Gpio test failed!\n");
+ 128:pwm.c         **** _fail:
+ 129:pwm.c         ****     return 0;
+ 130:pwm.c         **** }
+ 237              	 .loc 1 130 0
+ 238 0046 0020     	 movs r0,#0
+ 239 0048 0AB0     	 add sp,sp,#40
+ 240              	 .cfi_remember_state
+ 241              	 .cfi_def_cfa_offset 8
+ 242              	 
+ 243 004a 10BD     	 pop {r4,pc}
+ 244              	.LVL21:
+ 245              	.L23:
+ 246              	 .cfi_restore_state
+ 100:pwm.c         ****     if (status != GSDK_SUCCESS)
+ 247              	 .loc 1 100 0
+ 248 004c 04AA     	 add r2,sp,#16
+ 249 004e 01A9     	 add r1,sp,#4
+ 250 0050 0320     	 movs r0,#3
+ 251              	.LVL22:
+ 252 0052 FFF7FEFF 	 bl gsdk_pwm_open
+ 253              	.LVL23:
+ 101:pwm.c         ****         goto _fail_gpio;
+ 254              	 .loc 1 101 0
+ 255 0056 88B9     	 cbnz r0,.L20
+ 104:pwm.c         ****     if (status != GSDK_SUCCESS)
+ 256              	 .loc 1 104 0
+ 257 0058 0498     	 ldr r0,[sp,#16]
+ 258              	.LVL24:
+ 259 005a FFF7FEFF 	 bl gsdk_pwm_start
+ 260              	.LVL25:
+ 105:pwm.c         ****         goto _fail_pwm;
+ 261              	 .loc 1 105 0
+ 262 005e 38B9     	 cbnz r0,.L21
+ 108:pwm.c         **** 
+ 263              	 .loc 1 108 0
+ 264 0060 4FF47A70 	 mov r0,#1000
+ 265              	.LVL26:
+ 266 0064 FFF7FEFF 	 bl vTaskDelay
+ 267              	.LVL27:
+ARM GAS   			page 8
+
+
+ 110:pwm.c         ****     if (status != GSDK_SUCCESS)
+ 268              	 .loc 1 110 0
+ 269 0068 0498     	 ldr r0,[sp,#16]
+ 270 006a FFF7FEFF 	 bl gsdk_pwm_stop
+ 271              	.LVL28:
+ 111:pwm.c         ****         goto _fail_pwm;
+ 272              	 .loc 1 111 0
+ 273 006e 60B1     	 cbz r0,.L24
+ 274              	.L21:
+ 123:pwm.c         ****     printf("[PWM_DEMO] PWM test failed!\n");
+ 275              	 .loc 1 123 0
+ 276 0070 0498     	 ldr r0,[sp,#16]
+ 277              	.LVL29:
+ 278 0072 FFF7FEFF 	 bl gsdk_pwm_close
+ 279              	.LVL30:
+ 124:pwm.c         **** _fail_gpio:
+ 280              	 .loc 1 124 0
+ 281 0076 0C48     	 ldr r0,.L25+8
+ 282 0078 FFF7FEFF 	 bl puts
+ 283              	.LVL31:
+ 284              	.L20:
+ 126:pwm.c         ****     printf("[PWM_DEMO] Gpio test failed!\n");
+ 285              	 .loc 1 126 0
+ 286 007c 0998     	 ldr r0,[sp,#36]
+ 287 007e FFF7FEFF 	 bl gsdk_gpio_close
+ 288              	.LVL32:
+ 127:pwm.c         **** _fail:
+ 289              	 .loc 1 127 0
+ 290 0082 0A48     	 ldr r0,.L25+12
+ 291 0084 FFF7FEFF 	 bl puts
+ 292              	.LVL33:
+ 293 0088 DDE7     	 b .L19
+ 294              	.LVL34:
+ 295              	.L24:
+ 114:pwm.c         **** 
+ 296              	 .loc 1 114 0
+ 297 008a 4FF4FA70 	 mov r0,#500
+ 298              	.LVL35:
+ 299 008e FFF7FEFF 	 bl vTaskDelay
+ 300              	.LVL36:
+ 116:pwm.c         ****     if (status != GSDK_SUCCESS)
+ 301              	 .loc 1 116 0
+ 302 0092 0498     	 ldr r0,[sp,#16]
+ 303 0094 FFF7FEFF 	 bl gsdk_pwm_start
+ 304              	.LVL37:
+ 117:pwm.c         ****         goto _fail_pwm;
+ 305              	 .loc 1 117 0
+ 306 0098 0028     	 cmp r0,#0
+ 307 009a E9D1     	 bne .L21
+ 308 009c D3E7     	 b .L19
+ 309              	.L26:
+ 310 009e 00BF     	 .align 2
+ 311              	.L25:
+ 312 00a0 00000000 	 .word gpio_callback
+ 313 00a4 00000000 	 .word .LC3
+ 314 00a8 20000000 	 .word .LC4
+ 315 00ac 3C000000 	 .word .LC5
+ARM GAS   			page 9
+
+
+ 316              	 .cfi_endproc
+ 317              	.LFE6:
+ 319              	 .section .bss.g_huart,"aw",%nobits
+ 320              	 .align 2
+ 321              	 .set .LANCHOR0,.+0
+ 324              	g_huart:
+ 325 0000 00000000 	 .space 4
+ 326              	 .section .rodata.gpio_callback.str1.4,"aMS",%progbits,1
+ 327              	 .align 2
+ 328              	.LC0:
+ 329 0000 5B50574D 	 .ascii "[PWM_DEMO] gpio eint handle callback!\000"
+ 329      5F44454D 
+ 329      4F5D2067 
+ 329      70696F20 
+ 329      65696E74 
+ 330              	 .section .rodata.log_init.str1.4,"aMS",%progbits,1
+ 331              	 .align 2
+ 332              	.LC1:
+ 333 0000 5B50574D 	 .ascii "[PWM_DEMO]: failed to open uart %d\012\015\000"
+ 333      5F44454D 
+ 333      4F5D3A20 
+ 333      6661696C 
+ 333      65642074 
+ 334 0025 000000   	 .space 3
+ 335              	.LC2:
+ 336 0028 5B50574D 	 .ascii "[PWM_DEMO] log init....OK\012\015\000"
+ 336      5F44454D 
+ 336      4F5D206C 
+ 336      6F672069 
+ 336      6E69742E 
+ 337              	 .section .rodata.main.str1.4,"aMS",%progbits,1
+ 338              	 .align 2
+ 339              	.LC3:
+ 340 0000 5B50574D 	 .ascii "[PWM_DEMO] Ready to open gpio!\000"
+ 340      5F44454D 
+ 340      4F5D2052 
+ 340      65616479 
+ 340      20746F20 
+ 341 001f 00       	 .space 1
+ 342              	.LC4:
+ 343 0020 5B50574D 	 .ascii "[PWM_DEMO] PWM test failed!\000"
+ 343      5F44454D 
+ 343      4F5D2050 
+ 343      574D2074 
+ 343      65737420 
+ 344              	.LC5:
+ 345 003c 5B50574D 	 .ascii "[PWM_DEMO] Gpio test failed!\000"
+ 345      5F44454D 
+ 345      4F5D2047 
+ 345      70696F20 
+ 345      74657374 
+ 346              	 .text
+ 347              	.Letext0:
+ 348              	 .file 2 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 349              	 .file 3 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\lock.h"
+ 350              	 .file 4 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\_types.h"
+ 351              	 .file 5 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\lib\\gcc\\arm-none-eabi\\7.3.1\\include\\stddef.h"
+ARM GAS   			page 10
+
+
+ 352              	 .file 6 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\reent.h"
+ 353              	 .file 7 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\_stdint.h"
+ 354              	 .file 8 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\stdlib.h"
+ 355              	 .file 9 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_common.h"
+ 356              	 .file 10 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_uart.h"
+ 357              	 .file 11 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_flash.h"
+ 358              	 .file 12 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_gpio.h"
+ 359              	 .file 13 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_pwm.h"
+ 360              	 .file 14 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/include/FreeRTOSConfig.h"
+ 361              	 .file 15 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/include/task.h"
+ 362              	 .file 16 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\stdio.h"
+ 363              	 .file 17 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_api.h"
+ 364              	 .file 18 "<built-in>"
+ARM GAS   			page 11
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 pwm.c
+    {standard input}:18     .text.gpio_callback:00000000 $t
+    {standard input}:25     .text.gpio_callback:00000000 gpio_callback
+    {standard input}:47     .text.gpio_callback:0000000c $d
+    {standard input}:52     .text.__io_puts:00000000 $t
+    {standard input}:59     .text.__io_puts:00000000 __io_puts
+    {standard input}:97     .text.__io_puts:0000001c $d
+    {standard input}:102    .text.log_init:00000000 $t
+    {standard input}:109    .text.log_init:00000000 log_init
+    {standard input}:167    .text.log_init:00000040 $d
+    {standard input}:174    .text.main:00000000 $t
+    {standard input}:181    .text.main:00000000 main
+    {standard input}:312    .text.main:000000a0 $d
+    {standard input}:320    .bss.g_huart:00000000 $d
+    {standard input}:324    .bss.g_huart:00000000 g_huart
+    {standard input}:327    .rodata.gpio_callback.str1.4:00000000 $d
+    {standard input}:331    .rodata.log_init.str1.4:00000000 $d
+    {standard input}:338    .rodata.main.str1.4:00000000 $d
+                           .group:00000000 wm4.0.8fab1e1450c2b74bdd5e2aed4c325bf1
+                           .group:00000000 wm4._newlib_version.h.4.875b979a44719054cd750d0952ad3fd6
+                           .group:00000000 wm4.newlib.h.18.5e5ca3429233af402d406a202f1fc1ac
+                           .group:00000000 wm4.ieeefp.h.77.220d9cccac42cd58761758bee2df4ce6
+                           .group:00000000 wm4.features.h.22.fad1cec3bc7ff06488171438dbdcfd02
+                           .group:00000000 wm4.config.h.220.6cac6a9685cfce5e83c17784171638d9
+                           .group:00000000 wm4._ansi.h.31.de524f58584151836e90d8620a16f8e8
+                           .group:00000000 wm4.stdio.h.31.7c0e28c411445f3f9c5b11accf882760
+                           .group:00000000 wm4._default_types.h.6.959254cf5f09734ea7516c89e8bb21bd
+                           .group:00000000 wm4.stddef.h.187.2ff233552538c6ff9b8575ca8ea52cb3
+                           .group:00000000 wm4.cdefs.h.47.0bcdf94cb40e176393dd1404056825b4
+                           .group:00000000 wm4.stddef.h.39.ec95e8feac892e292b69dc7ae75b0d64
+                           .group:00000000 wm4.stdarg.h.34.3a23a216c0c293b3d2ea2e89281481e6
+                           .group:00000000 wm4.lock.h.2.1461d1fff82dffe8bfddc23307f6484f
+                           .group:00000000 wm4._types.h.125.5cf8a495f1f7ef36777ad868a1e32068
+                           .group:00000000 wm4.stddef.h.161.5349cb105733e8777bfb0cf53c4e3f34
+                           .group:00000000 wm4._types.h.184.03611d4f6b5bec9997bcf4279eceba07
+                           .group:00000000 wm4.reent.h.17.90c2574d4acdcfce933db5cb09ff35fe
+                           .group:00000000 wm4.types.h.40.e8c16e7ec36ba55f133d0616070e25fc
+                           .group:00000000 wm4._stdint.h.10.c24fa3af3bc1706662bb5593a907e841
+                           .group:00000000 wm4._endian.h.31.65a10590763c3dde1ac4a7f66d7d4891
+                           .group:00000000 wm4.endian.h.9.49f3a4695c1b61e8a0808de3c4a106cb
+                           .group:00000000 wm4._timeval.h.30.0e8bfd94e85db17dda3286ee81496fe6
+                           .group:00000000 wm4.timespec.h.41.d855182eb0e690443ab8651bcedca6e1
+                           .group:00000000 wm4.select.h.19.97ca6fd0c752a0f3b6719fd314d361e6
+                           .group:00000000 wm4.types.h.69.ed3eae3cf73030a737515151ebcab7a1
+                           .group:00000000 wm4.sched.h.22.c60982713a5c428609783c78f9c78d95
+                           .group:00000000 wm4._pthreadtypes.h.36.fcee9961c35163dde6267ef772ad1972
+                           .group:00000000 wm4.stdio.h.2.4aa87247282eca6c8f36f9de33d8df1a
+                           .group:00000000 wm4.stdio.h.81.932d0c162786b883f622b8d05c120c78
+                           .group:00000000 wm4.stdlib.h.13.4ed386f5c1a80d71e72172885d946ef2
+                           .group:00000000 wm4.stddef.h.161.19e15733342b50ead2919490b095303e
+                           .group:00000000 wm4.alloca.h.8.dfc0c703c47ec3e69746825b17d9e66d
+                           .group:00000000 wm4.stdlib.h.56.d4493cd3736e51e9d56335045f26df45
+                           .group:00000000 wm4.string.h.8.c4b8571ce60dff2817f43fec8b86aecd
+                           .group:00000000 wm4._intsup.h.10.cce27fed8484c08a33f522034c30d2b5
+                           .group:00000000 wm4.stdint.h.23.d53047a68f4a85177f80b422d52785ed
+                           .group:00000000 wm4.gsdk_common.h.47.22de8ea3659fbd5af0e08ced1ae1b062
+ARM GAS   			page 12
+
+
+                           .group:00000000 wm4.gsdk_flash.h.25.4d08791083e4af07d64570151ac0803c
+                           .group:00000000 wm4.app_loader.h.25.aa64c8d4536aca920728cda79a275eeb
+                           .group:00000000 wm4.FreeRTOSConfig.h.68.1d0dd6b8cda279d0020827f5584733bd
+                           .group:00000000 wm4.projdefs.h.71.1734cd3501e070360596dd847bb9d813
+                           .group:00000000 wm4.portmacro.h.72.3d5d774f718d157a637f7eb960850f27
+                           .group:00000000 wm4.portable.h.98.f435842f50d7864fba6a318a13e72513
+                           .group:00000000 wm4.mpu_wrappers.h.71.dd245fe44d82bd40288b5a47f895c82c
+                           .group:00000000 wm4.FreeRTOS.h.175.3abf49eaca38658a192da8d7c86d5374
+                           .group:00000000 wm4.list.h.103.6a12b7b9a7a136c3cca0ee53675c5498
+                           .group:00000000 wm4.task.h.88.da474b04c368050657453c137d8efe45
+
+UNDEFINED SYMBOLS
+puts
+gsdk_uart_write
+gsdk_uart_open
+printf
+gsdk_syslog_printf
+gsdk_gpio_open
+gsdk_pwm_open
+gsdk_pwm_start
+vTaskDelay
+gsdk_pwm_stop
+gsdk_pwm_close
+gsdk_gpio_close

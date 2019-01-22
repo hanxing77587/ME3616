@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<Settings>
+  <cboxComPort>
+  </cboxComPort>
+  <cbAutoStart>FALSE</cbAutoStart>
+  <cmbPPPCom1>
+  </cmbPPPCom1>
+  <DLCI1>1</DLCI1>
+  <DLCI2>2</DLCI2>
+  <DLCI3>3</DLCI3>
+  <DLCI4>4</DLCI4>
+  <DLCI5>5</DLCI5>
+  <DLCI6>6</DLCI6>
+  <DLCI7>7</DLCI7>
+  <DLCI1_N1>1500</DLCI1_N1>
+  <DLCI2_N1>1500</DLCI2_N1>
+  <DLCI3_N1>1500</DLCI3_N1>
+  <DLCI4_N1>1500</DLCI4_N1>
+  <DLCI5_N1>1500</DLCI5_N1>
+  <DLCI6_N1>1500</DLCI6_N1>
+  <DLCI7_N1>1500</DLCI7_N1>
+  <AtCommand />
+</Settings>

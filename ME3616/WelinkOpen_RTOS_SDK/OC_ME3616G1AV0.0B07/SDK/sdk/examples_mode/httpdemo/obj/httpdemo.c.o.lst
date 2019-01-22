@@ -1,0 +1,1057 @@
+ARM GAS   			page 1
+
+
+   1              	 .cpu cortex-m4
+   2              	 .eabi_attribute 27,1
+   3              	 .eabi_attribute 28,1
+   4              	 .eabi_attribute 20,1
+   5              	 .eabi_attribute 21,1
+   6              	 .eabi_attribute 23,3
+   7              	 .eabi_attribute 24,1
+   8              	 .eabi_attribute 25,1
+   9              	 .eabi_attribute 26,1
+  10              	 .eabi_attribute 30,1
+  11              	 .eabi_attribute 34,1
+  12              	 .eabi_attribute 18,4
+  13              	 .file "httpdemo.c"
+  14              	 .text
+  15              	.Ltext0:
+  16              	 .cfi_sections .debug_frame
+  17              	 .section .text.http_callback,"ax",%progbits
+  18              	 .align 1
+  19              	 .global http_callback
+  20              	 .syntax unified
+  21              	 .thumb
+  22              	 .thumb_func
+  23              	 .fpu fpv4-sp-d16
+  25              	http_callback:
+  26              	.LFB6:
+  27              	 .file 1 "httpdemo.c"
+   1:httpdemo.c    **** /*
+   2:httpdemo.c    **** ** File   : coapdemo.c
+   3:httpdemo.c    **** **
+   4:httpdemo.c    **** ** Copyright (C) 2013-2018 Gosuncn. All rights reserved.
+   5:httpdemo.c    **** **
+   6:httpdemo.c    **** ** Licensed under the Apache License, Version 2.0 (the "License");
+   7:httpdemo.c    **** ** you may not use this file except in compliance with the License.
+   8:httpdemo.c    **** ** You may obtain a copy of the License at
+   9:httpdemo.c    **** **
+  10:httpdemo.c    **** **      http://www.apache.org/licenses/LICENSE-2.0
+  11:httpdemo.c    **** **
+  12:httpdemo.c    **** ** Unless required by applicable law or agreed to in writing, software
+  13:httpdemo.c    **** ** distributed under the License is distributed on an "AS IS" BASIS,
+  14:httpdemo.c    **** ** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  15:httpdemo.c    **** ** See the License for the specific language governing permissions and
+  16:httpdemo.c    **** ** limitations under the License.
+  17:httpdemo.c    **** **
+  18:httpdemo.c    **** ** Author : zhangsiyuan@gosuncn.cn
+  19:httpdemo.c    **** **
+  20:httpdemo.c    **** **  $Date: 2018/06/28 
+  21:httpdemo.c    **** **
+  22:httpdemo.c    **** */
+  23:httpdemo.c    **** #include <stdio.h>
+  24:httpdemo.c    **** #include <stdlib.h>
+  25:httpdemo.c    **** #include <string.h>
+  26:httpdemo.c    **** #include "gsdk_api.h"
+  27:httpdemo.c    **** #include "FreeRTOS.h"
+  28:httpdemo.c    **** #include "task.h"
+  29:httpdemo.c    **** #include "gsdk_ril.h"
+  30:httpdemo.c    **** #include "gsdk_ril_cmds.h"
+  31:httpdemo.c    ****     
+ARM GAS   			page 2
+
+
+  32:httpdemo.c    **** #define MAX_IP_BYTE 128
+  33:httpdemo.c    **** #define MAX_HEX_SIZE 1024
+  34:httpdemo.c    **** #define MAX_REGISTER_SIZE 1024
+  35:httpdemo.c    **** #define LIFETIME 6000
+  36:httpdemo.c    **** 
+  37:httpdemo.c    **** 
+  38:httpdemo.c    **** 
+  39:httpdemo.c    **** static gsdk_handle_t g_huart;
+  40:httpdemo.c    **** static gsdk_handle_t huart;
+  41:httpdemo.c    ****     
+  42:httpdemo.c    **** #define MAX_RECEIVE_SIZE    1024
+  43:httpdemo.c    **** 
+  44:httpdemo.c    **** 
+  45:httpdemo.c    **** 
+  46:httpdemo.c    **** 
+  47:httpdemo.c    **** int __io_puts(char *data, int len)
+  48:httpdemo.c    **** {
+  49:httpdemo.c    ****     int ret = 0;
+  50:httpdemo.c    ****     if (g_huart) {
+  51:httpdemo.c    ****         ret = gsdk_uart_write(g_huart, (uint8_t *)data, len, 1000);
+  52:httpdemo.c    ****     }
+  53:httpdemo.c    ****     return ret;
+  54:httpdemo.c    **** }
+  55:httpdemo.c    **** 
+  56:httpdemo.c    **** int log_init(void)
+  57:httpdemo.c    **** {
+  58:httpdemo.c    ****     uart_config_t uart_config;
+  59:httpdemo.c    ****     gsdk_status_t status;
+  60:httpdemo.c    **** 
+  61:httpdemo.c    ****     uart_config.baudrate    = UART_BAUDRATE_115200;
+  62:httpdemo.c    ****     uart_config.parity      = UART_PARITY_NONE;
+  63:httpdemo.c    ****     uart_config.stop_bit    = UART_STOP_BIT_1;
+  64:httpdemo.c    ****     uart_config.word_length = UART_WORD_LENGTH_8;
+  65:httpdemo.c    **** 
+  66:httpdemo.c    ****     status = gsdk_uart_open(UART_0, &uart_config, &g_huart);
+  67:httpdemo.c    ****     if (status != GSDK_SUCCESS) {
+  68:httpdemo.c    ****         //syslog_printf("[ONENET_DEMO]: failed to open uart %d\n", status);
+  69:httpdemo.c    ****         return -1;
+  70:httpdemo.c    ****     }
+  71:httpdemo.c    **** 
+  72:httpdemo.c    ****     printf("[HTTP_DEMO] log init....OK\r\n");
+  73:httpdemo.c    **** 
+  74:httpdemo.c    ****     return 0;
+  75:httpdemo.c    **** }
+  76:httpdemo.c    **** 
+  77:httpdemo.c    **** int uart_init(void)
+  78:httpdemo.c    **** {
+  79:httpdemo.c    ****     gsdk_status_t status;
+  80:httpdemo.c    ****     uart_config_t uart_config;
+  81:httpdemo.c    ****     const char hello[] = "[HTTP_DEMO] Open Uart Successfully!\r\n";
+  82:httpdemo.c    **** 
+  83:httpdemo.c    ****     uart_config.baudrate    = UART_BAUDRATE_9600;
+  84:httpdemo.c    ****     uart_config.parity      = UART_PARITY_NONE;
+  85:httpdemo.c    ****     uart_config.stop_bit    = UART_STOP_BIT_1;
+  86:httpdemo.c    ****     uart_config.word_length = UART_WORD_LENGTH_8;
+  87:httpdemo.c    **** 
+  88:httpdemo.c    ****     status = gsdk_uart_open(UART_2, &uart_config, &huart);
+ARM GAS   			page 3
+
+
+  89:httpdemo.c    ****     if (status != GSDK_SUCCESS) {
+  90:httpdemo.c    ****         //syslog_printf("[ONENET_DEMO]: failed to open uart %d\n", status);
+  91:httpdemo.c    ****         return -1;
+  92:httpdemo.c    ****     }
+  93:httpdemo.c    **** 
+  94:httpdemo.c    ****     gsdk_uart_write(huart, (uint8_t *)hello, strlen(hello), 100);
+  95:httpdemo.c    **** 
+  96:httpdemo.c    ****     //gsdk_uart_close(huart);
+  97:httpdemo.c    **** 
+  98:httpdemo.c    ****     return 0;
+  99:httpdemo.c    **** }
+ 100:httpdemo.c    **** 
+ 101:httpdemo.c    **** 
+ 102:httpdemo.c    **** 
+ 103:httpdemo.c    **** int http_callback(const char *s, const char *extra, int len, void *user_data)
+ 104:httpdemo.c    **** {
+  28              	 .loc 1 104 0
+  29              	 .cfi_startproc
+  30              	 
+  31              	 
+  32              	.LVL0:
+  33 0000 08B5     	 push {r3,lr}
+  34              	 .cfi_def_cfa_offset 8
+  35              	 .cfi_offset 3,-8
+  36              	 .cfi_offset 14,-4
+ 105:httpdemo.c    ****  //UNUSED_PARAM is used to eliminate compilation warnings
+ 106:httpdemo.c    **** 	UNUSED_PARAM(extra);
+ 107:httpdemo.c    **** 	UNUSED_PARAM(len);
+ 108:httpdemo.c    **** 	UNUSED_PARAM(user_data);
+ 109:httpdemo.c    **** 	
+ 110:httpdemo.c    ****     printf(" %s\n\r", s);
+  37              	 .loc 1 110 0
+  38 0002 0146     	 mov r1,r0
+  39              	.LVL1:
+  40 0004 0248     	 ldr r0,.L3
+  41              	.LVL2:
+  42 0006 FFF7FEFF 	 bl printf
+  43              	.LVL3:
+ 111:httpdemo.c    **** 	return 1;
+ 112:httpdemo.c    **** }
+  44              	 .loc 1 112 0
+  45 000a 0120     	 movs r0,#1
+  46 000c 08BD     	 pop {r3,pc}
+  47              	.L4:
+  48 000e 00BF     	 .align 2
+  49              	.L3:
+  50 0010 00000000 	 .word .LC0
+  51              	 .cfi_endproc
+  52              	.LFE6:
+  54              	 .section .text.__io_puts,"ax",%progbits
+  55              	 .align 1
+  56              	 .global __io_puts
+  57              	 .syntax unified
+  58              	 .thumb
+  59              	 .thumb_func
+  60              	 .fpu fpv4-sp-d16
+  62              	__io_puts:
+ARM GAS   			page 4
+
+
+  63              	.LFB3:
+  48:httpdemo.c    ****     int ret = 0;
+  64              	 .loc 1 48 0
+  65              	 .cfi_startproc
+  66              	 
+  67              	 
+  68              	.LVL4:
+  69 0000 10B5     	 push {r4,lr}
+  70              	 .cfi_def_cfa_offset 8
+  71              	 .cfi_offset 4,-8
+  72              	 .cfi_offset 14,-4
+  73              	.LVL5:
+  50:httpdemo.c    ****         ret = gsdk_uart_write(g_huart, (uint8_t *)data, len, 1000);
+  74              	 .loc 1 50 0
+  75 0002 064B     	 ldr r3,.L9
+  76 0004 1C68     	 ldr r4,[r3]
+  77 0006 3CB1     	 cbz r4,.L7
+  78 0008 0A46     	 mov r2,r1
+  79 000a 0146     	 mov r1,r0
+  80              	.LVL6:
+  51:httpdemo.c    ****     }
+  81              	 .loc 1 51 0
+  82 000c 4FF47A73 	 mov r3,#1000
+  83 0010 2046     	 mov r0,r4
+  84              	.LVL7:
+  85 0012 FFF7FEFF 	 bl gsdk_uart_write
+  86              	.LVL8:
+  87              	.L5:
+  54:httpdemo.c    **** 
+  88              	 .loc 1 54 0
+  89 0016 10BD     	 pop {r4,pc}
+  90              	.LVL9:
+  91              	.L7:
+  49:httpdemo.c    ****     if (g_huart) {
+  92              	 .loc 1 49 0
+  93 0018 0020     	 movs r0,#0
+  94              	.LVL10:
+  53:httpdemo.c    **** }
+  95              	 .loc 1 53 0
+  96 001a FCE7     	 b .L5
+  97              	.L10:
+  98              	 .align 2
+  99              	.L9:
+ 100 001c 00000000 	 .word .LANCHOR0
+ 101              	 .cfi_endproc
+ 102              	.LFE3:
+ 104              	 .section .text.log_init,"ax",%progbits
+ 105              	 .align 1
+ 106              	 .global log_init
+ 107              	 .syntax unified
+ 108              	 .thumb
+ 109              	 .thumb_func
+ 110              	 .fpu fpv4-sp-d16
+ 112              	log_init:
+ 113              	.LFB4:
+  57:httpdemo.c    ****     uart_config_t uart_config;
+ 114              	 .loc 1 57 0
+ARM GAS   			page 5
+
+
+ 115              	 .cfi_startproc
+ 116              	 
+ 117              	 
+ 118 0000 00B5     	 push {lr}
+ 119              	 .cfi_def_cfa_offset 4
+ 120              	 .cfi_offset 14,-4
+ 121 0002 83B0     	 sub sp,sp,#12
+ 122              	 .cfi_def_cfa_offset 16
+  61:httpdemo.c    ****     uart_config.parity      = UART_PARITY_NONE;
+ 123              	 .loc 1 61 0
+ 124 0004 0923     	 movs r3,#9
+ 125 0006 8DF80430 	 strb r3,[sp,#4]
+  62:httpdemo.c    ****     uart_config.stop_bit    = UART_STOP_BIT_1;
+ 126              	 .loc 1 62 0
+ 127 000a 0020     	 movs r0,#0
+ 128 000c 8DF80700 	 strb r0,[sp,#7]
+  63:httpdemo.c    ****     uart_config.word_length = UART_WORD_LENGTH_8;
+ 129              	 .loc 1 63 0
+ 130 0010 8DF80600 	 strb r0,[sp,#6]
+  64:httpdemo.c    **** 
+ 131              	 .loc 1 64 0
+ 132 0014 0323     	 movs r3,#3
+ 133 0016 8DF80530 	 strb r3,[sp,#5]
+  66:httpdemo.c    ****     if (status != GSDK_SUCCESS) {
+ 134              	 .loc 1 66 0
+ 135 001a 074A     	 ldr r2,.L15
+ 136 001c 01A9     	 add r1,sp,#4
+ 137 001e FFF7FEFF 	 bl gsdk_uart_open
+ 138              	.LVL11:
+  67:httpdemo.c    ****         //syslog_printf("[ONENET_DEMO]: failed to open uart %d\n", status);
+ 139              	 .loc 1 67 0
+ 140 0022 30B9     	 cbnz r0,.L13
+  72:httpdemo.c    **** 
+ 141              	 .loc 1 72 0
+ 142 0024 0548     	 ldr r0,.L15+4
+ 143              	.LVL12:
+ 144 0026 FFF7FEFF 	 bl puts
+ 145              	.LVL13:
+  74:httpdemo.c    **** }
+ 146              	 .loc 1 74 0
+ 147 002a 0020     	 movs r0,#0
+ 148              	.L11:
+  75:httpdemo.c    **** 
+ 149              	 .loc 1 75 0
+ 150 002c 03B0     	 add sp,sp,#12
+ 151              	 .cfi_remember_state
+ 152              	 .cfi_def_cfa_offset 4
+ 153              	 
+ 154 002e 5DF804FB 	 ldr pc,[sp],#4
+ 155              	.LVL14:
+ 156              	.L13:
+ 157              	 .cfi_restore_state
+  69:httpdemo.c    ****     }
+ 158              	 .loc 1 69 0
+ 159 0032 4FF0FF30 	 mov r0,#-1
+ 160              	.LVL15:
+ 161 0036 F9E7     	 b .L11
+ARM GAS   			page 6
+
+
+ 162              	.L16:
+ 163              	 .align 2
+ 164              	.L15:
+ 165 0038 00000000 	 .word .LANCHOR0
+ 166 003c 00000000 	 .word .LC1
+ 167              	 .cfi_endproc
+ 168              	.LFE4:
+ 170              	 .section .text.uart_init,"ax",%progbits
+ 171              	 .align 1
+ 172              	 .global uart_init
+ 173              	 .syntax unified
+ 174              	 .thumb
+ 175              	 .thumb_func
+ 176              	 .fpu fpv4-sp-d16
+ 178              	uart_init:
+ 179              	.LFB5:
+  78:httpdemo.c    ****     gsdk_status_t status;
+ 180              	 .loc 1 78 0
+ 181              	 .cfi_startproc
+ 182              	 
+ 183              	 
+ 184 0000 30B5     	 push {r4,r5,lr}
+ 185              	 .cfi_def_cfa_offset 12
+ 186              	 .cfi_offset 4,-12
+ 187              	 .cfi_offset 5,-8
+ 188              	 .cfi_offset 14,-4
+ 189 0002 8DB0     	 sub sp,sp,#52
+ 190              	 .cfi_def_cfa_offset 64
+  81:httpdemo.c    **** 
+ 191              	 .loc 1 81 0
+ 192 0004 01AC     	 add r4,sp,#4
+ 193 0006 154D     	 ldr r5,.L21
+ 194 0008 0FCD     	 ldmia r5!,{r0,r1,r2,r3}
+ 195 000a 0FC4     	 stmia r4!,{r0,r1,r2,r3}
+ 196 000c 0FCD     	 ldmia r5!,{r0,r1,r2,r3}
+ 197 000e 0FC4     	 stmia r4!,{r0,r1,r2,r3}
+ 198 0010 95E80300 	 ldm r5,{r0,r1}
+ 199 0014 44F8040B 	 str r0,[r4],#4
+ 200 0018 2180     	 strh r1,[r4]
+  83:httpdemo.c    ****     uart_config.parity      = UART_PARITY_NONE;
+ 201              	 .loc 1 83 0
+ 202 001a 0523     	 movs r3,#5
+ 203 001c 8DF82C30 	 strb r3,[sp,#44]
+  84:httpdemo.c    ****     uart_config.stop_bit    = UART_STOP_BIT_1;
+ 204              	 .loc 1 84 0
+ 205 0020 0023     	 movs r3,#0
+ 206 0022 8DF82F30 	 strb r3,[sp,#47]
+  85:httpdemo.c    ****     uart_config.word_length = UART_WORD_LENGTH_8;
+ 207              	 .loc 1 85 0
+ 208 0026 8DF82E30 	 strb r3,[sp,#46]
+  86:httpdemo.c    **** 
+ 209              	 .loc 1 86 0
+ 210 002a 0323     	 movs r3,#3
+ 211 002c 8DF82D30 	 strb r3,[sp,#45]
+  88:httpdemo.c    ****     if (status != GSDK_SUCCESS) {
+ 212              	 .loc 1 88 0
+ 213 0030 0B4A     	 ldr r2,.L21+4
+ARM GAS   			page 7
+
+
+ 214 0032 0BA9     	 add r1,sp,#44
+ 215 0034 0220     	 movs r0,#2
+ 216 0036 FFF7FEFF 	 bl gsdk_uart_open
+ 217              	.LVL16:
+  89:httpdemo.c    ****         //syslog_printf("[ONENET_DEMO]: failed to open uart %d\n", status);
+ 218              	 .loc 1 89 0
+ 219 003a 60B9     	 cbnz r0,.L19
+  94:httpdemo.c    **** 
+ 220              	 .loc 1 94 0
+ 221 003c 01A8     	 add r0,sp,#4
+ 222              	.LVL17:
+ 223 003e FFF7FEFF 	 bl strlen
+ 224              	.LVL18:
+ 225 0042 6423     	 movs r3,#100
+ 226 0044 0246     	 mov r2,r0
+ 227 0046 01A9     	 add r1,sp,#4
+ 228 0048 0548     	 ldr r0,.L21+4
+ 229 004a 0068     	 ldr r0,[r0]
+ 230 004c FFF7FEFF 	 bl gsdk_uart_write
+ 231              	.LVL19:
+  98:httpdemo.c    **** }
+ 232              	 .loc 1 98 0
+ 233 0050 0020     	 movs r0,#0
+ 234              	.L17:
+  99:httpdemo.c    **** 
+ 235              	 .loc 1 99 0
+ 236 0052 0DB0     	 add sp,sp,#52
+ 237              	 .cfi_remember_state
+ 238              	 .cfi_def_cfa_offset 12
+ 239              	 
+ 240 0054 30BD     	 pop {r4,r5,pc}
+ 241              	.LVL20:
+ 242              	.L19:
+ 243              	 .cfi_restore_state
+  91:httpdemo.c    ****     }
+ 244              	 .loc 1 91 0
+ 245 0056 4FF0FF30 	 mov r0,#-1
+ 246              	.LVL21:
+ 247 005a FAE7     	 b .L17
+ 248              	.L22:
+ 249              	 .align 2
+ 250              	.L21:
+ 251 005c 00000000 	 .word .LC2
+ 252 0060 00000000 	 .word .LANCHOR1
+ 253              	 .cfi_endproc
+ 254              	.LFE5:
+ 256              	 .section .text.main,"ax",%progbits
+ 257              	 .align 1
+ 258              	 .global main
+ 259              	 .syntax unified
+ 260              	 .thumb
+ 261              	 .thumb_func
+ 262              	 .fpu fpv4-sp-d16
+ 264              	main:
+ 265              	.LFB7:
+ 113:httpdemo.c    **** 
+ 114:httpdemo.c    **** int main(void)
+ARM GAS   			page 8
+
+
+ 115:httpdemo.c    **** {
+ 266              	 .loc 1 115 0
+ 267              	 .cfi_startproc
+ 268              	 
+ 269              	 
+ 270 0000 10B5     	 push {r4,lr}
+ 271              	 .cfi_def_cfa_offset 8
+ 272              	 .cfi_offset 4,-8
+ 273              	 .cfi_offset 14,-4
+ 274 0002 BAB0     	 sub sp,sp,#232
+ 275              	 .cfi_def_cfa_offset 240
+ 276              	.LVL22:
+ 116:httpdemo.c    ****     gsdk_status_t status;
+ 117:httpdemo.c    ****     int ret = -1;
+ 118:httpdemo.c    ****     char ip[MAX_IP_BYTE] = {0};
+ 277              	 .loc 1 118 0
+ 278 0004 8022     	 movs r2,#128
+ 279 0006 0021     	 movs r1,#0
+ 280 0008 1AA8     	 add r0,sp,#104
+ 281 000a FFF7FEFF 	 bl memset
+ 282              	.LVL23:
+ 119:httpdemo.c    ****     int count = 0;
+ 120:httpdemo.c    **** 
+ 121:httpdemo.c    **** 
+ 122:httpdemo.c    ****     /************************* http create init  *********************************/
+ 123:httpdemo.c    ****     int httpclient_id;
+ 124:httpdemo.c    **** 
+ 125:httpdemo.c    ****     http_create http_new;
+ 126:httpdemo.c    **** 
+ 127:httpdemo.c    ****     memset(&http_new,0x0,sizeof(http_create));
+ 283              	 .loc 1 127 0
+ 284 000e 3022     	 movs r2,#48
+ 285 0010 0021     	 movs r1,#0
+ 286 0012 0DA8     	 add r0,sp,#52
+ 287 0014 FFF7FEFF 	 bl memset
+ 288              	.LVL24:
+ 128:httpdemo.c    ****     http_new.flag = 0;
+ 129:httpdemo.c    ****     http_new.total_len = 38;
+ 289              	 .loc 1 129 0
+ 290 0018 2623     	 movs r3,#38
+ 291 001a 0E93     	 str r3,[sp,#56]
+ 130:httpdemo.c    ****     http_new.len = 38;
+ 292              	 .loc 1 130 0
+ 293 001c 0F93     	 str r3,[sp,#60]
+ 131:httpdemo.c    ****     http_new.host = "http://219.144.130.27:80/";
+ 294              	 .loc 1 131 0
+ 295 001e 3D4B     	 ldr r3,.L39
+ 296 0020 1093     	 str r3,[sp,#64]
+ 132:httpdemo.c    ****     http_new.server_cert_len = 0;
+ 133:httpdemo.c    ****     http_new.client_cert_len = 0;
+ 134:httpdemo.c    ****     http_new.client_pk_len = 0;
+ 135:httpdemo.c    ****     /************************* http send init **********************************/
+ 136:httpdemo.c    **** 
+ 137:httpdemo.c    ****      http_send send;
+ 138:httpdemo.c    ****      memset(&send,0x0,sizeof(http_send));
+ 297              	 .loc 1 138 0
+ 298 0022 3422     	 movs r2,#52
+ARM GAS   			page 9
+
+
+ 299 0024 0021     	 movs r1,#0
+ 300 0026 6846     	 mov r0,sp
+ 301 0028 FFF7FEFF 	 bl memset
+ 302              	.LVL25:
+ 139:httpdemo.c    ****      send.flag = 0;
+ 140:httpdemo.c    ****      send.total_len = 26;
+ 303              	 .loc 1 140 0
+ 304 002c 1A23     	 movs r3,#26
+ 305 002e 0193     	 str r3,[sp,#4]
+ 141:httpdemo.c    ****      send.len = 26;
+ 306              	 .loc 1 141 0
+ 307 0030 0293     	 str r3,[sp,#8]
+ 142:httpdemo.c    ****      send.method = 0;
+ 143:httpdemo.c    ****      send.path_len = 9;
+ 308              	 .loc 1 143 0
+ 309 0032 0923     	 movs r3,#9
+ 310 0034 0593     	 str r3,[sp,#20]
+ 144:httpdemo.c    ****      send.path = "/Test.txt";
+ 311              	 .loc 1 144 0
+ 312 0036 384B     	 ldr r3,.L39+4
+ 313 0038 0693     	 str r3,[sp,#24]
+ 145:httpdemo.c    ****      send.customer_header_len = 0;
+ 146:httpdemo.c    ****      send.content_type_len = 0;
+ 147:httpdemo.c    ****      send.content_string_len = 0;
+ 148:httpdemo.c    ****     //uart0 log init
+ 149:httpdemo.c    ****     log_init();
+ 314              	 .loc 1 149 0
+ 315 003a FFF7FEFF 	 bl log_init
+ 316              	.LVL26:
+ 150:httpdemo.c    **** 
+ 151:httpdemo.c    ****     //uart2 init
+ 152:httpdemo.c    ****     //uart_init();
+ 153:httpdemo.c    **** 
+ 154:httpdemo.c    ****     printf("[HTTP_DEMO] main!\n");
+ 317              	 .loc 1 154 0
+ 318 003e 3748     	 ldr r0,.L39+8
+ 319 0040 FFF7FEFF 	 bl puts
+ 320              	.LVL27:
+ 155:httpdemo.c    **** 
+ 156:httpdemo.c    ****     status = gsdk_ril_init();
+ 321              	 .loc 1 156 0
+ 322 0044 FFF7FEFF 	 bl gsdk_ril_init
+ 323              	.LVL28:
+ 157:httpdemo.c    ****     if (status != GSDK_SUCCESS) {
+ 324              	 .loc 1 157 0
+ 325 0048 70B9     	 cbnz r0,.L37
+ 326              	.LVL29:
+ 327              	.L24:
+ 115:httpdemo.c    ****     gsdk_status_t status;
+ 328              	 .loc 1 115 0
+ 329 004a 0024     	 movs r4,#0
+ 330              	.LVL30:
+ 331              	.L28:
+ 158:httpdemo.c    ****         printf(" AT CMD init failed\n");
+ 159:httpdemo.c    ****         //return -1;
+ 160:httpdemo.c    ****     }
+ 161:httpdemo.c    **** 
+ARM GAS   			page 10
+
+
+ 162:httpdemo.c    ****     /*wait for ip appear*/
+ 163:httpdemo.c    ****     while (1) {
+ 164:httpdemo.c    ****         if (count > 100) {
+ 332              	 .loc 1 164 0
+ 333 004c 642C     	 cmp r4,#100
+ 334 004e 0FDC     	 bgt .L38
+ 165:httpdemo.c    ****             printf("wait for IP timeout\r\n");
+ 166:httpdemo.c    ****             return -1;
+ 167:httpdemo.c    ****         }
+ 168:httpdemo.c    ****         ret = gsdk_ril_get_local_ipaddr(ip, MAX_IP_BYTE);
+ 335              	 .loc 1 168 0
+ 336 0050 8021     	 movs r1,#128
+ 337 0052 1AA8     	 add r0,sp,#104
+ 338 0054 FFF7FEFF 	 bl gsdk_ril_get_local_ipaddr
+ 339              	.LVL31:
+ 169:httpdemo.c    ****         if (ret == 1)
+ 340              	 .loc 1 169 0
+ 341 0058 0128     	 cmp r0,#1
+ 342 005a 0FD0     	 beq .L27
+ 170:httpdemo.c    ****             break;
+ 171:httpdemo.c    ****         vTaskDelay(500);
+ 343              	 .loc 1 171 0
+ 344 005c 4FF4FA70 	 mov r0,#500
+ 345              	.LVL32:
+ 346 0060 FFF7FEFF 	 bl vTaskDelay
+ 347              	.LVL33:
+ 172:httpdemo.c    ****         count++;
+ 348              	 .loc 1 172 0
+ 349 0064 0134     	 adds r4,r4,#1
+ 350              	.LVL34:
+ 164:httpdemo.c    ****             printf("wait for IP timeout\r\n");
+ 351              	 .loc 1 164 0
+ 352 0066 F1E7     	 b .L28
+ 353              	.LVL35:
+ 354              	.L37:
+ 158:httpdemo.c    ****         //return -1;
+ 355              	 .loc 1 158 0
+ 356 0068 2D48     	 ldr r0,.L39+12
+ 357              	.LVL36:
+ 358 006a FFF7FEFF 	 bl puts
+ 359              	.LVL37:
+ 360 006e ECE7     	 b .L24
+ 361              	.LVL38:
+ 362              	.L38:
+ 165:httpdemo.c    ****             return -1;
+ 363              	 .loc 1 165 0
+ 364 0070 2C48     	 ldr r0,.L39+16
+ 365 0072 FFF7FEFF 	 bl puts
+ 366              	.LVL39:
+ 166:httpdemo.c    ****         }
+ 367              	 .loc 1 166 0
+ 368 0076 4FF0FF30 	 mov r0,#-1
+ 369 007a 12E0     	 b .L23
+ 370              	.LVL40:
+ 371              	.L27:
+ 173:httpdemo.c    ****     }
+ 174:httpdemo.c    ****     printf("ip is %s\r\n\r\n", ip);
+ARM GAS   			page 11
+
+
+ 372              	 .loc 1 174 0
+ 373 007c 1AA9     	 add r1,sp,#104
+ 374 007e 2A48     	 ldr r0,.L39+20
+ 375              	.LVL41:
+ 376 0080 FFF7FEFF 	 bl printf
+ 377              	.LVL42:
+ 175:httpdemo.c    ****     
+ 176:httpdemo.c    **** 
+ 177:httpdemo.c    ****     /*************************** http create client ********************************/
+ 178:httpdemo.c    **** 
+ 179:httpdemo.c    ****     status = gsdk_ril_create_http_client(&http_new, &httpclient_id);
+ 378              	 .loc 1 179 0
+ 379 0084 19A9     	 add r1,sp,#100
+ 380 0086 0DA8     	 add r0,sp,#52
+ 381 0088 FFF7FEFF 	 bl gsdk_ril_create_http_client
+ 382              	.LVL43:
+ 180:httpdemo.c    **** 
+ 181:httpdemo.c    ****     if(GSDK_SUCCESS != status){
+ 383              	 .loc 1 181 0
+ 384 008c 0146     	 mov r1,r0
+ 385 008e 50B1     	 cbz r0,.L29
+ 182:httpdemo.c    ****         printf("create http client failed:%d\r\n",status);
+ 386              	 .loc 1 182 0
+ 387 0090 2648     	 ldr r0,.L39+24
+ 388              	.LVL44:
+ 389 0092 FFF7FEFF 	 bl printf
+ 390              	.LVL45:
+ 391              	.L30:
+ 183:httpdemo.c    ****         goto _fail;
+ 184:httpdemo.c    ****     }
+ 185:httpdemo.c    ****     
+ 186:httpdemo.c    ****     send.httpclient_id = httpclient_id;// httpclient_id
+ 187:httpdemo.c    ****     /************************ http client connect *********************************/
+ 188:httpdemo.c    ****     if(GSDK_SUCCESS == gsdk_ril_connect_http_client(httpclient_id)){
+ 189:httpdemo.c    ****         printf("HTTP connect interface exe success.\n");
+ 190:httpdemo.c    ****     }else{
+ 191:httpdemo.c    ****         printf("HTTP connect error.\n");
+ 192:httpdemo.c    ****         goto _fail;
+ 193:httpdemo.c    ****     }
+ 194:httpdemo.c    ****     vTaskDelay(3 * 1000 / portTICK_RATE_MS);
+ 195:httpdemo.c    ****     /************************* http send request *********************************/
+ 196:httpdemo.c    ****     status = gsdk_ril_send_http_client(&send, http_callback,NULL);
+ 197:httpdemo.c    ****     if (status != GSDK_SUCCESS) {
+ 198:httpdemo.c    ****         printf("send request failed:%d\r\n", status);
+ 199:httpdemo.c    ****         goto _fail;
+ 200:httpdemo.c    ****     }
+ 201:httpdemo.c    ****     vTaskDelay(5 * 1000 / portTICK_RATE_MS);
+ 202:httpdemo.c    **** 
+ 203:httpdemo.c    ****     /************************ disconnect http client *****************************/
+ 204:httpdemo.c    ****     status = gsdk_ril_disconnect_http_client(httpclient_id);
+ 205:httpdemo.c    ****     if(GSDK_SUCCESS != status){
+ 206:httpdemo.c    ****         printf("disconnect http client failed:%d\r\n",status);
+ 207:httpdemo.c    ****         goto _fail;
+ 208:httpdemo.c    ****      }
+ 209:httpdemo.c    ****     vTaskDelay(3 * 1000 / portTICK_RATE_MS);
+ 210:httpdemo.c    ****     /************************ destroy http client ********************************/
+ 211:httpdemo.c    ****     status = gsdk_ril_destroy_http_client(httpclient_id);
+ARM GAS   			page 12
+
+
+ 212:httpdemo.c    ****     if(GSDK_SUCCESS != status){
+ 213:httpdemo.c    ****         printf("destroy http client failed:%d\r\n",status);
+ 214:httpdemo.c    ****         goto _fail;
+ 215:httpdemo.c    ****     }
+ 216:httpdemo.c    **** 
+ 217:httpdemo.c    ****      
+ 218:httpdemo.c    **** _fail:
+ 219:httpdemo.c    **** 
+ 220:httpdemo.c    ****     gsdk_uart_close(g_huart);
+ 392              	 .loc 1 220 0
+ 393 0096 264C     	 ldr r4,.L39+28
+ 394              	.LVL46:
+ 395 0098 2068     	 ldr r0,[r4]
+ 396 009a FFF7FEFF 	 bl gsdk_uart_close
+ 397              	.LVL47:
+ 221:httpdemo.c    ****     g_huart = NULL;
+ 398              	 .loc 1 221 0
+ 399 009e 0020     	 movs r0,#0
+ 400 00a0 2060     	 str r0,[r4]
+ 401              	.L23:
+ 222:httpdemo.c    **** 
+ 223:httpdemo.c    ****     return 0;
+ 224:httpdemo.c    **** 
+ 225:httpdemo.c    **** }
+ 402              	 .loc 1 225 0
+ 403 00a2 3AB0     	 add sp,sp,#232
+ 404              	 .cfi_remember_state
+ 405              	 .cfi_def_cfa_offset 8
+ 406              	 
+ 407 00a4 10BD     	 pop {r4,pc}
+ 408              	.LVL48:
+ 409              	.L29:
+ 410              	 .cfi_restore_state
+ 186:httpdemo.c    ****     /************************ http client connect *********************************/
+ 411              	 .loc 1 186 0
+ 412 00a6 1998     	 ldr r0,[sp,#100]
+ 413              	.LVL49:
+ 414 00a8 0390     	 str r0,[sp,#12]
+ 188:httpdemo.c    ****         printf("HTTP connect interface exe success.\n");
+ 415              	 .loc 1 188 0
+ 416 00aa FFF7FEFF 	 bl gsdk_ril_connect_http_client
+ 417              	.LVL50:
+ 418 00ae D0B9     	 cbnz r0,.L31
+ 189:httpdemo.c    ****     }else{
+ 419              	 .loc 1 189 0
+ 420 00b0 2048     	 ldr r0,.L39+32
+ 421 00b2 FFF7FEFF 	 bl puts
+ 422              	.LVL51:
+ 194:httpdemo.c    ****     /************************* http send request *********************************/
+ 423              	 .loc 1 194 0
+ 424 00b6 4FF49670 	 mov r0,#300
+ 425 00ba FFF7FEFF 	 bl vTaskDelay
+ 426              	.LVL52:
+ 196:httpdemo.c    ****     if (status != GSDK_SUCCESS) {
+ 427              	 .loc 1 196 0
+ 428 00be 0022     	 movs r2,#0
+ 429 00c0 1D49     	 ldr r1,.L39+36
+ARM GAS   			page 13
+
+
+ 430 00c2 6846     	 mov r0,sp
+ 431 00c4 FFF7FEFF 	 bl gsdk_ril_send_http_client
+ 432              	.LVL53:
+ 197:httpdemo.c    ****         printf("send request failed:%d\r\n", status);
+ 433              	 .loc 1 197 0
+ 434 00c8 0146     	 mov r1,r0
+ 435 00ca 80B9     	 cbnz r0,.L32
+ 201:httpdemo.c    **** 
+ 436              	 .loc 1 201 0
+ 437 00cc 4FF4FA70 	 mov r0,#500
+ 438              	.LVL54:
+ 439 00d0 FFF7FEFF 	 bl vTaskDelay
+ 440              	.LVL55:
+ 204:httpdemo.c    ****     if(GSDK_SUCCESS != status){
+ 441              	 .loc 1 204 0
+ 442 00d4 1998     	 ldr r0,[sp,#100]
+ 443 00d6 FFF7FEFF 	 bl gsdk_ril_disconnect_http_client
+ 444              	.LVL56:
+ 205:httpdemo.c    ****         printf("disconnect http client failed:%d\r\n",status);
+ 445              	 .loc 1 205 0
+ 446 00da 0146     	 mov r1,r0
+ 447 00dc 58B1     	 cbz r0,.L34
+ 206:httpdemo.c    ****         goto _fail;
+ 448              	 .loc 1 206 0
+ 449 00de 1748     	 ldr r0,.L39+40
+ 450              	.LVL57:
+ 451 00e0 FFF7FEFF 	 bl printf
+ 452              	.LVL58:
+ 207:httpdemo.c    ****      }
+ 453              	 .loc 1 207 0
+ 454 00e4 D7E7     	 b .L30
+ 455              	.L31:
+ 191:httpdemo.c    ****         goto _fail;
+ 456              	 .loc 1 191 0
+ 457 00e6 1648     	 ldr r0,.L39+44
+ 458 00e8 FFF7FEFF 	 bl puts
+ 459              	.LVL59:
+ 192:httpdemo.c    ****     }
+ 460              	 .loc 1 192 0
+ 461 00ec D3E7     	 b .L30
+ 462              	.LVL60:
+ 463              	.L32:
+ 198:httpdemo.c    ****         goto _fail;
+ 464              	 .loc 1 198 0
+ 465 00ee 1548     	 ldr r0,.L39+48
+ 466              	.LVL61:
+ 467 00f0 FFF7FEFF 	 bl printf
+ 468              	.LVL62:
+ 199:httpdemo.c    ****     }
+ 469              	 .loc 1 199 0
+ 470 00f4 CFE7     	 b .L30
+ 471              	.LVL63:
+ 472              	.L34:
+ 209:httpdemo.c    ****     /************************ destroy http client ********************************/
+ 473              	 .loc 1 209 0
+ 474 00f6 4FF49670 	 mov r0,#300
+ 475              	.LVL64:
+ARM GAS   			page 14
+
+
+ 476 00fa FFF7FEFF 	 bl vTaskDelay
+ 477              	.LVL65:
+ 211:httpdemo.c    ****     if(GSDK_SUCCESS != status){
+ 478              	 .loc 1 211 0
+ 479 00fe 1998     	 ldr r0,[sp,#100]
+ 480 0100 FFF7FEFF 	 bl gsdk_ril_destroy_http_client
+ 481              	.LVL66:
+ 212:httpdemo.c    ****         printf("destroy http client failed:%d\r\n",status);
+ 482              	 .loc 1 212 0
+ 483 0104 0146     	 mov r1,r0
+ 484 0106 0028     	 cmp r0,#0
+ 485 0108 C5D0     	 beq .L30
+ 213:httpdemo.c    ****         goto _fail;
+ 486              	 .loc 1 213 0
+ 487 010a 0F48     	 ldr r0,.L39+52
+ 488              	.LVL67:
+ 489 010c FFF7FEFF 	 bl printf
+ 490              	.LVL68:
+ 214:httpdemo.c    ****     }
+ 491              	 .loc 1 214 0
+ 492 0110 C1E7     	 b .L30
+ 493              	.L40:
+ 494 0112 00BF     	 .align 2
+ 495              	.L39:
+ 496 0114 00000000 	 .word .LC3
+ 497 0118 1C000000 	 .word .LC4
+ 498 011c 28000000 	 .word .LC5
+ 499 0120 3C000000 	 .word .LC6
+ 500 0124 50000000 	 .word .LC7
+ 501 0128 68000000 	 .word .LC8
+ 502 012c 78000000 	 .word .LC9
+ 503 0130 00000000 	 .word .LANCHOR0
+ 504 0134 98000000 	 .word .LC10
+ 505 0138 00000000 	 .word http_callback
+ 506 013c EC000000 	 .word .LC13
+ 507 0140 BC000000 	 .word .LC11
+ 508 0144 D0000000 	 .word .LC12
+ 509 0148 10010000 	 .word .LC14
+ 510              	 .cfi_endproc
+ 511              	.LFE7:
+ 513              	 .section .bss.g_huart,"aw",%nobits
+ 514              	 .align 2
+ 515              	 .set .LANCHOR0,.+0
+ 518              	g_huart:
+ 519 0000 00000000 	 .space 4
+ 520              	 .section .bss.huart,"aw",%nobits
+ 521              	 .align 2
+ 522              	 .set .LANCHOR1,.+0
+ 525              	huart:
+ 526 0000 00000000 	 .space 4
+ 527              	 .section .rodata.http_callback.str1.4,"aMS",%progbits,1
+ 528              	 .align 2
+ 529              	.LC0:
+ 530 0000 2025730A 	 .ascii " %s\012\015\000"
+ 530      0D00
+ 531              	 .section .rodata.log_init.str1.4,"aMS",%progbits,1
+ 532              	 .align 2
+ARM GAS   			page 15
+
+
+ 533              	.LC1:
+ 534 0000 5B485454 	 .ascii "[HTTP_DEMO] log init....OK\015\000"
+ 534      505F4445 
+ 534      4D4F5D20 
+ 534      6C6F6720 
+ 534      696E6974 
+ 535              	 .section .rodata.main.str1.4,"aMS",%progbits,1
+ 536              	 .align 2
+ 537              	.LC3:
+ 538 0000 68747470 	 .ascii "http://219.144.130.27:80/\000"
+ 538      3A2F2F32 
+ 538      31392E31 
+ 538      34342E31 
+ 538      33302E32 
+ 539 001a 0000     	 .space 2
+ 540              	.LC4:
+ 541 001c 2F546573 	 .ascii "/Test.txt\000"
+ 541      742E7478 
+ 541      7400
+ 542 0026 0000     	 .space 2
+ 543              	.LC5:
+ 544 0028 5B485454 	 .ascii "[HTTP_DEMO] main!\000"
+ 544      505F4445 
+ 544      4D4F5D20 
+ 544      6D61696E 
+ 544      2100
+ 545 003a 0000     	 .space 2
+ 546              	.LC6:
+ 547 003c 20415420 	 .ascii " AT CMD init failed\000"
+ 547      434D4420 
+ 547      696E6974 
+ 547      20666169 
+ 547      6C656400 
+ 548              	.LC7:
+ 549 0050 77616974 	 .ascii "wait for IP timeout\015\000"
+ 549      20666F72 
+ 549      20495020 
+ 549      74696D65 
+ 549      6F75740D 
+ 550 0065 000000   	 .space 3
+ 551              	.LC8:
+ 552 0068 69702069 	 .ascii "ip is %s\015\012\015\012\000"
+ 552      73202573 
+ 552      0D0A0D0A 
+ 552      00
+ 553 0075 000000   	 .space 3
+ 554              	.LC9:
+ 555 0078 63726561 	 .ascii "create http client failed:%d\015\012\000"
+ 555      74652068 
+ 555      74747020 
+ 555      636C6965 
+ 555      6E742066 
+ 556 0097 00       	 .space 1
+ 557              	.LC10:
+ 558 0098 48545450 	 .ascii "HTTP connect interface exe success.\000"
+ 558      20636F6E 
+ 558      6E656374 
+ARM GAS   			page 16
+
+
+ 558      20696E74 
+ 558      65726661 
+ 559              	.LC11:
+ 560 00bc 48545450 	 .ascii "HTTP connect error.\000"
+ 560      20636F6E 
+ 560      6E656374 
+ 560      20657272 
+ 560      6F722E00 
+ 561              	.LC12:
+ 562 00d0 73656E64 	 .ascii "send request failed:%d\015\012\000"
+ 562      20726571 
+ 562      75657374 
+ 562      20666169 
+ 562      6C65643A 
+ 563 00e9 000000   	 .space 3
+ 564              	.LC13:
+ 565 00ec 64697363 	 .ascii "disconnect http client failed:%d\015\012\000"
+ 565      6F6E6E65 
+ 565      63742068 
+ 565      74747020 
+ 565      636C6965 
+ 566 010f 00       	 .space 1
+ 567              	.LC14:
+ 568 0110 64657374 	 .ascii "destroy http client failed:%d\015\012\000"
+ 568      726F7920 
+ 568      68747470 
+ 568      20636C69 
+ 568      656E7420 
+ 569              	 .section .rodata.uart_init.str1.4,"aMS",%progbits,1
+ 570              	 .align 2
+ 571              	.LC2:
+ 572 0000 5B485454 	 .ascii "[HTTP_DEMO] Open Uart Successfully!\015\012\000"
+ 572      505F4445 
+ 572      4D4F5D20 
+ 572      4F70656E 
+ 572      20556172 
+ 573              	 .text
+ 574              	.Letext0:
+ 575              	 .file 2 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 576              	 .file 3 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\lock.h"
+ 577              	 .file 4 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\_types.h"
+ 578              	 .file 5 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\lib\\gcc\\arm-none-eabi\\7.3.1\\include\\stddef.h"
+ 579              	 .file 6 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\reent.h"
+ 580              	 .file 7 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\_stdint.h"
+ 581              	 .file 8 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\stdlib.h"
+ 582              	 .file 9 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_common.h"
+ 583              	 .file 10 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_uart.h"
+ 584              	 .file 11 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_flash.h"
+ 585              	 .file 12 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/include/FreeRTOSConfig.h"
+ 586              	 .file 13 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/GCC/mt2625/ARM_CM4F/portmacro.h"
+ 587              	 .file 14 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_ril_cmds.h"
+ 588              	 .file 15 "<built-in>"
+ 589              	 .file 16 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_ril.h"
+ 590              	 .file 17 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/include/task.h"
+ 591              	 .file 18 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\stdio.h"
+ 592              	 .file 19 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\string.h"
+ARM GAS   			page 17
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 httpdemo.c
+    {standard input}:18     .text.http_callback:00000000 $t
+    {standard input}:25     .text.http_callback:00000000 http_callback
+    {standard input}:50     .text.http_callback:00000010 $d
+    {standard input}:55     .text.__io_puts:00000000 $t
+    {standard input}:62     .text.__io_puts:00000000 __io_puts
+    {standard input}:100    .text.__io_puts:0000001c $d
+    {standard input}:105    .text.log_init:00000000 $t
+    {standard input}:112    .text.log_init:00000000 log_init
+    {standard input}:165    .text.log_init:00000038 $d
+    {standard input}:171    .text.uart_init:00000000 $t
+    {standard input}:178    .text.uart_init:00000000 uart_init
+    {standard input}:251    .text.uart_init:0000005c $d
+    {standard input}:257    .text.main:00000000 $t
+    {standard input}:264    .text.main:00000000 main
+    {standard input}:496    .text.main:00000114 $d
+    {standard input}:514    .bss.g_huart:00000000 $d
+    {standard input}:518    .bss.g_huart:00000000 g_huart
+    {standard input}:521    .bss.huart:00000000 $d
+    {standard input}:525    .bss.huart:00000000 huart
+    {standard input}:528    .rodata.http_callback.str1.4:00000000 $d
+    {standard input}:532    .rodata.log_init.str1.4:00000000 $d
+    {standard input}:536    .rodata.main.str1.4:00000000 $d
+    {standard input}:570    .rodata.uart_init.str1.4:00000000 $d
+                           .group:00000000 wm4.0.8fab1e1450c2b74bdd5e2aed4c325bf1
+                           .group:00000000 wm4._newlib_version.h.4.875b979a44719054cd750d0952ad3fd6
+                           .group:00000000 wm4.newlib.h.18.5e5ca3429233af402d406a202f1fc1ac
+                           .group:00000000 wm4.ieeefp.h.77.220d9cccac42cd58761758bee2df4ce6
+                           .group:00000000 wm4.features.h.22.fad1cec3bc7ff06488171438dbdcfd02
+                           .group:00000000 wm4.config.h.220.6cac6a9685cfce5e83c17784171638d9
+                           .group:00000000 wm4._ansi.h.31.de524f58584151836e90d8620a16f8e8
+                           .group:00000000 wm4.stdio.h.31.7c0e28c411445f3f9c5b11accf882760
+                           .group:00000000 wm4._default_types.h.6.959254cf5f09734ea7516c89e8bb21bd
+                           .group:00000000 wm4.stddef.h.187.2ff233552538c6ff9b8575ca8ea52cb3
+                           .group:00000000 wm4.cdefs.h.47.0bcdf94cb40e176393dd1404056825b4
+                           .group:00000000 wm4.stddef.h.39.ec95e8feac892e292b69dc7ae75b0d64
+                           .group:00000000 wm4.stdarg.h.34.3a23a216c0c293b3d2ea2e89281481e6
+                           .group:00000000 wm4.lock.h.2.1461d1fff82dffe8bfddc23307f6484f
+                           .group:00000000 wm4._types.h.125.5cf8a495f1f7ef36777ad868a1e32068
+                           .group:00000000 wm4.stddef.h.161.5349cb105733e8777bfb0cf53c4e3f34
+                           .group:00000000 wm4._types.h.184.03611d4f6b5bec9997bcf4279eceba07
+                           .group:00000000 wm4.reent.h.17.90c2574d4acdcfce933db5cb09ff35fe
+                           .group:00000000 wm4.types.h.40.e8c16e7ec36ba55f133d0616070e25fc
+                           .group:00000000 wm4._stdint.h.10.c24fa3af3bc1706662bb5593a907e841
+                           .group:00000000 wm4._endian.h.31.65a10590763c3dde1ac4a7f66d7d4891
+                           .group:00000000 wm4.endian.h.9.49f3a4695c1b61e8a0808de3c4a106cb
+                           .group:00000000 wm4._timeval.h.30.0e8bfd94e85db17dda3286ee81496fe6
+                           .group:00000000 wm4.timespec.h.41.d855182eb0e690443ab8651bcedca6e1
+                           .group:00000000 wm4.select.h.19.97ca6fd0c752a0f3b6719fd314d361e6
+                           .group:00000000 wm4.types.h.69.ed3eae3cf73030a737515151ebcab7a1
+                           .group:00000000 wm4.sched.h.22.c60982713a5c428609783c78f9c78d95
+                           .group:00000000 wm4._pthreadtypes.h.36.fcee9961c35163dde6267ef772ad1972
+                           .group:00000000 wm4.stdio.h.2.4aa87247282eca6c8f36f9de33d8df1a
+                           .group:00000000 wm4.stdio.h.81.932d0c162786b883f622b8d05c120c78
+                           .group:00000000 wm4.stdlib.h.13.4ed386f5c1a80d71e72172885d946ef2
+                           .group:00000000 wm4.stddef.h.161.19e15733342b50ead2919490b095303e
+ARM GAS   			page 18
+
+
+                           .group:00000000 wm4.alloca.h.8.dfc0c703c47ec3e69746825b17d9e66d
+                           .group:00000000 wm4.stdlib.h.56.d4493cd3736e51e9d56335045f26df45
+                           .group:00000000 wm4.string.h.8.c4b8571ce60dff2817f43fec8b86aecd
+                           .group:00000000 wm4._intsup.h.10.cce27fed8484c08a33f522034c30d2b5
+                           .group:00000000 wm4.stdint.h.23.d53047a68f4a85177f80b422d52785ed
+                           .group:00000000 wm4.gsdk_common.h.47.22de8ea3659fbd5af0e08ced1ae1b062
+                           .group:00000000 wm4.gsdk_flash.h.25.4d08791083e4af07d64570151ac0803c
+                           .group:00000000 wm4.app_loader.h.25.aa64c8d4536aca920728cda79a275eeb
+                           .group:00000000 wm4.FreeRTOSConfig.h.68.1d0dd6b8cda279d0020827f5584733bd
+                           .group:00000000 wm4.projdefs.h.71.1734cd3501e070360596dd847bb9d813
+                           .group:00000000 wm4.portmacro.h.72.3d5d774f718d157a637f7eb960850f27
+                           .group:00000000 wm4.portable.h.98.f435842f50d7864fba6a318a13e72513
+                           .group:00000000 wm4.mpu_wrappers.h.71.dd245fe44d82bd40288b5a47f895c82c
+                           .group:00000000 wm4.FreeRTOS.h.175.3abf49eaca38658a192da8d7c86d5374
+                           .group:00000000 wm4.list.h.103.6a12b7b9a7a136c3cca0ee53675c5498
+                           .group:00000000 wm4.task.h.88.da474b04c368050657453c137d8efe45
+                           .group:00000000 wm4.gsdk_ril.h.43.ec5a175e110d1c70143139b168262c34
+                           .group:00000000 wm4.gsdk_ril_cmds.h.25.9576f30a39fa8fd69cc4f6c2fc4c8bd9
+
+UNDEFINED SYMBOLS
+printf
+gsdk_uart_write
+gsdk_uart_open
+puts
+strlen
+memset
+gsdk_ril_init
+gsdk_ril_get_local_ipaddr
+vTaskDelay
+gsdk_ril_create_http_client
+gsdk_uart_close
+gsdk_ril_connect_http_client
+gsdk_ril_send_http_client
+gsdk_ril_disconnect_http_client
+gsdk_ril_destroy_http_client

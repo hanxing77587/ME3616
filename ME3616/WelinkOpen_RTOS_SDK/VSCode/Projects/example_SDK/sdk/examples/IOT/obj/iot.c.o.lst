@@ -1,0 +1,1558 @@
+ARM GAS   			page 1
+
+
+   1              	 .cpu cortex-m4
+   2              	 .eabi_attribute 27,1
+   3              	 .eabi_attribute 28,1
+   4              	 .eabi_attribute 20,1
+   5              	 .eabi_attribute 21,1
+   6              	 .eabi_attribute 23,3
+   7              	 .eabi_attribute 24,1
+   8              	 .eabi_attribute 25,1
+   9              	 .eabi_attribute 26,1
+  10              	 .eabi_attribute 30,1
+  11              	 .eabi_attribute 34,1
+  12              	 .eabi_attribute 18,4
+  13              	 .file "iot.c"
+  14              	 .text
+  15              	.Ltext0:
+  16              	 .cfi_sections .debug_frame
+  17              	 .section .text.handle_func,"ax",%progbits
+  18              	 .align 1
+  19              	 .syntax unified
+  20              	 .thumb
+  21              	 .thumb_func
+  22              	 .fpu fpv4-sp-d16
+  24              	handle_func:
+  25              	.LFB20:
+  26              	 .file 1 "iot.c"
+   1:iot.c         **** /*
+   2:iot.c         **** ** File   : iot.c
+   3:iot.c         **** **
+   4:iot.c         **** ** Copyright (C) 2013-2018 Gosuncn. All rights reserved.
+   5:iot.c         **** **
+   6:iot.c         **** ** Licensed under the Apache License, Version 2.0 (the "License");
+   7:iot.c         **** ** you may not use this file except in compliance with the License.
+   8:iot.c         **** ** You may obtain a copy of the License at
+   9:iot.c         **** **
+  10:iot.c         **** **      http://www.apache.org/licenses/LICENSE-2.0
+  11:iot.c         **** **
+  12:iot.c         **** ** Unless required by applicable law or agreed to in writing, software
+  13:iot.c         **** ** distributed under the License is distributed on an "AS IS" BASIS,
+  14:iot.c         **** ** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  15:iot.c         **** ** See the License for the specific language governing permissions and
+  16:iot.c         **** ** limitations under the License.
+  17:iot.c         **** **
+  18:iot.c         **** ** brief:This demo be aimed at introduce iot operation.Include link iot platform,
+  19:iot.c         **** ** send data to iot platform,recv data from iot platform and delete iot link.
+  20:iot.c         **** **
+  21:iot.c         **** ** Author : liyong2@gosuncn.cn
+  22:iot.c         **** **
+  23:iot.c         **** ** $Date: 2018/05/24 08:45:36GMT+08:00 $
+  24:iot.c         **** **
+  25:iot.c         **** */
+  26:iot.c         **** 
+  27:iot.c         **** #include "gsdk_sdk.h"
+  28:iot.c         **** 
+  29:iot.c         **** #define DEBUG_LOG(fmt,...) printf("[LOGD]:Function:%s,Line:%d,"fmt,__func__,__LINE__,##__VA_ARGS__)
+  30:iot.c         **** #define WARN_LOG(fmt,...) printf("[LOGW]:"fmt,##__VA_ARGS__);
+  31:iot.c         **** 
+  32:iot.c         **** #define MAX_IP_BYTE 20
+ARM GAS   			page 2
+
+
+  33:iot.c         **** #define MAX_HEX_SIZE 1024
+  34:iot.c         **** #define MAX_REGISTER_SIZE 1024
+  35:iot.c         **** #define LIFETIME 6000
+  36:iot.c         **** #define IMEI_SIZE 32
+  37:iot.c         **** 
+  38:iot.c         **** static gsdk_handle_t g_huart;
+  39:iot.c         **** 
+  40:iot.c         **** static char recv_buf[MAX_REGISTER_SIZE] = {0};
+  41:iot.c         **** 
+  42:iot.c         **** int __io_puts(char *data, int len)
+  43:iot.c         **** {
+  44:iot.c         ****     int ret = 0;
+  45:iot.c         ****     if (g_huart) {
+  46:iot.c         ****         ret = gsdk_uart_write(g_huart, (uint8_t *)data, len, 1000);
+  47:iot.c         ****     }
+  48:iot.c         ****     return ret;
+  49:iot.c         **** }
+  50:iot.c         **** 
+  51:iot.c         **** /*information that come from iot appear will execute this function*/
+  52:iot.c         **** static int handle_func(const char *s, const char *extra, int len, void *data)
+  53:iot.c         **** {
+  27              	 .loc 1 53 0
+  28              	 .cfi_startproc
+  29              	 
+  30              	 
+  31              	.LVL0:
+  32 0000 38B5     	 push {r3,r4,r5,lr}
+  33              	 .cfi_def_cfa_offset 16
+  34              	 .cfi_offset 3,-16
+  35              	 .cfi_offset 4,-12
+  36              	 .cfi_offset 5,-8
+  37              	 .cfi_offset 14,-4
+  38 0002 0446     	 mov r4,r0
+  39 0004 1D46     	 mov r5,r3
+  54:iot.c         ****     (void)extra;
+  55:iot.c         ****     (void)len;
+  56:iot.c         ****     WARN_LOG("infomation come from iot is %s\r\n", s);
+  40              	 .loc 1 56 0
+  41 0006 0146     	 mov r1,r0
+  42              	.LVL1:
+  43 0008 0A48     	 ldr r0,.L6
+  44              	.LVL2:
+  45 000a FFF7FEFF 	 bl printf
+  46              	.LVL3:
+  57:iot.c         ****     if (strlen(s) > (MAX_REGISTER_SIZE - 1)) {
+  47              	 .loc 1 57 0
+  48 000e 2046     	 mov r0,r4
+  49 0010 FFF7FEFF 	 bl strlen
+  50              	.LVL4:
+  51 0014 B0F5806F 	 cmp r0,#1024
+  52 0018 07D2     	 bcs .L5
+  58:iot.c         ****         WARN_LOG("the information is too large ,please change the size of recv_buf\r\n");
+  59:iot.c         ****     } else {
+  60:iot.c         ****         strncpy(data, s, MAX_REGISTER_SIZE);
+  53              	 .loc 1 60 0
+  54 001a 4FF48062 	 mov r2,#1024
+  55 001e 2146     	 mov r1,r4
+ARM GAS   			page 3
+
+
+  56 0020 2846     	 mov r0,r5
+  57 0022 FFF7FEFF 	 bl strncpy
+  58              	.LVL5:
+  59              	.L3:
+  61:iot.c         ****     }
+  62:iot.c         ****     return GSDK_AT_UNSOLICITED_HANDLED;
+  63:iot.c         **** }
+  60              	 .loc 1 63 0
+  61 0026 0120     	 movs r0,#1
+  62 0028 38BD     	 pop {r3,r4,r5,pc}
+  63              	.LVL6:
+  64              	.L5:
+  58:iot.c         ****         WARN_LOG("the information is too large ,please change the size of recv_buf\r\n");
+  65              	 .loc 1 58 0
+  66 002a 0348     	 ldr r0,.L6+4
+  67 002c FFF7FEFF 	 bl puts
+  68              	.LVL7:
+  69 0030 F9E7     	 b .L3
+  70              	.L7:
+  71 0032 00BF     	 .align 2
+  72              	.L6:
+  73 0034 00000000 	 .word .LC0
+  74 0038 28000000 	 .word .LC1
+  75              	 .cfi_endproc
+  76              	.LFE20:
+  78              	 .section .text.__io_puts,"ax",%progbits
+  79              	 .align 1
+  80              	 .global __io_puts
+  81              	 .syntax unified
+  82              	 .thumb
+  83              	 .thumb_func
+  84              	 .fpu fpv4-sp-d16
+  86              	__io_puts:
+  87              	.LFB19:
+  43:iot.c         ****     int ret = 0;
+  88              	 .loc 1 43 0
+  89              	 .cfi_startproc
+  90              	 
+  91              	 
+  92              	.LVL8:
+  93 0000 10B5     	 push {r4,lr}
+  94              	 .cfi_def_cfa_offset 8
+  95              	 .cfi_offset 4,-8
+  96              	 .cfi_offset 14,-4
+  97              	.LVL9:
+  45:iot.c         ****         ret = gsdk_uart_write(g_huart, (uint8_t *)data, len, 1000);
+  98              	 .loc 1 45 0
+  99 0002 064B     	 ldr r3,.L12
+ 100 0004 1C68     	 ldr r4,[r3]
+ 101 0006 3CB1     	 cbz r4,.L10
+ 102 0008 0A46     	 mov r2,r1
+ 103 000a 0146     	 mov r1,r0
+ 104              	.LVL10:
+  46:iot.c         ****     }
+ 105              	 .loc 1 46 0
+ 106 000c 4FF47A73 	 mov r3,#1000
+ 107 0010 2046     	 mov r0,r4
+ARM GAS   			page 4
+
+
+ 108              	.LVL11:
+ 109 0012 FFF7FEFF 	 bl gsdk_uart_write
+ 110              	.LVL12:
+ 111              	.L8:
+  49:iot.c         **** 
+ 112              	 .loc 1 49 0
+ 113 0016 10BD     	 pop {r4,pc}
+ 114              	.LVL13:
+ 115              	.L10:
+  44:iot.c         ****     if (g_huart) {
+ 116              	 .loc 1 44 0
+ 117 0018 0020     	 movs r0,#0
+ 118              	.LVL14:
+  48:iot.c         **** }
+ 119              	 .loc 1 48 0
+ 120 001a FCE7     	 b .L8
+ 121              	.L13:
+ 122              	 .align 2
+ 123              	.L12:
+ 124 001c 00000000 	 .word .LANCHOR0
+ 125              	 .cfi_endproc
+ 126              	.LFE19:
+ 128              	 .section .text.str_to_hex,"ax",%progbits
+ 129              	 .align 1
+ 130              	 .global str_to_hex
+ 131              	 .syntax unified
+ 132              	 .thumb
+ 133              	 .thumb_func
+ 134              	 .fpu fpv4-sp-d16
+ 136              	str_to_hex:
+ 137              	.LFB21:
+  64:iot.c         **** 
+  65:iot.c         **** void str_to_hex(char *out, const char *in, int len)
+  66:iot.c         **** {
+ 138              	 .loc 1 66 0
+ 139              	 .cfi_startproc
+ 140              	 
+ 141              	 
+ 142              	.LVL15:
+ 143 0000 F8B5     	 push {r3,r4,r5,r6,r7,lr}
+ 144              	 .cfi_def_cfa_offset 24
+ 145              	 .cfi_offset 3,-24
+ 146              	 .cfi_offset 4,-20
+ 147              	 .cfi_offset 5,-16
+ 148              	 .cfi_offset 6,-12
+ 149              	 .cfi_offset 7,-8
+ 150              	 .cfi_offset 14,-4
+ 151 0002 0746     	 mov r7,r0
+ 152 0004 0E46     	 mov r6,r1
+ 153 0006 1546     	 mov r5,r2
+ 154              	.LVL16:
+  67:iot.c         ****     int i;
+  68:iot.c         ****     for (i = 0; i < len; i++) {
+ 155              	 .loc 1 68 0
+ 156 0008 0024     	 movs r4,#0
+ 157 000a 06E0     	 b .L15
+ 158              	.LVL17:
+ARM GAS   			page 5
+
+
+ 159              	.L16:
+  69:iot.c         ****         sprintf(out + (i * 2), "%02x", in[i]);
+ 160              	 .loc 1 69 0 discriminator 3
+ 161 000c 325D     	 ldrb r2,[r6,r4]
+ 162 000e 0449     	 ldr r1,.L18
+ 163 0010 07EB4400 	 add r0,r7,r4,lsl#1
+ 164 0014 FFF7FEFF 	 bl sprintf
+ 165              	.LVL18:
+  68:iot.c         ****         sprintf(out + (i * 2), "%02x", in[i]);
+ 166              	 .loc 1 68 0 discriminator 3
+ 167 0018 0134     	 adds r4,r4,#1
+ 168              	.LVL19:
+ 169              	.L15:
+  68:iot.c         ****         sprintf(out + (i * 2), "%02x", in[i]);
+ 170              	 .loc 1 68 0 is_stmt 0 discriminator 1
+ 171 001a AC42     	 cmp r4,r5
+ 172 001c F6DB     	 blt .L16
+  70:iot.c         ****     }
+  71:iot.c         **** }
+ 173              	 .loc 1 71 0 is_stmt 1
+ 174 001e F8BD     	 pop {r3,r4,r5,r6,r7,pc}
+ 175              	.LVL20:
+ 176              	.L19:
+ 177              	 .align 2
+ 178              	.L18:
+ 179 0020 00000000 	 .word .LC2
+ 180              	 .cfi_endproc
+ 181              	.LFE21:
+ 183              	 .section .text.main,"ax",%progbits
+ 184              	 .align 1
+ 185              	 .global main
+ 186              	 .syntax unified
+ 187              	 .thumb
+ 188              	 .thumb_func
+ 189              	 .fpu fpv4-sp-d16
+ 191              	main:
+ 192              	.LFB22:
+  72:iot.c         **** 
+  73:iot.c         **** int main(void)
+  74:iot.c         **** {
+ 193              	 .loc 1 74 0
+ 194              	 .cfi_startproc
+ 195              	 
+ 196              	 
+ 197 0000 70B5     	 push {r4,r5,r6,lr}
+ 198              	 .cfi_def_cfa_offset 16
+ 199              	 .cfi_offset 4,-16
+ 200              	 .cfi_offset 5,-12
+ 201              	 .cfi_offset 6,-8
+ 202              	 .cfi_offset 14,-4
+ 203 0002 ADF58E6D 	 sub sp,sp,#1136
+ 204              	 .cfi_def_cfa_offset 1152
+ 205              	.LVL21:
+  75:iot.c         ****     uart_config_t uart_config;
+  76:iot.c         **** 
+  77:iot.c         ****     gsdk_status_t status             = GSDK_ERROR;
+  78:iot.c         ****     int ret 						 = -1;
+ARM GAS   			page 6
+
+
+  79:iot.c         ****     uart_config.baudrate             = UART_BAUDRATE_115200;
+ 206              	 .loc 1 79 0
+ 207 0006 0923     	 movs r3,#9
+ 208 0008 8DF86C34 	 strb r3,[sp,#1132]
+  80:iot.c         ****     uart_config.parity               = UART_PARITY_NONE;
+ 209              	 .loc 1 80 0
+ 210 000c 0024     	 movs r4,#0
+ 211 000e 8DF86F44 	 strb r4,[sp,#1135]
+  81:iot.c         ****     uart_config.stop_bit             = UART_STOP_BIT_1;
+ 212              	 .loc 1 81 0
+ 213 0012 8DF86E44 	 strb r4,[sp,#1134]
+  82:iot.c         ****     uart_config.word_length          = UART_WORD_LENGTH_8;
+ 214              	 .loc 1 82 0
+ 215 0016 0323     	 movs r3,#3
+ 216 0018 8DF86D34 	 strb r3,[sp,#1133]
+  83:iot.c         ****     char ip[MAX_IP_BYTE]             = {0};
+ 217              	 .loc 1 83 0
+ 218 001c CDF85844 	 str r4,[sp,#1112]
+ 219 0020 CDF85C44 	 str r4,[sp,#1116]
+ 220 0024 CDF86044 	 str r4,[sp,#1120]
+ 221 0028 CDF86444 	 str r4,[sp,#1124]
+ 222 002c CDF86844 	 str r4,[sp,#1128]
+  84:iot.c         ****     char imei_buf[IMEI_SIZE]         = {0};
+ 223              	 .loc 1 84 0
+ 224 0030 2022     	 movs r2,#32
+ 225 0032 2146     	 mov r1,r4
+ 226 0034 0DF58760 	 add r0,sp,#1080
+ 227 0038 FFF7FEFF 	 bl memset
+ 228              	.LVL22:
+  85:iot.c         ****     int lifetime                     = LIFETIME;
+  86:iot.c         ****     char business_data[]             = {"aabbcc1234567890"};
+ 229              	 .loc 1 86 0
+ 230 003c 0DF22445 	 addw r5,sp,#1060
+ 231 0040 914E     	 ldr r6,.L64
+ 232 0042 0FCE     	 ldmia r6!,{r0,r1,r2,r3}
+ 233 0044 0FC5     	 stmia r5!,{r0,r1,r2,r3}
+ 234 0046 3368     	 ldr r3,[r6]
+ 235 0048 2B70     	 strb r3,[r5]
+  87:iot.c         ****     char hex_user_data[MAX_HEX_SIZE] = {0};
+ 236              	 .loc 1 87 0
+ 237 004a 4FF48062 	 mov r2,#1024
+ 238 004e 2146     	 mov r1,r4
+ 239 0050 09A8     	 add r0,sp,#36
+ 240 0052 FFF7FEFF 	 bl memset
+ 241              	.LVL23:
+  88:iot.c         ****     int count                        = 0;
+  89:iot.c         ****     char srv_ip[MAX_IP_BYTE]         = {"180.101.147.115"};
+ 242              	 .loc 1 89 0
+ 243 0056 04AD     	 add r5,sp,#16
+ 244 0058 8C4B     	 ldr r3,.L64+4
+ 245 005a 0FCB     	 ldm r3,{r0,r1,r2,r3}
+ 246 005c 85E80F00 	 stm r5,{r0,r1,r2,r3}
+ 247 0060 2C61     	 str r4,[r5,#16]
+ 248              	.LVL24:
+  90:iot.c         ****     int srv_port                     = 5683;
+  91:iot.c         **** 
+  92:iot.c         ****     status = gsdk_uart_open(UART_0, &uart_config, &g_huart);
+ARM GAS   			page 7
+
+
+ 249              	 .loc 1 92 0
+ 250 0062 8B4A     	 ldr r2,.L64+8
+ 251 0064 0DF26C41 	 addw r1,sp,#1132
+ 252 0068 2046     	 mov r0,r4
+ 253 006a FFF7FEFF 	 bl gsdk_uart_open
+ 254              	.LVL25:
+  93:iot.c         ****     if (status != GSDK_SUCCESS) {
+ 255              	 .loc 1 93 0
+ 256 006e 10BB     	 cbnz r0,.L46
+  94:iot.c         ****         DEBUG_LOG("[PRINTF_DEMO]: failed to open uart %d\n", status);
+  95:iot.c         ****         return -1;
+  96:iot.c         ****     }
+  97:iot.c         ****     WARN_LOG("open uart0 success\r\n");
+ 257              	 .loc 1 97 0
+ 258 0070 8848     	 ldr r0,.L64+12
+ 259              	.LVL26:
+ 260 0072 FFF7FEFF 	 bl puts
+ 261              	.LVL27:
+  98:iot.c         **** 	
+  99:iot.c         **** 	/*Before call gsdk_ril_XXX function,this function must be called*/
+ 100:iot.c         ****     status = gsdk_ril_init();
+ 262              	 .loc 1 100 0
+ 263 0076 FFF7FEFF 	 bl gsdk_ril_init
+ 264              	.LVL28:
+ 101:iot.c         ****     if (status != GSDK_SUCCESS) {
+ 265              	 .loc 1 101 0
+ 266 007a 28BB     	 cbnz r0,.L47
+ 102:iot.c         ****         DEBUG_LOG(" AT CMD init failed\n");
+ 103:iot.c         ****         goto _fail;
+ 104:iot.c         ****     }
+ 105:iot.c         **** 
+ 106:iot.c         ****     /*Get NB module IMEI number*/
+ 107:iot.c         ****     status = gsdk_ril_get_imei(imei_buf, IMEI_SIZE);
+ 267              	 .loc 1 107 0
+ 268 007c 2021     	 movs r1,#32
+ 269 007e 0DF58760 	 add r0,sp,#1080
+ 270              	.LVL29:
+ 271 0082 FFF7FEFF 	 bl gsdk_ril_get_imei
+ 272              	.LVL30:
+ 108:iot.c         ****     if (GSDK_ERROR == status) {
+ 273              	 .loc 1 108 0
+ 274 0086 B0F1FF3F 	 cmp r0,#-1
+ 275 008a 27D0     	 beq .L48
+ 109:iot.c         ****         DEBUG_LOG("Get imei number cmd failed\r\n");
+ 110:iot.c         ****         goto _fail;
+ 111:iot.c         ****     }
+ 112:iot.c         **** 
+ 113:iot.c         ****     WARN_LOG("Get imei number success,imei:%s\r\n", imei_buf + 7);
+ 276              	 .loc 1 113 0
+ 277 008c 0DF23F41 	 addw r1,sp,#1087
+ 278 0090 8148     	 ldr r0,.L64+16
+ 279              	.LVL31:
+ 280 0092 FFF7FEFF 	 bl printf
+ 281              	.LVL32:
+  88:iot.c         ****     char srv_ip[MAX_IP_BYTE]         = {"180.101.147.115"};
+ 282              	 .loc 1 88 0
+ 283 0096 0024     	 movs r4,#0
+ARM GAS   			page 8
+
+
+ 284              	.LVL33:
+ 285              	.L27:
+ 114:iot.c         **** 
+ 115:iot.c         ****     /*wai for ip appear*/
+ 116:iot.c         ****     while (1) {
+ 117:iot.c         ****         if (count > 100) {
+ 286              	 .loc 1 117 0
+ 287 0098 642C     	 cmp r4,#100
+ 288 009a 26DC     	 bgt .L49
+ 118:iot.c         ****             WARN_LOG("wait for IP timeout\r\n");
+ 119:iot.c         ****             goto _fail;
+ 120:iot.c         ****         }
+ 121:iot.c         ****         ret = gsdk_ril_get_local_ipaddr(ip, MAX_IP_BYTE);
+ 289              	 .loc 1 121 0
+ 290 009c 1421     	 movs r1,#20
+ 291 009e 0DF58B60 	 add r0,sp,#1112
+ 292 00a2 FFF7FEFF 	 bl gsdk_ril_get_local_ipaddr
+ 293              	.LVL34:
+ 122:iot.c         ****         if (ret == 1)
+ 294              	 .loc 1 122 0
+ 295 00a6 0128     	 cmp r0,#1
+ 296 00a8 24D0     	 beq .L26
+ 123:iot.c         ****             break;
+ 124:iot.c         ****         vTaskDelay(500);
+ 297              	 .loc 1 124 0
+ 298 00aa 4FF4FA70 	 mov r0,#500
+ 299              	.LVL35:
+ 300 00ae FFF7FEFF 	 bl vTaskDelay
+ 301              	.LVL36:
+ 125:iot.c         ****         count++;
+ 302              	 .loc 1 125 0
+ 303 00b2 0134     	 adds r4,r4,#1
+ 304              	.LVL37:
+ 117:iot.c         ****             WARN_LOG("wait for IP timeout\r\n");
+ 305              	 .loc 1 117 0
+ 306 00b4 F0E7     	 b .L27
+ 307              	.LVL38:
+ 308              	.L46:
+ 309 00b6 0346     	 mov r3,r0
+  94:iot.c         ****         return -1;
+ 310              	 .loc 1 94 0
+ 311 00b8 5E22     	 movs r2,#94
+ 312 00ba 7849     	 ldr r1,.L64+20
+ 313 00bc 7848     	 ldr r0,.L64+24
+ 314              	.LVL39:
+ 315 00be FFF7FEFF 	 bl printf
+ 316              	.LVL40:
+  95:iot.c         ****     }
+ 317              	 .loc 1 95 0
+ 318 00c2 4FF0FF34 	 mov r4,#-1
+ 319 00c6 05E0     	 b .L20
+ 320              	.LVL41:
+ 321              	.L47:
+ 102:iot.c         ****         goto _fail;
+ 322              	 .loc 1 102 0
+ 323 00c8 6622     	 movs r2,#102
+ 324 00ca 7449     	 ldr r1,.L64+20
+ARM GAS   			page 9
+
+
+ 325 00cc 7548     	 ldr r0,.L64+28
+ 326              	.LVL42:
+ 327 00ce FFF7FEFF 	 bl printf
+ 328              	.LVL43:
+ 126:iot.c         ****     }
+ 127:iot.c         ****     WARN_LOG("ip is %s\r\n", ip);
+ 128:iot.c         **** 
+ 129:iot.c         ****     /*add function for handle unsolicited information relate to "+M2MCLIRECV:"*/
+ 130:iot.c         ****     unsolicited_handler_t handler;
+ 131:iot.c         ****     handler.prefix = "+M2MCLIRECV:";
+ 132:iot.c         ****     handler.func = handle_func;
+ 133:iot.c         ****     handler.user_data = recv_buf;
+ 134:iot.c         ****     status = gsdk_at_register_unsolicited_handler(&handler);
+ 135:iot.c         ****     if (status != GSDK_SUCCESS) {
+ 136:iot.c         ****         DEBUG_LOG("some error hanppened in handle2,status is %d\r\n", status);
+ 137:iot.c         ****         goto _fail;
+ 138:iot.c         ****     }
+ 139:iot.c         **** 
+ 140:iot.c         ****     /*set link iot*/
+ 141:iot.c         ****     status = gsdk_ril_set_link_iot(imei_buf + 7, srv_ip, srv_port, lifetime);
+ 142:iot.c         ****     if (status == GSDK_ERROR) {
+ 143:iot.c         ****         DEBUG_LOG("set link cmd is failed\r\n");
+ 144:iot.c         ****         goto _fail;
+ 145:iot.c         ****     } else if (status == GSDK_ERROR_UNINITIALIZED) {
+ 146:iot.c         ****         DEBUG_LOG("not register success,please do delete operation and set link again\r\n");
+ 147:iot.c         ****         goto _fail;
+ 148:iot.c         ****     } else if (status == GSDK_ERROR_UNSUPPORTED) {
+ 149:iot.c         ****         DEBUG_LOG("this maybe device not register previously,or signal is bad\r\n");
+ 150:iot.c         ****         goto _fail;
+ 151:iot.c         ****     } else if (status != GSDK_SUCCESS) {
+ 152:iot.c         ****         DEBUG_LOG("unknown error happen in set link iot\r\n");
+ 153:iot.c         ****         goto _fail;
+ 154:iot.c         ****     } else {
+ 155:iot.c         ****         WARN_LOG("set link iot success\r\n");
+ 156:iot.c         ****     }
+ 157:iot.c         **** 
+ 158:iot.c         ****     /*send update information to iot*/
+ 159:iot.c         ****     status = gsdk_ril_update_to_iot();
+ 160:iot.c         ****     if (status == GSDK_ERROR) {
+ 161:iot.c         ****         DEBUG_LOG("update iot cmd is failed\r\n");
+ 162:iot.c         ****         goto _fail;
+ 163:iot.c         ****     } else if (status != GSDK_SUCCESS) {
+ 164:iot.c         ****         DEBUG_LOG("unknown error happen in update iot\r\n");
+ 165:iot.c         ****         goto _fail;
+ 166:iot.c         ****     } else {
+ 167:iot.c         ****         WARN_LOG("update iot cmd is success\r\n");
+ 168:iot.c         ****     }
+ 169:iot.c         **** 
+ 170:iot.c         ****     /*data to hex*/
+ 171:iot.c         ****     str_to_hex(hex_user_data, business_data, strlen(business_data));
+ 172:iot.c         **** 
+ 173:iot.c         ****     /*send data to iot*/
+ 174:iot.c         ****     status = gsdk_ril_send_data_to_iot(hex_user_data);
+ 175:iot.c         ****     if (status == GSDK_ERROR) {
+ 176:iot.c         ****         DEBUG_LOG("send data to iot cmd is failed\r\n");
+ 177:iot.c         ****         goto _fail;
+ 178:iot.c         ****     } else if (status != GSDK_SUCCESS) {
+ARM GAS   			page 10
+
+
+ 179:iot.c         ****         DEBUG_LOG("unknown error happen in send data to iot\r\n");
+ 180:iot.c         ****         goto _fail;
+ 181:iot.c         ****     } else {
+ 182:iot.c         ****         WARN_LOG("send data iot cmd is success\r\n");
+ 183:iot.c         ****     }
+ 184:iot.c         **** 
+ 185:iot.c         ****     /*wait for data from iot*/
+ 186:iot.c         ****     count = 0;
+ 187:iot.c         ****     while (1) {
+ 188:iot.c         ****         if (count > 100) {
+ 189:iot.c         ****             DEBUG_LOG("wait for receive information timeout\r\n");
+ 190:iot.c         ****             goto _fail;
+ 191:iot.c         ****         }
+ 192:iot.c         ****         if (0 == strncmp(recv_buf, "+M2MCLIRECV:", 12)) {
+ 193:iot.c         ****             WARN_LOG("send data to iot is success\r\n");
+ 194:iot.c         ****             break;
+ 195:iot.c         ****         }
+ 196:iot.c         ****         vTaskDelay(500 / portTICK_PERIOD_MS);
+ 197:iot.c         ****         count++;
+ 198:iot.c         ****     }
+ 199:iot.c         **** 
+ 200:iot.c         ****     /*delete link with iot*/
+ 201:iot.c         ****     status = gsdk_ril_del_link_iot();
+ 202:iot.c         ****     if (status == GSDK_ERROR) {
+ 203:iot.c         ****         DEBUG_LOG("delete link iot cmd failed\r\n");
+ 204:iot.c         ****         goto _fail;
+ 205:iot.c         ****     } else if (status == GSDK_ERROR_TIMEOUT) {
+ 206:iot.c         ****         DEBUG_LOG("wait for information timeout,maybe signal bad\r\n");
+ 207:iot.c         ****         goto _fail;
+ 208:iot.c         ****     } else if (status != GSDK_SUCCESS) {
+ 209:iot.c         ****         DEBUG_LOG("unknown error happen in delete link iot\r\n");
+ 210:iot.c         ****         goto _fail;
+ 211:iot.c         ****     } else {
+ 212:iot.c         ****         WARN_LOG("delete iot is succcess\r\n");
+ 213:iot.c         ****     }
+ 214:iot.c         **** 
+ 215:iot.c         ****     WARN_LOG("data from iot is %s\r\n", recv_buf);
+ 216:iot.c         ****     gsdk_uart_close(g_huart);
+ 217:iot.c         ****     g_huart = NULL;
+ 218:iot.c         **** 	
+ 219:iot.c         **** _fail:
+ 220:iot.c         ****     return 0;
+ 329              	 .loc 1 220 0
+ 330 00d2 0024     	 movs r4,#0
+ 331              	.LVL44:
+ 332              	.L20:
+ 221:iot.c         **** }
+ 333              	 .loc 1 221 0
+ 334 00d4 2046     	 mov r0,r4
+ 335 00d6 0DF58E6D 	 add sp,sp,#1136
+ 336              	 .cfi_remember_state
+ 337              	 .cfi_def_cfa_offset 16
+ 338              	 
+ 339 00da 70BD     	 pop {r4,r5,r6,pc}
+ 340              	.LVL45:
+ 341              	.L48:
+ 342              	 .cfi_restore_state
+ARM GAS   			page 11
+
+
+ 109:iot.c         ****         goto _fail;
+ 343              	 .loc 1 109 0
+ 344 00dc 6D22     	 movs r2,#109
+ 345 00de 6F49     	 ldr r1,.L64+20
+ 346 00e0 7148     	 ldr r0,.L64+32
+ 347              	.LVL46:
+ 348 00e2 FFF7FEFF 	 bl printf
+ 349              	.LVL47:
+ 220:iot.c         **** }
+ 350              	 .loc 1 220 0
+ 351 00e6 0024     	 movs r4,#0
+ 110:iot.c         ****     }
+ 352              	 .loc 1 110 0
+ 353 00e8 F4E7     	 b .L20
+ 354              	.LVL48:
+ 355              	.L49:
+ 118:iot.c         ****             goto _fail;
+ 356              	 .loc 1 118 0
+ 357 00ea 7048     	 ldr r0,.L64+36
+ 358 00ec FFF7FEFF 	 bl puts
+ 359              	.LVL49:
+ 220:iot.c         **** }
+ 360              	 .loc 1 220 0
+ 361 00f0 0024     	 movs r4,#0
+ 362              	.LVL50:
+ 119:iot.c         ****         }
+ 363              	 .loc 1 119 0
+ 364 00f2 EFE7     	 b .L20
+ 365              	.LVL51:
+ 366              	.L26:
+ 127:iot.c         **** 
+ 367              	 .loc 1 127 0
+ 368 00f4 0DF58B61 	 add r1,sp,#1112
+ 369 00f8 6D48     	 ldr r0,.L64+40
+ 370              	.LVL52:
+ 371 00fa FFF7FEFF 	 bl printf
+ 372              	.LVL53:
+ 131:iot.c         ****     handler.func = handle_func;
+ 373              	 .loc 1 131 0
+ 374 00fe 6D4B     	 ldr r3,.L64+44
+ 375 0100 0193     	 str r3,[sp,#4]
+ 132:iot.c         ****     handler.user_data = recv_buf;
+ 376              	 .loc 1 132 0
+ 377 0102 6D4B     	 ldr r3,.L64+48
+ 378 0104 0093     	 str r3,[sp]
+ 133:iot.c         ****     status = gsdk_at_register_unsolicited_handler(&handler);
+ 379              	 .loc 1 133 0
+ 380 0106 6D4B     	 ldr r3,.L64+52
+ 381 0108 0293     	 str r3,[sp,#8]
+ 134:iot.c         ****     if (status != GSDK_SUCCESS) {
+ 382              	 .loc 1 134 0
+ 383 010a 6846     	 mov r0,sp
+ 384 010c FFF7FEFF 	 bl gsdk_at_register_unsolicited_handler
+ 385              	.LVL54:
+ 135:iot.c         ****         DEBUG_LOG("some error hanppened in handle2,status is %d\r\n", status);
+ 386              	 .loc 1 135 0
+ 387 0110 0346     	 mov r3,r0
+ARM GAS   			page 12
+
+
+ 388 0112 0028     	 cmp r0,#0
+ 389 0114 45D1     	 bne .L50
+ 141:iot.c         ****     if (status == GSDK_ERROR) {
+ 390              	 .loc 1 141 0
+ 391 0116 41F27073 	 movw r3,#6000
+ 392 011a 41F23362 	 movw r2,#5683
+ 393 011e 04A9     	 add r1,sp,#16
+ 394 0120 0DF23F40 	 addw r0,sp,#1087
+ 395              	.LVL55:
+ 396 0124 FFF7FEFF 	 bl gsdk_ril_set_link_iot
+ 397              	.LVL56:
+ 142:iot.c         ****         DEBUG_LOG("set link cmd is failed\r\n");
+ 398              	 .loc 1 142 0
+ 399 0128 B0F1FF3F 	 cmp r0,#-1
+ 400 012c 40D0     	 beq .L51
+ 145:iot.c         ****         DEBUG_LOG("not register success,please do delete operation and set link again\r\n");
+ 401              	 .loc 1 145 0
+ 402 012e 10F1080F 	 cmn r0,#8
+ 403 0132 44D0     	 beq .L52
+ 148:iot.c         ****         DEBUG_LOG("this maybe device not register previously,or signal is bad\r\n");
+ 404              	 .loc 1 148 0
+ 405 0134 10F1090F 	 cmn r0,#9
+ 406 0138 48D0     	 beq .L53
+ 151:iot.c         ****         DEBUG_LOG("unknown error happen in set link iot\r\n");
+ 407              	 .loc 1 151 0
+ 408 013a 0028     	 cmp r0,#0
+ 409 013c 4DD1     	 bne .L54
+ 155:iot.c         ****     }
+ 410              	 .loc 1 155 0
+ 411 013e 6048     	 ldr r0,.L64+56
+ 412              	.LVL57:
+ 413 0140 FFF7FEFF 	 bl puts
+ 414              	.LVL58:
+ 159:iot.c         ****     if (status == GSDK_ERROR) {
+ 415              	 .loc 1 159 0
+ 416 0144 FFF7FEFF 	 bl gsdk_ril_update_to_iot
+ 417              	.LVL59:
+ 160:iot.c         ****         DEBUG_LOG("update iot cmd is failed\r\n");
+ 418              	 .loc 1 160 0
+ 419 0148 B0F1FF3F 	 cmp r0,#-1
+ 420 014c 4CD0     	 beq .L55
+ 163:iot.c         ****         DEBUG_LOG("unknown error happen in update iot\r\n");
+ 421              	 .loc 1 163 0
+ 422 014e 0028     	 cmp r0,#0
+ 423 0150 51D1     	 bne .L56
+ 167:iot.c         ****     }
+ 424              	 .loc 1 167 0
+ 425 0152 5C48     	 ldr r0,.L64+60
+ 426              	.LVL60:
+ 427 0154 FFF7FEFF 	 bl puts
+ 428              	.LVL61:
+ 171:iot.c         **** 
+ 429              	 .loc 1 171 0
+ 430 0158 0DF22440 	 addw r0,sp,#1060
+ 431 015c FFF7FEFF 	 bl strlen
+ 432              	.LVL62:
+ 433 0160 0246     	 mov r2,r0
+ARM GAS   			page 13
+
+
+ 434 0162 0DF22441 	 addw r1,sp,#1060
+ 435 0166 09A8     	 add r0,sp,#36
+ 436 0168 FFF7FEFF 	 bl str_to_hex
+ 437              	.LVL63:
+ 174:iot.c         ****     if (status == GSDK_ERROR) {
+ 438              	 .loc 1 174 0
+ 439 016c 09A8     	 add r0,sp,#36
+ 440 016e FFF7FEFF 	 bl gsdk_ril_send_data_to_iot
+ 441              	.LVL64:
+ 175:iot.c         ****         DEBUG_LOG("send data to iot cmd is failed\r\n");
+ 442              	 .loc 1 175 0
+ 443 0172 B0F1FF3F 	 cmp r0,#-1
+ 444 0176 45D0     	 beq .L57
+ 178:iot.c         ****         DEBUG_LOG("unknown error happen in send data to iot\r\n");
+ 445              	 .loc 1 178 0
+ 446 0178 0028     	 cmp r0,#0
+ 447 017a 4AD1     	 bne .L58
+ 182:iot.c         ****     }
+ 448              	 .loc 1 182 0
+ 449 017c 5248     	 ldr r0,.L64+64
+ 450              	.LVL65:
+ 451 017e FFF7FEFF 	 bl puts
+ 452              	.LVL66:
+ 186:iot.c         ****     while (1) {
+ 453              	 .loc 1 186 0
+ 454 0182 0025     	 movs r5,#0
+ 455              	.LVL67:
+ 456              	.L41:
+ 188:iot.c         ****             DEBUG_LOG("wait for receive information timeout\r\n");
+ 457              	 .loc 1 188 0
+ 458 0184 642D     	 cmp r5,#100
+ 459 0186 4BDC     	 bgt .L59
+ 192:iot.c         ****             WARN_LOG("send data to iot is success\r\n");
+ 460              	 .loc 1 192 0
+ 461 0188 0C22     	 movs r2,#12
+ 462 018a 4A49     	 ldr r1,.L64+44
+ 463 018c 4B48     	 ldr r0,.L64+52
+ 464 018e FFF7FEFF 	 bl strncmp
+ 465              	.LVL68:
+ 466 0192 0446     	 mov r4,r0
+ 467 0194 0028     	 cmp r0,#0
+ 468 0196 4AD0     	 beq .L60
+ 196:iot.c         ****         count++;
+ 469              	 .loc 1 196 0
+ 470 0198 3220     	 movs r0,#50
+ 471 019a FFF7FEFF 	 bl vTaskDelay
+ 472              	.LVL69:
+ 197:iot.c         ****     }
+ 473              	 .loc 1 197 0
+ 474 019e 0135     	 adds r5,r5,#1
+ 475              	.LVL70:
+ 188:iot.c         ****             DEBUG_LOG("wait for receive information timeout\r\n");
+ 476              	 .loc 1 188 0
+ 477 01a0 F0E7     	 b .L41
+ 478              	.LVL71:
+ 479              	.L50:
+ 136:iot.c         ****         goto _fail;
+ARM GAS   			page 14
+
+
+ 480              	 .loc 1 136 0
+ 481 01a2 8822     	 movs r2,#136
+ 482 01a4 3D49     	 ldr r1,.L64+20
+ 483 01a6 4948     	 ldr r0,.L64+68
+ 484              	.LVL72:
+ 485 01a8 FFF7FEFF 	 bl printf
+ 486              	.LVL73:
+ 220:iot.c         **** }
+ 487              	 .loc 1 220 0
+ 488 01ac 0024     	 movs r4,#0
+ 489              	.LVL74:
+ 137:iot.c         ****     }
+ 490              	 .loc 1 137 0
+ 491 01ae 91E7     	 b .L20
+ 492              	.LVL75:
+ 493              	.L51:
+ 143:iot.c         ****         goto _fail;
+ 494              	 .loc 1 143 0
+ 495 01b0 8F22     	 movs r2,#143
+ 496 01b2 3A49     	 ldr r1,.L64+20
+ 497 01b4 4648     	 ldr r0,.L64+72
+ 498              	.LVL76:
+ 499 01b6 FFF7FEFF 	 bl printf
+ 500              	.LVL77:
+ 220:iot.c         **** }
+ 501              	 .loc 1 220 0
+ 502 01ba 0024     	 movs r4,#0
+ 503              	.LVL78:
+ 144:iot.c         ****     } else if (status == GSDK_ERROR_UNINITIALIZED) {
+ 504              	 .loc 1 144 0
+ 505 01bc 8AE7     	 b .L20
+ 506              	.LVL79:
+ 507              	.L52:
+ 146:iot.c         ****         goto _fail;
+ 508              	 .loc 1 146 0
+ 509 01be 9222     	 movs r2,#146
+ 510 01c0 3649     	 ldr r1,.L64+20
+ 511 01c2 4448     	 ldr r0,.L64+76
+ 512              	.LVL80:
+ 513 01c4 FFF7FEFF 	 bl printf
+ 514              	.LVL81:
+ 220:iot.c         **** }
+ 515              	 .loc 1 220 0
+ 516 01c8 0024     	 movs r4,#0
+ 517              	.LVL82:
+ 147:iot.c         ****     } else if (status == GSDK_ERROR_UNSUPPORTED) {
+ 518              	 .loc 1 147 0
+ 519 01ca 83E7     	 b .L20
+ 520              	.LVL83:
+ 521              	.L53:
+ 149:iot.c         ****         goto _fail;
+ 522              	 .loc 1 149 0
+ 523 01cc 9522     	 movs r2,#149
+ 524 01ce 3349     	 ldr r1,.L64+20
+ 525 01d0 4148     	 ldr r0,.L64+80
+ 526              	.LVL84:
+ 527 01d2 FFF7FEFF 	 bl printf
+ARM GAS   			page 15
+
+
+ 528              	.LVL85:
+ 220:iot.c         **** }
+ 529              	 .loc 1 220 0
+ 530 01d6 0024     	 movs r4,#0
+ 531              	.LVL86:
+ 150:iot.c         ****     } else if (status != GSDK_SUCCESS) {
+ 532              	 .loc 1 150 0
+ 533 01d8 7CE7     	 b .L20
+ 534              	.LVL87:
+ 535              	.L54:
+ 152:iot.c         ****         goto _fail;
+ 536              	 .loc 1 152 0
+ 537 01da 9822     	 movs r2,#152
+ 538 01dc 2F49     	 ldr r1,.L64+20
+ 539 01de 3F48     	 ldr r0,.L64+84
+ 540              	.LVL88:
+ 541 01e0 FFF7FEFF 	 bl printf
+ 542              	.LVL89:
+ 220:iot.c         **** }
+ 543              	 .loc 1 220 0
+ 544 01e4 0024     	 movs r4,#0
+ 545              	.LVL90:
+ 153:iot.c         ****     } else {
+ 546              	 .loc 1 153 0
+ 547 01e6 75E7     	 b .L20
+ 548              	.LVL91:
+ 549              	.L55:
+ 161:iot.c         ****         goto _fail;
+ 550              	 .loc 1 161 0
+ 551 01e8 A122     	 movs r2,#161
+ 552 01ea 2C49     	 ldr r1,.L64+20
+ 553 01ec 3C48     	 ldr r0,.L64+88
+ 554              	.LVL92:
+ 555 01ee FFF7FEFF 	 bl printf
+ 556              	.LVL93:
+ 220:iot.c         **** }
+ 557              	 .loc 1 220 0
+ 558 01f2 0024     	 movs r4,#0
+ 559              	.LVL94:
+ 162:iot.c         ****     } else if (status != GSDK_SUCCESS) {
+ 560              	 .loc 1 162 0
+ 561 01f4 6EE7     	 b .L20
+ 562              	.LVL95:
+ 563              	.L56:
+ 164:iot.c         ****         goto _fail;
+ 564              	 .loc 1 164 0
+ 565 01f6 A422     	 movs r2,#164
+ 566 01f8 2849     	 ldr r1,.L64+20
+ 567 01fa 3A48     	 ldr r0,.L64+92
+ 568              	.LVL96:
+ 569 01fc FFF7FEFF 	 bl printf
+ 570              	.LVL97:
+ 220:iot.c         **** }
+ 571              	 .loc 1 220 0
+ 572 0200 0024     	 movs r4,#0
+ 573              	.LVL98:
+ 165:iot.c         ****     } else {
+ARM GAS   			page 16
+
+
+ 574              	 .loc 1 165 0
+ 575 0202 67E7     	 b .L20
+ 576              	.LVL99:
+ 577              	.L57:
+ 176:iot.c         ****         goto _fail;
+ 578              	 .loc 1 176 0
+ 579 0204 B022     	 movs r2,#176
+ 580 0206 2549     	 ldr r1,.L64+20
+ 581 0208 3748     	 ldr r0,.L64+96
+ 582              	.LVL100:
+ 583 020a FFF7FEFF 	 bl printf
+ 584              	.LVL101:
+ 220:iot.c         **** }
+ 585              	 .loc 1 220 0
+ 586 020e 0024     	 movs r4,#0
+ 587              	.LVL102:
+ 177:iot.c         ****     } else if (status != GSDK_SUCCESS) {
+ 588              	 .loc 1 177 0
+ 589 0210 60E7     	 b .L20
+ 590              	.LVL103:
+ 591              	.L58:
+ 179:iot.c         ****         goto _fail;
+ 592              	 .loc 1 179 0
+ 593 0212 B322     	 movs r2,#179
+ 594 0214 2149     	 ldr r1,.L64+20
+ 595 0216 3548     	 ldr r0,.L64+100
+ 596              	.LVL104:
+ 597 0218 FFF7FEFF 	 bl printf
+ 598              	.LVL105:
+ 220:iot.c         **** }
+ 599              	 .loc 1 220 0
+ 600 021c 0024     	 movs r4,#0
+ 601              	.LVL106:
+ 180:iot.c         ****     } else {
+ 602              	 .loc 1 180 0
+ 603 021e 59E7     	 b .L20
+ 604              	.LVL107:
+ 605              	.L59:
+ 189:iot.c         ****             goto _fail;
+ 606              	 .loc 1 189 0
+ 607 0220 BD22     	 movs r2,#189
+ 608 0222 1E49     	 ldr r1,.L64+20
+ 609 0224 3248     	 ldr r0,.L64+104
+ 610 0226 FFF7FEFF 	 bl printf
+ 611              	.LVL108:
+ 220:iot.c         **** }
+ 612              	 .loc 1 220 0
+ 613 022a 0024     	 movs r4,#0
+ 190:iot.c         ****         }
+ 614              	 .loc 1 190 0
+ 615 022c 52E7     	 b .L20
+ 616              	.L60:
+ 193:iot.c         ****             break;
+ 617              	 .loc 1 193 0
+ 618 022e 3148     	 ldr r0,.L64+108
+ 619 0230 FFF7FEFF 	 bl puts
+ 620              	.LVL109:
+ARM GAS   			page 17
+
+
+ 201:iot.c         ****     if (status == GSDK_ERROR) {
+ 621              	 .loc 1 201 0
+ 622 0234 FFF7FEFF 	 bl gsdk_ril_del_link_iot
+ 623              	.LVL110:
+ 202:iot.c         ****         DEBUG_LOG("delete link iot cmd failed\r\n");
+ 624              	 .loc 1 202 0
+ 625 0238 B0F1FF3F 	 cmp r0,#-1
+ 626 023c 11D0     	 beq .L61
+ 205:iot.c         ****         DEBUG_LOG("wait for information timeout,maybe signal bad\r\n");
+ 627              	 .loc 1 205 0
+ 628 023e 10F1050F 	 cmn r0,#5
+ 629 0242 14D0     	 beq .L62
+ 208:iot.c         ****         DEBUG_LOG("unknown error happen in delete link iot\r\n");
+ 630              	 .loc 1 208 0
+ 631 0244 C8B9     	 cbnz r0,.L63
+ 212:iot.c         ****     }
+ 632              	 .loc 1 212 0
+ 633 0246 2C48     	 ldr r0,.L64+112
+ 634              	.LVL111:
+ 635 0248 FFF7FEFF 	 bl puts
+ 636              	.LVL112:
+ 215:iot.c         ****     gsdk_uart_close(g_huart);
+ 637              	 .loc 1 215 0
+ 638 024c 1B49     	 ldr r1,.L64+52
+ 639 024e 2B48     	 ldr r0,.L64+116
+ 640 0250 FFF7FEFF 	 bl printf
+ 641              	.LVL113:
+ 216:iot.c         ****     g_huart = NULL;
+ 642              	 .loc 1 216 0
+ 643 0254 0E4D     	 ldr r5,.L64+8
+ 644              	.LVL114:
+ 645 0256 2868     	 ldr r0,[r5]
+ 646 0258 FFF7FEFF 	 bl gsdk_uart_close
+ 647              	.LVL115:
+ 217:iot.c         **** 	
+ 648              	 .loc 1 217 0
+ 649 025c 0023     	 movs r3,#0
+ 650 025e 2B60     	 str r3,[r5]
+ 651 0260 38E7     	 b .L20
+ 652              	.LVL116:
+ 653              	.L61:
+ 203:iot.c         ****         goto _fail;
+ 654              	 .loc 1 203 0
+ 655 0262 CB22     	 movs r2,#203
+ 656 0264 0D49     	 ldr r1,.L64+20
+ 657 0266 2648     	 ldr r0,.L64+120
+ 658              	.LVL117:
+ 659 0268 FFF7FEFF 	 bl printf
+ 660              	.LVL118:
+ 204:iot.c         ****     } else if (status == GSDK_ERROR_TIMEOUT) {
+ 661              	 .loc 1 204 0
+ 662 026c 32E7     	 b .L20
+ 663              	.LVL119:
+ 664              	.L62:
+ 206:iot.c         ****         goto _fail;
+ 665              	 .loc 1 206 0
+ 666 026e CE22     	 movs r2,#206
+ARM GAS   			page 18
+
+
+ 667 0270 0A49     	 ldr r1,.L64+20
+ 668 0272 2448     	 ldr r0,.L64+124
+ 669              	.LVL120:
+ 670 0274 FFF7FEFF 	 bl printf
+ 671              	.LVL121:
+ 207:iot.c         ****     } else if (status != GSDK_SUCCESS) {
+ 672              	 .loc 1 207 0
+ 673 0278 2CE7     	 b .L20
+ 674              	.LVL122:
+ 675              	.L63:
+ 209:iot.c         ****         goto _fail;
+ 676              	 .loc 1 209 0
+ 677 027a D122     	 movs r2,#209
+ 678 027c 0749     	 ldr r1,.L64+20
+ 679 027e 2248     	 ldr r0,.L64+128
+ 680              	.LVL123:
+ 681 0280 FFF7FEFF 	 bl printf
+ 682              	.LVL124:
+ 210:iot.c         ****     } else {
+ 683              	 .loc 1 210 0
+ 684 0284 26E7     	 b .L20
+ 685              	.L65:
+ 686 0286 00BF     	 .align 2
+ 687              	.L64:
+ 688 0288 8C050000 	 .word .LC3
+ 689 028c 00000000 	 .word .LANCHOR1
+ 690 0290 00000000 	 .word .LANCHOR0
+ 691 0294 44000000 	 .word .LC6
+ 692 0298 C8000000 	 .word .LC9
+ 693 029c 00000000 	 .word .LANCHOR2
+ 694 02a0 00000000 	 .word .LC5
+ 695 02a4 60000000 	 .word .LC7
+ 696 02a8 90000000 	 .word .LC8
+ 697 02ac F4000000 	 .word .LC10
+ 698 02b0 10010000 	 .word .LC11
+ 699 02b4 24010000 	 .word .LC12
+ 700 02b8 00000000 	 .word handle_func
+ 701 02bc 00000000 	 .word .LANCHOR3
+ 702 02c0 B0020000 	 .word .LC18
+ 703 02c4 48030000 	 .word .LC21
+ 704 02c8 F0030000 	 .word .LC24
+ 705 02cc 34010000 	 .word .LC13
+ 706 02d0 80010000 	 .word .LC14
+ 707 02d4 B4010000 	 .word .LC15
+ 708 02d8 14020000 	 .word .LC16
+ 709 02dc 6C020000 	 .word .LC17
+ 710 02e0 D0020000 	 .word .LC19
+ 711 02e4 08030000 	 .word .LC20
+ 712 02e8 6C030000 	 .word .LC22
+ 713 02ec A8030000 	 .word .LC23
+ 714 02f0 18040000 	 .word .LC25
+ 715 02f4 5C040000 	 .word .LC26
+ 716 02f8 4C050000 	 .word .LC30
+ 717 02fc 6C050000 	 .word .LC31
+ 718 0300 80040000 	 .word .LC27
+ 719 0304 B8040000 	 .word .LC28
+ 720 0308 04050000 	 .word .LC29
+ARM GAS   			page 19
+
+
+ 721              	 .cfi_endproc
+ 722              	.LFE22:
+ 724              	 .section .rodata
+ 725              	 .align 2
+ 726              	 .set .LANCHOR1,.+0
+ 727              	.LC4:
+ 728 0000 3138302E 	 .ascii "180.101.147.115\000"
+ 728      3130312E 
+ 728      3134372E 
+ 728      31313500 
+ 729 0010 00000000 	 .space 4
+ 730              	 .section .bss.g_huart,"aw",%nobits
+ 731              	 .align 2
+ 732              	 .set .LANCHOR0,.+0
+ 735              	g_huart:
+ 736 0000 00000000 	 .space 4
+ 737              	 .section .bss.recv_buf,"aw",%nobits
+ 738              	 .align 2
+ 739              	 .set .LANCHOR3,.+0
+ 742              	recv_buf:
+ 743 0000 00000000 	 .space 1024
+ 743      00000000 
+ 743      00000000 
+ 743      00000000 
+ 743      00000000 
+ 744              	 .section .rodata.__func__.9501,"a",%progbits
+ 745              	 .align 2
+ 746              	 .set .LANCHOR2,.+0
+ 749              	__func__.9501:
+ 750 0000 6D61696E 	 .ascii "main\000"
+ 750      00
+ 751              	 .section .rodata.handle_func.str1.4,"aMS",%progbits,1
+ 752              	 .align 2
+ 753              	.LC0:
+ 754 0000 5B4C4F47 	 .ascii "[LOGW]:infomation come from iot is %s\015\012\000"
+ 754      575D3A69 
+ 754      6E666F6D 
+ 754      6174696F 
+ 754      6E20636F 
+ 755              	.LC1:
+ 756 0028 5B4C4F47 	 .ascii "[LOGW]:the information is too large ,please change "
+ 756      575D3A74 
+ 756      68652069 
+ 756      6E666F72 
+ 756      6D617469 
+ 757 005b 74686520 	 .ascii "the size of recv_buf\015\000"
+ 757      73697A65 
+ 757      206F6620 
+ 757      72656376 
+ 757      5F627566 
+ 758              	 .section .rodata.main.str1.4,"aMS",%progbits,1
+ 759              	 .align 2
+ 760              	.LC5:
+ 761 0000 5B4C4F47 	 .ascii "[LOGD]:Function:%s,Line:%d,[PRINTF_DEMO]: failed to"
+ 761      445D3A46 
+ 761      756E6374 
+ 761      696F6E3A 
+ARM GAS   			page 20
+
+
+ 761      25732C4C 
+ 762 0033 206F7065 	 .ascii " open uart %d\012\000"
+ 762      6E207561 
+ 762      72742025 
+ 762      640A00
+ 763 0042 0000     	 .space 2
+ 764              	.LC6:
+ 765 0044 5B4C4F47 	 .ascii "[LOGW]:open uart0 success\015\000"
+ 765      575D3A6F 
+ 765      70656E20 
+ 765      75617274 
+ 765      30207375 
+ 766 005f 00       	 .space 1
+ 767              	.LC7:
+ 768 0060 5B4C4F47 	 .ascii "[LOGD]:Function:%s,Line:%d, AT CMD init failed\012\000"
+ 768      445D3A46 
+ 768      756E6374 
+ 768      696F6E3A 
+ 768      25732C4C 
+ 769              	.LC8:
+ 770 0090 5B4C4F47 	 .ascii "[LOGD]:Function:%s,Line:%d,Get imei number cmd fail"
+ 770      445D3A46 
+ 770      756E6374 
+ 770      696F6E3A 
+ 770      25732C4C 
+ 771 00c3 65640D0A 	 .ascii "ed\015\012\000"
+ 771      00
+ 772              	.LC9:
+ 773 00c8 5B4C4F47 	 .ascii "[LOGW]:Get imei number success,imei:%s\015\012\000"
+ 773      575D3A47 
+ 773      65742069 
+ 773      6D656920 
+ 773      6E756D62 
+ 774 00f1 000000   	 .space 3
+ 775              	.LC10:
+ 776 00f4 5B4C4F47 	 .ascii "[LOGW]:wait for IP timeout\015\000"
+ 776      575D3A77 
+ 776      61697420 
+ 776      666F7220 
+ 776      49502074 
+ 777              	.LC11:
+ 778 0110 5B4C4F47 	 .ascii "[LOGW]:ip is %s\015\012\000"
+ 778      575D3A69 
+ 778      70206973 
+ 778      2025730D 
+ 778      0A00
+ 779 0122 0000     	 .space 2
+ 780              	.LC12:
+ 781 0124 2B4D324D 	 .ascii "+M2MCLIRECV:\000"
+ 781      434C4952 
+ 781      4543563A 
+ 781      00
+ 782 0131 000000   	 .space 3
+ 783              	.LC13:
+ 784 0134 5B4C4F47 	 .ascii "[LOGD]:Function:%s,Line:%d,some error hanppened in "
+ 784      445D3A46 
+ 784      756E6374 
+ARM GAS   			page 21
+
+
+ 784      696F6E3A 
+ 784      25732C4C 
+ 785 0167 68616E64 	 .ascii "handle2,status is %d\015\012\000"
+ 785      6C65322C 
+ 785      73746174 
+ 785      75732069 
+ 785      73202564 
+ 786 017e 0000     	 .space 2
+ 787              	.LC14:
+ 788 0180 5B4C4F47 	 .ascii "[LOGD]:Function:%s,Line:%d,set link cmd is failed\015"
+ 788      445D3A46 
+ 788      756E6374 
+ 788      696F6E3A 
+ 788      25732C4C 
+ 789 01b2 0A00     	 .ascii "\012\000"
+ 790              	.LC15:
+ 791 01b4 5B4C4F47 	 .ascii "[LOGD]:Function:%s,Line:%d,not register success,ple"
+ 791      445D3A46 
+ 791      756E6374 
+ 791      696F6E3A 
+ 791      25732C4C 
+ 792 01e7 61736520 	 .ascii "ase do delete operation and set link again\015\012\000"
+ 792      646F2064 
+ 792      656C6574 
+ 792      65206F70 
+ 792      65726174 
+ 793              	.LC16:
+ 794 0214 5B4C4F47 	 .ascii "[LOGD]:Function:%s,Line:%d,this maybe device not re"
+ 794      445D3A46 
+ 794      756E6374 
+ 794      696F6E3A 
+ 794      25732C4C 
+ 795 0247 67697374 	 .ascii "gister previously,or signal is bad\015\012\000"
+ 795      65722070 
+ 795      72657669 
+ 795      6F75736C 
+ 795      792C6F72 
+ 796              	.LC17:
+ 797 026c 5B4C4F47 	 .ascii "[LOGD]:Function:%s,Line:%d,unknown error happen in "
+ 797      445D3A46 
+ 797      756E6374 
+ 797      696F6E3A 
+ 797      25732C4C 
+ 798 029f 73657420 	 .ascii "set link iot\015\012\000"
+ 798      6C696E6B 
+ 798      20696F74 
+ 798      0D0A00
+ 799 02ae 0000     	 .space 2
+ 800              	.LC18:
+ 801 02b0 5B4C4F47 	 .ascii "[LOGW]:set link iot success\015\000"
+ 801      575D3A73 
+ 801      6574206C 
+ 801      696E6B20 
+ 801      696F7420 
+ 802 02cd 000000   	 .space 3
+ 803              	.LC19:
+ 804 02d0 5B4C4F47 	 .ascii "[LOGD]:Function:%s,Line:%d,update iot cmd is failed"
+ARM GAS   			page 22
+
+
+ 804      445D3A46 
+ 804      756E6374 
+ 804      696F6E3A 
+ 804      25732C4C 
+ 805 0303 0D0A00   	 .ascii "\015\012\000"
+ 806 0306 0000     	 .space 2
+ 807              	.LC20:
+ 808 0308 5B4C4F47 	 .ascii "[LOGD]:Function:%s,Line:%d,unknown error happen in "
+ 808      445D3A46 
+ 808      756E6374 
+ 808      696F6E3A 
+ 808      25732C4C 
+ 809 033b 75706461 	 .ascii "update iot\015\012\000"
+ 809      74652069 
+ 809      6F740D0A 
+ 809      00
+ 810              	.LC21:
+ 811 0348 5B4C4F47 	 .ascii "[LOGW]:update iot cmd is success\015\000"
+ 811      575D3A75 
+ 811      70646174 
+ 811      6520696F 
+ 811      7420636D 
+ 812 036a 0000     	 .space 2
+ 813              	.LC22:
+ 814 036c 5B4C4F47 	 .ascii "[LOGD]:Function:%s,Line:%d,send data to iot cmd is "
+ 814      445D3A46 
+ 814      756E6374 
+ 814      696F6E3A 
+ 814      25732C4C 
+ 815 039f 6661696C 	 .ascii "failed\015\012\000"
+ 815      65640D0A 
+ 815      00
+ 816              	.LC23:
+ 817 03a8 5B4C4F47 	 .ascii "[LOGD]:Function:%s,Line:%d,unknown error happen in "
+ 817      445D3A46 
+ 817      756E6374 
+ 817      696F6E3A 
+ 817      25732C4C 
+ 818 03db 73656E64 	 .ascii "send data to iot\015\012\000"
+ 818      20646174 
+ 818      6120746F 
+ 818      20696F74 
+ 818      0D0A00
+ 819 03ee 0000     	 .space 2
+ 820              	.LC24:
+ 821 03f0 5B4C4F47 	 .ascii "[LOGW]:send data iot cmd is success\015\000"
+ 821      575D3A73 
+ 821      656E6420 
+ 821      64617461 
+ 821      20696F74 
+ 822 0415 000000   	 .space 3
+ 823              	.LC25:
+ 824 0418 5B4C4F47 	 .ascii "[LOGD]:Function:%s,Line:%d,wait for receive informa"
+ 824      445D3A46 
+ 824      756E6374 
+ 824      696F6E3A 
+ 824      25732C4C 
+ARM GAS   			page 23
+
+
+ 825 044b 74696F6E 	 .ascii "tion timeout\015\012\000"
+ 825      2074696D 
+ 825      656F7574 
+ 825      0D0A00
+ 826 045a 0000     	 .space 2
+ 827              	.LC26:
+ 828 045c 5B4C4F47 	 .ascii "[LOGW]:send data to iot is success\015\000"
+ 828      575D3A73 
+ 828      656E6420 
+ 828      64617461 
+ 828      20746F20 
+ 829              	.LC27:
+ 830 0480 5B4C4F47 	 .ascii "[LOGD]:Function:%s,Line:%d,delete link iot cmd fail"
+ 830      445D3A46 
+ 830      756E6374 
+ 830      696F6E3A 
+ 830      25732C4C 
+ 831 04b3 65640D0A 	 .ascii "ed\015\012\000"
+ 831      00
+ 832              	.LC28:
+ 833 04b8 5B4C4F47 	 .ascii "[LOGD]:Function:%s,Line:%d,wait for information tim"
+ 833      445D3A46 
+ 833      756E6374 
+ 833      696F6E3A 
+ 833      25732C4C 
+ 834 04eb 656F7574 	 .ascii "eout,maybe signal bad\015\012\000"
+ 834      2C6D6179 
+ 834      62652073 
+ 834      69676E61 
+ 834      6C206261 
+ 835 0503 00       	 .space 1
+ 836              	.LC29:
+ 837 0504 5B4C4F47 	 .ascii "[LOGD]:Function:%s,Line:%d,unknown error happen in "
+ 837      445D3A46 
+ 837      756E6374 
+ 837      696F6E3A 
+ 837      25732C4C 
+ 838 0537 64656C65 	 .ascii "delete link iot\015\012\000"
+ 838      7465206C 
+ 838      696E6B20 
+ 838      696F740D 
+ 838      0A00
+ 839 0549 000000   	 .space 3
+ 840              	.LC30:
+ 841 054c 5B4C4F47 	 .ascii "[LOGW]:delete iot is succcess\015\000"
+ 841      575D3A64 
+ 841      656C6574 
+ 841      6520696F 
+ 841      74206973 
+ 842 056b 00       	 .space 1
+ 843              	.LC31:
+ 844 056c 5B4C4F47 	 .ascii "[LOGW]:data from iot is %s\015\012\000"
+ 844      575D3A64 
+ 844      61746120 
+ 844      66726F6D 
+ 844      20696F74 
+ 845 0589 000000   	 .space 3
+ARM GAS   			page 24
+
+
+ 846              	.LC3:
+ 847 058c 61616262 	 .ascii "aabbcc1234567890\000"
+ 847      63633132 
+ 847      33343536 
+ 847      37383930 
+ 847      00
+ 848              	 .section .rodata.str_to_hex.str1.4,"aMS",%progbits,1
+ 849              	 .align 2
+ 850              	.LC2:
+ 851 0000 25303278 	 .ascii "%02x\000"
+ 851      00
+ 852              	 .text
+ 853              	.Letext0:
+ 854              	 .file 2 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 855              	 .file 3 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\lock.h"
+ 856              	 .file 4 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\_types.h"
+ 857              	 .file 5 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\lib\\gcc\\arm-none-eabi\\7.3.1\\include\\stddef.h"
+ 858              	 .file 6 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\reent.h"
+ 859              	 .file 7 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\_stdint.h"
+ 860              	 .file 8 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\stdlib.h"
+ 861              	 .file 9 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/include/FreeRTOSConfig.h"
+ 862              	 .file 10 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/GCC/mt2625/ARM_CM4F/portmacro.h"
+ 863              	 .file 11 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\errno.h"
+ 864              	 .file 12 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\time.h"
+ 865              	 .file 13 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/ports/include/arch/cc.h"
+ 866              	 .file 14 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/ip4_addr.h"
+ 867              	 .file 15 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/ip6_addr.h"
+ 868              	 .file 16 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/ip_addr.h"
+ 869              	 .file 17 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/err.h"
+ 870              	 .file 18 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/pbuf.h"
+ 871              	 .file 19 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/netif.h"
+ 872              	 .file 20 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/inet.h"
+ 873              	 .file 21 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/ip4.h"
+ 874              	 .file 22 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/ip6.h"
+ 875              	 .file 23 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/ip.h"
+ 876              	 .file 24 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_common.h"
+ 877              	 .file 25 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_uart.h"
+ 878              	 .file 26 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_flash.h"
+ 879              	 .file 27 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_ril.h"
+ 880              	 .file 28 "<built-in>"
+ 881              	 .file 29 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_ril_cmds.h"
+ 882              	 .file 30 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\stdio.h"
+ 883              	 .file 31 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/include/task.h"
+ 884              	 .file 32 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\string.h"
+ARM GAS   			page 25
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 iot.c
+    {standard input}:18     .text.handle_func:00000000 $t
+    {standard input}:24     .text.handle_func:00000000 handle_func
+    {standard input}:73     .text.handle_func:00000034 $d
+    {standard input}:79     .text.__io_puts:00000000 $t
+    {standard input}:86     .text.__io_puts:00000000 __io_puts
+    {standard input}:124    .text.__io_puts:0000001c $d
+    {standard input}:129    .text.str_to_hex:00000000 $t
+    {standard input}:136    .text.str_to_hex:00000000 str_to_hex
+    {standard input}:179    .text.str_to_hex:00000020 $d
+    {standard input}:184    .text.main:00000000 $t
+    {standard input}:191    .text.main:00000000 main
+    {standard input}:688    .text.main:00000288 $d
+    {standard input}:725    .rodata:00000000 $d
+    {standard input}:731    .bss.g_huart:00000000 $d
+    {standard input}:735    .bss.g_huart:00000000 g_huart
+    {standard input}:738    .bss.recv_buf:00000000 $d
+    {standard input}:742    .bss.recv_buf:00000000 recv_buf
+    {standard input}:745    .rodata.__func__.9501:00000000 $d
+    {standard input}:749    .rodata.__func__.9501:00000000 __func__.9501
+    {standard input}:752    .rodata.handle_func.str1.4:00000000 $d
+    {standard input}:759    .rodata.main.str1.4:00000000 $d
+    {standard input}:849    .rodata.str_to_hex.str1.4:00000000 $d
+                           .group:00000000 wm4.0.8fab1e1450c2b74bdd5e2aed4c325bf1
+                           .group:00000000 wm4._newlib_version.h.4.875b979a44719054cd750d0952ad3fd6
+                           .group:00000000 wm4.newlib.h.18.5e5ca3429233af402d406a202f1fc1ac
+                           .group:00000000 wm4.ieeefp.h.77.220d9cccac42cd58761758bee2df4ce6
+                           .group:00000000 wm4.features.h.22.fad1cec3bc7ff06488171438dbdcfd02
+                           .group:00000000 wm4.config.h.220.6cac6a9685cfce5e83c17784171638d9
+                           .group:00000000 wm4._ansi.h.31.de524f58584151836e90d8620a16f8e8
+                           .group:00000000 wm4.stdio.h.31.7c0e28c411445f3f9c5b11accf882760
+                           .group:00000000 wm4._default_types.h.6.959254cf5f09734ea7516c89e8bb21bd
+                           .group:00000000 wm4.stddef.h.187.2ff233552538c6ff9b8575ca8ea52cb3
+                           .group:00000000 wm4.cdefs.h.47.0bcdf94cb40e176393dd1404056825b4
+                           .group:00000000 wm4.stddef.h.39.ec95e8feac892e292b69dc7ae75b0d64
+                           .group:00000000 wm4.stdarg.h.34.3a23a216c0c293b3d2ea2e89281481e6
+                           .group:00000000 wm4.lock.h.2.1461d1fff82dffe8bfddc23307f6484f
+                           .group:00000000 wm4._types.h.125.5cf8a495f1f7ef36777ad868a1e32068
+                           .group:00000000 wm4.stddef.h.161.5349cb105733e8777bfb0cf53c4e3f34
+                           .group:00000000 wm4._types.h.184.03611d4f6b5bec9997bcf4279eceba07
+                           .group:00000000 wm4.reent.h.17.90c2574d4acdcfce933db5cb09ff35fe
+                           .group:00000000 wm4.types.h.40.e8c16e7ec36ba55f133d0616070e25fc
+                           .group:00000000 wm4._stdint.h.10.c24fa3af3bc1706662bb5593a907e841
+                           .group:00000000 wm4._endian.h.31.65a10590763c3dde1ac4a7f66d7d4891
+                           .group:00000000 wm4.endian.h.9.49f3a4695c1b61e8a0808de3c4a106cb
+                           .group:00000000 wm4._timeval.h.30.0e8bfd94e85db17dda3286ee81496fe6
+                           .group:00000000 wm4.timespec.h.41.d855182eb0e690443ab8651bcedca6e1
+                           .group:00000000 wm4.select.h.19.97ca6fd0c752a0f3b6719fd314d361e6
+                           .group:00000000 wm4.types.h.69.ed3eae3cf73030a737515151ebcab7a1
+                           .group:00000000 wm4.sched.h.22.c60982713a5c428609783c78f9c78d95
+                           .group:00000000 wm4._pthreadtypes.h.36.fcee9961c35163dde6267ef772ad1972
+                           .group:00000000 wm4.stdio.h.2.4aa87247282eca6c8f36f9de33d8df1a
+                           .group:00000000 wm4.stdio.h.81.932d0c162786b883f622b8d05c120c78
+                           .group:00000000 wm4.stdlib.h.13.4ed386f5c1a80d71e72172885d946ef2
+                           .group:00000000 wm4.stddef.h.161.19e15733342b50ead2919490b095303e
+                           .group:00000000 wm4.alloca.h.8.dfc0c703c47ec3e69746825b17d9e66d
+ARM GAS   			page 26
+
+
+                           .group:00000000 wm4.stdlib.h.56.d4493cd3736e51e9d56335045f26df45
+                           .group:00000000 wm4.string.h.8.c4b8571ce60dff2817f43fec8b86aecd
+                           .group:00000000 wm4._intsup.h.10.cce27fed8484c08a33f522034c30d2b5
+                           .group:00000000 wm4.stdint.h.23.d53047a68f4a85177f80b422d52785ed
+                           .group:00000000 wm4.FreeRTOSConfig.h.68.1d0dd6b8cda279d0020827f5584733bd
+                           .group:00000000 wm4.projdefs.h.71.1734cd3501e070360596dd847bb9d813
+                           .group:00000000 wm4.portmacro.h.72.3d5d774f718d157a637f7eb960850f27
+                           .group:00000000 wm4.portable.h.98.f435842f50d7864fba6a318a13e72513
+                           .group:00000000 wm4.mpu_wrappers.h.71.dd245fe44d82bd40288b5a47f895c82c
+                           .group:00000000 wm4.FreeRTOS.h.175.3abf49eaca38658a192da8d7c86d5374
+                           .group:00000000 wm4.queue.h.72.3695320c7600effec3d17b83c99d3c0b
+                           .group:00000000 wm4.semphr.h.81.476996112f7cf2dd045dbdd37a9136bc
+                           .group:00000000 wm4.list.h.103.6a12b7b9a7a136c3cca0ee53675c5498
+                           .group:00000000 wm4.task.h.88.da474b04c368050657453c137d8efe45
+                           .group:00000000 wm4.timers.h.96.b62a20effad09455c0ed06e5f17e2a48
+                           .group:00000000 wm4.lwipopts.h.39.6b59604adf87dc94bbbda24564503740
+                           .group:00000000 wm4.errno.h.2.ba016d646105af6cad23be83630b6a3f
+                           .group:00000000 wm4.errno.h.9.1ecd7b1049497a0ab61da0f6cbd4b0c6
+                           .group:00000000 wm4.time.h.38.20beed93add9f31905d3a626e4660be9
+                           .group:00000000 wm4.time.h.8.db4619001f026d0b4874c029fef0e91f
+                           .group:00000000 wm4.time.h.2.4581ce0ffb6627cfc02162c94bf846c9
+                           .group:00000000 wm4.time.h.25.483ee9b7e27a5dcca3d222ded0e25e01
+                           .group:00000000 wm4.cc.h.48.d6d2c2bb4a8eeb217c55b9ca1943b7a0
+                           .group:00000000 wm4.arch.h.65.8829bb52e9eb86f038bc22f28844c005
+                           .group:00000000 wm4.debug.h.44.85dd174371aa97df303e04153d799135
+                           .group:00000000 wm4.opt.h.77.035e4f6feedd8c96216e0818f09a9265
+                           .group:00000000 wm4.def.h.33.687716bada84b2810fdf97c9d167aeeb
+                           .group:00000000 wm4.ip4_addr.h.33.1a8b96da9c9099dd4d4b421392c24416
+                           .group:00000000 wm4.ip6_addr.h.43.f0356dc1c9eb4011a6824b272ca0bdec
+                           .group:00000000 wm4.ip_addr.h.58.d7bcbad6cfa9a793708e54980ac1c34d
+                           .group:00000000 wm4.netif.h.33.379f236f9670aafd30086e50d1a89f89
+                           .group:00000000 wm4.err.h.33.f97d15a7862198a77a6b19a8b190fee7
+                           .group:00000000 wm4.pbuf.h.34.202868ef9162d4cb74cfc854b7b74f63
+                           .group:00000000 wm4.netif.h.67.da8672002bd78982c4ab50b84285a595
+                           .group:00000000 wm4.inet.h.41.0cf9f502d748021afadf1fe4fba638f4
+                           .group:00000000 wm4.sockets.h.72.bc82e899e862bc38df9aee17d977f9be
+                           .group:00000000 wm4.ip4.h.33.2db1e45313b1f472e08d288657c61499
+                           .group:00000000 wm4.ip6.h.42.4c9fe14607f20e2a534215f8047124e1
+                           .group:00000000 wm4.ip.h.49.1a1fbae54cafc9b96064363517198239
+                           .group:00000000 wm4.gsdk_common.h.25.69f333dc5f5113dd7092f6831560754f
+                           .group:00000000 wm4.gsdk_flash.h.25.4d08791083e4af07d64570151ac0803c
+                           .group:00000000 wm4.app_loader.h.25.aa64c8d4536aca920728cda79a275eeb
+                           .group:00000000 wm4.gsdk_ril.h.43.ec5a175e110d1c70143139b168262c34
+                           .group:00000000 wm4.gsdk_ril_cmds.h.25.9576f30a39fa8fd69cc4f6c2fc4c8bd9
+
+UNDEFINED SYMBOLS
+printf
+strlen
+strncpy
+puts
+gsdk_uart_write
+sprintf
+memset
+gsdk_uart_open
+gsdk_ril_init
+gsdk_ril_get_imei
+gsdk_ril_get_local_ipaddr
+ARM GAS   			page 27
+
+
+vTaskDelay
+gsdk_at_register_unsolicited_handler
+gsdk_ril_set_link_iot
+gsdk_ril_update_to_iot
+gsdk_ril_send_data_to_iot
+strncmp
+gsdk_ril_del_link_iot
+gsdk_uart_close

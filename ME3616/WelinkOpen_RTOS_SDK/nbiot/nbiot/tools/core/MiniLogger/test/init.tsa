@@ -1,0 +1,6 @@
+{
+   KiInitialiseTask kiInitialiseTask;
+   kiInitialiseTask.cause = RESET_NORMAL_POWER_ON;
+   GsSendStruct (SIG_INITIALISE, sizeof(KiInitialiseTask), &kiInitialiseTask, UNKNOWN_TASK_ID, AL_TASK_ID);
+}
+GsStart ();

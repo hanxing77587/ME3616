@@ -1,0 +1,499 @@
+ARM GAS   			page 1
+
+
+   1              	 .cpu cortex-m4
+   2              	 .eabi_attribute 27,1
+   3              	 .eabi_attribute 28,1
+   4              	 .eabi_attribute 20,1
+   5              	 .eabi_attribute 21,1
+   6              	 .eabi_attribute 23,3
+   7              	 .eabi_attribute 24,1
+   8              	 .eabi_attribute 25,1
+   9              	 .eabi_attribute 26,1
+  10              	 .eabi_attribute 30,1
+  11              	 .eabi_attribute 34,1
+  12              	 .eabi_attribute 18,4
+  13              	 .file "wefota.c"
+  14              	 .text
+  15              	.Ltext0:
+  16              	 .cfi_sections .debug_frame
+  17              	 .section .text.__io_puts,"ax",%progbits
+  18              	 .align 1
+  19              	 .global __io_puts
+  20              	 .syntax unified
+  21              	 .thumb
+  22              	 .thumb_func
+  23              	 .fpu fpv4-sp-d16
+  25              	__io_puts:
+  26              	.LFB19:
+  27              	 .file 1 "wefota.c"
+   1:wefota.c      **** /*
+   2:wefota.c      **** ** File   : wefota.c
+   3:wefota.c      **** **
+   4:wefota.c      **** ** Copyright (C) 2013-2018 Gosuncn. All rights reserved.
+   5:wefota.c      **** **
+   6:wefota.c      **** ** Licensed under the Apache License, Version 2.0 (the "License");
+   7:wefota.c      **** ** you may not use this file except in compliance with the License.
+   8:wefota.c      **** ** You may obtain a copy of the License at
+   9:wefota.c      **** **
+  10:wefota.c      **** **      http://www.apache.org/licenses/LICENSE-2.0
+  11:wefota.c      **** **
+  12:wefota.c      **** ** Unless required by applicable law or agreed to in writing, software
+  13:wefota.c      **** ** distributed under the License is distributed on an "AS IS" BASIS,
+  14:wefota.c      **** ** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  15:wefota.c      **** ** See the License for the specific language governing permissions and
+  16:wefota.c      **** ** limitations under the License.
+  17:wefota.c      **** **
+  18:wefota.c      **** ** Author : liyinhai@gosuncn.cn
+  19:wefota.c      **** **
+  20:wefota.c      **** **  $Date: 2018/05/26 09:48:55GMT+08:00 $
+  21:wefota.c      **** **
+  22:wefota.c      **** */
+  23:wefota.c      **** #include <stdio.h>
+  24:wefota.c      **** #include <stdlib.h>
+  25:wefota.c      **** #include <string.h>
+  26:wefota.c      **** #include "gsdk_api.h"
+  27:wefota.c      **** #include "FreeRTOS.h"
+  28:wefota.c      **** #include "semphr.h"
+  29:wefota.c      **** #include "task.h"
+  30:wefota.c      **** #include "gsdk_ril.h"
+  31:wefota.c      **** #include "lwip/sockets.h"
+ARM GAS   			page 2
+
+
+  32:wefota.c      **** #include "lwip/ip.h"
+  33:wefota.c      **** 
+  34:wefota.c      **** static gsdk_handle_t g_huart;
+  35:wefota.c      **** 
+  36:wefota.c      **** int __io_puts(char *data, int len)
+  37:wefota.c      **** {
+  28              	 .loc 1 37 0
+  29              	 .cfi_startproc
+  30              	 
+  31              	 
+  32              	.LVL0:
+  33 0000 10B5     	 push {r4,lr}
+  34              	 .cfi_def_cfa_offset 8
+  35              	 .cfi_offset 4,-8
+  36              	 .cfi_offset 14,-4
+  37              	.LVL1:
+  38:wefota.c      ****     int ret = 0;
+  39:wefota.c      ****     if (g_huart) {
+  38              	 .loc 1 39 0
+  39 0002 064B     	 ldr r3,.L5
+  40 0004 1C68     	 ldr r4,[r3]
+  41 0006 3CB1     	 cbz r4,.L3
+  42 0008 0A46     	 mov r2,r1
+  43 000a 0146     	 mov r1,r0
+  44              	.LVL2:
+  40:wefota.c      ****         ret = gsdk_uart_write(g_huart, (uint8_t *)data, len, 1000);
+  45              	 .loc 1 40 0
+  46 000c 4FF47A73 	 mov r3,#1000
+  47 0010 2046     	 mov r0,r4
+  48              	.LVL3:
+  49 0012 FFF7FEFF 	 bl gsdk_uart_write
+  50              	.LVL4:
+  51              	.L1:
+  41:wefota.c      ****     }
+  42:wefota.c      ****     return ret;
+  43:wefota.c      **** }
+  52              	 .loc 1 43 0
+  53 0016 10BD     	 pop {r4,pc}
+  54              	.LVL5:
+  55              	.L3:
+  38:wefota.c      ****     if (g_huart) {
+  56              	 .loc 1 38 0
+  57 0018 0020     	 movs r0,#0
+  58              	.LVL6:
+  42:wefota.c      **** }
+  59              	 .loc 1 42 0
+  60 001a FCE7     	 b .L1
+  61              	.L6:
+  62              	 .align 2
+  63              	.L5:
+  64 001c 00000000 	 .word .LANCHOR0
+  65              	 .cfi_endproc
+  66              	.LFE19:
+  68              	 .section .text.log_init,"ax",%progbits
+  69              	 .align 1
+  70              	 .global log_init
+  71              	 .syntax unified
+ARM GAS   			page 3
+
+
+  72              	 .thumb
+  73              	 .thumb_func
+  74              	 .fpu fpv4-sp-d16
+  76              	log_init:
+  77              	.LFB20:
+  44:wefota.c      **** 
+  45:wefota.c      **** int log_init(void)
+  46:wefota.c      **** {
+  78              	 .loc 1 46 0
+  79              	 .cfi_startproc
+  80              	 
+  81              	 
+  82 0000 00B5     	 push {lr}
+  83              	 .cfi_def_cfa_offset 4
+  84              	 .cfi_offset 14,-4
+  85 0002 83B0     	 sub sp,sp,#12
+  86              	 .cfi_def_cfa_offset 16
+  47:wefota.c      ****     uart_config_t uart_config;
+  48:wefota.c      ****     gsdk_status_t status;
+  49:wefota.c      **** 
+  50:wefota.c      ****     uart_config.baudrate    = UART_BAUDRATE_115200;
+  87              	 .loc 1 50 0
+  88 0004 0923     	 movs r3,#9
+  89 0006 8DF80430 	 strb r3,[sp,#4]
+  51:wefota.c      ****     uart_config.parity      = UART_PARITY_NONE;
+  90              	 .loc 1 51 0
+  91 000a 0020     	 movs r0,#0
+  92 000c 8DF80700 	 strb r0,[sp,#7]
+  52:wefota.c      ****     uart_config.stop_bit    = UART_STOP_BIT_1;
+  93              	 .loc 1 52 0
+  94 0010 8DF80600 	 strb r0,[sp,#6]
+  53:wefota.c      ****     uart_config.word_length = UART_WORD_LENGTH_8;
+  95              	 .loc 1 53 0
+  96 0014 0323     	 movs r3,#3
+  97 0016 8DF80530 	 strb r3,[sp,#5]
+  54:wefota.c      **** 
+  55:wefota.c      ****     status = gsdk_uart_open(UART_0, &uart_config, &g_huart);
+  98              	 .loc 1 55 0
+  99 001a 094A     	 ldr r2,.L12
+ 100 001c 01A9     	 add r1,sp,#4
+ 101 001e FFF7FEFF 	 bl gsdk_uart_open
+ 102              	.LVL7:
+  56:wefota.c      ****     if (status != GSDK_SUCCESS) {
+ 103              	 .loc 1 56 0
+ 104 0022 30B9     	 cbnz r0,.L11
+  57:wefota.c      ****         gsdk_syslog_printf("[WEFOTA_DEMO]: failed to open uart %d\n", status);
+  58:wefota.c      ****         return -1;
+  59:wefota.c      ****     }
+  60:wefota.c      **** 
+  61:wefota.c      ****     printf("[WEFOTA_DEMO] log init....OK\r\n");
+ 105              	 .loc 1 61 0
+ 106 0024 0748     	 ldr r0,.L12+4
+ 107              	.LVL8:
+ 108 0026 FFF7FEFF 	 bl puts
+ 109              	.LVL9:
+  62:wefota.c      **** 
+  63:wefota.c      ****     return 0;
+ARM GAS   			page 4
+
+
+ 110              	 .loc 1 63 0
+ 111 002a 0020     	 movs r0,#0
+ 112              	.L7:
+  64:wefota.c      **** }
+ 113              	 .loc 1 64 0
+ 114 002c 03B0     	 add sp,sp,#12
+ 115              	 .cfi_remember_state
+ 116              	 .cfi_def_cfa_offset 4
+ 117              	 
+ 118 002e 5DF804FB 	 ldr pc,[sp],#4
+ 119              	.LVL10:
+ 120              	.L11:
+ 121              	 .cfi_restore_state
+ 122 0032 0146     	 mov r1,r0
+  57:wefota.c      ****         gsdk_syslog_printf("[WEFOTA_DEMO]: failed to open uart %d\n", status);
+ 123              	 .loc 1 57 0
+ 124 0034 0448     	 ldr r0,.L12+8
+ 125              	.LVL11:
+ 126 0036 FFF7FEFF 	 bl gsdk_syslog_printf
+ 127              	.LVL12:
+  58:wefota.c      ****     }
+ 128              	 .loc 1 58 0
+ 129 003a 4FF0FF30 	 mov r0,#-1
+ 130 003e F5E7     	 b .L7
+ 131              	.L13:
+ 132              	 .align 2
+ 133              	.L12:
+ 134 0040 00000000 	 .word .LANCHOR0
+ 135 0044 28000000 	 .word .LC1
+ 136 0048 00000000 	 .word .LC0
+ 137              	 .cfi_endproc
+ 138              	.LFE20:
+ 140              	 .section .text.main,"ax",%progbits
+ 141              	 .align 1
+ 142              	 .global main
+ 143              	 .syntax unified
+ 144              	 .thumb
+ 145              	 .thumb_func
+ 146              	 .fpu fpv4-sp-d16
+ 148              	main:
+ 149              	.LFB21:
+  65:wefota.c      **** 
+  66:wefota.c      **** int main(void)
+  67:wefota.c      **** {
+ 150              	 .loc 1 67 0
+ 151              	 .cfi_startproc
+ 152              	 
+ 153              	 
+ 154 0000 08B5     	 push {r3,lr}
+ 155              	 .cfi_def_cfa_offset 8
+ 156              	 .cfi_offset 3,-8
+ 157              	 .cfi_offset 14,-4
+  68:wefota.c      ****     gsdk_status_t     status;
+  69:wefota.c      **** 
+  70:wefota.c      ****     log_init();
+ 158              	 .loc 1 70 0
+ 159 0002 FFF7FEFF 	 bl log_init
+ARM GAS   			page 5
+
+
+ 160              	.LVL13:
+  71:wefota.c      **** 
+  72:wefota.c      **** 	vTaskDelay(3 * 1000 / portTICK_RATE_MS);
+ 161              	 .loc 1 72 0
+ 162 0006 4FF49670 	 mov r0,#300
+ 163 000a FFF7FEFF 	 bl vTaskDelay
+ 164              	.LVL14:
+  73:wefota.c      **** 
+  74:wefota.c      ****     printf("enter wefota.c\n");
+ 165              	 .loc 1 74 0
+ 166 000e 0A48     	 ldr r0,.L18
+ 167 0010 FFF7FEFF 	 bl puts
+ 168              	.LVL15:
+  75:wefota.c      ****     status = gsdk_ril_init();     //init gsdk_ril for at command
+ 169              	 .loc 1 75 0
+ 170 0014 FFF7FEFF 	 bl gsdk_ril_init
+ 171              	.LVL16:
+  76:wefota.c      **** 
+  77:wefota.c      ****     if (status != GSDK_SUCCESS) {
+ 172              	 .loc 1 77 0
+ 173 0018 48B9     	 cbnz r0,.L17
+ 174              	.LVL17:
+ 175              	.L15:
+  78:wefota.c      ****         printf("[OEM_DEMO] AT CMD init failed\n");
+  79:wefota.c      ****     }
+  80:wefota.c      **** 
+  81:wefota.c      ****     status =  gsdk_ril_fota_settv("ME3616C1AV1.0B03");  //set target version command(at+fotatv=ME36
+ 176              	 .loc 1 81 0
+ 177 001a 0848     	 ldr r0,.L18+4
+ 178 001c FFF7FEFF 	 bl gsdk_ril_fota_settv
+ 179              	.LVL18:
+  82:wefota.c      **** 
+  83:wefota.c      ****     status = gsdk_ril_fota_ctr();  //start wefota (at+fotactr)
+ 180              	 .loc 1 83 0
+ 181 0020 FFF7FEFF 	 bl gsdk_ril_fota_ctr
+ 182              	.LVL19:
+  84:wefota.c      ****     printf("exit wefota.c\n");
+ 183              	 .loc 1 84 0
+ 184 0024 0648     	 ldr r0,.L18+8
+ 185 0026 FFF7FEFF 	 bl puts
+ 186              	.LVL20:
+  85:wefota.c      ****     return 0;
+  86:wefota.c      **** }
+ 187              	 .loc 1 86 0
+ 188 002a 0020     	 movs r0,#0
+ 189 002c 08BD     	 pop {r3,pc}
+ 190              	.LVL21:
+ 191              	.L17:
+  78:wefota.c      ****     }
+ 192              	 .loc 1 78 0
+ 193 002e 0548     	 ldr r0,.L18+12
+ 194              	.LVL22:
+ 195 0030 FFF7FEFF 	 bl puts
+ 196              	.LVL23:
+ 197 0034 F1E7     	 b .L15
+ 198              	.L19:
+ 199 0036 00BF     	 .align 2
+ARM GAS   			page 6
+
+
+ 200              	.L18:
+ 201 0038 00000000 	 .word .LC2
+ 202 003c 30000000 	 .word .LC4
+ 203 0040 44000000 	 .word .LC5
+ 204 0044 10000000 	 .word .LC3
+ 205              	 .cfi_endproc
+ 206              	.LFE21:
+ 208              	 .section .bss.g_huart,"aw",%nobits
+ 209              	 .align 2
+ 210              	 .set .LANCHOR0,.+0
+ 213              	g_huart:
+ 214 0000 00000000 	 .space 4
+ 215              	 .section .rodata.log_init.str1.4,"aMS",%progbits,1
+ 216              	 .align 2
+ 217              	.LC0:
+ 218 0000 5B574546 	 .ascii "[WEFOTA_DEMO]: failed to open uart %d\012\000"
+ 218      4F54415F 
+ 218      44454D4F 
+ 218      5D3A2066 
+ 218      61696C65 
+ 219 0027 00       	 .space 1
+ 220              	.LC1:
+ 221 0028 5B574546 	 .ascii "[WEFOTA_DEMO] log init....OK\015\000"
+ 221      4F54415F 
+ 221      44454D4F 
+ 221      5D206C6F 
+ 221      6720696E 
+ 222              	 .section .rodata.main.str1.4,"aMS",%progbits,1
+ 223              	 .align 2
+ 224              	.LC2:
+ 225 0000 656E7465 	 .ascii "enter wefota.c\000"
+ 225      72207765 
+ 225      666F7461 
+ 225      2E6300
+ 226 000f 00       	 .space 1
+ 227              	.LC3:
+ 228 0010 5B4F454D 	 .ascii "[OEM_DEMO] AT CMD init failed\000"
+ 228      5F44454D 
+ 228      4F5D2041 
+ 228      5420434D 
+ 228      4420696E 
+ 229 002e 0000     	 .space 2
+ 230              	.LC4:
+ 231 0030 4D453336 	 .ascii "ME3616C1AV1.0B03\000"
+ 231      31364331 
+ 231      4156312E 
+ 231      30423033 
+ 231      00
+ 232 0041 000000   	 .space 3
+ 233              	.LC5:
+ 234 0044 65786974 	 .ascii "exit wefota.c\000"
+ 234      20776566 
+ 234      6F74612E 
+ 234      6300
+ 235              	 .text
+ 236              	.Letext0:
+ 237              	 .file 2 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\machine\\_default_types.h"
+ARM GAS   			page 7
+
+
+ 238              	 .file 3 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\lock.h"
+ 239              	 .file 4 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\_types.h"
+ 240              	 .file 5 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\lib\\gcc\\arm-none-eabi\\7.3.1\\include\\stddef.h"
+ 241              	 .file 6 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\reent.h"
+ 242              	 .file 7 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\_stdint.h"
+ 243              	 .file 8 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\stdlib.h"
+ 244              	 .file 9 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_common.h"
+ 245              	 .file 10 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_uart.h"
+ 246              	 .file 11 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_flash.h"
+ 247              	 .file 12 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/include/FreeRTOSConfig.h"
+ 248              	 .file 13 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/GCC/mt2625/ARM_CM4F/portmacro.h"
+ 249              	 .file 14 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\errno.h"
+ 250              	 .file 15 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\time.h"
+ 251              	 .file 16 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/ports/include/arch/cc.h"
+ 252              	 .file 17 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/ip4_addr.h"
+ 253              	 .file 18 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/ip6_addr.h"
+ 254              	 .file 19 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/ip_addr.h"
+ 255              	 .file 20 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/err.h"
+ 256              	 .file 21 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/pbuf.h"
+ 257              	 .file 22 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/netif.h"
+ 258              	 .file 23 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/inet.h"
+ 259              	 .file 24 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/ip4.h"
+ 260              	 .file 25 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/ip6.h"
+ 261              	 .file 26 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/ip.h"
+ 262              	 .file 27 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/include/task.h"
+ 263              	 .file 28 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_ril.h"
+ 264              	 .file 29 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_ril_cmds.h"
+ 265              	 .file 30 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_api.h"
+ 266              	 .file 31 "<built-in>"
+ARM GAS   			page 8
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 wefota.c
+    {standard input}:18     .text.__io_puts:00000000 $t
+    {standard input}:25     .text.__io_puts:00000000 __io_puts
+    {standard input}:64     .text.__io_puts:0000001c $d
+    {standard input}:69     .text.log_init:00000000 $t
+    {standard input}:76     .text.log_init:00000000 log_init
+    {standard input}:134    .text.log_init:00000040 $d
+    {standard input}:141    .text.main:00000000 $t
+    {standard input}:148    .text.main:00000000 main
+    {standard input}:201    .text.main:00000038 $d
+    {standard input}:209    .bss.g_huart:00000000 $d
+    {standard input}:213    .bss.g_huart:00000000 g_huart
+    {standard input}:216    .rodata.log_init.str1.4:00000000 $d
+    {standard input}:223    .rodata.main.str1.4:00000000 $d
+                           .group:00000000 wm4.0.8fab1e1450c2b74bdd5e2aed4c325bf1
+                           .group:00000000 wm4._newlib_version.h.4.875b979a44719054cd750d0952ad3fd6
+                           .group:00000000 wm4.newlib.h.18.5e5ca3429233af402d406a202f1fc1ac
+                           .group:00000000 wm4.ieeefp.h.77.220d9cccac42cd58761758bee2df4ce6
+                           .group:00000000 wm4.features.h.22.fad1cec3bc7ff06488171438dbdcfd02
+                           .group:00000000 wm4.config.h.220.6cac6a9685cfce5e83c17784171638d9
+                           .group:00000000 wm4._ansi.h.31.de524f58584151836e90d8620a16f8e8
+                           .group:00000000 wm4.stdio.h.31.7c0e28c411445f3f9c5b11accf882760
+                           .group:00000000 wm4._default_types.h.6.959254cf5f09734ea7516c89e8bb21bd
+                           .group:00000000 wm4.stddef.h.187.2ff233552538c6ff9b8575ca8ea52cb3
+                           .group:00000000 wm4.cdefs.h.47.0bcdf94cb40e176393dd1404056825b4
+                           .group:00000000 wm4.stddef.h.39.ec95e8feac892e292b69dc7ae75b0d64
+                           .group:00000000 wm4.stdarg.h.34.3a23a216c0c293b3d2ea2e89281481e6
+                           .group:00000000 wm4.lock.h.2.1461d1fff82dffe8bfddc23307f6484f
+                           .group:00000000 wm4._types.h.125.5cf8a495f1f7ef36777ad868a1e32068
+                           .group:00000000 wm4.stddef.h.161.5349cb105733e8777bfb0cf53c4e3f34
+                           .group:00000000 wm4._types.h.184.03611d4f6b5bec9997bcf4279eceba07
+                           .group:00000000 wm4.reent.h.17.90c2574d4acdcfce933db5cb09ff35fe
+                           .group:00000000 wm4.types.h.40.e8c16e7ec36ba55f133d0616070e25fc
+                           .group:00000000 wm4._stdint.h.10.c24fa3af3bc1706662bb5593a907e841
+                           .group:00000000 wm4._endian.h.31.65a10590763c3dde1ac4a7f66d7d4891
+                           .group:00000000 wm4.endian.h.9.49f3a4695c1b61e8a0808de3c4a106cb
+                           .group:00000000 wm4._timeval.h.30.0e8bfd94e85db17dda3286ee81496fe6
+                           .group:00000000 wm4.timespec.h.41.d855182eb0e690443ab8651bcedca6e1
+                           .group:00000000 wm4.select.h.19.97ca6fd0c752a0f3b6719fd314d361e6
+                           .group:00000000 wm4.types.h.69.ed3eae3cf73030a737515151ebcab7a1
+                           .group:00000000 wm4.sched.h.22.c60982713a5c428609783c78f9c78d95
+                           .group:00000000 wm4._pthreadtypes.h.36.fcee9961c35163dde6267ef772ad1972
+                           .group:00000000 wm4.stdio.h.2.4aa87247282eca6c8f36f9de33d8df1a
+                           .group:00000000 wm4.stdio.h.81.932d0c162786b883f622b8d05c120c78
+                           .group:00000000 wm4.stdlib.h.13.4ed386f5c1a80d71e72172885d946ef2
+                           .group:00000000 wm4.stddef.h.161.19e15733342b50ead2919490b095303e
+                           .group:00000000 wm4.alloca.h.8.dfc0c703c47ec3e69746825b17d9e66d
+                           .group:00000000 wm4.stdlib.h.56.d4493cd3736e51e9d56335045f26df45
+                           .group:00000000 wm4.string.h.8.c4b8571ce60dff2817f43fec8b86aecd
+                           .group:00000000 wm4._intsup.h.10.cce27fed8484c08a33f522034c30d2b5
+                           .group:00000000 wm4.stdint.h.23.d53047a68f4a85177f80b422d52785ed
+                           .group:00000000 wm4.gsdk_common.h.47.22de8ea3659fbd5af0e08ced1ae1b062
+                           .group:00000000 wm4.gsdk_flash.h.25.4d08791083e4af07d64570151ac0803c
+                           .group:00000000 wm4.app_loader.h.25.aa64c8d4536aca920728cda79a275eeb
+                           .group:00000000 wm4.FreeRTOSConfig.h.68.1d0dd6b8cda279d0020827f5584733bd
+                           .group:00000000 wm4.projdefs.h.71.1734cd3501e070360596dd847bb9d813
+ARM GAS   			page 9
+
+
+                           .group:00000000 wm4.portmacro.h.72.3d5d774f718d157a637f7eb960850f27
+                           .group:00000000 wm4.portable.h.98.f435842f50d7864fba6a318a13e72513
+                           .group:00000000 wm4.mpu_wrappers.h.71.dd245fe44d82bd40288b5a47f895c82c
+                           .group:00000000 wm4.FreeRTOS.h.175.3abf49eaca38658a192da8d7c86d5374
+                           .group:00000000 wm4.queue.h.72.3695320c7600effec3d17b83c99d3c0b
+                           .group:00000000 wm4.semphr.h.81.476996112f7cf2dd045dbdd37a9136bc
+                           .group:00000000 wm4.list.h.103.6a12b7b9a7a136c3cca0ee53675c5498
+                           .group:00000000 wm4.task.h.88.da474b04c368050657453c137d8efe45
+                           .group:00000000 wm4.gsdk_ril.h.43.ec5a175e110d1c70143139b168262c34
+                           .group:00000000 wm4.gsdk_ril_cmds.h.25.9576f30a39fa8fd69cc4f6c2fc4c8bd9
+                           .group:00000000 wm4.lwipopts.h.39.6b59604adf87dc94bbbda24564503740
+                           .group:00000000 wm4.errno.h.2.ba016d646105af6cad23be83630b6a3f
+                           .group:00000000 wm4.errno.h.9.1ecd7b1049497a0ab61da0f6cbd4b0c6
+                           .group:00000000 wm4.time.h.38.20beed93add9f31905d3a626e4660be9
+                           .group:00000000 wm4.time.h.8.db4619001f026d0b4874c029fef0e91f
+                           .group:00000000 wm4.time.h.2.4581ce0ffb6627cfc02162c94bf846c9
+                           .group:00000000 wm4.time.h.25.483ee9b7e27a5dcca3d222ded0e25e01
+                           .group:00000000 wm4.cc.h.48.d6d2c2bb4a8eeb217c55b9ca1943b7a0
+                           .group:00000000 wm4.arch.h.65.8829bb52e9eb86f038bc22f28844c005
+                           .group:00000000 wm4.debug.h.44.85dd174371aa97df303e04153d799135
+                           .group:00000000 wm4.opt.h.77.035e4f6feedd8c96216e0818f09a9265
+                           .group:00000000 wm4.def.h.33.687716bada84b2810fdf97c9d167aeeb
+                           .group:00000000 wm4.ip4_addr.h.33.1a8b96da9c9099dd4d4b421392c24416
+                           .group:00000000 wm4.ip6_addr.h.43.f0356dc1c9eb4011a6824b272ca0bdec
+                           .group:00000000 wm4.ip_addr.h.58.d7bcbad6cfa9a793708e54980ac1c34d
+                           .group:00000000 wm4.netif.h.33.379f236f9670aafd30086e50d1a89f89
+                           .group:00000000 wm4.err.h.33.f97d15a7862198a77a6b19a8b190fee7
+                           .group:00000000 wm4.pbuf.h.34.202868ef9162d4cb74cfc854b7b74f63
+                           .group:00000000 wm4.netif.h.67.da8672002bd78982c4ab50b84285a595
+                           .group:00000000 wm4.inet.h.41.0cf9f502d748021afadf1fe4fba638f4
+                           .group:00000000 wm4.sockets.h.72.bc82e899e862bc38df9aee17d977f9be
+                           .group:00000000 wm4.ip4.h.33.2db1e45313b1f472e08d288657c61499
+                           .group:00000000 wm4.ip6.h.42.4c9fe14607f20e2a534215f8047124e1
+                           .group:00000000 wm4.ip.h.49.1a1fbae54cafc9b96064363517198239
+
+UNDEFINED SYMBOLS
+gsdk_uart_write
+gsdk_uart_open
+puts
+gsdk_syslog_printf
+vTaskDelay
+gsdk_ril_init
+gsdk_ril_fota_settv
+gsdk_ril_fota_ctr

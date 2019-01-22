@@ -1,0 +1,19 @@
+;
+; The format of predefined AT Command :
+;     <AT CMD> ; <Tag> ; <Type> ;
+;         <AT CMD> : the predefined at-command
+;         <Tag>    : the tag, it will be displayed in each predefined command button
+;         <Type>   : 0, normal at-command;
+;                    1, keyboard code;
+;
+AT*MCGDEFCONT="IP","ctnb"; Set Def APN; 0; 
+AT+EGACT=1,1,"ctnb","web","password"; Activate APN; 0; 
+AT+IPERF=-s -u -p 5099; Open UDP Server on port 5099; 0; 
+AT+IPERF=-s -p 5011; Open TCP Server on port 5011; 0; 
+AT+CNMI=2,1,0,1,0; SMS Step 1; 0; 
+AT+CFUN=1; SMS Step 2; 0; 
+AT+CMGF=1; SMS Step 3 set TEXT MODE; 0; 
+AT+CSCA="+861234567"; SMS Step 4 set SMS server; 0; 
+AT+CMGS="7654321"; SMS Step 5 set MT number; 0; 
+AT+PING=192.20.20.15 -l 64 -n 5; Ping 192.20.20.15; 0; 
+AT+PING="close"; Ping Stop; 0; 

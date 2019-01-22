@@ -1,0 +1,68 @@
+/************************************************************************
+ * Copyright (c) 2008 MStar Semiconductor, Inc. All Rights Reserved.
+ ************************************************************************
+ * Signal Type : KiInitialiseTaskTag
+ * Signal Id   : SIG_INITIALISE
+ * Created     : Mon Mar 17 11:05:45 2003
+ ************************************************************************
+ * $Workfile$
+ * $Revision: #2 $
+ *     $Date: 2010/06/12 $
+ ************************************************************************
+ * File Description:
+ ************************************************************************
+ * Revision Details
+ *
+ * $Log$
+ *
+ * 08 17 2016 stephen.laws
+ * [WCPSW00004290] Add Mstar modem SW
+ * Add remaining MStar Tools.
+ *
+ ************************************************************************/
+
+#define LONGNAME initialise
+#define COMMENT  " "
+
+/************************************************************************
+ * MANDATORY: Do not change
+ ************************************************************************/
+
+#include "gwcsa.h"
+
+/************************************************************************
+ * MANDATORY: Do not change except to add argument decoding if required.
+ *
+ *   In a test script (.tss), send() is used to generate this signal. send()
+ *   has three fixed parameters. Extra parameters can be added after the
+ *   Dest TaskId, which can then be decoded in this function by using
+ *   using va_arg(). (Don't call va_end()!). For example:
+ *
+ * In Script file:
+ *      send (mySignal, TEST_TASK_ID, MY_TASK_ID, 2);
+ *
+ * In Signal file:
+ *      void LONGNAME (va_list argList)
+ *      {
+ *        int sigParam1;
+ *
+ *        sigParam1 = va_arg (argList, int);  // will be 2
+ *
+ *        ...etc...
+ ************************************************************************/
+
+#pragma argsused
+void LONGNAME (va_list argList)
+{
+/************************************************************************
+ * MANDATORY: Signal Id and Size, used externally
+ ************************************************************************/
+
+  sigId   = SIG_INITIALISE;
+  sigSize = sizeof(body.initialise);
+/************************************************************************
+ * Fill in the Signal Body
+ ************************************************************************/
+
+  body.initialise.cause                                   = RESET_NORMAL_POWER_ON;
+}

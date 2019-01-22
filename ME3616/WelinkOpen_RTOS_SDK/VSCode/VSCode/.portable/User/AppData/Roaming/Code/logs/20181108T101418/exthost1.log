@@ -1,0 +1,10 @@
+[2018-11-08 10:14:21.613] [exthost1] [info] extension host started
+[2018-11-08 10:14:21.654] [exthost1] [info] ExtensionService#_doActivateExtension vscode.emmet {"startup":true,"activationEvent":"*"}
+[2018-11-08 10:14:21.654] [exthost1] [info] ExtensionService#loadCommonJSModule e:\WorkDir\WelinkOpen_RTOS_SDK\VSCode\VSCode\resources\app\extensions\emmet\out\extension
+[2018-11-08 10:14:21.759] [exthost1] [info] ExtensionService#_doActivateExtension vscode.git {"startup":true,"activationEvent":"*"}
+[2018-11-08 10:14:21.759] [exthost1] [info] ExtensionService#loadCommonJSModule e:\WorkDir\WelinkOpen_RTOS_SDK\VSCode\VSCode\resources\app\extensions\git\out\main
+[2018-11-08 10:14:21.952] [exthost1] [info] ExtensionService#_doActivateExtension vscode.merge-conflict {"startup":true,"activationEvent":"*"}
+[2018-11-08 10:14:21.952] [exthost1] [info] ExtensionService#loadCommonJSModule e:\WorkDir\WelinkOpen_RTOS_SDK\VSCode\VSCode\resources\app\extensions\merge-conflict\out\extension
+[2018-11-08 10:14:21.978] [exthost1] [info] eager extensions activated
+[2018-11-08 10:14:21.978] [exthost1] [info] ExtensionService#_doActivateExtension ms-vscode.cpptools {"startup":false,"activationEvent":"onLanguage:c"}
+[2018-11-08 10:14:21.978] [exthost1] [info] ExtensionService#loadCommonJSModule E:\WorkDir\WelinkOpen_RTOS_SDK\VSCode\VSCode\.portable\User\.vscode\extensions\ms-vscode.cpptools-0.16.1\out\src\main

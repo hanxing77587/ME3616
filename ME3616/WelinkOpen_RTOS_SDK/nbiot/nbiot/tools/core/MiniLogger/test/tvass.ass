@@ -1,0 +1,196 @@
+/********************************************************************************************
+ * WARNING * WARNING * WARNING * WARNING * WARNING * WARNING * WARNING * WARNING
+ * 
+ * THIS FILE CONTAINS CONTAINS INSTRUCTIONS FOR THE GENIE PROGRAM
+ * TO SKIP CHECKING FOR A PRESENCE OF VALID UNION ASSOCIATIONS.
+ *
+ * ITS ONLY PURPOSE IS TO ENABLE CORRECT GENIE OPERATION FOR LEGACY CODE WHERE
+ * PROVIDING A VALID ASSOCIATION WOULD NOT BE PRACTICAL OR ADVISABLE.
+ *
+ * IT MUST *NEVER* BE USED TO CIRCUMVENT GENIE'S VALIDATIONS RULES
+ * FOR NEWLY ADDED SIGNAL CONTAINING UNIONS.
+ * PLEASE ADD NEW ASSOCIATIONS IN DOXYGEN COMMENTS FOR RELEVANT SIGNALS INSTEAD.
+ * 
+ * FOR DETAILS SEE GENIE HELP: 
+ * TEST CAPABILITIES -> SIGNAL ASSOCIATIONS -> SIGNAL ASSOCIATIONS IN COMMENTS
+ ********************************************************************************************/
+
+IGNORE    GrrPccchInfo                             chan
+IGNORE    GrrPccchInfoTag                          chan
+IGNORE    ApexEmCellInfo                           pscOrCpi
+IGNORE    ApexEmCellInfoTag                        pscOrCpi
+IGNORE    UEngCellInfo                             pscOrCpi
+IGNORE    UEngCellInfoTag                          pscOrCpi  
+IGNORE    UrrInternalSignalSelectCell              umtsCellInformation
+IGNORE    UrrInternalSignalSelectCellTag           umtsCellInformation
+IGNORE    LmDialNumberRecord                       recordData
+IGNORE    LmDialNumberRecordTag                    recordData
+IGNORE    UrrInternalSignalQueueStoreContents      sig    
+IGNORE    UrrInternalSignalQueueStoreContentsTag   sig        
+IGNORE    UrrInternalSignalCampedOnCell            requestedCellIdentity  
+IGNORE    UrrInternalSignalCampedOnCellTag         requestedCellIdentity
+IGNORE    AbmmMmrLog                               status
+IGNORE    AbmmMmrLogTag                            status
+IGNORE    UrrInternalSignalCellSelected            cellIdentity
+IGNORE    UrrInternalSignalCellSelectedTag         cellIdentity
+IGNORE    LmDialNumberFileRecord                   speData
+IGNORE    LmDialNumberFileRecordTag                speData         
+IGNORE    VgSsChldStateInd                         vgSsInSignal
+IGNORE    VgSsChldStateIndTag                      vgSsInSignal
+IGNORE    cstate                                   slcs_u
+IGNORE    PacketUplinkAckNack                      ackNackDescUnion
+IGNORE    PacketUplinkAckNackTag                   ackNackDescUnion
+IGNORE    ApexCcEctInd                             compData
+IGNORE    ApexCcEctIndTag                          compData
+IGNORE    UrlAmTxDataPduSegment                    refNode
+IGNORE    UrlAmTxDataPduSegmentTag                 refNode
+IGNORE    VtMessage                                vtMsgData
+IGNORE    VtMessageTag                             vtMsgData
+IGNORE    EuplCryptoHeaderInBand                   misc
+IGNORE    EuplCryptoHeaderInBandTag                misc
+IGNORE    El2RlcSduTxDescriptor                    u
+IGNORE    El2RlcSduTxDescriptorTag                 u
+IGNORE    El2PdcpSduTxDescriptor                   u
+IGNORE    El2PdcpSduTxDescriptorTag                u
+
+/* Dataref associations for which a fix has been provided but waits for 
+ * the relevant tools' modification */
+ 
+IGNORE    UmacDataIndRefDataPayload                pduData
+IGNORE    UmacDataIndRefDataPayloadTag             pduData
+IGNORE    UmacHsDataIndRefDataPayload              pduData
+IGNORE    UmacHsDataIndRefDataPayloadTag           pduData
+IGNORE    UmacDataReqRefDataPayload                pduData
+IGNORE    UmacDataReqRefDataPayloadTag             pduData
+IGNORE    UmacEdchDataReqRefDataPayload            pduData
+IGNORE    UmacEdchDataReqRefDataPayloadTag         pduData
+
+/* The following exceptions need to be reviewed (L1)
+ * temporarily added in order to enable full signal database validation */
+
+IGNORE    FrMpShm                                  mxData 
+IGNORE    FrMpShmTag                               mxData 
+IGNORE    MmxGsmIn3gState                          sd 
+IGNORE    MmxGsmIn3gStateTag                       sd 
+IGNORE    TxIntBufferS                             mode 
+IGNORE    L1MmTstFixedGapInd                       umtsTiming 
+IGNORE    L1MmTstFixedGapIndTag                    umtsTiming 
+IGNORE    L1MmStartGsmFrameInterruptAds            umtsArbTimebase 
+IGNORE    L1MmStartGsmFrameInterruptAdsTag         umtsArbTimebase 
+IGNORE    GSMStateIndDspMem                        cipherTds 
+IGNORE    U1SmTdPhChInfo                           cellIdentityUnion 
+IGNORE    U1SmTdPhChInfoTag                        cellIdentityUnion 
+IGNORE    U1SmTdUplinkData                         ulTfcInfo 
+IGNORE    U1SmTdUplinkDataTag                      ulTfcInfo 
+IGNORE    W1SqPschAfcData                          methodData 
+IGNORE    W1SqPschAfcDataTag                       methodData 
+IGNORE    PdchAllocationUnion                      uplink 
+IGNORE    PdchAllocationUnionTag                   uplink 
+IGNORE    L1MmShmUig                               modeSpecificData 
+IGNORE    L1MmShmUigTag                            modeSpecificData 
+IGNORE    RxTdsSet                                 dec 
+IGNORE    L1MmTstOptionalGapTakenInd               umtsTiming 
+IGNORE    FrxMethodCall                            call 
+IGNORE    FrxMethodCallTag                         call 
+IGNORE    U1McMeasCtrlData                         internalMeasType 
+IGNORE    U1McMeasCtrlDataTag                      internalMeasType 
+IGNORE    L1MmShmMc                                l1MmModeChangeAdsData 
+IGNORE    L1MmShmMcTag                             l1MmModeChangeAdsData 
+IGNORE    ChdTds                                   decode 
+IGNORE    L1DspShm                                 sd 
+IGNORE    CheTds                                   encode 
+IGNORE    UphDpDlTrChTfsInfo                       nBits 
+IGNORE    UphDpDlTrChTfsInfoTag                    nBits 
+IGNORE    RxDeIntBufferS                           mode 
+
+/* The following exceptions are for RRC global variable
+ * temporarily added in order to enable full signal database validation */
+ 
+IGNORE    McrEmMode                                cellInfo
+IGNORE    McrEmModeTag                             cellInfo
+IGNORE    CsrpPlmnInfo                             q_measured
+IGNORE    CsrpPlmnInfoTag                          q_measured
+IGNORE    CsrpPlmnInfo                             cellIdentity
+IGNORE    CsrpPlmnInfoTag                          cellIdentity
+IGNORE    CsrRssiTable                             band
+IGNORE    CsrRssiTableTag                          band
+IGNORE    UrrRbcCommonPhysChSysInfo                mode
+IGNORE    UrrRbcCommonPhysChSysInfoTag             mode
+IGNORE    McrFrequencyList                         u
+IGNORE    McrFrequencyListTag                      u
+IGNORE    McrUeInternalMeasResults                 u
+IGNORE    McrUeInternalMeasResultsTag              u
+IGNORE    McrCurrentCell                           u
+IGNORE    McrCurrentCellTag                        u
+IGNORE    U1ctIntraFreqMeasOnRachReq               measRepOnRach
+IGNORE    U1ctIntraFreqMeasOnRachReqTag            measRepOnRach
+IGNORE    UrrRbcDLTrChListElement                  trChInfo
+IGNORE    UrrRbcDLTrChListElementTag               trChInfo
+IGNORE    CsrEmMode                                pscOrCpi
+IGNORE    CsrEmModeTag                             pscOrCpi
+IGNORE    CsrLastCellUeWasCampedOn                 servingCellInformation
+IGNORE    CsrLastCellUeWasCampedOnTag              servingCellInformation
+IGNORE    AcquiredPredefConfigStore                cellIdentity
+IGNORE    AcquiredPredefConfigStoreTag             cellIdentity
+IGNORE    CellIdentityAndValid                     cellIdentity
+IGNORE    CellIdentityAndValidTag                  cellIdentity
+IGNORE    CsrData                                  listOfFrequenciesToSearch
+IGNORE    CsrDataTag                               listOfFrequenciesToSearch
+IGNORE    CsrData                                  listOfFreqsToSniff
+IGNORE    CsrDataTag                               listOfFreqsToSniff
+IGNORE    CsrInterFreqNCellInfo                    q_measured
+IGNORE    CsrInterFreqNCellInfoTag                 q_measured
+IGNORE    McrActiveSet                             u
+IGNORE    McrActiveSetTag                          u
+IGNORE    McrInterFreqList                         u
+IGNORE    McrInterFreqListTag                      u
+IGNORE    UrrCmrData                               cellId
+IGNORE    UrrCmrDataTag                            cellId
+IGNORE    CsrSavedInfoFromIntSigSelectCell         cellInfo
+IGNORE    CsrSavedInfoFromIntSigSelectCellTag      cellInfo
+IGNORE    CsrCell                                  cell_p
+IGNORE    CsrCellTag                               cell_p
+IGNORE    UrrRbcHsupaInfo                          mode
+IGNORE    UrrRbcHsupaInfoTag                       mode
+IGNORE    CsrPendingRequest                        request
+IGNORE    CsrPendingRequestTag                     request
+IGNORE    UrrRbcReferenceGainFactor                mode
+IGNORE    UrrRbcReferenceGainFactorTag             mode
+IGNORE    UrrRbcData                               servingCellIdentity
+IGNORE    UrrRbcDataTag                            servingCellIdentity
+IGNORE    UrrRbcPowerOfset                         mode
+IGNORE    UrrRbcPowerOfsetTag                      mode
+IGNORE    CsrSCellInfo                             servingCellInformation
+IGNORE    CsrSCellInfoTag                          servingCellInformation
+IGNORE    CsrSCellInfo                             q_measured
+IGNORE    CsrSCellInfoTag                          q_measured
+IGNORE    McrCellData                              u
+IGNORE    McrCellDataTag                           u
+IGNORE    CsrCellFoundDuringPlmnSearch             cellInfo
+IGNORE    CsrCellFoundDuringPlmnSearchTag          cellInfo
+IGNORE    CsrIntraFreqNCellInfo                    umtsCellInfo
+IGNORE    CsrIntraFreqNCellInfoTag                 umtsCellInfo
+IGNORE    CsrIntraFreqNCellInfo                    q_measured
+IGNORE    CsrIntraFreqNCellInfoTag                 q_measured
+IGNORE    McrUeInternalEventResults                timerData
+IGNORE    McrUeInternalEventResultsTag             timerData
+IGNORE    CsrInterFreqList                         u
+IGNORE    CsrInterFreqListTag                      u
+IGNORE    UrrRbcRadioBearerDatabase                mode
+IGNORE    UrrRbcRadioBearerDatabaseTag             mode
+IGNORE    McrRawValues                             u
+IGNORE    McrRawValuesTag                          u
+IGNORE    UrrRbcULTrChListElement                  trChInfo
+IGNORE    UrrRbcULTrChListElementTag               trChInfo
+IGNORE    McrActiveSetEntry                        u
+IGNORE    McrActiveSetEntryTag                     u
+IGNORE    UrrRbcHsdpaInfo                          mode
+IGNORE    UrrRbcHsdpaInfoTag                       mode
+IGNORE    UMTS_SysInfo                             cellIdentity
+IGNORE    UMTS_SysInfoTag                          cellIdentity
+IGNORE    McrFilterValues                          u
+IGNORE    McrFilterValuesTag                       u
+IGNORE    UrrRbcHdspaInfo                          mode
+IGNORE    UrrRbcHdspaInfoTag                       mode
+IGNORE    CiApbTlvTag                              data
+IGNORE    CiApbTlv                                 data

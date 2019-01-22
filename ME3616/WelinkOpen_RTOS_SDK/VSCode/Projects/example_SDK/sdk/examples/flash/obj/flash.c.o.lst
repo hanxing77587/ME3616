@@ -1,0 +1,673 @@
+ARM GAS   			page 1
+
+
+   1              	 .cpu cortex-m4
+   2              	 .eabi_attribute 27,1
+   3              	 .eabi_attribute 28,1
+   4              	 .eabi_attribute 20,1
+   5              	 .eabi_attribute 21,1
+   6              	 .eabi_attribute 23,3
+   7              	 .eabi_attribute 24,1
+   8              	 .eabi_attribute 25,1
+   9              	 .eabi_attribute 26,1
+  10              	 .eabi_attribute 30,1
+  11              	 .eabi_attribute 34,1
+  12              	 .eabi_attribute 18,4
+  13              	 .file "flash.c"
+  14              	 .text
+  15              	.Ltext0:
+  16              	 .cfi_sections .debug_frame
+  17              	 .section .text.__io_puts,"ax",%progbits
+  18              	 .align 1
+  19              	 .global __io_puts
+  20              	 .syntax unified
+  21              	 .thumb
+  22              	 .thumb_func
+  23              	 .fpu fpv4-sp-d16
+  25              	__io_puts:
+  26              	.LFB3:
+  27              	 .file 1 "flash.c"
+   1:flash.c       **** /*
+   2:flash.c       **** ** File   : flash.c
+   3:flash.c       **** **
+   4:flash.c       **** *i* Copyright (C) 2013-2018 Gosuncn. All rights reserved.
+   5:flash.c       **** **
+   6:flash.c       **** ** Licensed under the Apache License, Version 2.0 (the "License");
+   7:flash.c       **** ** you may not use this file except in compliance with the License.
+   8:flash.c       **** ** You may obtain a copy of the License at
+   9:flash.c       **** **
+  10:flash.c       **** **      http://www.apache.org/licenses/LICENSE-2.0
+  11:flash.c       **** **
+  12:flash.c       **** ** Unless required by applicable law or agreed to in writing, software
+  13:flash.c       **** ** distributed under the License is distributed on an "AS IS" BASIS,
+  14:flash.c       **** ** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  15:flash.c       **** ** See the License for the specific language governing permissions and
+  16:flash.c       **** ** limitations under the License.
+  17:flash.c       **** **
+  18:flash.c       **** ** Author : lixingyuan@gosuncn.cn
+  19:flash.c       **** **
+  20:flash.c       **** **  $Date: 2018/03/16 08:45:36GMT+08:00 $
+  21:flash.c       **** **
+  22:flash.c       **** */
+  23:flash.c       **** 
+  24:flash.c       **** #include <stdio.h>
+  25:flash.c       **** #include <stdlib.h>
+  26:flash.c       **** #include <string.h>
+  27:flash.c       **** #include "gsdk_api.h"
+  28:flash.c       **** 
+  29:flash.c       **** #define FLASH_TEST_BASE    0x00297800 
+  30:flash.c       **** #define FLASH_TEST_SIZE    0x1000
+  31:flash.c       **** 
+ARM GAS   			page 2
+
+
+  32:flash.c       **** static const char gsdk_test_data[] =
+  33:flash.c       ****     "-----BEGIN CERTIFICATE-----\r\n"
+  34:flash.c       ****     "MIIDhTCCAm2gAwIBAgIBBDANBgkqhkiG9w0BAQsFADA7MQswCQYDVQQGEwJOTDER\r\n"
+  35:flash.c       ****     "MA8GA1UECgwIUG9sYXJTU0wxGTAXBgNVBAMMEFBvbGFyU1NMIFRlc3QgQ0EwHhcN\r\n"
+  36:flash.c       ****     "MTcwNTA1MTMwNzU5WhcNMjcwNTA2MTMwNzU5WjA8MQswCQYDVQQGEwJOTDERMA8G\r\n"
+  37:flash.c       ****     "A1UECgwIUG9sYXJTU0wxGjAYBgNVBAMMEVBvbGFyU1NMIENsaWVudCAyMIIBIjAN\r\n"
+  38:flash.c       ****     "BgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyHTEzLn5tXnpRdkUYLB9u5Pyax6f\r\n"
+  39:flash.c       ****     "M60Nj4o8VmXl3ETZzGaFB9X4J7BKNdBjngpuG7fa8H6r7gwQk4ZJGDTzqCrSV/Uu\r\n"
+  40:flash.c       ****     "1C93KYRhTYJQj6eVSHD1bk2y1RPD0hrt5kPqQhTrdOrA7R/UV06p86jt0uDBMHEw\r\n"
+  41:flash.c       ****     "MjDV0/YI0FZPRo7yX/k9Z5GIMC5Cst99++UMd//sMcB4j7/Cf8qtbCHWjdmLao5v\r\n"
+  42:flash.c       ****     "4Jv4EFbMs44TFeY0BGbH7vk2DmqV9gmaBmf0ZXH4yqSxJeD+PIs1BGe64E92hfx/\r\n"
+  43:flash.c       ****     "/DZrtenNLQNiTrM9AM+vdqBpVoNq0qjU51Bx5rU2BXcFbXvI5MT9TNUhXwIDAQAB\r\n"
+  44:flash.c       ****     "o4GSMIGPMB0GA1UdDgQWBBRxoQBzckAvVHZeM/xSj7zx3WtGITBjBgNVHSMEXDBa\r\n"
+  45:flash.c       ****     "gBS0WuSls97SUva51aaVD+s+vMf9/6E/pD0wOzELMAkGA1UEBhMCTkwxETAPBgNV\r\n"
+  46:flash.c       ****     "BAoMCFBvbGFyU1NMMRkwFwYDVQQDDBBQb2xhclNTTCBUZXN0IENBggEAMAkGA1Ud\r\n"
+  47:flash.c       ****     "EwQCMAAwDQYJKoZIhvcNAQELBQADggEBAC7yO786NvcHpK8UovKIG9cB32oSQQom\r\n"
+  48:flash.c       ****     "LoR0eHDRzdqEkoq7yGZufHFiRAAzbMqJfogRtxlrWAeB4y/jGaMBV25IbFOIcH2W\r\n"
+  49:flash.c       ****     "iCEaMMbG+VQLKNvuC63kmw/Zewc9ThM6Pa1Hcy0axT0faf1B/U01j0FIcw/6mTfK\r\n"
+  50:flash.c       ****     "D8w48OIwc1yr0JtutCVjig5DC0yznGMt32RyseOLcUe+lfq005v2PAiCozr5X8rE\r\n"
+  51:flash.c       ****     "ofGZpiM2NqRPePgYy+Vc75Zk28xkRQq1ncprgQb3S4vTsZdScpM9hLf+eMlrgqlj\r\n"
+  52:flash.c       ****     "c5PLSkXBeLE5+fedkyfTaLxxQlgCpuoOhKBm04/R1pWNzUHyqagjO9Q=\r\n"
+  53:flash.c       ****     "-----END CERTIFICATE-----\r\n";
+  54:flash.c       **** 
+  55:flash.c       **** static gsdk_handle_t g_huart;
+  56:flash.c       **** 
+  57:flash.c       **** int __io_puts(char *data, int len)
+  58:flash.c       **** {
+  28              	 .loc 1 58 0
+  29              	 .cfi_startproc
+  30              	 
+  31              	 
+  32              	.LVL0:
+  33 0000 10B5     	 push {r4,lr}
+  34              	 .cfi_def_cfa_offset 8
+  35              	 .cfi_offset 4,-8
+  36              	 .cfi_offset 14,-4
+  37              	.LVL1:
+  59:flash.c       ****     int ret = 0;
+  60:flash.c       ****     if (g_huart) {
+  38              	 .loc 1 60 0
+  39 0002 064B     	 ldr r3,.L5
+  40 0004 1C68     	 ldr r4,[r3]
+  41 0006 3CB1     	 cbz r4,.L3
+  42 0008 0A46     	 mov r2,r1
+  43 000a 0146     	 mov r1,r0
+  44              	.LVL2:
+  61:flash.c       ****         ret = gsdk_uart_write(g_huart, (uint8_t *)data, len, 1000);
+  45              	 .loc 1 61 0
+  46 000c 4FF47A73 	 mov r3,#1000
+  47 0010 2046     	 mov r0,r4
+  48              	.LVL3:
+  49 0012 FFF7FEFF 	 bl gsdk_uart_write
+  50              	.LVL4:
+  51              	.L1:
+  62:flash.c       ****     }
+  63:flash.c       ****     return ret;
+  64:flash.c       **** }
+ARM GAS   			page 3
+
+
+  52              	 .loc 1 64 0
+  53 0016 10BD     	 pop {r4,pc}
+  54              	.LVL5:
+  55              	.L3:
+  59:flash.c       ****     if (g_huart) {
+  56              	 .loc 1 59 0
+  57 0018 0020     	 movs r0,#0
+  58              	.LVL6:
+  63:flash.c       **** }
+  59              	 .loc 1 63 0
+  60 001a FCE7     	 b .L1
+  61              	.L6:
+  62              	 .align 2
+  63              	.L5:
+  64 001c 00000000 	 .word .LANCHOR0
+  65              	 .cfi_endproc
+  66              	.LFE3:
+  68              	 .section .text.log_init,"ax",%progbits
+  69              	 .align 1
+  70              	 .global log_init
+  71              	 .syntax unified
+  72              	 .thumb
+  73              	 .thumb_func
+  74              	 .fpu fpv4-sp-d16
+  76              	log_init:
+  77              	.LFB4:
+  65:flash.c       **** 
+  66:flash.c       **** int log_init(void)
+  67:flash.c       **** {
+  78              	 .loc 1 67 0
+  79              	 .cfi_startproc
+  80              	 
+  81              	 
+  82 0000 00B5     	 push {lr}
+  83              	 .cfi_def_cfa_offset 4
+  84              	 .cfi_offset 14,-4
+  85 0002 83B0     	 sub sp,sp,#12
+  86              	 .cfi_def_cfa_offset 16
+  68:flash.c       ****     uart_config_t uart_config;
+  69:flash.c       ****     gsdk_status_t status;
+  70:flash.c       **** 
+  71:flash.c       ****     uart_config.baudrate    = UART_BAUDRATE_115200;
+  87              	 .loc 1 71 0
+  88 0004 0923     	 movs r3,#9
+  89 0006 8DF80430 	 strb r3,[sp,#4]
+  72:flash.c       ****     uart_config.parity      = UART_PARITY_NONE;
+  90              	 .loc 1 72 0
+  91 000a 0020     	 movs r0,#0
+  92 000c 8DF80700 	 strb r0,[sp,#7]
+  73:flash.c       ****     uart_config.stop_bit    = UART_STOP_BIT_1;
+  93              	 .loc 1 73 0
+  94 0010 8DF80600 	 strb r0,[sp,#6]
+  74:flash.c       ****     uart_config.word_length = UART_WORD_LENGTH_8;
+  95              	 .loc 1 74 0
+  96 0014 0323     	 movs r3,#3
+  97 0016 8DF80530 	 strb r3,[sp,#5]
+  75:flash.c       **** 
+ARM GAS   			page 4
+
+
+  76:flash.c       ****     status = gsdk_uart_open(UART_0, &uart_config, &g_huart);
+  98              	 .loc 1 76 0
+  99 001a 094A     	 ldr r2,.L12
+ 100 001c 01A9     	 add r1,sp,#4
+ 101 001e FFF7FEFF 	 bl gsdk_uart_open
+ 102              	.LVL7:
+  77:flash.c       ****     if (status != GSDK_SUCCESS) {
+ 103              	 .loc 1 77 0
+ 104 0022 30B9     	 cbnz r0,.L11
+  78:flash.c       ****         gsdk_syslog_printf("[ADC_DEMO]: failed to open uart %d\n", status);
+  79:flash.c       ****         return -1;
+  80:flash.c       ****     }
+  81:flash.c       **** 
+  82:flash.c       ****     printf("[ADC_DEMO] log init....OK\r\n");
+ 105              	 .loc 1 82 0
+ 106 0024 0748     	 ldr r0,.L12+4
+ 107              	.LVL8:
+ 108 0026 FFF7FEFF 	 bl puts
+ 109              	.LVL9:
+  83:flash.c       **** 
+  84:flash.c       ****     return 0;
+ 110              	 .loc 1 84 0
+ 111 002a 0020     	 movs r0,#0
+ 112              	.L7:
+  85:flash.c       **** }
+ 113              	 .loc 1 85 0
+ 114 002c 03B0     	 add sp,sp,#12
+ 115              	 .cfi_remember_state
+ 116              	 .cfi_def_cfa_offset 4
+ 117              	 
+ 118 002e 5DF804FB 	 ldr pc,[sp],#4
+ 119              	.LVL10:
+ 120              	.L11:
+ 121              	 .cfi_restore_state
+ 122 0032 0146     	 mov r1,r0
+  78:flash.c       ****         gsdk_syslog_printf("[ADC_DEMO]: failed to open uart %d\n", status);
+ 123              	 .loc 1 78 0
+ 124 0034 0448     	 ldr r0,.L12+8
+ 125              	.LVL11:
+ 126 0036 FFF7FEFF 	 bl gsdk_syslog_printf
+ 127              	.LVL12:
+  79:flash.c       ****     }
+ 128              	 .loc 1 79 0
+ 129 003a 4FF0FF30 	 mov r0,#-1
+ 130 003e F5E7     	 b .L7
+ 131              	.L13:
+ 132              	 .align 2
+ 133              	.L12:
+ 134 0040 00000000 	 .word .LANCHOR0
+ 135 0044 24000000 	 .word .LC1
+ 136 0048 00000000 	 .word .LC0
+ 137              	 .cfi_endproc
+ 138              	.LFE4:
+ 140              	 .section .text.main,"ax",%progbits
+ 141              	 .align 1
+ 142              	 .global main
+ 143              	 .syntax unified
+ARM GAS   			page 5
+
+
+ 144              	 .thumb
+ 145              	 .thumb_func
+ 146              	 .fpu fpv4-sp-d16
+ 148              	main:
+ 149              	.LFB5:
+  86:flash.c       **** 
+  87:flash.c       **** int main(void)
+  88:flash.c       **** {
+ 150              	 .loc 1 88 0
+ 151              	 .cfi_startproc
+ 152              	 
+ 153              	 
+ 154 0000 00B5     	 push {lr}
+ 155              	 .cfi_def_cfa_offset 4
+ 156              	 .cfi_offset 14,-4
+ 157 0002 ADF2245D 	 subw sp,sp,#1316
+ 158              	 .cfi_def_cfa_offset 1320
+  89:flash.c       ****     char buf[sizeof(gsdk_test_data)];
+  90:flash.c       ****     gsdk_status_t status;
+  91:flash.c       ****     gsdk_handle_t hflash;
+  92:flash.c       **** 
+  93:flash.c       ****     log_init();
+ 159              	 .loc 1 93 0
+ 160 0006 FFF7FEFF 	 bl log_init
+ 161              	.LVL13:
+  94:flash.c       **** 
+  95:flash.c       ****     status = gsdk_flash_open(FLASH_TEST_BASE, FLASH_TEST_SIZE, &hflash);
+ 162              	 .loc 1 95 0
+ 163 000a 01AA     	 add r2,sp,#4
+ 164 000c 4FF48051 	 mov r1,#4096
+ 165 0010 1A48     	 ldr r0,.L20
+ 166 0012 FFF7FEFF 	 bl gsdk_flash_open
+ 167              	.LVL14:
+  96:flash.c       ****     if (status != GSDK_SUCCESS)
+ 168              	 .loc 1 96 0
+ 169 0016 80B9     	 cbnz r0,.L15
+  97:flash.c       ****         goto _fail;
+  98:flash.c       ****     status = gsdk_flash_erase(hflash, FLASH_TEST_BASE, FLASH_BLOCK_4K);
+ 170              	 .loc 1 98 0
+ 171 0018 0022     	 movs r2,#0
+ 172 001a 1849     	 ldr r1,.L20
+ 173 001c 0198     	 ldr r0,[sp,#4]
+ 174              	.LVL15:
+ 175 001e FFF7FEFF 	 bl gsdk_flash_erase
+ 176              	.LVL16:
+  99:flash.c       ****     if (status != GSDK_SUCCESS)
+ 177              	 .loc 1 99 0
+ 178 0022 38B9     	 cbnz r0,.L16
+ 100:flash.c       ****         goto _fail_close;
+ 101:flash.c       ****     status = gsdk_flash_write(hflash, FLASH_TEST_BASE, (uint8_t *)gsdk_test_data, sizeof(gsdk_test_
+ 179              	 .loc 1 101 0
+ 180 0024 40F21753 	 movw r3,#1303
+ 181 0028 154A     	 ldr r2,.L20+4
+ 182 002a 1449     	 ldr r1,.L20
+ 183 002c 0198     	 ldr r0,[sp,#4]
+ 184              	.LVL17:
+ 185 002e FFF7FEFF 	 bl gsdk_flash_write
+ARM GAS   			page 6
+
+
+ 186              	.LVL18:
+ 102:flash.c       ****     if (status != GSDK_SUCCESS)
+ 187              	 .loc 1 102 0
+ 188 0032 50B1     	 cbz r0,.L19
+ 189              	.LVL19:
+ 190              	.L16:
+ 103:flash.c       ****         goto _fail_close;
+ 104:flash.c       ****     status = gsdk_flash_read(hflash, FLASH_TEST_BASE, (uint8_t *)buf, sizeof(gsdk_test_data));
+ 105:flash.c       ****     if (status != GSDK_SUCCESS)
+ 106:flash.c       ****         goto _fail_close;
+ 107:flash.c       ****     if (strcmp(gsdk_test_data, buf)) {
+ 108:flash.c       ****         goto _fail_close;
+ 109:flash.c       ****     }
+ 110:flash.c       ****     gsdk_flash_close(hflash);
+ 111:flash.c       ****     printf("[FLASH_DEMO] Flash test pass!\n");
+ 112:flash.c       ****     return -1;
+ 113:flash.c       **** 
+ 114:flash.c       **** _fail_close:
+ 115:flash.c       ****     gsdk_flash_close(hflash);
+ 191              	 .loc 1 115 0
+ 192 0034 0198     	 ldr r0,[sp,#4]
+ 193 0036 FFF7FEFF 	 bl gsdk_flash_close
+ 194              	.LVL20:
+ 195              	.L15:
+ 116:flash.c       **** _fail:
+ 117:flash.c       ****     printf("[FLASH_DEMO] Flash test failed!\n");
+ 196              	 .loc 1 117 0
+ 197 003a 1248     	 ldr r0,.L20+8
+ 198 003c FFF7FEFF 	 bl puts
+ 199              	.LVL21:
+ 118:flash.c       **** 
+ 119:flash.c       ****     return 0;
+ 200              	 .loc 1 119 0
+ 201 0040 0020     	 movs r0,#0
+ 202              	.L14:
+ 120:flash.c       **** }
+ 203              	 .loc 1 120 0
+ 204 0042 0DF2245D 	 addw sp,sp,#1316
+ 205              	 .cfi_remember_state
+ 206              	 .cfi_def_cfa_offset 4
+ 207              	 
+ 208 0046 5DF804FB 	 ldr pc,[sp],#4
+ 209              	.LVL22:
+ 210              	.L19:
+ 211              	 .cfi_restore_state
+ 104:flash.c       ****     if (status != GSDK_SUCCESS)
+ 212              	 .loc 1 104 0
+ 213 004a 40F21753 	 movw r3,#1303
+ 214 004e 02AA     	 add r2,sp,#8
+ 215 0050 0A49     	 ldr r1,.L20
+ 216 0052 0198     	 ldr r0,[sp,#4]
+ 217              	.LVL23:
+ 218 0054 FFF7FEFF 	 bl gsdk_flash_read
+ 219              	.LVL24:
+ 105:flash.c       ****         goto _fail_close;
+ 220              	 .loc 1 105 0
+ 221 0058 0028     	 cmp r0,#0
+ARM GAS   			page 7
+
+
+ 222 005a EBD1     	 bne .L16
+ 107:flash.c       ****         goto _fail_close;
+ 223              	 .loc 1 107 0
+ 224 005c 02A9     	 add r1,sp,#8
+ 225 005e 0848     	 ldr r0,.L20+4
+ 226              	.LVL25:
+ 227 0060 FFF7FEFF 	 bl strcmp
+ 228              	.LVL26:
+ 229 0064 0028     	 cmp r0,#0
+ 230 0066 E5D1     	 bne .L16
+ 110:flash.c       ****     printf("[FLASH_DEMO] Flash test pass!\n");
+ 231              	 .loc 1 110 0
+ 232 0068 0198     	 ldr r0,[sp,#4]
+ 233 006a FFF7FEFF 	 bl gsdk_flash_close
+ 234              	.LVL27:
+ 111:flash.c       ****     return -1;
+ 235              	 .loc 1 111 0
+ 236 006e 0648     	 ldr r0,.L20+12
+ 237 0070 FFF7FEFF 	 bl puts
+ 238              	.LVL28:
+ 112:flash.c       **** 
+ 239              	 .loc 1 112 0
+ 240 0074 4FF0FF30 	 mov r0,#-1
+ 241 0078 E3E7     	 b .L14
+ 242              	.L21:
+ 243 007a 00BF     	 .align 2
+ 244              	.L20:
+ 245 007c 00782900 	 .word 2717696
+ 246 0080 00000000 	 .word .LANCHOR1
+ 247 0084 20000000 	 .word .LC3
+ 248 0088 00000000 	 .word .LC2
+ 249              	 .cfi_endproc
+ 250              	.LFE5:
+ 252              	 .section .bss.g_huart,"aw",%nobits
+ 253              	 .align 2
+ 254              	 .set .LANCHOR0,.+0
+ 257              	g_huart:
+ 258 0000 00000000 	 .space 4
+ 259              	 .section .rodata.gsdk_test_data,"a",%progbits
+ 260              	 .align 2
+ 261              	 .set .LANCHOR1,.+0
+ 264              	gsdk_test_data:
+ 265 0000 2D2D2D2D 	 .ascii "-----BEGIN CERTIFICATE-----\015\012MIIDhTCCAm2gAwIB"
+ 265      2D424547 
+ 265      494E2043 
+ 265      45525449 
+ 265      46494341 
+ 266 002d 41674942 	 .ascii "AgIBBDANBgkqhkiG9w0BAQsFADA7MQswCQYDVQQGEwJOTDER\015"
+ 266      4244414E 
+ 266      42676B71 
+ 266      686B6947 
+ 266      39773042 
+ 267 005e 0A4D4138 	 .ascii "\012MA8GA1UECgwIUG9sYXJTU0wxGTAXBgNVBAMMEFBvbGFyU1N"
+ 267      47413155 
+ 267      45436777 
+ 267      49554739 
+ 267      7359584A 
+ARM GAS   			page 8
+
+
+ 268 008e 4D494652 	 .ascii "MIFRlc3QgQ0EwHhcN\015\012MTcwNTA1MTMwNzU5WhcNMjcwNT"
+ 268      6C633351 
+ 268      67513045 
+ 268      77486863 
+ 268      4E0D0A4D 
+ 269 00bb 41324D54 	 .ascii "A2MTMwNzU5WjA8MQswCQYDVQQGEwJOTDERMA8G\015\012A1UEC"
+ 269      4D774E7A 
+ 269      5535576A 
+ 269      41384D51 
+ 269      73774351 
+ 270 00e8 67774955 	 .ascii "gwIUG9sYXJTU0wxGjAYBgNVBAMMEVBvbGFyU1NMIENsaWVudCAy"
+ 270      47397359 
+ 270      584A5455 
+ 270      30777847 
+ 270      6A415942 
+ 271 011b 4D494942 	 .ascii "MIIBIjAN\015\012BgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQE"
+ 271      496A414E 
+ 271      0D0A4267 
+ 271      6B71686B 
+ 271      69473977 
+ 272 0148 41794854 	 .ascii "AyHTEzLn5tXnpRdkUYLB9u5Pyax6f\015\012M60Nj4o8VmXl3E"
+ 272      457A4C6E 
+ 272      3574586E 
+ 272      7052646B 
+ 272      55594C42 
+ 273 0175 545A7A47 	 .ascii "TZzGaFB9X4J7BKNdBjngpuG7fa8H6r7gwQk4ZJGDTzqCrSV/Uu\015"
+ 273      61464239 
+ 273      58344A37 
+ 273      424B4E64 
+ 273      426A6E67 
+ 274 01a8 0A314339 	 .ascii "\0121C93KYRhTYJQj6eVSHD1bk2y1RPD0hrt5kPqQhTrdOrA7R/"
+ 274      334B5952 
+ 274      6854594A 
+ 274      516A3665 
+ 274      56534844 
+ 275 01d8 55563036 	 .ascii "UV06p86jt0uDBMHEw\015\012MjDV0/YI0FZPRo7yX/k9Z5GIMC"
+ 275      7038366A 
+ 275      74307544 
+ 275      424D4845 
+ 275      770D0A4D 
+ 276 0205 35437374 	 .ascii "5Cst99++UMd//sMcB4j7/Cf8qtbCHWjdmLao5v\015\0124Jv4E"
+ 276      39392B2B 
+ 276      554D642F 
+ 276      2F734D63 
+ 276      42346A37 
+ 277 0232 46624D73 	 .ascii "FbMs44TFeY0BGbH7vk2DmqV9gmaBmf0ZXH4yqSxJeD+PIs1BGe6"
+ 277      34345446 
+ 277      65593042 
+ 277      47624837 
+ 277      766B3244 
+ 278 0265 34453932 	 .ascii "4E92hfx/\015\012/DZrtenNLQNiTrM9AM+vdqBpVoNq0qjU51B"
+ 278      6866782F 
+ 278      0D0A2F44 
+ 278      5A727465 
+ 278      6E4E4C51 
+ 279 0292 78357255 	 .ascii "x5rU2BXcFbXvI5MT9TNUhXwIDAQAB\015\012o4GSMIGPMB0GA1"
+ 279      32425863 
+ARM GAS   			page 9
+
+
+ 279      46625876 
+ 279      49354D54 
+ 279      39544E55 
+ 280 02bf 55644467 	 .ascii "UdDgQWBBRxoQBzckAvVHZeM/xSj7zx3WtGITBjBgNVHSMEXDBa\015"
+ 280      51574242 
+ 280      52786F51 
+ 280      427A636B 
+ 280      41765648 
+ 281 02f2 0A674253 	 .ascii "\012gBS0WuSls97SUva51aaVD+s+vMf9/6E/pD0wOzELMAkGA1U"
+ 281      30577553 
+ 281      6C733937 
+ 281      53557661 
+ 281      35316161 
+ 282 0322 4542684D 	 .ascii "EBhMCTkwxETAPBgNV\015\012BAoMCFBvbGFyU1NMMRkwFwYDVQ"
+ 282      43546B77 
+ 282      78455441 
+ 282      5042674E 
+ 282      560D0A42 
+ 283 034f 51444442 	 .ascii "QDDBBQb2xhclNTTCBUZXN0IENBggEAMAkGA1Ud\015\012EwQCM"
+ 283      42516232 
+ 283      7868636C 
+ 283      4E545443 
+ 283      42555A58 
+ 284 037c 41417744 	 .ascii "AAwDQYJKoZIhvcNAQELBQADggEBAC7yO786NvcHpK8UovKIG9cB"
+ 284      51594A4B 
+ 284      6F5A4968 
+ 284      76634E41 
+ 284      51454C42 
+ 285 03af 33326F53 	 .ascii "32oSQQom\015\012LoR0eHDRzdqEkoq7yGZufHFiRAAzbMqJfog"
+ 285      51516F6D 
+ 285      0D0A4C6F 
+ 285      52306548 
+ 285      44527A64 
+ 286 03dc 5274786C 	 .ascii "RtxlrWAeB4y/jGaMBV25IbFOIcH2W\015\012iCEaMMbG+VQLKN"
+ 286      72574165 
+ 286      4234792F 
+ 286      6A47614D 
+ 286      42563235 
+ 287 0409 76754336 	 .ascii "vuC63kmw/Zewc9ThM6Pa1Hcy0axT0faf1B/U01j0FIcw/6mTfK\015"
+ 287      336B6D77 
+ 287      2F5A6577 
+ 287      63395468 
+ 287      4D365061 
+ 288 043c 0A443877 	 .ascii "\012D8w48OIwc1yr0JtutCVjig5DC0yznGMt32RyseOLcUe+lfq"
+ 288      34384F49 
+ 288      77633179 
+ 288      72304A74 
+ 288      75744356 
+ 289 046c 30303576 	 .ascii "005v2PAiCozr5X8rE\015\012ofGZpiM2NqRPePgYy+Vc75Zk28"
+ 289      32504169 
+ 289      436F7A72 
+ 289      35583872 
+ 289      450D0A6F 
+ 290 0499 786B5251 	 .ascii "xkRQq1ncprgQb3S4vTsZdScpM9hLf+eMlrgqlj\015\012c5PLS"
+ 290      71316E63 
+ 290      70726751 
+ 290      62335334 
+ARM GAS   			page 10
+
+
+ 290      7654735A 
+ 291 04c6 6B584265 	 .ascii "kXBeLE5+fedkyfTaLxxQlgCpuoOhKBm04/R1pWNzUHyqagjO9Q="
+ 291      4C45352B 
+ 291      6665646B 
+ 291      79665461 
+ 291      4C787851 
+ 292 04f9 0D0A2D2D 	 .ascii "\015\012-----END CERTIFICATE-----\015\012\000"
+ 292      2D2D2D45 
+ 292      4E442043 
+ 292      45525449 
+ 292      46494341 
+ 293              	 .section .rodata.log_init.str1.4,"aMS",%progbits,1
+ 294              	 .align 2
+ 295              	.LC0:
+ 296 0000 5B414443 	 .ascii "[ADC_DEMO]: failed to open uart %d\012\000"
+ 296      5F44454D 
+ 296      4F5D3A20 
+ 296      6661696C 
+ 296      65642074 
+ 297              	.LC1:
+ 298 0024 5B414443 	 .ascii "[ADC_DEMO] log init....OK\015\000"
+ 298      5F44454D 
+ 298      4F5D206C 
+ 298      6F672069 
+ 298      6E69742E 
+ 299              	 .section .rodata.main.str1.4,"aMS",%progbits,1
+ 300              	 .align 2
+ 301              	.LC2:
+ 302 0000 5B464C41 	 .ascii "[FLASH_DEMO] Flash test pass!\000"
+ 302      53485F44 
+ 302      454D4F5D 
+ 302      20466C61 
+ 302      73682074 
+ 303 001e 0000     	 .space 2
+ 304              	.LC3:
+ 305 0020 5B464C41 	 .ascii "[FLASH_DEMO] Flash test failed!\000"
+ 305      53485F44 
+ 305      454D4F5D 
+ 305      20466C61 
+ 305      73682074 
+ 306              	 .text
+ 307              	.Letext0:
+ 308              	 .file 2 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 309              	 .file 3 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\lock.h"
+ 310              	 .file 4 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\_types.h"
+ 311              	 .file 5 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\lib\\gcc\\arm-none-eabi\\7.3.1\\include\\stddef.h"
+ 312              	 .file 6 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\reent.h"
+ 313              	 .file 7 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\_stdint.h"
+ 314              	 .file 8 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\stdlib.h"
+ 315              	 .file 9 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_common.h"
+ 316              	 .file 10 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_uart.h"
+ 317              	 .file 11 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_flash.h"
+ 318              	 .file 12 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\string.h"
+ 319              	 .file 13 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_api.h"
+ 320              	 .file 14 "<built-in>"
+ARM GAS   			page 11
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 flash.c
+    {standard input}:18     .text.__io_puts:00000000 $t
+    {standard input}:25     .text.__io_puts:00000000 __io_puts
+    {standard input}:64     .text.__io_puts:0000001c $d
+    {standard input}:69     .text.log_init:00000000 $t
+    {standard input}:76     .text.log_init:00000000 log_init
+    {standard input}:134    .text.log_init:00000040 $d
+    {standard input}:141    .text.main:00000000 $t
+    {standard input}:148    .text.main:00000000 main
+    {standard input}:245    .text.main:0000007c $d
+    {standard input}:253    .bss.g_huart:00000000 $d
+    {standard input}:257    .bss.g_huart:00000000 g_huart
+    {standard input}:260    .rodata.gsdk_test_data:00000000 $d
+    {standard input}:264    .rodata.gsdk_test_data:00000000 gsdk_test_data
+    {standard input}:294    .rodata.log_init.str1.4:00000000 $d
+    {standard input}:300    .rodata.main.str1.4:00000000 $d
+                           .group:00000000 wm4.0.8fab1e1450c2b74bdd5e2aed4c325bf1
+                           .group:00000000 wm4._newlib_version.h.4.875b979a44719054cd750d0952ad3fd6
+                           .group:00000000 wm4.newlib.h.18.5e5ca3429233af402d406a202f1fc1ac
+                           .group:00000000 wm4.ieeefp.h.77.220d9cccac42cd58761758bee2df4ce6
+                           .group:00000000 wm4.features.h.22.fad1cec3bc7ff06488171438dbdcfd02
+                           .group:00000000 wm4.config.h.220.6cac6a9685cfce5e83c17784171638d9
+                           .group:00000000 wm4._ansi.h.31.de524f58584151836e90d8620a16f8e8
+                           .group:00000000 wm4.stdio.h.31.7c0e28c411445f3f9c5b11accf882760
+                           .group:00000000 wm4._default_types.h.6.959254cf5f09734ea7516c89e8bb21bd
+                           .group:00000000 wm4.stddef.h.187.2ff233552538c6ff9b8575ca8ea52cb3
+                           .group:00000000 wm4.cdefs.h.47.0bcdf94cb40e176393dd1404056825b4
+                           .group:00000000 wm4.stddef.h.39.ec95e8feac892e292b69dc7ae75b0d64
+                           .group:00000000 wm4.stdarg.h.34.3a23a216c0c293b3d2ea2e89281481e6
+                           .group:00000000 wm4.lock.h.2.1461d1fff82dffe8bfddc23307f6484f
+                           .group:00000000 wm4._types.h.125.5cf8a495f1f7ef36777ad868a1e32068
+                           .group:00000000 wm4.stddef.h.161.5349cb105733e8777bfb0cf53c4e3f34
+                           .group:00000000 wm4._types.h.184.03611d4f6b5bec9997bcf4279eceba07
+                           .group:00000000 wm4.reent.h.17.90c2574d4acdcfce933db5cb09ff35fe
+                           .group:00000000 wm4.types.h.40.e8c16e7ec36ba55f133d0616070e25fc
+                           .group:00000000 wm4._stdint.h.10.c24fa3af3bc1706662bb5593a907e841
+                           .group:00000000 wm4._endian.h.31.65a10590763c3dde1ac4a7f66d7d4891
+                           .group:00000000 wm4.endian.h.9.49f3a4695c1b61e8a0808de3c4a106cb
+                           .group:00000000 wm4._timeval.h.30.0e8bfd94e85db17dda3286ee81496fe6
+                           .group:00000000 wm4.timespec.h.41.d855182eb0e690443ab8651bcedca6e1
+                           .group:00000000 wm4.select.h.19.97ca6fd0c752a0f3b6719fd314d361e6
+                           .group:00000000 wm4.types.h.69.ed3eae3cf73030a737515151ebcab7a1
+                           .group:00000000 wm4.sched.h.22.c60982713a5c428609783c78f9c78d95
+                           .group:00000000 wm4._pthreadtypes.h.36.fcee9961c35163dde6267ef772ad1972
+                           .group:00000000 wm4.stdio.h.2.4aa87247282eca6c8f36f9de33d8df1a
+                           .group:00000000 wm4.stdio.h.81.932d0c162786b883f622b8d05c120c78
+                           .group:00000000 wm4.stdlib.h.13.4ed386f5c1a80d71e72172885d946ef2
+                           .group:00000000 wm4.stddef.h.161.19e15733342b50ead2919490b095303e
+                           .group:00000000 wm4.alloca.h.8.dfc0c703c47ec3e69746825b17d9e66d
+                           .group:00000000 wm4.stdlib.h.56.d4493cd3736e51e9d56335045f26df45
+                           .group:00000000 wm4.string.h.8.c4b8571ce60dff2817f43fec8b86aecd
+                           .group:00000000 wm4._intsup.h.10.cce27fed8484c08a33f522034c30d2b5
+                           .group:00000000 wm4.stdint.h.23.d53047a68f4a85177f80b422d52785ed
+                           .group:00000000 wm4.gsdk_common.h.47.22de8ea3659fbd5af0e08ced1ae1b062
+                           .group:00000000 wm4.gsdk_flash.h.25.4d08791083e4af07d64570151ac0803c
+                           .group:00000000 wm4.app_loader.h.25.aa64c8d4536aca920728cda79a275eeb
+ARM GAS   			page 12
+
+
+
+UNDEFINED SYMBOLS
+gsdk_uart_write
+gsdk_uart_open
+puts
+gsdk_syslog_printf
+gsdk_flash_open
+gsdk_flash_erase
+gsdk_flash_write
+gsdk_flash_close
+gsdk_flash_read
+strcmp

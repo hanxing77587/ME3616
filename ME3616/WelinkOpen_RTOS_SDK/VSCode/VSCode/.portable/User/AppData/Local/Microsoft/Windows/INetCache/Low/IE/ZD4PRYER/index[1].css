@@ -1,0 +1,214 @@
+/******************* index.css ********************************/
+/* banner */
+.bannerwarp { height: 490px; margin: 0 auto; background: url("../pic/9.0bg.png") repeat-x; min-width: 1000px; position: relative; overflow: hidden; }
+
+.bannerwarp-box { height: 490px; margin: 0 auto; min-width: 1000px; background: url("../pic/bannerbg_9.0.png") no-repeat center; }
+
+.bannercontents { width: 1000px; height: 490px; margin: 0 auto; position: relative; min-width: 1000px; }
+
+.release { width: 428px; height: 66px; position: absolute; right: 16px; bottom: 141px; }
+.release a { width: 126px; padding-left: 88px; height: 112px; color: #fff; font-size: 18px; line-height: 89px; display: inline-block; background-image: url(../images/downloadBtn_bg.png); background-repeat: no-repeat; position: relative; }
+.release a:hover { text-decoration: none; color: #fff; }
+.release a i { width: 32px; height: 32px; display: block; position: absolute; left: 46px; top: 28px; background: url("../images/dl-arrow.png") no-repeat; overflow: hidden; }
+.release p { color: #8b8b8b; font-size: 12px; padding-left: 5px; }
+.release p .phone_link { background-image: none; background-color: #fff; color: #454545; border-bottom: 1px solid #abaeb2; width: 72px; height: 14px; line-height: 14px; padding-left: 0px; font-size: 12px; position: relative; }
+.release p .phone_link:hover { color: #4e9cfd; border-bottom: 1px solid #4e9cfd; }
+.release .beta { float: left; color: #4e9cfd; background: url("../images/downloadBtn_white.png") no-repeat; }
+.release .beta:hover { color: #4e9cfd; background-position: left -112px; }
+.release .beta:active { color: #4e9cfd; background-position: left -224px; }
+.release .beta i { background: url("../images/dl-arrow02.png") no-repeat; }
+
+.group_btn { position: absolute; top: 274px; left: 650px; }
+.group_btn .btn { text-decoration: none; background: url(../images/download_btn_bg_03.png) no-repeat; }
+.group_btn .text_box { position: relative; }
+.group_btn .block_green { *position: relative; font-family: Microsoft Yahei, sans-serif; font-size: 22px; display: block; width: 240px; height: 56px; color: #fff; overflow: hidden; }
+.group_btn .block_green:hover { background-position: -248px 0;}
+.group_btn .block_green:active { background-position: -497px 0;}
+.group_btn .block_green .text { display: block; margin-left: 73px; }
+.group_btn .block_green .text01 { line-height: 56px; }
+.group_btn .block_green .text02 { padding-bottom: 12px; }
+.group_btn .block_green .text02 span { font-size: 16px; }
+.group_btn .block_green .text02 em { font-size: 12px; display: block; line-height: 12px; }
+.group_btn .border_white_01 { *position: relative; background-position: 0 -66px; margin-right: 10px; overflow: hidden; }
+.group_btn .border_white_02 { position: relative; }
+.group_btn .border_white_02:hover .erweima img{
+    width: 134px;
+    height: 127px;
+}
+.group_btn dd { margin-top: 10px; }
+.group_btn dd .btn { float: left; width: 115px; height: 46px; font-size: 18px; text-align: center; line-height: 46px; color: #fff; background-position: 0 -66px; }
+.group_btn dd .btn:hover { background-position: -248px -66px; text-decoration:none;color: #fff;}
+.group_btn dd a:hover { text-decoration:none;color: #fff; }
+.group_btn dd .btn:active { background-position: -497px -66px; }
+.group_btn dd .text02 { *position: relative; *top: 3px; padding: 4px 0; line-height: 0.9; }
+.group_btn dd .text02 span { font-size: 18px; }
+.group_btn dd .text02 em { font-size: 12px; }
+
+.group_btn dt.dt { margin-top: 10px; }
+.group_btn dt.dt{background-color: transparent;}
+.group_btn dt.dt{background: none;}
+.group_btn dt.dt:hover{background: transparent;}
+.group_btn dt.dt .btn { float: left; width: 115px; height: 46px; font-size: 18px; text-align: center; line-height: 46px; color: #fff; background-position: 0 -66px; }
+.group_btn dt.dt .btn:hover { background-position: -248px -66px; }
+.group_btn dt.dt .btn:active { background-position: -497px -66px; }
+.group_btn dt.dt .text02 { *position: relative; *top: 3px; padding: 4px 0; line-height: 0.9; }
+.group_btn dt.dt .text02 span { font-size: 18px; }
+.group_btn dt.dt .text02 em { font-size: 12px; }
+
+.group_btn .erweima {  position: absolute; left: 100%; bottom: 0; margin-left: 5px; text-indent: 0; }
+.group_btn .erweima img {vertical-align: top; width: 0;height: 0}
+
+.officialversion { float: left; }
+.officialversion:hover { background-position: left -112px; }
+.officialversion:active { background-position: left -224px; }
+
+.classic { float: left; text-decoration: underline !important; }
+.release .classic { font-size: 14px; background: none; width: auto; height: auto; padding-left: 0; }
+
+.release .classic i { background: url("../images/dl-arrow2.png") no-repeat; }
+
+/* 当中部分 */
+.centerwarp { background: #f7fcff; min-width: 1000px; }
+
+.warpoverflow { width: 1000px; margin: 0 auto; padding-top: 48px; overflow: hidden; }
+
+.toolbox { width: 1200px; }
+.toolbox li { width: 417px; height: 137px; margin-left: 26px; display: inline; float: left; margin-right: 108px; padding-bottom: 91px; overflow: hidden; zoom: 1; }
+
+.toolImg { display: inline; float: left; }
+
+.toolContext { margin-left: 162px; overflow: hidden; }
+.toolContext h2 { font-size: 18px; color: #1e2a39; font-weight: normal; margin-top: 5px; }
+.toolContext h3 { color: #1e2a39; height: 65px; display: table-cell; vertical-align: middle; /* 针对IE的Hack */ *display: block; *font-size: 56px; /*约为高度的0.873，200*0.873 约为175*/ *font-family: Arial; /*防止非utf-8引起的hack失效问题，如gbk编码*/ }
+.toolContext h3 img { vertical-align: middle; }
+.toolContext p { color: #8f8e8e; font-size: 14px; line-height: 20px; }
+
+.new-browser { width: 283px; height: 23px; display: block; margin: 0 auto; background: url("../pic/words1.jpg") no-repeat; margin-bottom: 25px; overflow: hidden; }
+
+.has-user { padding-left: 150px; }
+
+.has-user .sp-user1, .has-user .count, .has-user .sp-user2 { display: inline-block; float: left; }
+
+.sp-user1, .sp-user2 { height: 22px; margin-top: 10px; overflow: hidden; }
+
+.sp-user1 { width: 170px; background: url("../pic/words2.jpg") no-repeat; }
+
+.sp-user2 { width: 191px; background: url("../pic/words3.jpg") no-repeat; }
+
+.count { margin-left: 8px; margin-right: 3px; }
+.count span { width: 36px; height: 53px; display: inline-block; float: left; color: #fff; font-size: 30px; margin-right: 5px; text-align: center; line-height: 44px; background: url("../images/countbg.png") no-repeat; position: relative; }
+.count span i { width: 36px; height: 2px; line-height: 0px; font-size: 0px; overflow: hidden; position: absolute; left: 0; top: 21px; background: url("../images/countbg.png") no-repeat left bottom; }
+
+.download { width: 172px; height: 66px; display: block; text-align: center; line-height: 56px; margin-left: 405px; color: #fff; font-size: 18px; background-image: url(../images/downbg.png); background-repeat: no-repeat; margin-top: 45px; margin-bottom: 103px; background-position: left -198px; }
+.download:hover { text-decoration: none; color: #fff; background-position: left -264px; }
+.download:active { background-position: left -330px; }
+
+.release .mobile-browser { line-height: normal; margin-top: 30px; }
+
+.qr-box { display: none; position: absolute; top: -140px; height: 134px; }
+
+.circle .circle-1 { width: 94px; height: 94px; border-radius: 50%; position: absolute; z-index: 1; top: 10px; left: 50%; margin-left: -548px; animation: sport 3s linear 0s infinite; background-image: linear-gradient(-60deg, #30d3eb 0%, rgba(48, 211, 235, 0) 80%, rgba(48, 211, 235, 0) 100%); opacity: 0.2; }
+
+.circle .circle-2 { width: 330px; height: 330px; border-radius: 50%; position: absolute; top: -120px; right: 50%; margin-right: -810px; animation: sport 3s linear 200ms infinite; background-image: linear-gradient(-60deg, #30d3eb 0%, rgba(48, 211, 235, 0.1) 80%, rgba(48, 211, 235, 0) 100%); opacity: 0.1; }
+
+.circle .circle-3 { width: 210px; height: 210px; border-radius: 50%; position: absolute; z-index: 1; bottom: 45px; left: 50%; margin-left: -800px; animation: sport 3s linear 100ms infinite; background-image: linear-gradient(-60deg, #30d3eb 0%, rgba(48, 211, 235, 0) 80%, rgba(48, 211, 235, 0) 100%); opacity: 0.2; }
+
+.circle .circle-4 { width: 150px; height: 150px; border-radius: 50%; position: absolute; z-index: 1; bottom: -20px; right: 50%; margin-right: -464px; animation: sport 3s linear 300ms infinite; background-image: linear-gradient(-60deg, #30d3eb 0%, rgba(48, 211, 235, 0) 80%, rgba(48, 211, 235, 0) 100%); opacity: 0.3; }
+
+@keyframes sport { 0%,90%,100% { transform: translateY(0px); }
+  30% { transform: translateY(30px); }
+  50% { transform: translateY(40px); }
+  80% { transform: translateY(10px); } }
+  body{
+                min-width: 1344px;
+            }
+            a{
+                text-decoration: none;
+            }
+            .changeName-banner{
+                position: relative;
+                background: #3c65f1;
+                *zoom: 1;
+            }
+            .changeName-banner .inner-container{
+                position: relative;
+                width: 1344px;
+                height: 40px;
+                margin: 0 auto;
+
+            }
+            .changeName-banner .link{
+                display: block;
+                width: 100%;
+                height: 100%;
+                background: url(../images/changeName_banner.jpg) no-repeat;
+            }
+            .changeName-banner .close_btn{
+                position: absolute;
+                top: 10px;
+                right: 90px;
+                width: 20px;
+                height: 20px;
+                background: url(../images/changeName_banner.jpg) no-repeat;
+                cursor: pointer;
+                z-index: 2;
+            }
+            .changeName-banner .close_btn:hover{
+                background-position: 0 -20px;
+            }
+            .group_btn {
+                width: 240px;
+            }
+            .group_btn dt{
+                float: left;
+                width: 240px;
+                height: 56px;
+                background:url("../pic/Left.png") no-repeat 29px 12px;
+                background-color: #40c710;
+            }
+            .group_btn dt:hover{
+                background-color: #45d411;
+            }
+            .group_btn dt:active{
+                background-color: #3ab20e;
+            }
+            .group_btn .rt_btn{
+                background-color:transparent;
+                border: 1px solid #cee4f5;
+            }
+            .group_btn .rt_btn:hover{
+                background-color: rgba(255,255,255,.15);
+                *background-color: #045caf;
+                _background-color: #045caf;
+
+            }
+            .group_btn .rt_btn:active{
+                background-color: rgba(255,255,255,.3);
+                *background-color: #0663a7;
+                _background-color: #0663a7;
+            }
+            .ie8  .group_btn .rt_btn:hover{
+               background-color: #045caf; 
+            }
+            .ie8  .group_btn .rt_btn:active{
+               background-color: #0663a7; 
+            }
+            .group_btn .block_green{
+                background: none;
+                font-size: 22px;
+                width: 240px;
+            }
+            .group_btn .block_green .text{
+                margin-left: 74px;
+            }
+            .group_btn .block_green .text02 span{
+                font-size: 16px;
+             }
+            .ram{
+                font-size: 12px !important;
+            }
+            .group_btn {
+                position: absolute;
+                top: 272px;
+                left: 649px;
+            }

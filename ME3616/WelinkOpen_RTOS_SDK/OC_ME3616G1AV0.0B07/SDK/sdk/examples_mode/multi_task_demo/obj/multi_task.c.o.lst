@@ -1,0 +1,1832 @@
+ARM GAS   			page 1
+
+
+   1              	 .cpu cortex-m4
+   2              	 .eabi_attribute 27,1
+   3              	 .eabi_attribute 28,1
+   4              	 .eabi_attribute 20,1
+   5              	 .eabi_attribute 21,1
+   6              	 .eabi_attribute 23,3
+   7              	 .eabi_attribute 24,1
+   8              	 .eabi_attribute 25,1
+   9              	 .eabi_attribute 26,1
+  10              	 .eabi_attribute 30,1
+  11              	 .eabi_attribute 34,1
+  12              	 .eabi_attribute 18,4
+  13              	 .file "multi_task.c"
+  14              	 .text
+  15              	.Ltext0:
+  16              	 .cfi_sections .debug_frame
+  17              	 .section .text.customerdebuglog_open,"ax",%progbits
+  18              	 .align 1
+  19              	 .global customerdebuglog_open
+  20              	 .syntax unified
+  21              	 .thumb
+  22              	 .thumb_func
+  23              	 .fpu fpv4-sp-d16
+  25              	customerdebuglog_open:
+  26              	.LFB19:
+  27              	 .file 1 "multi_task.c"
+   1:multi_task.c  **** /*
+   2:multi_task.c  **** ** File   : multi_task.c
+   3:multi_task.c  **** **
+   4:multi_task.c  **** ** Copyright (C) 2013-2018 Gosuncn. All rights reserved.
+   5:multi_task.c  **** **
+   6:multi_task.c  **** ** Licensed under the Apache License, Version 2.0 (the "License");
+   7:multi_task.c  **** ** you may not use this file except in compliance with the License.
+   8:multi_task.c  **** ** You may obtain a copy of the License at
+   9:multi_task.c  **** **
+  10:multi_task.c  **** **      http://www.apache.org/licenses/LICENSE-2.0
+  11:multi_task.c  **** **
+  12:multi_task.c  **** ** Unless required by applicable law or agreed to in writing, software
+  13:multi_task.c  **** ** distributed under the License is distributed on an "AS IS" BASIS,
+  14:multi_task.c  **** ** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  15:multi_task.c  **** ** See the License for the specific language governing permissions and
+  16:multi_task.c  **** ** limitations under the License.
+  17:multi_task.c  **** ** 
+  18:multi_task.c  **** ** demo说明：此版本示例程序为多任务并发测试demo，程序中预设置4个任务，
+  19:multi_task.c  **** **           每个任务每隔2s执行一次，实际使用中，任务的个数、大小、周期
+  20:multi_task.c  **** **           务栈占空间大小均可根据需要进行配置。
+  21:multi_task.c  **** ** 
+  22:multi_task.c  **** ** Author : chengkai2@gosuncn.cn
+  23:multi_task.c  **** **
+  24:multi_task.c  **** **  $Date: 2018/09/03 08:45:36GMT+08:00 $
+  25:multi_task.c  **** **
+  26:multi_task.c  **** */
+  27:multi_task.c  **** 
+  28:multi_task.c  **** #include <stdio.h>
+  29:multi_task.c  **** #include <stdlib.h>
+  30:multi_task.c  **** #include <string.h>
+  31:multi_task.c  **** #include "gsdk_api.h"
+ARM GAS   			page 2
+
+
+  32:multi_task.c  **** #include "FreeRTOS.h"
+  33:multi_task.c  **** #include "gsdk_ril.h"
+  34:multi_task.c  **** #include "semphr.h"
+  35:multi_task.c  **** #include "timers.h"
+  36:multi_task.c  **** #include "task.h"
+  37:multi_task.c  **** #include "lwip/sockets.h"
+  38:multi_task.c  **** #include "lwip/ip.h"
+  39:multi_task.c  **** 
+  40:multi_task.c  **** #define EVENT_QUEUE_DEPTH 8
+  41:multi_task.c  **** 
+  42:multi_task.c  **** int customer_debuglog = 1;
+  43:multi_task.c  **** int oem_debuglog = 1;
+  44:multi_task.c  **** 
+  45:multi_task.c  **** /* call this to open customer log */
+  46:multi_task.c  **** int customerdebuglog_open(void)
+  47:multi_task.c  **** {
+  28              	 .loc 1 47 0
+  29              	 .cfi_startproc
+  30              	 
+  31              	 
+  32              	 
+  48:multi_task.c  ****     customer_debuglog = 1;
+  33              	 .loc 1 48 0
+  34 0000 0120     	 movs r0,#1
+  35 0002 014B     	 ldr r3,.L2
+  36 0004 1860     	 str r0,[r3]
+  49:multi_task.c  ****     return customer_debuglog;
+  50:multi_task.c  **** }
+  37              	 .loc 1 50 0
+  38 0006 7047     	 bx lr
+  39              	.L3:
+  40              	 .align 2
+  41              	.L2:
+  42 0008 00000000 	 .word .LANCHOR0
+  43              	 .cfi_endproc
+  44              	.LFE19:
+  46              	 .section .text.customerdebuglog_close,"ax",%progbits
+  47              	 .align 1
+  48              	 .global customerdebuglog_close
+  49              	 .syntax unified
+  50              	 .thumb
+  51              	 .thumb_func
+  52              	 .fpu fpv4-sp-d16
+  54              	customerdebuglog_close:
+  55              	.LFB20:
+  51:multi_task.c  **** /* call this to close customer log */
+  52:multi_task.c  **** int customerdebuglog_close(void)
+  53:multi_task.c  **** {
+  56              	 .loc 1 53 0
+  57              	 .cfi_startproc
+  58              	 
+  59              	 
+  60              	 
+  54:multi_task.c  ****     customer_debuglog = 0;
+  61              	 .loc 1 54 0
+  62 0000 0020     	 movs r0,#0
+  63 0002 014B     	 ldr r3,.L5
+ARM GAS   			page 3
+
+
+  64 0004 1860     	 str r0,[r3]
+  55:multi_task.c  ****     return customer_debuglog;
+  56:multi_task.c  **** }
+  65              	 .loc 1 56 0
+  66 0006 7047     	 bx lr
+  67              	.L6:
+  68              	 .align 2
+  69              	.L5:
+  70 0008 00000000 	 .word .LANCHOR0
+  71              	 .cfi_endproc
+  72              	.LFE20:
+  74              	 .section .text.oemdebuglog_open,"ax",%progbits
+  75              	 .align 1
+  76              	 .global oemdebuglog_open
+  77              	 .syntax unified
+  78              	 .thumb
+  79              	 .thumb_func
+  80              	 .fpu fpv4-sp-d16
+  82              	oemdebuglog_open:
+  83              	.LFB21:
+  57:multi_task.c  **** /* call this to open oem log */
+  58:multi_task.c  **** int oemdebuglog_open(void)
+  59:multi_task.c  **** {
+  84              	 .loc 1 59 0
+  85              	 .cfi_startproc
+  86              	 
+  87              	 
+  88              	 
+  60:multi_task.c  ****     oem_debuglog = 1;
+  89              	 .loc 1 60 0
+  90 0000 0120     	 movs r0,#1
+  91 0002 014B     	 ldr r3,.L8
+  92 0004 1860     	 str r0,[r3]
+  61:multi_task.c  ****     return oem_debuglog;
+  62:multi_task.c  **** }
+  93              	 .loc 1 62 0
+  94 0006 7047     	 bx lr
+  95              	.L9:
+  96              	 .align 2
+  97              	.L8:
+  98 0008 00000000 	 .word .LANCHOR1
+  99              	 .cfi_endproc
+ 100              	.LFE21:
+ 102              	 .section .text.oemdebuglog_close,"ax",%progbits
+ 103              	 .align 1
+ 104              	 .global oemdebuglog_close
+ 105              	 .syntax unified
+ 106              	 .thumb
+ 107              	 .thumb_func
+ 108              	 .fpu fpv4-sp-d16
+ 110              	oemdebuglog_close:
+ 111              	.LFB22:
+  63:multi_task.c  **** /* call this to close oem log */
+  64:multi_task.c  **** int oemdebuglog_close(void)
+  65:multi_task.c  **** {
+ 112              	 .loc 1 65 0
+ 113              	 .cfi_startproc
+ARM GAS   			page 4
+
+
+ 114              	 
+ 115              	 
+ 116              	 
+  66:multi_task.c  ****     oem_debuglog = 0;
+ 117              	 .loc 1 66 0
+ 118 0000 0020     	 movs r0,#0
+ 119 0002 014B     	 ldr r3,.L11
+ 120 0004 1860     	 str r0,[r3]
+  67:multi_task.c  ****     return oem_debuglog;
+  68:multi_task.c  **** }
+ 121              	 .loc 1 68 0
+ 122 0006 7047     	 bx lr
+ 123              	.L12:
+ 124              	 .align 2
+ 125              	.L11:
+ 126 0008 00000000 	 .word .LANCHOR1
+ 127              	 .cfi_endproc
+ 128              	.LFE22:
+ 130              	 .section .text.CUSTOMER_PRINTF,"ax",%progbits
+ 131              	 .align 1
+ 132              	 .global CUSTOMER_PRINTF
+ 133              	 .syntax unified
+ 134              	 .thumb
+ 135              	 .thumb_func
+ 136              	 .fpu fpv4-sp-d16
+ 138              	CUSTOMER_PRINTF:
+ 139              	.LFB23:
+  69:multi_task.c  **** /* customer use this to printf log */
+  70:multi_task.c  **** void CUSTOMER_PRINTF(char *s, ...)
+  71:multi_task.c  **** {
+ 140              	 .loc 1 71 0
+ 141              	 .cfi_startproc
+ 142              	 
+ 143              	 
+ 144              	.LVL0:
+ 145 0000 0FB4     	 push {r0,r1,r2,r3}
+ 146              	 .cfi_def_cfa_offset 16
+ 147              	 .cfi_offset 0,-16
+ 148              	 .cfi_offset 1,-12
+ 149              	 .cfi_offset 2,-8
+ 150              	 .cfi_offset 3,-4
+ 151 0002 08B5     	 push {r3,lr}
+ 152              	 .cfi_def_cfa_offset 24
+ 153              	 .cfi_offset 3,-24
+ 154              	 .cfi_offset 14,-20
+  72:multi_task.c  ****     if (customer_debuglog == 1){
+ 155              	 .loc 1 72 0
+ 156 0004 054B     	 ldr r3,.L17
+ 157 0006 1B68     	 ldr r3,[r3]
+ 158 0008 012B     	 cmp r3,#1
+ 159 000a 03D0     	 beq .L16
+ 160              	.L13:
+  73:multi_task.c  ****         printf(s);
+  74:multi_task.c  ****     }
+  75:multi_task.c  ****     else if (customer_debuglog == 0){
+  76:multi_task.c  ****     }
+  77:multi_task.c  **** }
+ARM GAS   			page 5
+
+
+ 161              	 .loc 1 77 0
+ 162 000c BDE80840 	 pop {r3,lr}
+ 163              	 .cfi_remember_state
+ 164              	 .cfi_restore 14
+ 165              	 .cfi_restore 3
+ 166              	 .cfi_def_cfa_offset 16
+ 167 0010 04B0     	 add sp,sp,#16
+ 168              	 .cfi_restore 3
+ 169              	 .cfi_restore 2
+ 170              	 .cfi_restore 1
+ 171              	 .cfi_restore 0
+ 172              	 .cfi_def_cfa_offset 0
+ 173 0012 7047     	 bx lr
+ 174              	.L16:
+ 175              	 .cfi_restore_state
+  73:multi_task.c  ****         printf(s);
+ 176              	 .loc 1 73 0
+ 177 0014 0298     	 ldr r0,[sp,#8]
+ 178 0016 FFF7FEFF 	 bl printf
+ 179              	.LVL1:
+ 180              	 .loc 1 77 0
+ 181 001a F7E7     	 b .L13
+ 182              	.L18:
+ 183              	 .align 2
+ 184              	.L17:
+ 185 001c 00000000 	 .word .LANCHOR0
+ 186              	 .cfi_endproc
+ 187              	.LFE23:
+ 189              	 .section .text.OEM_PRINTF,"ax",%progbits
+ 190              	 .align 1
+ 191              	 .global OEM_PRINTF
+ 192              	 .syntax unified
+ 193              	 .thumb
+ 194              	 .thumb_func
+ 195              	 .fpu fpv4-sp-d16
+ 197              	OEM_PRINTF:
+ 198              	.LFB24:
+  78:multi_task.c  **** /* OEM use this to printf log */
+  79:multi_task.c  **** void OEM_PRINTF(char *fmt, ...)
+  80:multi_task.c  **** {
+ 199              	 .loc 1 80 0
+ 200              	 .cfi_startproc
+ 201              	 
+ 202              	 
+ 203              	.LVL2:
+ 204 0000 0FB4     	 push {r0,r1,r2,r3}
+ 205              	 .cfi_def_cfa_offset 16
+ 206              	 .cfi_offset 0,-16
+ 207              	 .cfi_offset 1,-12
+ 208              	 .cfi_offset 2,-8
+ 209              	 .cfi_offset 3,-4
+ 210 0002 08B5     	 push {r3,lr}
+ 211              	 .cfi_def_cfa_offset 24
+ 212              	 .cfi_offset 3,-24
+ 213              	 .cfi_offset 14,-20
+  81:multi_task.c  ****     if (oem_debuglog == 1){
+ 214              	 .loc 1 81 0
+ARM GAS   			page 6
+
+
+ 215 0004 054B     	 ldr r3,.L23
+ 216 0006 1B68     	 ldr r3,[r3]
+ 217 0008 012B     	 cmp r3,#1
+ 218 000a 03D0     	 beq .L22
+ 219              	.L19:
+  82:multi_task.c  ****         printf(fmt);
+  83:multi_task.c  ****     }
+  84:multi_task.c  ****     else if (oem_debuglog == 0){
+  85:multi_task.c  ****     }
+  86:multi_task.c  **** }
+ 220              	 .loc 1 86 0
+ 221 000c BDE80840 	 pop {r3,lr}
+ 222              	 .cfi_remember_state
+ 223              	 .cfi_restore 14
+ 224              	 .cfi_restore 3
+ 225              	 .cfi_def_cfa_offset 16
+ 226 0010 04B0     	 add sp,sp,#16
+ 227              	 .cfi_restore 3
+ 228              	 .cfi_restore 2
+ 229              	 .cfi_restore 1
+ 230              	 .cfi_restore 0
+ 231              	 .cfi_def_cfa_offset 0
+ 232 0012 7047     	 bx lr
+ 233              	.L22:
+ 234              	 .cfi_restore_state
+  82:multi_task.c  ****         printf(fmt);
+ 235              	 .loc 1 82 0
+ 236 0014 0298     	 ldr r0,[sp,#8]
+ 237 0016 FFF7FEFF 	 bl printf
+ 238              	.LVL3:
+ 239              	 .loc 1 86 0
+ 240 001a F7E7     	 b .L19
+ 241              	.L24:
+ 242              	 .align 2
+ 243              	.L23:
+ 244 001c 00000000 	 .word .LANCHOR1
+ 245              	 .cfi_endproc
+ 246              	.LFE24:
+ 248              	 .section .text.task_1_thread,"ax",%progbits
+ 249              	 .align 1
+ 250              	 .global task_1_thread
+ 251              	 .syntax unified
+ 252              	 .thumb
+ 253              	 .thumb_func
+ 254              	 .fpu fpv4-sp-d16
+ 256              	task_1_thread:
+ 257              	.LFB29:
+  87:multi_task.c  **** 
+  88:multi_task.c  **** typedef enum{
+  89:multi_task.c  ****     IP_GET_EVENT,
+  90:multi_task.c  ****     NETWORK_DISCON_EVENT,
+  91:multi_task.c  ****     INVALID_EVENT
+  92:multi_task.c  **** } state_event_t;
+  93:multi_task.c  **** 
+  94:multi_task.c  **** static gsdk_handle_t g_huart;
+  95:multi_task.c  **** static TaskHandle_t task_handle_1 = NULL;
+  96:multi_task.c  **** static TaskHandle_t task_handle_2 = NULL;
+ARM GAS   			page 7
+
+
+  97:multi_task.c  **** static TaskHandle_t task_handle_3 = NULL;
+  98:multi_task.c  **** static TaskHandle_t task_handle_4 = NULL;
+  99:multi_task.c  **** 
+ 100:multi_task.c  **** int __io_puts(char *data, int len)
+ 101:multi_task.c  **** {
+ 102:multi_task.c  ****     int ret = 0;
+ 103:multi_task.c  ****     if (g_huart){
+ 104:multi_task.c  ****         ret = gsdk_uart_write(g_huart, (uint8_t *)data, len, 1000);
+ 105:multi_task.c  ****     }
+ 106:multi_task.c  ****     return ret;
+ 107:multi_task.c  **** }
+ 108:multi_task.c  **** 
+ 109:multi_task.c  **** int log_init()
+ 110:multi_task.c  **** {
+ 111:multi_task.c  ****     uart_config_t uart_config;
+ 112:multi_task.c  ****     gsdk_status_t status;
+ 113:multi_task.c  **** 
+ 114:multi_task.c  ****     uart_config.baudrate     = UART_BAUDRATE_115200;
+ 115:multi_task.c  ****     uart_config.parity       = UART_PARITY_NONE;
+ 116:multi_task.c  ****     uart_config.stop_bit    = UART_STOP_BIT_1;
+ 117:multi_task.c  ****     uart_config.word_length  = UART_WORD_LENGTH_8;
+ 118:multi_task.c  **** 
+ 119:multi_task.c  ****     status = gsdk_uart_open(UART_0, &uart_config, &g_huart);
+ 120:multi_task.c  ****     if(status != GSDK_SUCCESS){
+ 121:multi_task.c  ****         OEM_PRINTF("failure to open uart\r\n");
+ 122:multi_task.c  ****         return -1;
+ 123:multi_task.c  ****     }
+ 124:multi_task.c  ****     return 0;
+ 125:multi_task.c  **** }
+ 126:multi_task.c  **** 
+ 127:multi_task.c  **** int gsdk_ril_init_func()
+ 128:multi_task.c  **** {
+ 129:multi_task.c  ****     gsdk_status_t status;
+ 130:multi_task.c  ****     status = gsdk_ril_init();
+ 131:multi_task.c  ****     if(status != GSDK_SUCCESS){
+ 132:multi_task.c  ****         OEM_PRINTF("ril init failed\r\n");
+ 133:multi_task.c  ****         return -1;
+ 134:multi_task.c  ****     }
+ 135:multi_task.c  ****     return 0;
+ 136:multi_task.c  **** }
+ 137:multi_task.c  **** 
+ 138:multi_task.c  **** int init_func()
+ 139:multi_task.c  **** {
+ 140:multi_task.c  ****     if(log_init() != 0)
+ 141:multi_task.c  ****         goto init_fail;
+ 142:multi_task.c  ****     if(gsdk_ril_init_func() != 0)
+ 143:multi_task.c  ****         goto init_fail;
+ 144:multi_task.c  ****     
+ 145:multi_task.c  ****     OEM_PRINTF("init_func end\r\n");
+ 146:multi_task.c  ****     return 0;
+ 147:multi_task.c  **** init_fail:
+ 148:multi_task.c  ****     OEM_PRINTF("init_func error\r\n");
+ 149:multi_task.c  ****     return -1;
+ 150:multi_task.c  **** }
+ 151:multi_task.c  **** 
+ 152:multi_task.c  **** void task_1_thread()
+ 153:multi_task.c  **** {
+ARM GAS   			page 8
+
+
+ 258              	 .loc 1 153 0
+ 259              	 .cfi_startproc
+ 260              	 
+ 261              	 
+ 262              	 
+ 263 0000 08B5     	 push {r3,lr}
+ 264              	 .cfi_def_cfa_offset 8
+ 265              	 .cfi_offset 3,-8
+ 266              	 .cfi_offset 14,-4
+ 267              	.L26:
+ 154:multi_task.c  ****     while(1){
+ 155:multi_task.c  ****         vTaskDelay(2 * 1000/ portTICK_PERIOD_MS);
+ 268              	 .loc 1 155 0 discriminator 1
+ 269 0002 C820     	 movs r0,#200
+ 270 0004 FFF7FEFF 	 bl vTaskDelay
+ 271              	.LVL4:
+ 156:multi_task.c  ****         OEM_PRINTF("task_1_thread running...\r\n");
+ 272              	 .loc 1 156 0 discriminator 1
+ 273 0008 0148     	 ldr r0,.L28
+ 274 000a FFF7FEFF 	 bl OEM_PRINTF
+ 275              	.LVL5:
+ 276 000e F8E7     	 b .L26
+ 277              	.L29:
+ 278              	 .align 2
+ 279              	.L28:
+ 280 0010 00000000 	 .word .LC0
+ 281              	 .cfi_endproc
+ 282              	.LFE29:
+ 284              	 .section .text.task_2_thread,"ax",%progbits
+ 285              	 .align 1
+ 286              	 .global task_2_thread
+ 287              	 .syntax unified
+ 288              	 .thumb
+ 289              	 .thumb_func
+ 290              	 .fpu fpv4-sp-d16
+ 292              	task_2_thread:
+ 293              	.LFB30:
+ 157:multi_task.c  ****     
+ 158:multi_task.c  ****     }
+ 159:multi_task.c  **** }
+ 160:multi_task.c  **** 
+ 161:multi_task.c  **** void task_2_thread()
+ 162:multi_task.c  **** {
+ 294              	 .loc 1 162 0
+ 295              	 .cfi_startproc
+ 296              	 
+ 297              	 
+ 298              	 
+ 299 0000 08B5     	 push {r3,lr}
+ 300              	 .cfi_def_cfa_offset 8
+ 301              	 .cfi_offset 3,-8
+ 302              	 .cfi_offset 14,-4
+ 303              	.L31:
+ 163:multi_task.c  ****     while(1){
+ 164:multi_task.c  ****         vTaskDelay(2 * 1000/ portTICK_PERIOD_MS);
+ 304              	 .loc 1 164 0 discriminator 1
+ 305 0002 C820     	 movs r0,#200
+ARM GAS   			page 9
+
+
+ 306 0004 FFF7FEFF 	 bl vTaskDelay
+ 307              	.LVL6:
+ 165:multi_task.c  ****         OEM_PRINTF("task_2_thread running...\r\n");
+ 308              	 .loc 1 165 0 discriminator 1
+ 309 0008 0148     	 ldr r0,.L33
+ 310 000a FFF7FEFF 	 bl OEM_PRINTF
+ 311              	.LVL7:
+ 312 000e F8E7     	 b .L31
+ 313              	.L34:
+ 314              	 .align 2
+ 315              	.L33:
+ 316 0010 00000000 	 .word .LC1
+ 317              	 .cfi_endproc
+ 318              	.LFE30:
+ 320              	 .section .text.task_3_thread,"ax",%progbits
+ 321              	 .align 1
+ 322              	 .global task_3_thread
+ 323              	 .syntax unified
+ 324              	 .thumb
+ 325              	 .thumb_func
+ 326              	 .fpu fpv4-sp-d16
+ 328              	task_3_thread:
+ 329              	.LFB31:
+ 166:multi_task.c  **** 
+ 167:multi_task.c  ****     }
+ 168:multi_task.c  **** }
+ 169:multi_task.c  **** 
+ 170:multi_task.c  **** void task_3_thread()
+ 171:multi_task.c  **** {
+ 330              	 .loc 1 171 0
+ 331              	 .cfi_startproc
+ 332              	 
+ 333              	 
+ 334              	 
+ 335 0000 08B5     	 push {r3,lr}
+ 336              	 .cfi_def_cfa_offset 8
+ 337              	 .cfi_offset 3,-8
+ 338              	 .cfi_offset 14,-4
+ 339              	.L36:
+ 172:multi_task.c  ****     while(1){
+ 173:multi_task.c  ****         vTaskDelay(2 * 1000/ portTICK_PERIOD_MS);
+ 340              	 .loc 1 173 0 discriminator 1
+ 341 0002 C820     	 movs r0,#200
+ 342 0004 FFF7FEFF 	 bl vTaskDelay
+ 343              	.LVL8:
+ 174:multi_task.c  ****         OEM_PRINTF("task_3_thread running...\r\n");
+ 344              	 .loc 1 174 0 discriminator 1
+ 345 0008 0148     	 ldr r0,.L38
+ 346 000a FFF7FEFF 	 bl OEM_PRINTF
+ 347              	.LVL9:
+ 348 000e F8E7     	 b .L36
+ 349              	.L39:
+ 350              	 .align 2
+ 351              	.L38:
+ 352 0010 00000000 	 .word .LC2
+ 353              	 .cfi_endproc
+ 354              	.LFE31:
+ARM GAS   			page 10
+
+
+ 356              	 .section .text.task_4_thread,"ax",%progbits
+ 357              	 .align 1
+ 358              	 .global task_4_thread
+ 359              	 .syntax unified
+ 360              	 .thumb
+ 361              	 .thumb_func
+ 362              	 .fpu fpv4-sp-d16
+ 364              	task_4_thread:
+ 365              	.LFB32:
+ 175:multi_task.c  **** 
+ 176:multi_task.c  ****     }
+ 177:multi_task.c  **** }
+ 178:multi_task.c  **** 
+ 179:multi_task.c  **** void task_4_thread()
+ 180:multi_task.c  **** {
+ 366              	 .loc 1 180 0
+ 367              	 .cfi_startproc
+ 368              	 
+ 369              	 
+ 370              	 
+ 371 0000 08B5     	 push {r3,lr}
+ 372              	 .cfi_def_cfa_offset 8
+ 373              	 .cfi_offset 3,-8
+ 374              	 .cfi_offset 14,-4
+ 375              	.L41:
+ 181:multi_task.c  ****     while(1){
+ 182:multi_task.c  ****         vTaskDelay(2 * 1000/ portTICK_PERIOD_MS);
+ 376              	 .loc 1 182 0 discriminator 1
+ 377 0002 C820     	 movs r0,#200
+ 378 0004 FFF7FEFF 	 bl vTaskDelay
+ 379              	.LVL10:
+ 183:multi_task.c  ****         OEM_PRINTF("task_4_thread running...\r\n");
+ 380              	 .loc 1 183 0 discriminator 1
+ 381 0008 0148     	 ldr r0,.L43
+ 382 000a FFF7FEFF 	 bl OEM_PRINTF
+ 383              	.LVL11:
+ 384 000e F8E7     	 b .L41
+ 385              	.L44:
+ 386              	 .align 2
+ 387              	.L43:
+ 388 0010 00000000 	 .word .LC3
+ 389              	 .cfi_endproc
+ 390              	.LFE32:
+ 392              	 .section .text.__io_puts,"ax",%progbits
+ 393              	 .align 1
+ 394              	 .global __io_puts
+ 395              	 .syntax unified
+ 396              	 .thumb
+ 397              	 .thumb_func
+ 398              	 .fpu fpv4-sp-d16
+ 400              	__io_puts:
+ 401              	.LFB25:
+ 101:multi_task.c  ****     int ret = 0;
+ 402              	 .loc 1 101 0
+ 403              	 .cfi_startproc
+ 404              	 
+ 405              	 
+ARM GAS   			page 11
+
+
+ 406              	.LVL12:
+ 407 0000 10B5     	 push {r4,lr}
+ 408              	 .cfi_def_cfa_offset 8
+ 409              	 .cfi_offset 4,-8
+ 410              	 .cfi_offset 14,-4
+ 411              	.LVL13:
+ 103:multi_task.c  ****         ret = gsdk_uart_write(g_huart, (uint8_t *)data, len, 1000);
+ 412              	 .loc 1 103 0
+ 413 0002 064B     	 ldr r3,.L49
+ 414 0004 1C68     	 ldr r4,[r3]
+ 415 0006 3CB1     	 cbz r4,.L47
+ 416 0008 0A46     	 mov r2,r1
+ 417 000a 0146     	 mov r1,r0
+ 418              	.LVL14:
+ 104:multi_task.c  ****     }
+ 419              	 .loc 1 104 0
+ 420 000c 4FF47A73 	 mov r3,#1000
+ 421 0010 2046     	 mov r0,r4
+ 422              	.LVL15:
+ 423 0012 FFF7FEFF 	 bl gsdk_uart_write
+ 424              	.LVL16:
+ 425              	.L45:
+ 107:multi_task.c  **** 
+ 426              	 .loc 1 107 0
+ 427 0016 10BD     	 pop {r4,pc}
+ 428              	.LVL17:
+ 429              	.L47:
+ 102:multi_task.c  ****     if (g_huart){
+ 430              	 .loc 1 102 0
+ 431 0018 0020     	 movs r0,#0
+ 432              	.LVL18:
+ 106:multi_task.c  **** }
+ 433              	 .loc 1 106 0
+ 434 001a FCE7     	 b .L45
+ 435              	.L50:
+ 436              	 .align 2
+ 437              	.L49:
+ 438 001c 00000000 	 .word .LANCHOR2
+ 439              	 .cfi_endproc
+ 440              	.LFE25:
+ 442              	 .section .text.log_init,"ax",%progbits
+ 443              	 .align 1
+ 444              	 .global log_init
+ 445              	 .syntax unified
+ 446              	 .thumb
+ 447              	 .thumb_func
+ 448              	 .fpu fpv4-sp-d16
+ 450              	log_init:
+ 451              	.LFB26:
+ 110:multi_task.c  ****     uart_config_t uart_config;
+ 452              	 .loc 1 110 0
+ 453              	 .cfi_startproc
+ 454              	 
+ 455              	 
+ 456 0000 00B5     	 push {lr}
+ 457              	 .cfi_def_cfa_offset 4
+ 458              	 .cfi_offset 14,-4
+ARM GAS   			page 12
+
+
+ 459 0002 83B0     	 sub sp,sp,#12
+ 460              	 .cfi_def_cfa_offset 16
+ 114:multi_task.c  ****     uart_config.parity       = UART_PARITY_NONE;
+ 461              	 .loc 1 114 0
+ 462 0004 0923     	 movs r3,#9
+ 463 0006 8DF80430 	 strb r3,[sp,#4]
+ 115:multi_task.c  ****     uart_config.stop_bit    = UART_STOP_BIT_1;
+ 464              	 .loc 1 115 0
+ 465 000a 0020     	 movs r0,#0
+ 466 000c 8DF80700 	 strb r0,[sp,#7]
+ 116:multi_task.c  ****     uart_config.word_length  = UART_WORD_LENGTH_8;
+ 467              	 .loc 1 116 0
+ 468 0010 8DF80600 	 strb r0,[sp,#6]
+ 117:multi_task.c  **** 
+ 469              	 .loc 1 117 0
+ 470 0014 0323     	 movs r3,#3
+ 471 0016 8DF80530 	 strb r3,[sp,#5]
+ 119:multi_task.c  ****     if(status != GSDK_SUCCESS){
+ 472              	 .loc 1 119 0
+ 473 001a 074A     	 ldr r2,.L56
+ 474 001c 01A9     	 add r1,sp,#4
+ 475 001e FFF7FEFF 	 bl gsdk_uart_open
+ 476              	.LVL19:
+ 120:multi_task.c  ****         OEM_PRINTF("failure to open uart\r\n");
+ 477              	 .loc 1 120 0
+ 478 0022 18B9     	 cbnz r0,.L55
+ 124:multi_task.c  **** }
+ 479              	 .loc 1 124 0
+ 480 0024 0020     	 movs r0,#0
+ 481              	.LVL20:
+ 482              	.L51:
+ 125:multi_task.c  **** 
+ 483              	 .loc 1 125 0
+ 484 0026 03B0     	 add sp,sp,#12
+ 485              	 .cfi_remember_state
+ 486              	 .cfi_def_cfa_offset 4
+ 487              	 
+ 488 0028 5DF804FB 	 ldr pc,[sp],#4
+ 489              	.LVL21:
+ 490              	.L55:
+ 491              	 .cfi_restore_state
+ 121:multi_task.c  ****         return -1;
+ 492              	 .loc 1 121 0
+ 493 002c 0348     	 ldr r0,.L56+4
+ 494              	.LVL22:
+ 495 002e FFF7FEFF 	 bl OEM_PRINTF
+ 496              	.LVL23:
+ 122:multi_task.c  ****     }
+ 497              	 .loc 1 122 0
+ 498 0032 4FF0FF30 	 mov r0,#-1
+ 499 0036 F6E7     	 b .L51
+ 500              	.L57:
+ 501              	 .align 2
+ 502              	.L56:
+ 503 0038 00000000 	 .word .LANCHOR2
+ 504 003c 00000000 	 .word .LC4
+ 505              	 .cfi_endproc
+ARM GAS   			page 13
+
+
+ 506              	.LFE26:
+ 508              	 .section .text.gsdk_ril_init_func,"ax",%progbits
+ 509              	 .align 1
+ 510              	 .global gsdk_ril_init_func
+ 511              	 .syntax unified
+ 512              	 .thumb
+ 513              	 .thumb_func
+ 514              	 .fpu fpv4-sp-d16
+ 516              	gsdk_ril_init_func:
+ 517              	.LFB27:
+ 128:multi_task.c  ****     gsdk_status_t status;
+ 518              	 .loc 1 128 0
+ 519              	 .cfi_startproc
+ 520              	 
+ 521              	 
+ 522 0000 08B5     	 push {r3,lr}
+ 523              	 .cfi_def_cfa_offset 8
+ 524              	 .cfi_offset 3,-8
+ 525              	 .cfi_offset 14,-4
+ 130:multi_task.c  ****     if(status != GSDK_SUCCESS){
+ 526              	 .loc 1 130 0
+ 527 0002 FFF7FEFF 	 bl gsdk_ril_init
+ 528              	.LVL24:
+ 131:multi_task.c  ****         OEM_PRINTF("ril init failed\r\n");
+ 529              	 .loc 1 131 0
+ 530 0006 08B9     	 cbnz r0,.L62
+ 135:multi_task.c  **** }
+ 531              	 .loc 1 135 0
+ 532 0008 0020     	 movs r0,#0
+ 533              	.LVL25:
+ 534              	.L58:
+ 136:multi_task.c  **** 
+ 535              	 .loc 1 136 0
+ 536 000a 08BD     	 pop {r3,pc}
+ 537              	.LVL26:
+ 538              	.L62:
+ 132:multi_task.c  ****         return -1;
+ 539              	 .loc 1 132 0
+ 540 000c 0248     	 ldr r0,.L63
+ 541              	.LVL27:
+ 542 000e FFF7FEFF 	 bl OEM_PRINTF
+ 543              	.LVL28:
+ 133:multi_task.c  ****     }
+ 544              	 .loc 1 133 0
+ 545 0012 4FF0FF30 	 mov r0,#-1
+ 546 0016 F8E7     	 b .L58
+ 547              	.L64:
+ 548              	 .align 2
+ 549              	.L63:
+ 550 0018 00000000 	 .word .LC5
+ 551              	 .cfi_endproc
+ 552              	.LFE27:
+ 554              	 .section .text.init_func,"ax",%progbits
+ 555              	 .align 1
+ 556              	 .global init_func
+ 557              	 .syntax unified
+ 558              	 .thumb
+ARM GAS   			page 14
+
+
+ 559              	 .thumb_func
+ 560              	 .fpu fpv4-sp-d16
+ 562              	init_func:
+ 563              	.LFB28:
+ 139:multi_task.c  ****     if(log_init() != 0)
+ 564              	 .loc 1 139 0
+ 565              	 .cfi_startproc
+ 566              	 
+ 567              	 
+ 568 0000 10B5     	 push {r4,lr}
+ 569              	 .cfi_def_cfa_offset 8
+ 570              	 .cfi_offset 4,-8
+ 571              	 .cfi_offset 14,-4
+ 140:multi_task.c  ****         goto init_fail;
+ 572              	 .loc 1 140 0
+ 573 0002 FFF7FEFF 	 bl log_init
+ 574              	.LVL29:
+ 575 0006 40B9     	 cbnz r0,.L66
+ 142:multi_task.c  ****         goto init_fail;
+ 576              	 .loc 1 142 0
+ 577 0008 FFF7FEFF 	 bl gsdk_ril_init_func
+ 578              	.LVL30:
+ 579 000c 0446     	 mov r4,r0
+ 580 000e 20B9     	 cbnz r0,.L66
+ 145:multi_task.c  ****     return 0;
+ 581              	 .loc 1 145 0
+ 582 0010 0548     	 ldr r0,.L69
+ 583 0012 FFF7FEFF 	 bl OEM_PRINTF
+ 584              	.LVL31:
+ 585              	.L65:
+ 150:multi_task.c  **** 
+ 586              	 .loc 1 150 0
+ 587 0016 2046     	 mov r0,r4
+ 588 0018 10BD     	 pop {r4,pc}
+ 589              	.L66:
+ 148:multi_task.c  ****     return -1;
+ 590              	 .loc 1 148 0
+ 591 001a 0448     	 ldr r0,.L69+4
+ 592 001c FFF7FEFF 	 bl OEM_PRINTF
+ 593              	.LVL32:
+ 149:multi_task.c  **** }
+ 594              	 .loc 1 149 0
+ 595 0020 4FF0FF34 	 mov r4,#-1
+ 596 0024 F7E7     	 b .L65
+ 597              	.L70:
+ 598 0026 00BF     	 .align 2
+ 599              	.L69:
+ 600 0028 00000000 	 .word .LC6
+ 601 002c 10000000 	 .word .LC7
+ 602              	 .cfi_endproc
+ 603              	.LFE28:
+ 605              	 .section .text.task_1,"ax",%progbits
+ 606              	 .align 1
+ 607              	 .global task_1
+ 608              	 .syntax unified
+ 609              	 .thumb
+ 610              	 .thumb_func
+ARM GAS   			page 15
+
+
+ 611              	 .fpu fpv4-sp-d16
+ 613              	task_1:
+ 614              	.LFB33:
+ 184:multi_task.c  **** 
+ 185:multi_task.c  ****     }
+ 186:multi_task.c  **** }
+ 187:multi_task.c  **** 
+ 188:multi_task.c  **** int task_1()
+ 189:multi_task.c  **** {
+ 615              	 .loc 1 189 0
+ 616              	 .cfi_startproc
+ 617              	 
+ 618              	 
+ 619 0000 00B5     	 push {lr}
+ 620              	 .cfi_def_cfa_offset 4
+ 621              	 .cfi_offset 14,-4
+ 622 0002 83B0     	 sub sp,sp,#12
+ 623              	 .cfi_def_cfa_offset 16
+ 190:multi_task.c  ****     if(pdPASS != xTaskCreate(task_1_thread, "task_1_thread", 512*1, NULL, TASK_PRIORITY_LOW, &task_
+ 624              	 .loc 1 190 0
+ 625 0004 0C4B     	 ldr r3,.L76
+ 626 0006 0193     	 str r3,[sp,#4]
+ 627 0008 0223     	 movs r3,#2
+ 628 000a 0093     	 str r3,[sp]
+ 629 000c 0023     	 movs r3,#0
+ 630 000e 4FF40072 	 mov r2,#512
+ 631 0012 0A49     	 ldr r1,.L76+4
+ 632 0014 0A48     	 ldr r0,.L76+8
+ 633 0016 FFF7FEFF 	 bl xTaskCreate
+ 634              	.LVL33:
+ 635 001a 0128     	 cmp r0,#1
+ 636 001c 06D1     	 bne .L75
+ 191:multi_task.c  ****         OEM_PRINTF("gps data send task create failured\r\n");
+ 192:multi_task.c  ****         return -1;
+ 193:multi_task.c  ****     }
+ 194:multi_task.c  ****     OEM_PRINTF("task_1 end\r\n");
+ 637              	 .loc 1 194 0
+ 638 001e 0948     	 ldr r0,.L76+12
+ 639 0020 FFF7FEFF 	 bl OEM_PRINTF
+ 640              	.LVL34:
+ 195:multi_task.c  ****     return 0;
+ 641              	 .loc 1 195 0
+ 642 0024 0020     	 movs r0,#0
+ 643              	.L71:
+ 196:multi_task.c  **** }
+ 644              	 .loc 1 196 0
+ 645 0026 03B0     	 add sp,sp,#12
+ 646              	 .cfi_remember_state
+ 647              	 .cfi_def_cfa_offset 4
+ 648              	 
+ 649 0028 5DF804FB 	 ldr pc,[sp],#4
+ 650              	.L75:
+ 651              	 .cfi_restore_state
+ 191:multi_task.c  ****         OEM_PRINTF("gps data send task create failured\r\n");
+ 652              	 .loc 1 191 0
+ 653 002c 0648     	 ldr r0,.L76+16
+ 654 002e FFF7FEFF 	 bl OEM_PRINTF
+ARM GAS   			page 16
+
+
+ 655              	.LVL35:
+ 192:multi_task.c  ****     }
+ 656              	 .loc 1 192 0
+ 657 0032 4FF0FF30 	 mov r0,#-1
+ 658 0036 F6E7     	 b .L71
+ 659              	.L77:
+ 660              	 .align 2
+ 661              	.L76:
+ 662 0038 00000000 	 .word .LANCHOR3
+ 663 003c 00000000 	 .word .LC8
+ 664 0040 00000000 	 .word task_1_thread
+ 665 0044 38000000 	 .word .LC10
+ 666 0048 10000000 	 .word .LC9
+ 667              	 .cfi_endproc
+ 668              	.LFE33:
+ 670              	 .section .text.task_2,"ax",%progbits
+ 671              	 .align 1
+ 672              	 .global task_2
+ 673              	 .syntax unified
+ 674              	 .thumb
+ 675              	 .thumb_func
+ 676              	 .fpu fpv4-sp-d16
+ 678              	task_2:
+ 679              	.LFB34:
+ 197:multi_task.c  **** 
+ 198:multi_task.c  **** int task_2()
+ 199:multi_task.c  **** {
+ 680              	 .loc 1 199 0
+ 681              	 .cfi_startproc
+ 682              	 
+ 683              	 
+ 684 0000 00B5     	 push {lr}
+ 685              	 .cfi_def_cfa_offset 4
+ 686              	 .cfi_offset 14,-4
+ 687 0002 83B0     	 sub sp,sp,#12
+ 688              	 .cfi_def_cfa_offset 16
+ 200:multi_task.c  ****     if(pdPASS != xTaskCreate(task_2_thread, "task_2_thread", 512*1, NULL, TASK_PRIORITY_LOW, &task_
+ 689              	 .loc 1 200 0
+ 690 0004 0C4B     	 ldr r3,.L83
+ 691 0006 0193     	 str r3,[sp,#4]
+ 692 0008 0223     	 movs r3,#2
+ 693 000a 0093     	 str r3,[sp]
+ 694 000c 0023     	 movs r3,#0
+ 695 000e 4FF40072 	 mov r2,#512
+ 696 0012 0A49     	 ldr r1,.L83+4
+ 697 0014 0A48     	 ldr r0,.L83+8
+ 698 0016 FFF7FEFF 	 bl xTaskCreate
+ 699              	.LVL36:
+ 700 001a 0128     	 cmp r0,#1
+ 701 001c 06D1     	 bne .L82
+ 201:multi_task.c  ****         OEM_PRINTF("gps data send task create failured\r\n");
+ 202:multi_task.c  ****         return -1;
+ 203:multi_task.c  ****     }
+ 204:multi_task.c  ****     OEM_PRINTF("task_2 end\r\n");
+ 702              	 .loc 1 204 0
+ 703 001e 0948     	 ldr r0,.L83+12
+ 704 0020 FFF7FEFF 	 bl OEM_PRINTF
+ARM GAS   			page 17
+
+
+ 705              	.LVL37:
+ 205:multi_task.c  ****     return 0;
+ 706              	 .loc 1 205 0
+ 707 0024 0020     	 movs r0,#0
+ 708              	.L78:
+ 206:multi_task.c  **** }
+ 709              	 .loc 1 206 0
+ 710 0026 03B0     	 add sp,sp,#12
+ 711              	 .cfi_remember_state
+ 712              	 .cfi_def_cfa_offset 4
+ 713              	 
+ 714 0028 5DF804FB 	 ldr pc,[sp],#4
+ 715              	.L82:
+ 716              	 .cfi_restore_state
+ 201:multi_task.c  ****         OEM_PRINTF("gps data send task create failured\r\n");
+ 717              	 .loc 1 201 0
+ 718 002c 0648     	 ldr r0,.L83+16
+ 719 002e FFF7FEFF 	 bl OEM_PRINTF
+ 720              	.LVL38:
+ 202:multi_task.c  ****     }
+ 721              	 .loc 1 202 0
+ 722 0032 4FF0FF30 	 mov r0,#-1
+ 723 0036 F6E7     	 b .L78
+ 724              	.L84:
+ 725              	 .align 2
+ 726              	.L83:
+ 727 0038 00000000 	 .word .LANCHOR4
+ 728 003c 00000000 	 .word .LC11
+ 729 0040 00000000 	 .word task_2_thread
+ 730 0044 10000000 	 .word .LC12
+ 731 0048 10000000 	 .word .LC9
+ 732              	 .cfi_endproc
+ 733              	.LFE34:
+ 735              	 .section .text.task_3,"ax",%progbits
+ 736              	 .align 1
+ 737              	 .global task_3
+ 738              	 .syntax unified
+ 739              	 .thumb
+ 740              	 .thumb_func
+ 741              	 .fpu fpv4-sp-d16
+ 743              	task_3:
+ 744              	.LFB35:
+ 207:multi_task.c  **** 
+ 208:multi_task.c  **** int task_3()
+ 209:multi_task.c  **** {
+ 745              	 .loc 1 209 0
+ 746              	 .cfi_startproc
+ 747              	 
+ 748              	 
+ 749 0000 00B5     	 push {lr}
+ 750              	 .cfi_def_cfa_offset 4
+ 751              	 .cfi_offset 14,-4
+ 752 0002 83B0     	 sub sp,sp,#12
+ 753              	 .cfi_def_cfa_offset 16
+ 210:multi_task.c  ****     if(pdPASS != xTaskCreate(task_3_thread, "task_3_thread", 512*1, NULL, TASK_PRIORITY_LOW, &task_
+ 754              	 .loc 1 210 0
+ 755 0004 0C4B     	 ldr r3,.L90
+ARM GAS   			page 18
+
+
+ 756 0006 0193     	 str r3,[sp,#4]
+ 757 0008 0223     	 movs r3,#2
+ 758 000a 0093     	 str r3,[sp]
+ 759 000c 0023     	 movs r3,#0
+ 760 000e 4FF40072 	 mov r2,#512
+ 761 0012 0A49     	 ldr r1,.L90+4
+ 762 0014 0A48     	 ldr r0,.L90+8
+ 763 0016 FFF7FEFF 	 bl xTaskCreate
+ 764              	.LVL39:
+ 765 001a 0128     	 cmp r0,#1
+ 766 001c 06D1     	 bne .L89
+ 211:multi_task.c  ****         OEM_PRINTF("gps data send task create failured\r\n");
+ 212:multi_task.c  ****         return -1;
+ 213:multi_task.c  ****     }
+ 214:multi_task.c  ****     OEM_PRINTF("task_3 end\r\n");
+ 767              	 .loc 1 214 0
+ 768 001e 0948     	 ldr r0,.L90+12
+ 769 0020 FFF7FEFF 	 bl OEM_PRINTF
+ 770              	.LVL40:
+ 215:multi_task.c  ****     return 0;
+ 771              	 .loc 1 215 0
+ 772 0024 0020     	 movs r0,#0
+ 773              	.L85:
+ 216:multi_task.c  **** }
+ 774              	 .loc 1 216 0
+ 775 0026 03B0     	 add sp,sp,#12
+ 776              	 .cfi_remember_state
+ 777              	 .cfi_def_cfa_offset 4
+ 778              	 
+ 779 0028 5DF804FB 	 ldr pc,[sp],#4
+ 780              	.L89:
+ 781              	 .cfi_restore_state
+ 211:multi_task.c  ****         OEM_PRINTF("gps data send task create failured\r\n");
+ 782              	 .loc 1 211 0
+ 783 002c 0648     	 ldr r0,.L90+16
+ 784 002e FFF7FEFF 	 bl OEM_PRINTF
+ 785              	.LVL41:
+ 212:multi_task.c  ****     }
+ 786              	 .loc 1 212 0
+ 787 0032 4FF0FF30 	 mov r0,#-1
+ 788 0036 F6E7     	 b .L85
+ 789              	.L91:
+ 790              	 .align 2
+ 791              	.L90:
+ 792 0038 00000000 	 .word .LANCHOR5
+ 793 003c 00000000 	 .word .LC13
+ 794 0040 00000000 	 .word task_3_thread
+ 795 0044 10000000 	 .word .LC14
+ 796 0048 10000000 	 .word .LC9
+ 797              	 .cfi_endproc
+ 798              	.LFE35:
+ 800              	 .section .text.task_4,"ax",%progbits
+ 801              	 .align 1
+ 802              	 .global task_4
+ 803              	 .syntax unified
+ 804              	 .thumb
+ 805              	 .thumb_func
+ARM GAS   			page 19
+
+
+ 806              	 .fpu fpv4-sp-d16
+ 808              	task_4:
+ 809              	.LFB36:
+ 217:multi_task.c  **** 
+ 218:multi_task.c  **** int task_4()
+ 219:multi_task.c  **** {
+ 810              	 .loc 1 219 0
+ 811              	 .cfi_startproc
+ 812              	 
+ 813              	 
+ 814 0000 00B5     	 push {lr}
+ 815              	 .cfi_def_cfa_offset 4
+ 816              	 .cfi_offset 14,-4
+ 817 0002 83B0     	 sub sp,sp,#12
+ 818              	 .cfi_def_cfa_offset 16
+ 220:multi_task.c  ****     if(pdPASS != xTaskCreate(task_4_thread, "task_4_thread", 512*1, NULL, TASK_PRIORITY_LOW, &task_
+ 819              	 .loc 1 220 0
+ 820 0004 0C4B     	 ldr r3,.L97
+ 821 0006 0193     	 str r3,[sp,#4]
+ 822 0008 0223     	 movs r3,#2
+ 823 000a 0093     	 str r3,[sp]
+ 824 000c 0023     	 movs r3,#0
+ 825 000e 4FF40072 	 mov r2,#512
+ 826 0012 0A49     	 ldr r1,.L97+4
+ 827 0014 0A48     	 ldr r0,.L97+8
+ 828 0016 FFF7FEFF 	 bl xTaskCreate
+ 829              	.LVL42:
+ 830 001a 0128     	 cmp r0,#1
+ 831 001c 06D1     	 bne .L96
+ 221:multi_task.c  ****         OEM_PRINTF("gps data send task create failured\r\n");
+ 222:multi_task.c  ****         return -1;
+ 223:multi_task.c  ****     }
+ 224:multi_task.c  ****     OEM_PRINTF("task_4 end\r\n");
+ 832              	 .loc 1 224 0
+ 833 001e 0948     	 ldr r0,.L97+12
+ 834 0020 FFF7FEFF 	 bl OEM_PRINTF
+ 835              	.LVL43:
+ 225:multi_task.c  ****     return 0;
+ 836              	 .loc 1 225 0
+ 837 0024 0020     	 movs r0,#0
+ 838              	.L92:
+ 226:multi_task.c  **** }
+ 839              	 .loc 1 226 0
+ 840 0026 03B0     	 add sp,sp,#12
+ 841              	 .cfi_remember_state
+ 842              	 .cfi_def_cfa_offset 4
+ 843              	 
+ 844 0028 5DF804FB 	 ldr pc,[sp],#4
+ 845              	.L96:
+ 846              	 .cfi_restore_state
+ 221:multi_task.c  ****         OEM_PRINTF("gps data send task create failured\r\n");
+ 847              	 .loc 1 221 0
+ 848 002c 0648     	 ldr r0,.L97+16
+ 849 002e FFF7FEFF 	 bl OEM_PRINTF
+ 850              	.LVL44:
+ 222:multi_task.c  ****     }
+ 851              	 .loc 1 222 0
+ARM GAS   			page 20
+
+
+ 852 0032 4FF0FF30 	 mov r0,#-1
+ 853 0036 F6E7     	 b .L92
+ 854              	.L98:
+ 855              	 .align 2
+ 856              	.L97:
+ 857 0038 00000000 	 .word .LANCHOR6
+ 858 003c 00000000 	 .word .LC15
+ 859 0040 00000000 	 .word task_4_thread
+ 860 0044 10000000 	 .word .LC16
+ 861 0048 10000000 	 .word .LC9
+ 862              	 .cfi_endproc
+ 863              	.LFE36:
+ 865              	 .section .text.ip_wait_func,"ax",%progbits
+ 866              	 .align 1
+ 867              	 .global ip_wait_func
+ 868              	 .syntax unified
+ 869              	 .thumb
+ 870              	 .thumb_func
+ 871              	 .fpu fpv4-sp-d16
+ 873              	ip_wait_func:
+ 874              	.LFB37:
+ 227:multi_task.c  **** 
+ 228:multi_task.c  **** int ip_wait_func()
+ 229:multi_task.c  **** {
+ 875              	 .loc 1 229 0
+ 876              	 .cfi_startproc
+ 877              	 
+ 878              	 
+ 879 0000 30B5     	 push {r4,r5,lr}
+ 880              	 .cfi_def_cfa_offset 12
+ 881              	 .cfi_offset 4,-12
+ 882              	 .cfi_offset 5,-8
+ 883              	 .cfi_offset 14,-4
+ 884 0002 91B0     	 sub sp,sp,#68
+ 885              	 .cfi_def_cfa_offset 80
+ 886              	.LVL45:
+ 230:multi_task.c  ****     int count = 0;
+ 231:multi_task.c  ****     gsdk_status_t status;
+ 232:multi_task.c  ****     char ip_buf[64] = {0};
+ 887              	 .loc 1 232 0
+ 888 0004 4022     	 movs r2,#64
+ 889 0006 0021     	 movs r1,#0
+ 890 0008 6846     	 mov r0,sp
+ 891 000a FFF7FEFF 	 bl memset
+ 892              	.LVL46:
+ 230:multi_task.c  ****     int count = 0;
+ 893              	 .loc 1 230 0
+ 894 000e 0025     	 movs r5,#0
+ 895              	.LVL47:
+ 896              	.L103:
+ 233:multi_task.c  **** 
+ 234:multi_task.c  ****     while(1){
+ 235:multi_task.c  ****         if(count > 100){
+ 897              	 .loc 1 235 0
+ 898 0010 642D     	 cmp r5,#100
+ 899 0012 13DC     	 bgt .L105
+ 236:multi_task.c  ****             OEM_PRINTF("wait for IP timeout\r\n");
+ARM GAS   			page 21
+
+
+ 237:multi_task.c  ****             return -1;
+ 238:multi_task.c  ****         }
+ 239:multi_task.c  ****         memset(ip_buf, 0, 64);
+ 900              	 .loc 1 239 0
+ 901 0014 4024     	 movs r4,#64
+ 902 0016 2246     	 mov r2,r4
+ 903 0018 0021     	 movs r1,#0
+ 904 001a 6846     	 mov r0,sp
+ 905 001c FFF7FEFF 	 bl memset
+ 906              	.LVL48:
+ 240:multi_task.c  ****         status = gsdk_ril_get_local_ipaddr(ip_buf, 64);
+ 907              	 .loc 1 240 0
+ 908 0020 2146     	 mov r1,r4
+ 909 0022 6846     	 mov r0,sp
+ 910 0024 FFF7FEFF 	 bl gsdk_ril_get_local_ipaddr
+ 911              	.LVL49:
+ 241:multi_task.c  ****         if(status == 1){
+ 912              	 .loc 1 241 0
+ 913 0028 0128     	 cmp r0,#1
+ 914 002a 0DD0     	 beq .L106
+ 242:multi_task.c  ****             OEM_PRINTF("get ip success!\r\n");
+ 243:multi_task.c  ****             break;
+ 244:multi_task.c  ****         }
+ 245:multi_task.c  ****         OEM_PRINTF("get ip failed!\r\n");
+ 915              	 .loc 1 245 0
+ 916 002c 0B48     	 ldr r0,.L107
+ 917              	.LVL50:
+ 918 002e FFF7FEFF 	 bl OEM_PRINTF
+ 919              	.LVL51:
+ 246:multi_task.c  ****         vTaskDelay(100);
+ 920              	 .loc 1 246 0
+ 921 0032 6420     	 movs r0,#100
+ 922 0034 FFF7FEFF 	 bl vTaskDelay
+ 923              	.LVL52:
+ 247:multi_task.c  ****         count++;
+ 924              	 .loc 1 247 0
+ 925 0038 0135     	 adds r5,r5,#1
+ 926              	.LVL53:
+ 235:multi_task.c  ****             OEM_PRINTF("wait for IP timeout\r\n");
+ 927              	 .loc 1 235 0
+ 928 003a E9E7     	 b .L103
+ 929              	.L105:
+ 236:multi_task.c  ****             return -1;
+ 930              	 .loc 1 236 0
+ 931 003c 0848     	 ldr r0,.L107+4
+ 932 003e FFF7FEFF 	 bl OEM_PRINTF
+ 933              	.LVL54:
+ 237:multi_task.c  ****         }
+ 934              	 .loc 1 237 0
+ 935 0042 4FF0FF30 	 mov r0,#-1
+ 936 0046 06E0     	 b .L99
+ 937              	.LVL55:
+ 938              	.L106:
+ 242:multi_task.c  ****             break;
+ 939              	 .loc 1 242 0
+ 940 0048 0648     	 ldr r0,.L107+8
+ 941              	.LVL56:
+ARM GAS   			page 22
+
+
+ 942 004a FFF7FEFF 	 bl OEM_PRINTF
+ 943              	.LVL57:
+ 248:multi_task.c  ****     }
+ 249:multi_task.c  ****     OEM_PRINTF("ip registered\r\n");
+ 944              	 .loc 1 249 0
+ 945 004e 0648     	 ldr r0,.L107+12
+ 946 0050 FFF7FEFF 	 bl OEM_PRINTF
+ 947              	.LVL58:
+ 250:multi_task.c  ****     return 0;
+ 948              	 .loc 1 250 0
+ 949 0054 0020     	 movs r0,#0
+ 950              	.L99:
+ 251:multi_task.c  **** }
+ 951              	 .loc 1 251 0
+ 952 0056 11B0     	 add sp,sp,#68
+ 953              	 .cfi_def_cfa_offset 12
+ 954              	 
+ 955 0058 30BD     	 pop {r4,r5,pc}
+ 956              	.LVL59:
+ 957              	.L108:
+ 958 005a 00BF     	 .align 2
+ 959              	.L107:
+ 960 005c 3C000000 	 .word .LC20
+ 961 0060 00000000 	 .word .LC17
+ 962 0064 18000000 	 .word .LC18
+ 963 0068 2C000000 	 .word .LC19
+ 964              	 .cfi_endproc
+ 965              	.LFE37:
+ 967              	 .section .text.main,"ax",%progbits
+ 968              	 .align 1
+ 969              	 .global main
+ 970              	 .syntax unified
+ 971              	 .thumb
+ 972              	 .thumb_func
+ 973              	 .fpu fpv4-sp-d16
+ 975              	main:
+ 976              	.LFB38:
+ 252:multi_task.c  **** 
+ 253:multi_task.c  **** /*
+ 254:multi_task.c  ****  * 多任务demo示例代码中，在任务开始前，有等待模块获取IP步骤，在测试与
+ 255:multi_task.c  ****  * 此步骤可以省略。main函数结尾处用死循环while(1)确保主函数不退出。
+ 256:multi_task.c  ****  */
+ 257:multi_task.c  **** int main()
+ 258:multi_task.c  **** {
+ 977              	 .loc 1 258 0
+ 978              	 .cfi_startproc
+ 979              	 
+ 980              	 
+ 981 0000 08B5     	 push {r3,lr}
+ 982              	 .cfi_def_cfa_offset 8
+ 983              	 .cfi_offset 3,-8
+ 984              	 .cfi_offset 14,-4
+ 259:multi_task.c  ****     oemdebuglog_open();
+ 985              	 .loc 1 259 0
+ 986 0002 FFF7FEFF 	 bl oemdebuglog_open
+ 987              	.LVL60:
+ 260:multi_task.c  ****     if(init_func() != 0) goto end;
+ARM GAS   			page 23
+
+
+ 988              	 .loc 1 260 0
+ 989 0006 FFF7FEFF 	 bl init_func
+ 990              	.LVL61:
+ 991 000a 10B9     	 cbnz r0,.L110
+ 261:multi_task.c  ****     if(ip_wait_func() != 0) goto end;
+ 992              	 .loc 1 261 0
+ 993 000c FFF7FEFF 	 bl ip_wait_func
+ 994              	.LVL62:
+ 995 0010 20B1     	 cbz r0,.L113
+ 996              	.L110:
+ 262:multi_task.c  **** 
+ 263:multi_task.c  ****     if(task_1() != 0) goto end;
+ 264:multi_task.c  ****     if(task_2() != 0) goto end;
+ 265:multi_task.c  ****     if(task_3() != 0) goto end;
+ 266:multi_task.c  ****     if(task_4() != 0) goto end;
+ 267:multi_task.c  **** 
+ 268:multi_task.c  ****     while(1){
+ 269:multi_task.c  ****         vTaskDelay(20 * 1000/ portTICK_PERIOD_MS);
+ 270:multi_task.c  ****         OEM_PRINTF("main function running...\r\n");
+ 271:multi_task.c  ****     }
+ 272:multi_task.c  **** end:
+ 273:multi_task.c  ****     OEM_PRINTF("main function exit!\r\n");
+ 997              	 .loc 1 273 0
+ 998 0012 0E48     	 ldr r0,.L114
+ 999 0014 FFF7FEFF 	 bl OEM_PRINTF
+ 1000              	.LVL63:
+ 274:multi_task.c  ****     return 0;
+ 275:multi_task.c  **** }
+ 1001              	 .loc 1 275 0
+ 1002 0018 0020     	 movs r0,#0
+ 1003 001a 08BD     	 pop {r3,pc}
+ 1004              	.L113:
+ 263:multi_task.c  ****     if(task_2() != 0) goto end;
+ 1005              	 .loc 1 263 0
+ 1006 001c FFF7FEFF 	 bl task_1
+ 1007              	.LVL64:
+ 1008 0020 0028     	 cmp r0,#0
+ 1009 0022 F6D1     	 bne .L110
+ 264:multi_task.c  ****     if(task_3() != 0) goto end;
+ 1010              	 .loc 1 264 0
+ 1011 0024 FFF7FEFF 	 bl task_2
+ 1012              	.LVL65:
+ 1013 0028 0028     	 cmp r0,#0
+ 1014 002a F2D1     	 bne .L110
+ 265:multi_task.c  ****     if(task_4() != 0) goto end;
+ 1015              	 .loc 1 265 0
+ 1016 002c FFF7FEFF 	 bl task_3
+ 1017              	.LVL66:
+ 1018 0030 0028     	 cmp r0,#0
+ 1019 0032 EED1     	 bne .L110
+ 266:multi_task.c  **** 
+ 1020              	 .loc 1 266 0
+ 1021 0034 FFF7FEFF 	 bl task_4
+ 1022              	.LVL67:
+ 1023 0038 0028     	 cmp r0,#0
+ 1024 003a EAD1     	 bne .L110
+ 1025              	.L111:
+ARM GAS   			page 24
+
+
+ 269:multi_task.c  ****         OEM_PRINTF("main function running...\r\n");
+ 1026              	 .loc 1 269 0 discriminator 1
+ 1027 003c 4FF4FA60 	 mov r0,#2000
+ 1028 0040 FFF7FEFF 	 bl vTaskDelay
+ 1029              	.LVL68:
+ 270:multi_task.c  ****     }
+ 1030              	 .loc 1 270 0 discriminator 1
+ 1031 0044 0248     	 ldr r0,.L114+4
+ 1032 0046 FFF7FEFF 	 bl OEM_PRINTF
+ 1033              	.LVL69:
+ 1034 004a F7E7     	 b .L111
+ 1035              	.L115:
+ 1036              	 .align 2
+ 1037              	.L114:
+ 1038 004c 1C000000 	 .word .LC22
+ 1039 0050 00000000 	 .word .LC21
+ 1040              	 .cfi_endproc
+ 1041              	.LFE38:
+ 1043              	 .global oem_debuglog
+ 1044              	 .global customer_debuglog
+ 1045              	 .section .bss.g_huart,"aw",%nobits
+ 1046              	 .align 2
+ 1047              	 .set .LANCHOR2,.+0
+ 1050              	g_huart:
+ 1051 0000 00000000 	 .space 4
+ 1052              	 .section .bss.task_handle_1,"aw",%nobits
+ 1053              	 .align 2
+ 1054              	 .set .LANCHOR3,.+0
+ 1057              	task_handle_1:
+ 1058 0000 00000000 	 .space 4
+ 1059              	 .section .bss.task_handle_2,"aw",%nobits
+ 1060              	 .align 2
+ 1061              	 .set .LANCHOR4,.+0
+ 1064              	task_handle_2:
+ 1065 0000 00000000 	 .space 4
+ 1066              	 .section .bss.task_handle_3,"aw",%nobits
+ 1067              	 .align 2
+ 1068              	 .set .LANCHOR5,.+0
+ 1071              	task_handle_3:
+ 1072 0000 00000000 	 .space 4
+ 1073              	 .section .bss.task_handle_4,"aw",%nobits
+ 1074              	 .align 2
+ 1075              	 .set .LANCHOR6,.+0
+ 1078              	task_handle_4:
+ 1079 0000 00000000 	 .space 4
+ 1080              	 .section .data.customer_debuglog,"aw",%progbits
+ 1081              	 .align 2
+ 1082              	 .set .LANCHOR0,.+0
+ 1085              	customer_debuglog:
+ 1086 0000 01000000 	 .word 1
+ 1087              	 .section .data.oem_debuglog,"aw",%progbits
+ 1088              	 .align 2
+ 1089              	 .set .LANCHOR1,.+0
+ 1092              	oem_debuglog:
+ 1093 0000 01000000 	 .word 1
+ 1094              	 .section .rodata.gsdk_ril_init_func.str1.4,"aMS",%progbits,1
+ 1095              	 .align 2
+ARM GAS   			page 25
+
+
+ 1096              	.LC5:
+ 1097 0000 72696C20 	 .ascii "ril init failed\015\012\000"
+ 1097      696E6974 
+ 1097      20666169 
+ 1097      6C65640D 
+ 1097      0A00
+ 1098              	 .section .rodata.init_func.str1.4,"aMS",%progbits,1
+ 1099              	 .align 2
+ 1100              	.LC6:
+ 1101 0000 696E6974 	 .ascii "init_func end\015\012\000"
+ 1101      5F66756E 
+ 1101      6320656E 
+ 1101      640D0A00 
+ 1102              	.LC7:
+ 1103 0010 696E6974 	 .ascii "init_func error\015\012\000"
+ 1103      5F66756E 
+ 1103      63206572 
+ 1103      726F720D 
+ 1103      0A00
+ 1104              	 .section .rodata.ip_wait_func.str1.4,"aMS",%progbits,1
+ 1105              	 .align 2
+ 1106              	.LC17:
+ 1107 0000 77616974 	 .ascii "wait for IP timeout\015\012\000"
+ 1107      20666F72 
+ 1107      20495020 
+ 1107      74696D65 
+ 1107      6F75740D 
+ 1108 0016 0000     	 .space 2
+ 1109              	.LC18:
+ 1110 0018 67657420 	 .ascii "get ip success!\015\012\000"
+ 1110      69702073 
+ 1110      75636365 
+ 1110      7373210D 
+ 1110      0A00
+ 1111 002a 0000     	 .space 2
+ 1112              	.LC19:
+ 1113 002c 69702072 	 .ascii "ip registered\015\012\000"
+ 1113      65676973 
+ 1113      74657265 
+ 1113      640D0A00 
+ 1114              	.LC20:
+ 1115 003c 67657420 	 .ascii "get ip failed!\015\012\000"
+ 1115      69702066 
+ 1115      61696C65 
+ 1115      64210D0A 
+ 1115      00
+ 1116              	 .section .rodata.log_init.str1.4,"aMS",%progbits,1
+ 1117              	 .align 2
+ 1118              	.LC4:
+ 1119 0000 6661696C 	 .ascii "failure to open uart\015\012\000"
+ 1119      75726520 
+ 1119      746F206F 
+ 1119      70656E20 
+ 1119      75617274 
+ 1120              	 .section .rodata.main.str1.4,"aMS",%progbits,1
+ 1121              	 .align 2
+ 1122              	.LC21:
+ARM GAS   			page 26
+
+
+ 1123 0000 6D61696E 	 .ascii "main function running...\015\012\000"
+ 1123      2066756E 
+ 1123      6374696F 
+ 1123      6E207275 
+ 1123      6E6E696E 
+ 1124 001b 00       	 .space 1
+ 1125              	.LC22:
+ 1126 001c 6D61696E 	 .ascii "main function exit!\015\012\000"
+ 1126      2066756E 
+ 1126      6374696F 
+ 1126      6E206578 
+ 1126      6974210D 
+ 1127              	 .section .rodata.task_1.str1.4,"aMS",%progbits,1
+ 1128              	 .align 2
+ 1129              	.LC8:
+ 1130 0000 7461736B 	 .ascii "task_1_thread\000"
+ 1130      5F315F74 
+ 1130      68726561 
+ 1130      6400
+ 1131 000e 0000     	 .space 2
+ 1132              	.LC9:
+ 1133 0010 67707320 	 .ascii "gps data send task create failured\015\012\000"
+ 1133      64617461 
+ 1133      2073656E 
+ 1133      64207461 
+ 1133      736B2063 
+ 1134 0035 000000   	 .space 3
+ 1135              	.LC10:
+ 1136 0038 7461736B 	 .ascii "task_1 end\015\012\000"
+ 1136      5F312065 
+ 1136      6E640D0A 
+ 1136      00
+ 1137              	 .section .rodata.task_1_thread.str1.4,"aMS",%progbits,1
+ 1138              	 .align 2
+ 1139              	.LC0:
+ 1140 0000 7461736B 	 .ascii "task_1_thread running...\015\012\000"
+ 1140      5F315F74 
+ 1140      68726561 
+ 1140      64207275 
+ 1140      6E6E696E 
+ 1141              	 .section .rodata.task_2.str1.4,"aMS",%progbits,1
+ 1142              	 .align 2
+ 1143              	.LC11:
+ 1144 0000 7461736B 	 .ascii "task_2_thread\000"
+ 1144      5F325F74 
+ 1144      68726561 
+ 1144      6400
+ 1145 000e 0000     	 .space 2
+ 1146              	.LC12:
+ 1147 0010 7461736B 	 .ascii "task_2 end\015\012\000"
+ 1147      5F322065 
+ 1147      6E640D0A 
+ 1147      00
+ 1148              	 .section .rodata.task_2_thread.str1.4,"aMS",%progbits,1
+ 1149              	 .align 2
+ 1150              	.LC1:
+ 1151 0000 7461736B 	 .ascii "task_2_thread running...\015\012\000"
+ARM GAS   			page 27
+
+
+ 1151      5F325F74 
+ 1151      68726561 
+ 1151      64207275 
+ 1151      6E6E696E 
+ 1152              	 .section .rodata.task_3.str1.4,"aMS",%progbits,1
+ 1153              	 .align 2
+ 1154              	.LC13:
+ 1155 0000 7461736B 	 .ascii "task_3_thread\000"
+ 1155      5F335F74 
+ 1155      68726561 
+ 1155      6400
+ 1156 000e 0000     	 .space 2
+ 1157              	.LC14:
+ 1158 0010 7461736B 	 .ascii "task_3 end\015\012\000"
+ 1158      5F332065 
+ 1158      6E640D0A 
+ 1158      00
+ 1159              	 .section .rodata.task_3_thread.str1.4,"aMS",%progbits,1
+ 1160              	 .align 2
+ 1161              	.LC2:
+ 1162 0000 7461736B 	 .ascii "task_3_thread running...\015\012\000"
+ 1162      5F335F74 
+ 1162      68726561 
+ 1162      64207275 
+ 1162      6E6E696E 
+ 1163              	 .section .rodata.task_4.str1.4,"aMS",%progbits,1
+ 1164              	 .align 2
+ 1165              	.LC15:
+ 1166 0000 7461736B 	 .ascii "task_4_thread\000"
+ 1166      5F345F74 
+ 1166      68726561 
+ 1166      6400
+ 1167 000e 0000     	 .space 2
+ 1168              	.LC16:
+ 1169 0010 7461736B 	 .ascii "task_4 end\015\012\000"
+ 1169      5F342065 
+ 1169      6E640D0A 
+ 1169      00
+ 1170              	 .section .rodata.task_4_thread.str1.4,"aMS",%progbits,1
+ 1171              	 .align 2
+ 1172              	.LC3:
+ 1173 0000 7461736B 	 .ascii "task_4_thread running...\015\012\000"
+ 1173      5F345F74 
+ 1173      68726561 
+ 1173      64207275 
+ 1173      6E6E696E 
+ 1174              	 .text
+ 1175              	.Letext0:
+ 1176              	 .file 2 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 1177              	 .file 3 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\lock.h"
+ 1178              	 .file 4 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\_types.h"
+ 1179              	 .file 5 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\lib\\gcc\\arm-none-eabi\\7.3.1\\include\\stddef.h"
+ 1180              	 .file 6 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\reent.h"
+ 1181              	 .file 7 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\_stdint.h"
+ 1182              	 .file 8 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\stdlib.h"
+ 1183              	 .file 9 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_common.h"
+ 1184              	 .file 10 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_uart.h"
+ARM GAS   			page 28
+
+
+ 1185              	 .file 11 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_flash.h"
+ 1186              	 .file 12 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/include/FreeRTOSConfig.h"
+ 1187              	 .file 13 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/GCC/mt2625/ARM_CM4F/portmacro.h"
+ 1188              	 .file 14 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/include/task.h"
+ 1189              	 .file 15 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\errno.h"
+ 1190              	 .file 16 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\time.h"
+ 1191              	 .file 17 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/ports/include/arch/cc.h"
+ 1192              	 .file 18 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/ip4_addr.h"
+ 1193              	 .file 19 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/ip6_addr.h"
+ 1194              	 .file 20 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/ip_addr.h"
+ 1195              	 .file 21 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/err.h"
+ 1196              	 .file 22 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/pbuf.h"
+ 1197              	 .file 23 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/netif.h"
+ 1198              	 .file 24 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/inet.h"
+ 1199              	 .file 25 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/ip4.h"
+ 1200              	 .file 26 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/ip6.h"
+ 1201              	 .file 27 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/ip.h"
+ 1202              	 .file 28 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_ril_cmds.h"
+ 1203              	 .file 29 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_ril.h"
+ 1204              	 .file 30 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\stdio.h"
+ 1205              	 .file 31 "<built-in>"
+ARM GAS   			page 29
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 multi_task.c
+    {standard input}:18     .text.customerdebuglog_open:00000000 $t
+    {standard input}:25     .text.customerdebuglog_open:00000000 customerdebuglog_open
+    {standard input}:42     .text.customerdebuglog_open:00000008 $d
+    {standard input}:47     .text.customerdebuglog_close:00000000 $t
+    {standard input}:54     .text.customerdebuglog_close:00000000 customerdebuglog_close
+    {standard input}:70     .text.customerdebuglog_close:00000008 $d
+    {standard input}:75     .text.oemdebuglog_open:00000000 $t
+    {standard input}:82     .text.oemdebuglog_open:00000000 oemdebuglog_open
+    {standard input}:98     .text.oemdebuglog_open:00000008 $d
+    {standard input}:103    .text.oemdebuglog_close:00000000 $t
+    {standard input}:110    .text.oemdebuglog_close:00000000 oemdebuglog_close
+    {standard input}:126    .text.oemdebuglog_close:00000008 $d
+    {standard input}:131    .text.CUSTOMER_PRINTF:00000000 $t
+    {standard input}:138    .text.CUSTOMER_PRINTF:00000000 CUSTOMER_PRINTF
+    {standard input}:185    .text.CUSTOMER_PRINTF:0000001c $d
+    {standard input}:190    .text.OEM_PRINTF:00000000 $t
+    {standard input}:197    .text.OEM_PRINTF:00000000 OEM_PRINTF
+    {standard input}:244    .text.OEM_PRINTF:0000001c $d
+    {standard input}:249    .text.task_1_thread:00000000 $t
+    {standard input}:256    .text.task_1_thread:00000000 task_1_thread
+    {standard input}:280    .text.task_1_thread:00000010 $d
+    {standard input}:285    .text.task_2_thread:00000000 $t
+    {standard input}:292    .text.task_2_thread:00000000 task_2_thread
+    {standard input}:316    .text.task_2_thread:00000010 $d
+    {standard input}:321    .text.task_3_thread:00000000 $t
+    {standard input}:328    .text.task_3_thread:00000000 task_3_thread
+    {standard input}:352    .text.task_3_thread:00000010 $d
+    {standard input}:357    .text.task_4_thread:00000000 $t
+    {standard input}:364    .text.task_4_thread:00000000 task_4_thread
+    {standard input}:388    .text.task_4_thread:00000010 $d
+    {standard input}:393    .text.__io_puts:00000000 $t
+    {standard input}:400    .text.__io_puts:00000000 __io_puts
+    {standard input}:438    .text.__io_puts:0000001c $d
+    {standard input}:443    .text.log_init:00000000 $t
+    {standard input}:450    .text.log_init:00000000 log_init
+    {standard input}:503    .text.log_init:00000038 $d
+    {standard input}:509    .text.gsdk_ril_init_func:00000000 $t
+    {standard input}:516    .text.gsdk_ril_init_func:00000000 gsdk_ril_init_func
+    {standard input}:550    .text.gsdk_ril_init_func:00000018 $d
+    {standard input}:555    .text.init_func:00000000 $t
+    {standard input}:562    .text.init_func:00000000 init_func
+    {standard input}:600    .text.init_func:00000028 $d
+    {standard input}:606    .text.task_1:00000000 $t
+    {standard input}:613    .text.task_1:00000000 task_1
+    {standard input}:662    .text.task_1:00000038 $d
+    {standard input}:671    .text.task_2:00000000 $t
+    {standard input}:678    .text.task_2:00000000 task_2
+    {standard input}:727    .text.task_2:00000038 $d
+    {standard input}:736    .text.task_3:00000000 $t
+    {standard input}:743    .text.task_3:00000000 task_3
+    {standard input}:792    .text.task_3:00000038 $d
+    {standard input}:801    .text.task_4:00000000 $t
+    {standard input}:808    .text.task_4:00000000 task_4
+    {standard input}:857    .text.task_4:00000038 $d
+    {standard input}:866    .text.ip_wait_func:00000000 $t
+ARM GAS   			page 30
+
+
+    {standard input}:873    .text.ip_wait_func:00000000 ip_wait_func
+    {standard input}:960    .text.ip_wait_func:0000005c $d
+    {standard input}:968    .text.main:00000000 $t
+    {standard input}:975    .text.main:00000000 main
+    {standard input}:1038   .text.main:0000004c $d
+    {standard input}:1092   .data.oem_debuglog:00000000 oem_debuglog
+    {standard input}:1085   .data.customer_debuglog:00000000 customer_debuglog
+    {standard input}:1046   .bss.g_huart:00000000 $d
+    {standard input}:1050   .bss.g_huart:00000000 g_huart
+    {standard input}:1053   .bss.task_handle_1:00000000 $d
+    {standard input}:1057   .bss.task_handle_1:00000000 task_handle_1
+    {standard input}:1060   .bss.task_handle_2:00000000 $d
+    {standard input}:1064   .bss.task_handle_2:00000000 task_handle_2
+    {standard input}:1067   .bss.task_handle_3:00000000 $d
+    {standard input}:1071   .bss.task_handle_3:00000000 task_handle_3
+    {standard input}:1074   .bss.task_handle_4:00000000 $d
+    {standard input}:1078   .bss.task_handle_4:00000000 task_handle_4
+    {standard input}:1081   .data.customer_debuglog:00000000 $d
+    {standard input}:1088   .data.oem_debuglog:00000000 $d
+    {standard input}:1095   .rodata.gsdk_ril_init_func.str1.4:00000000 $d
+    {standard input}:1099   .rodata.init_func.str1.4:00000000 $d
+    {standard input}:1105   .rodata.ip_wait_func.str1.4:00000000 $d
+    {standard input}:1117   .rodata.log_init.str1.4:00000000 $d
+    {standard input}:1121   .rodata.main.str1.4:00000000 $d
+    {standard input}:1128   .rodata.task_1.str1.4:00000000 $d
+    {standard input}:1138   .rodata.task_1_thread.str1.4:00000000 $d
+    {standard input}:1142   .rodata.task_2.str1.4:00000000 $d
+    {standard input}:1149   .rodata.task_2_thread.str1.4:00000000 $d
+    {standard input}:1153   .rodata.task_3.str1.4:00000000 $d
+    {standard input}:1160   .rodata.task_3_thread.str1.4:00000000 $d
+    {standard input}:1164   .rodata.task_4.str1.4:00000000 $d
+    {standard input}:1171   .rodata.task_4_thread.str1.4:00000000 $d
+                           .group:00000000 wm4.0.8fab1e1450c2b74bdd5e2aed4c325bf1
+                           .group:00000000 wm4._newlib_version.h.4.875b979a44719054cd750d0952ad3fd6
+                           .group:00000000 wm4.newlib.h.18.5e5ca3429233af402d406a202f1fc1ac
+                           .group:00000000 wm4.ieeefp.h.77.220d9cccac42cd58761758bee2df4ce6
+                           .group:00000000 wm4.features.h.22.fad1cec3bc7ff06488171438dbdcfd02
+                           .group:00000000 wm4.config.h.220.6cac6a9685cfce5e83c17784171638d9
+                           .group:00000000 wm4._ansi.h.31.de524f58584151836e90d8620a16f8e8
+                           .group:00000000 wm4.stdio.h.31.7c0e28c411445f3f9c5b11accf882760
+                           .group:00000000 wm4._default_types.h.6.959254cf5f09734ea7516c89e8bb21bd
+                           .group:00000000 wm4.stddef.h.187.2ff233552538c6ff9b8575ca8ea52cb3
+                           .group:00000000 wm4.cdefs.h.47.0bcdf94cb40e176393dd1404056825b4
+                           .group:00000000 wm4.stddef.h.39.ec95e8feac892e292b69dc7ae75b0d64
+                           .group:00000000 wm4.stdarg.h.34.3a23a216c0c293b3d2ea2e89281481e6
+                           .group:00000000 wm4.lock.h.2.1461d1fff82dffe8bfddc23307f6484f
+                           .group:00000000 wm4._types.h.125.5cf8a495f1f7ef36777ad868a1e32068
+                           .group:00000000 wm4.stddef.h.161.5349cb105733e8777bfb0cf53c4e3f34
+                           .group:00000000 wm4._types.h.184.03611d4f6b5bec9997bcf4279eceba07
+                           .group:00000000 wm4.reent.h.17.90c2574d4acdcfce933db5cb09ff35fe
+                           .group:00000000 wm4.types.h.40.e8c16e7ec36ba55f133d0616070e25fc
+                           .group:00000000 wm4._stdint.h.10.c24fa3af3bc1706662bb5593a907e841
+                           .group:00000000 wm4._endian.h.31.65a10590763c3dde1ac4a7f66d7d4891
+                           .group:00000000 wm4.endian.h.9.49f3a4695c1b61e8a0808de3c4a106cb
+                           .group:00000000 wm4._timeval.h.30.0e8bfd94e85db17dda3286ee81496fe6
+                           .group:00000000 wm4.timespec.h.41.d855182eb0e690443ab8651bcedca6e1
+                           .group:00000000 wm4.select.h.19.97ca6fd0c752a0f3b6719fd314d361e6
+ARM GAS   			page 31
+
+
+                           .group:00000000 wm4.types.h.69.ed3eae3cf73030a737515151ebcab7a1
+                           .group:00000000 wm4.sched.h.22.c60982713a5c428609783c78f9c78d95
+                           .group:00000000 wm4._pthreadtypes.h.36.fcee9961c35163dde6267ef772ad1972
+                           .group:00000000 wm4.stdio.h.2.4aa87247282eca6c8f36f9de33d8df1a
+                           .group:00000000 wm4.stdio.h.81.932d0c162786b883f622b8d05c120c78
+                           .group:00000000 wm4.stdlib.h.13.4ed386f5c1a80d71e72172885d946ef2
+                           .group:00000000 wm4.stddef.h.161.19e15733342b50ead2919490b095303e
+                           .group:00000000 wm4.alloca.h.8.dfc0c703c47ec3e69746825b17d9e66d
+                           .group:00000000 wm4.stdlib.h.56.d4493cd3736e51e9d56335045f26df45
+                           .group:00000000 wm4.string.h.8.c4b8571ce60dff2817f43fec8b86aecd
+                           .group:00000000 wm4._intsup.h.10.cce27fed8484c08a33f522034c30d2b5
+                           .group:00000000 wm4.stdint.h.23.d53047a68f4a85177f80b422d52785ed
+                           .group:00000000 wm4.gsdk_common.h.47.22de8ea3659fbd5af0e08ced1ae1b062
+                           .group:00000000 wm4.gsdk_flash.h.25.4d08791083e4af07d64570151ac0803c
+                           .group:00000000 wm4.app_loader.h.25.aa64c8d4536aca920728cda79a275eeb
+                           .group:00000000 wm4.FreeRTOSConfig.h.68.1d0dd6b8cda279d0020827f5584733bd
+                           .group:00000000 wm4.projdefs.h.71.1734cd3501e070360596dd847bb9d813
+                           .group:00000000 wm4.portmacro.h.72.3d5d774f718d157a637f7eb960850f27
+                           .group:00000000 wm4.portable.h.98.f435842f50d7864fba6a318a13e72513
+                           .group:00000000 wm4.mpu_wrappers.h.71.dd245fe44d82bd40288b5a47f895c82c
+                           .group:00000000 wm4.FreeRTOS.h.175.3abf49eaca38658a192da8d7c86d5374
+                           .group:00000000 wm4.gsdk_ril.h.43.ec5a175e110d1c70143139b168262c34
+                           .group:00000000 wm4.gsdk_ril_cmds.h.25.9576f30a39fa8fd69cc4f6c2fc4c8bd9
+                           .group:00000000 wm4.queue.h.72.3695320c7600effec3d17b83c99d3c0b
+                           .group:00000000 wm4.semphr.h.81.476996112f7cf2dd045dbdd37a9136bc
+                           .group:00000000 wm4.list.h.103.6a12b7b9a7a136c3cca0ee53675c5498
+                           .group:00000000 wm4.task.h.88.da474b04c368050657453c137d8efe45
+                           .group:00000000 wm4.timers.h.96.b62a20effad09455c0ed06e5f17e2a48
+                           .group:00000000 wm4.lwipopts.h.39.6b59604adf87dc94bbbda24564503740
+                           .group:00000000 wm4.errno.h.2.ba016d646105af6cad23be83630b6a3f
+                           .group:00000000 wm4.errno.h.9.1ecd7b1049497a0ab61da0f6cbd4b0c6
+                           .group:00000000 wm4.time.h.38.20beed93add9f31905d3a626e4660be9
+                           .group:00000000 wm4.time.h.8.db4619001f026d0b4874c029fef0e91f
+                           .group:00000000 wm4.time.h.2.4581ce0ffb6627cfc02162c94bf846c9
+                           .group:00000000 wm4.time.h.25.483ee9b7e27a5dcca3d222ded0e25e01
+                           .group:00000000 wm4.cc.h.48.d6d2c2bb4a8eeb217c55b9ca1943b7a0
+                           .group:00000000 wm4.arch.h.65.8829bb52e9eb86f038bc22f28844c005
+                           .group:00000000 wm4.debug.h.44.85dd174371aa97df303e04153d799135
+                           .group:00000000 wm4.opt.h.77.035e4f6feedd8c96216e0818f09a9265
+                           .group:00000000 wm4.def.h.33.687716bada84b2810fdf97c9d167aeeb
+                           .group:00000000 wm4.ip4_addr.h.33.1a8b96da9c9099dd4d4b421392c24416
+                           .group:00000000 wm4.ip6_addr.h.43.f0356dc1c9eb4011a6824b272ca0bdec
+                           .group:00000000 wm4.ip_addr.h.58.d7bcbad6cfa9a793708e54980ac1c34d
+                           .group:00000000 wm4.netif.h.33.379f236f9670aafd30086e50d1a89f89
+                           .group:00000000 wm4.err.h.33.f97d15a7862198a77a6b19a8b190fee7
+                           .group:00000000 wm4.pbuf.h.34.202868ef9162d4cb74cfc854b7b74f63
+                           .group:00000000 wm4.netif.h.67.da8672002bd78982c4ab50b84285a595
+                           .group:00000000 wm4.inet.h.41.0cf9f502d748021afadf1fe4fba638f4
+                           .group:00000000 wm4.sockets.h.72.bc82e899e862bc38df9aee17d977f9be
+                           .group:00000000 wm4.ip4.h.33.2db1e45313b1f472e08d288657c61499
+                           .group:00000000 wm4.ip6.h.42.4c9fe14607f20e2a534215f8047124e1
+                           .group:00000000 wm4.ip.h.49.1a1fbae54cafc9b96064363517198239
+
+UNDEFINED SYMBOLS
+printf
+vTaskDelay
+gsdk_uart_write
+ARM GAS   			page 32
+
+
+gsdk_uart_open
+gsdk_ril_init
+xTaskCreate
+memset
+gsdk_ril_get_local_ipaddr

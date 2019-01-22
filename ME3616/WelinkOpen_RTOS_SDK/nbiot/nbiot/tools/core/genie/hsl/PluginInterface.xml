@@ -1,0 +1,422 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>PluginInterface</name>
+    </assembly>
+    <members>
+        <member name="T:PluginInterface.NewLogPointsEventArgs">
+            <summary>
+            Informs about new log points avaialble for the application
+            </summary>
+            <seealso cref="T:System.EventArgs"/>
+        </member>
+        <member name="M:PluginInterface.NewLogPointsEventArgs.#ctor(System.Int64,System.Int64,HslDecoder.LogPoint[],System.Byte)">
+            <summary>
+            Initializes a new instance of the <see cref="T:PluginInterface.NewLogPointsEventArgs"/> class.
+            </summary>
+        </member>
+        <member name="P:PluginInterface.NewLogPointsEventArgs.LogPointCount">
+            <summary>
+            Count of all log points avaialble in the log. If addin specified a filter, this value will reflect filter.
+            </summary>
+        </member>
+        <member name="P:PluginInterface.NewLogPointsEventArgs.LogPointIndexCount">
+            <summary>
+             Count of all log points avaialble in the LP Table. If addin specified a filter, this value will reflect filter.
+            </summary>
+        </member>
+        <member name="P:PluginInterface.NewLogPointsEventArgs.DecodedLogPoints">
+            <summary>
+            <para>Gets a list of decoded log points.</para>
+            <para>This will equal null if user subscribed to <see cref="E:PluginInterface.ITeraHslWorld.OnNewLogPoints"/></para>
+            <para>This will be not null if user subscribed to <see cref="E:PluginInterface.ITeraHslWorld.OnNewLogPointsDecoded"/></para>
+            </summary>
+        </member>
+        <member name="P:PluginInterface.NewLogPointsEventArgs.LogParsingState">
+            <summary>
+            <para>Gets the state of the log parsing.</para>
+            <para>Value from 0 to 100 represents a percentage of log that has been parsed.</para>
+            </summary>
+        </member>
+        <member name="T:PluginInterface.StatusUpdateEventArgs">
+            <summary>
+            Informs about event happening during in TeraHSL
+            </summary>
+            <seealso cref="T:System.EventArgs"/>
+        </member>
+        <member name="M:PluginInterface.StatusUpdateEventArgs.#ctor(HslDecoder.HslsNotifyCode,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:PluginInterface.StatusUpdateEventArgs"/> class.
+            </summary>
+        </member>
+        <member name="P:PluginInterface.StatusUpdateEventArgs.NotifyCode">
+            <summary>
+            Gets the notify code.
+            </summary>
+        </member>
+        <member name="P:PluginInterface.StatusUpdateEventArgs.Message">
+            <summary>
+            Gets the message.
+            </summary>
+        </member>
+        <member name="T:PluginInterface.LogPointSelectedEventArgs">
+            <summary>
+            Informs about selection of log point in some other view
+            </summary>
+            <seealso cref="T:System.EventArgs"/>
+        </member>
+        <member name="M:PluginInterface.LogPointSelectedEventArgs.#ctor(System.Int64)">
+            <summary>
+            Initializes a new instance of the <see cref="T:PluginInterface.LogPointSelectedEventArgs"/> class.
+            </summary>
+            <param name="logPointIndex">Index of the log point.</param>
+        </member>
+        <member name="P:PluginInterface.LogPointSelectedEventArgs.LogPointIndex">
+            <summary>
+            Gets the index of the log point.
+            </summary>
+        </member>
+        <member name="T:PluginInterface.OnNewLogPointsDelegate">
+            <summary>
+            Delivers log points via callback
+            </summary>
+        </member>
+        <member name="T:PluginInterface.OnLogPointSelectedDelegate">
+            <summary>
+            Notifies about log point selection in GUI.
+            </summary>
+            <param name="sender">The sender.</param>
+            <param name="args">The <see cref="T:PluginInterface.LogPointSelectedEventArgs"/> instance containing the event data.</param>
+        </member>
+        <member name="T:PluginInterface.OnStatusUpdateDelegate">
+            <summary>
+            Delivers notifiaction messages via callback
+            </summary>
+        </member>
+        <member name="T:PluginInterface.OnConfigurationChange">
+            <summary>
+            Used to inform that configuration was updated by user
+            </summary>
+        </member>
+        <member name="T:PluginInterface.ITeraHslConfig">
+            <summary>
+            Configuration of TeraHsl
+            </summary>
+        </member>
+        <member name="E:PluginInterface.ITeraHslConfig.OnChange">
+            <summary>
+            Fired when configuration is modified by the user
+            </summary>
+        </member>
+        <member name="P:PluginInterface.ITeraHslConfig.ConnectionDllPath">
+            <summary>
+            Full path of connection dll to be used
+            </summary>
+        </member>
+        <member name="P:PluginInterface.ITeraHslConfig.EnabledPluginPaths">
+            <summary>
+            List of currently enabled plugins (full paths)
+            </summary>
+        </member>
+        <member name="P:PluginInterface.ITeraHslConfig.SoxDecoderDbFilePath">
+            <summary>
+            Full path to decoder database file used
+            </summary>
+        </member>
+        <member name="T:PluginInterface.TeraHslMenuGroup">
+            <summary>
+            Specify location of menu in TeraHSL
+            </summary>
+        </member>
+        <member name="F:PluginInterface.TeraHslMenuGroup.File">
+            <summary>
+            The file
+            </summary>
+        </member>
+        <member name="F:PluginInterface.TeraHslMenuGroup.Configuration">
+            <summary>
+            The configuration
+            </summary>
+        </member>
+        <member name="F:PluginInterface.TeraHslMenuGroup.Help">
+            <summary>
+            The help
+            </summary>
+        </member>
+        <member name="T:PluginInterface.IDataFilter">
+            <summary>
+            Defines a filter of addin.
+            </summary>
+            <seealso cref="T:PluginInterface.IDataFilter"/>
+        </member>
+        <member name="M:PluginInterface.IDataFilter.SetIdFilter(System.UInt32[])">
+            <summary>
+            <para>Sets a new ID based filter.</para>
+            <para>NOTE: You can't have ID and TEXT based filters at the same time. If you called <see cref="M:PluginInterface.IDataFilter.SetTextFilter(System.String)"/> before, call <see cref="M:PluginInterface.IDataFilter.Clear"/> first to clear the filter.</para>
+            </summary>
+            <param name="logPointIDs">log point ID to include in filter</param>
+        </member>
+        <member name="M:PluginInterface.IDataFilter.SetTextFilter(System.String)">
+            <summary>
+            <para>Sets the text based filter.</para>
+            <para>NOTE: You can't have ID and TEXT based filters at the same time. If you called <see cref="M:PluginInterface.IDataFilter.SetIdFilter(System.UInt32[])"/> before, call <see cref="M:PluginInterface.IDataFilter.Clear"/> first to clear the filter.</para>
+            </summary>
+            <param name="textToFind">The text to find.</param>
+        </member>
+        <member name="M:PluginInterface.IDataFilter.Clear">
+            <summary>
+            Clears this instance.
+            </summary>
+        </member>
+        <member name="P:PluginInterface.IDataFilter.IsEmpty">
+            <summary>
+            Specifies if filter is empty (contains no log points, no modules)
+            </summary>
+        </member>
+        <member name="T:PluginInterface.ITeraHslWorld">
+            <summary>
+            Specifies interface of main application
+            </summary>
+        </member>
+        <member name="M:PluginInterface.ITeraHslWorld.ReportError(System.String,System.Exception,System.Boolean)">
+            <summary>
+            Used to report errors from plugin to main application
+            </summary>
+            <remarks>Thread safety: MUST be called from GUI thread</remarks>
+        </member>
+        <member name="M:PluginInterface.ITeraHslWorld.StorePluginSettingsInProfile(System.String)">
+            <summary>
+            If plugin wants some settings to be stored in profile - it should call this function.
+            Specified string will be passed next time to ITeraHslPlugin.Setup function by TeraHsl.
+            </summary>
+            <remarks>Thread safety: MUST be called from GUI thread</remarks>
+        </member>
+        <member name="M:PluginInterface.ITeraHslWorld.RegisterPluginMenu(PluginInterface.TeraHslMenuGroup,System.String,System.Windows.Forms.ToolStripDropDown)">
+            <summary>
+            Adds (or removes) a popup menu to TeraHsl
+            </summary>
+            <param name="group">where to add menu</param>
+            <param name="menuText">what text menu should have</param>
+            <param name="menu">popup menu to be added</param>
+            <returns>added menu entry</returns>
+            <remarks>Thread safety: MUST be called from GUI thread</remarks>
+        </member>
+        <member name="M:PluginInterface.ITeraHslWorld.RegisterPluginMenu(PluginInterface.TeraHslMenuGroup,System.String,System.EventHandler)">
+            <summary>
+            Adds (or removes) a menu entry to TeraHsl
+            </summary>
+            <param name="group">where to add menu</param>
+            <param name="menuText">what text menu should have</param>
+            <param name="callback">callback to be called on click</param>
+            <returns>added menu entry</returns>
+            <remarks>Thread safety: MUST be called from GUI thread</remarks>
+        </member>
+        <member name="M:PluginInterface.ITeraHslWorld.UnRegisterPluginMenu(PluginInterface.TeraHslMenuGroup,System.String)">
+            <summary>
+            Removes plugin menu from TeraHsl
+            </summary>
+            <param name="group">where menu is located</param>
+            <param name="menuText">item text to be removed</param>
+            <remarks>Thread safety: MUST be called from GUI thread</remarks>
+        </member>
+        <member name="M:PluginInterface.ITeraHslWorld.GetLogPoints(System.Int64,System.Int32)">
+            <summary>
+            Gets the logs points from the log.
+            This API returns log points according to specified filter (see <see cref="P:PluginInterface.ITeraHslWorld.Filter"/>)
+            This API should not be called when log is closed (after <see cref="E:PluginInterface.ITeraHslWorld.OnStatusUpdate"/> event with <see cref="F:HslDecoder.HslsNotifyCode.LogClosed"/> notification.
+            </summary>
+            <remarks>Thread safety: safe to call from any thread</remarks>
+        </member>
+        <member name="M:PluginInterface.ITeraHslWorld.SendData(System.Byte[])">
+            <summary>
+            Sends data to acquisition hardware/EVB using connection DLL
+            Not supported with all connection Dlls!
+            </summary>
+            <param name="dataToSend">data to send</param>
+            <remarks>Thread safety: MUST be called from GUI thread</remarks>
+        </member>
+        <member name="M:PluginInterface.ITeraHslWorld.Log(System.String,System.String,PluginInterface.MessageType)">
+            <summary>
+            Logs the message from addins.
+            </summary>
+            <param name="extraData">this is optional and can be null</param>
+            <param name="text">test to log</param>
+            <param name="type">type of message to log</param>
+        </member>
+        <member name="M:PluginInterface.ITeraHslWorld.LogPointClicked(System.Int64)">
+            <summary>
+            <para>Call this function when user selected a log point in your GUI application,</para>
+            <para>This will be broadcasted to other addins, so they can adjust current selection as well.</para>
+            </summary>
+            <remarks>
+            <para>This function takes into account a filter. If you view has a filter defined, specify a log point index according to your view - this will be translated to an id for other views.</para>
+            <para>Thread safety: MUST be called from GUI thread</para>
+            </remarks>
+            <param name="logPointIndex">Log point index (zero based).</param>
+        </member>
+        <member name="M:PluginInterface.ITeraHslWorld.CreateFindView(System.UInt32[])">
+            <summary>
+            Creates a new find view that will display only log points specified by messageIds parameter.
+            </summary>
+            <remarks>Thread safety: MUST be called from GUI thread</remarks>
+            <param name="messageIds">The message ids to filter.</param>
+        </member>
+        <member name="E:PluginInterface.ITeraHslWorld.OnStatusUpdate">
+            <summary>
+            Fires when TeraHsl has something interesting to notify
+            </summary>
+        </member>
+        <member name="E:PluginInterface.ITeraHslWorld.OnNewLogPoints">
+            <summary>
+            <para>Fires when a log points are acquired and ready for decoding.</para>
+            <para>This informs only about number of new log poits and it's up for the app to call GetLogPoint to decode those</para>
+            </summary>
+        </member>
+        <member name="E:PluginInterface.ITeraHslWorld.OnNewLogPointsDecoded">
+            <summary>
+            <para>Fires when a block of populated log points are ready.</para>
+            <para>This will pre-decode all log points before callback is called.</para>
+            <para>Important: this event is slower than <see cref="E:PluginInterface.ITeraHslWorld.OnNewLogPoints"/>, use it only if you need all log points decoded.</para>
+            </summary>
+        </member>
+        <member name="E:PluginInterface.ITeraHslWorld.OnLogPointSelected">
+            <summary>
+            <para>Fires when user made a selection in other view.</para>
+            <para>If current view has a filter, delivered notification will match closest item in your filter.</para>
+            </summary>
+        </member>
+        <member name="P:PluginInterface.ITeraHslWorld.Configuration">
+            <summary>
+            Specifies configuration of TeraHsl
+            </summary>
+            <remarks>Thread safety: MUST be called from GUI thread</remarks>
+        </member>
+        <member name="P:PluginInterface.ITeraHslWorld.Filter">
+            <summary>
+            Specifies filter for the addin.
+            </summary>
+            <remarks>Thread safety: safe to call from any thread</remarks>
+        </member>
+        <member name="P:PluginInterface.ITeraHslWorld.StatusBar">
+            <summary>
+            Status bar of application
+            </summary>
+            <remarks>Thread safety: MUST be called from GUI thread</remarks>
+        </member>
+        <member name="P:PluginInterface.ITeraHslWorld.MainMenu">
+            <summary>
+            Main menu of application
+            </summary>
+            <remarks>Thread safety: MUST be called from GUI thread</remarks>
+        </member>
+        <member name="P:PluginInterface.ITeraHslWorld.Form">
+            <summary>
+            Gets the form of main TeraHSL application.
+            </summary>
+        </member>
+        <member name="P:PluginInterface.ITeraHslWorld.GenieWnd">
+            <summary>
+            Gets the form of Genie (if TeraHSL is embeded).
+            </summary>
+        </member>
+        <member name="P:PluginInterface.ITeraHslWorld.Toolbar">
+            <summary>
+            Toolbar of application
+            </summary>
+            <remarks>Thread safety: MUST be called from GUI thread</remarks>
+        </member>
+        <member name="T:PluginInterface.MessageType">
+            <summary>
+            Specifies type of message to log
+            </summary>
+        </member>
+        <member name="F:PluginInterface.MessageType.Debug">
+            <summary>
+            The debug
+            </summary>
+        </member>
+        <member name="F:PluginInterface.MessageType.Info">
+            <summary>
+            The information
+            </summary>
+        </member>
+        <member name="F:PluginInterface.MessageType.Warn">
+            <summary>
+            The warn
+            </summary>
+        </member>
+        <member name="F:PluginInterface.MessageType.Error">
+            <summary>
+            The error
+            </summary>
+        </member>
+        <member name="T:PluginInterface.ITeraHslPlugin">
+            <summary>
+            Specifies interface of plugin
+            </summary>
+        </member>
+        <member name="M:PluginInterface.ITeraHslPlugin.Setup(PluginInterface.ITeraHslWorld,System.String,System.Object)">
+            <summary>
+            Called by main application on startup of plugin
+            </summary>
+            <param name="mainApplication">reference to main application interface. Can be used to register for log points.</param>
+            <param name="pluginPersistenceString">if plugin is loaded for the first time - this will be null, 
+            if plugin was loaded before and retuned someting to be stored in profile using StorePluginSettingsInProfile - this string will be returned</param>
+            <param name="extraParams">this is typically null</param>
+        </member>
+        <member name="M:PluginInterface.ITeraHslPlugin.TearDown">
+            <summary>
+            Called by main application on teardown of plugin
+            </summary>
+        </member>
+        <member name="P:PluginInterface.ITeraHslPlugin.PersistString">
+            <summary>
+            Gets the persistence string.
+            </summary>
+        </member>
+        <member name="T:PluginInterface.CustomOnlyAttribute">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:PluginInterface.CustomOnlyAttribute.Version">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:PluginInterface.CustomOnlyAttribute.IsPublic">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:PluginInterface.CustomOnlyAttribute.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="group"></param>
+        </member>
+        <member name="M:PluginInterface.CustomOnlyAttribute.GetMenuGroup">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:PluginInterface.CustomMultiAttribute">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:PluginInterface.CustomMultiAttribute.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="customerId"></param>
+        </member>
+        <member name="M:PluginInterface.CustomMultiAttribute.GetCustomerId">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

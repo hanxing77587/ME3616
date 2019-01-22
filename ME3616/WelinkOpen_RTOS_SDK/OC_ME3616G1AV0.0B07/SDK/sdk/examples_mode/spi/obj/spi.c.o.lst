@@ -1,0 +1,2524 @@
+ARM GAS   			page 1
+
+
+   1              	 .cpu cortex-m4
+   2              	 .eabi_attribute 27,1
+   3              	 .eabi_attribute 28,1
+   4              	 .eabi_attribute 20,1
+   5              	 .eabi_attribute 21,1
+   6              	 .eabi_attribute 23,3
+   7              	 .eabi_attribute 24,1
+   8              	 .eabi_attribute 25,1
+   9              	 .eabi_attribute 26,1
+  10              	 .eabi_attribute 30,1
+  11              	 .eabi_attribute 34,1
+  12              	 .eabi_attribute 18,4
+  13              	 .file "spi.c"
+  14              	 .text
+  15              	.Ltext0:
+  16              	 .cfi_sections .debug_frame
+  17              	 .section .text.Flash_Spi_Init,"ax",%progbits
+  18              	 .align 1
+  19              	 .syntax unified
+  20              	 .thumb
+  21              	 .thumb_func
+  22              	 .fpu fpv4-sp-d16
+  24              	Flash_Spi_Init:
+  25              	.LFB19:
+  26              	 .file 1 "spi.c"
+   1:spi.c         **** /*
+   2:spi.c         **** ** File   : spi.c
+   3:spi.c         **** **
+   4:spi.c         **** ** Copyright (C) 2013-2018 Gosuncn. All rights reserved.
+   5:spi.c         **** **
+   6:spi.c         **** ** Licensed under the Apache License, Version 2.0 (the "License");
+   7:spi.c         **** ** you may not use this file except in compliance with the License.
+   8:spi.c         **** ** You may obtain a copy of the License at
+   9:spi.c         **** **
+  10:spi.c         **** **      http://www.apache.org/licenses/LICENSE-2.0
+  11:spi.c         **** **
+  12:spi.c         **** ** Unless required by applicable law or agreed to in writing, software
+  13:spi.c         **** ** distributed under the License is distributed on an "AS IS" BASIS,
+  14:spi.c         **** ** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  15:spi.c         **** ** See the License for the specific language governing permissions and
+  16:spi.c         **** ** limitations under the License.
+  17:spi.c         **** **
+  18:spi.c         **** ** Author : qubo@gosuncn.cn
+  19:spi.c         **** **
+  20:spi.c         **** **  $Date: 2018/05/29 08:45:36GMT+08:00 $
+  21:spi.c         **** **
+  22:spi.c         **** */
+  23:spi.c         **** 
+  24:spi.c         **** /* this example show how to use spi bus */
+  25:spi.c         **** 
+  26:spi.c         **** #include "gsdk_sdk.h"
+  27:spi.c         **** 
+  28:spi.c         **** #define FLOGD(fmt, ...)         printf(fmt, ##__VA_ARGS__)
+  29:spi.c         **** #define FLOGI(fmt, ...)         printf(fmt, ##__VA_ARGS__)
+  30:spi.c         **** #define FLOGE(fmt, ...)         printf(fmt, ##__VA_ARGS__)
+  31:spi.c         **** 
+  32:spi.c         **** #define FLASHIF_OK     0
+ARM GAS   			page 2
+
+
+  33:spi.c         **** #define FLASHIF_ERROR -1
+  34:spi.c         **** 
+  35:spi.c         **** #define TEST_ADDR 0x20000
+  36:spi.c         **** 
+  37:spi.c         **** /* Max falsh cmd length + page size */
+  38:spi.c         **** #define FLASH_EXT_SECTOR_SIZE   (1024 * 4)
+  39:spi.c         **** #define FLASH_EXT_BLOCK_SIZE    (1024 * 64)
+  40:spi.c         **** #define FLASH_EXT_PAGE_SIZE     (256)
+  41:spi.c         **** #define FLASH_EXT_CMD_SIZE      (5)
+  42:spi.c         **** #define SPI_BUF_SIZE            (FLASH_EXT_CMD_SIZE + FLASH_EXT_PAGE_SIZE)
+  43:spi.c         **** 
+  44:spi.c         **** #define FLASH_SPI_TIMEOUT       (~0U)
+  45:spi.c         **** 
+  46:spi.c         **** static gsdk_handle_t pspi;
+  47:spi.c         **** static gsdk_handle_t g_huart;
+  48:spi.c         **** 
+  49:spi.c         **** static int Flash_Spi_Init(void)
+  50:spi.c         **** {
+  27              	 .loc 1 50 0
+  28              	 .cfi_startproc
+  29              	 
+  30              	 
+  31 0000 00B5     	 push {lr}
+  32              	 .cfi_def_cfa_offset 4
+  33              	 .cfi_offset 14,-4
+  34 0002 83B0     	 sub sp,sp,#12
+  35              	 .cfi_def_cfa_offset 16
+  51:spi.c         ****     gsdk_status_t status;
+  52:spi.c         ****     spi_master_config_t spi_config;
+  53:spi.c         **** 
+  54:spi.c         ****     spi_config.bit_order       = SPI_MASTER_MSB_FIRST;
+  36              	 .loc 1 54 0
+  37 0004 0123     	 movs r3,#1
+  38 0006 8DF80430 	 strb r3,[sp,#4]
+  55:spi.c         ****     spi_config.clock_frequency = 10000000;
+  39              	 .loc 1 55 0
+  40 000a 0C4A     	 ldr r2,.L6
+  41 000c 0092     	 str r2,[sp]
+  56:spi.c         ****     spi_config.phase           = SPI_MASTER_CLOCK_PHASE1;
+  42              	 .loc 1 56 0
+  43 000e 8DF80630 	 strb r3,[sp,#6]
+  57:spi.c         ****     spi_config.polarity        = SPI_MASTER_CLOCK_POLARITY1;
+  44              	 .loc 1 57 0
+  45 0012 8DF80530 	 strb r3,[sp,#5]
+  58:spi.c         ****     spi_config.cs_mode         = SPI_MASTER_CS_SPI_MODE;
+  46              	 .loc 1 58 0
+  47 0016 0023     	 movs r3,#0
+  48 0018 8DF80730 	 strb r3,[sp,#7]
+  59:spi.c         **** 
+  60:spi.c         ****     status = gsdk_spi_open(&pspi, &spi_config);
+  49              	 .loc 1 60 0
+  50 001c 6946     	 mov r1,sp
+  51 001e 0848     	 ldr r0,.L6+4
+  52 0020 FFF7FEFF 	 bl gsdk_spi_open
+  53              	.LVL0:
+  61:spi.c         ****     if (status != GSDK_SUCCESS) {
+  54              	 .loc 1 61 0
+ARM GAS   			page 3
+
+
+  55 0024 18B9     	 cbnz r0,.L5
+  62:spi.c         ****         FLOGE("[SPI_DEMO] Wakeup in callback init failed\r\n");
+  63:spi.c         ****         return FLASHIF_ERROR;
+  64:spi.c         ****     }
+  65:spi.c         **** 
+  66:spi.c         ****     return FLASHIF_OK;
+  56              	 .loc 1 66 0
+  57 0026 0020     	 movs r0,#0
+  58              	.LVL1:
+  59              	.L1:
+  67:spi.c         **** }
+  60              	 .loc 1 67 0
+  61 0028 03B0     	 add sp,sp,#12
+  62              	 .cfi_remember_state
+  63              	 .cfi_def_cfa_offset 4
+  64              	 
+  65 002a 5DF804FB 	 ldr pc,[sp],#4
+  66              	.LVL2:
+  67              	.L5:
+  68              	 .cfi_restore_state
+  62:spi.c         ****         FLOGE("[SPI_DEMO] Wakeup in callback init failed\r\n");
+  69              	 .loc 1 62 0
+  70 002e 0548     	 ldr r0,.L6+8
+  71              	.LVL3:
+  72 0030 FFF7FEFF 	 bl puts
+  73              	.LVL4:
+  63:spi.c         ****     }
+  74              	 .loc 1 63 0
+  75 0034 4FF0FF30 	 mov r0,#-1
+  76 0038 F6E7     	 b .L1
+  77              	.L7:
+  78 003a 00BF     	 .align 2
+  79              	.L6:
+  80 003c 80969800 	 .word 10000000
+  81 0040 00000000 	 .word .LANCHOR0
+  82 0044 00000000 	 .word .LC0
+  83              	 .cfi_endproc
+  84              	.LFE19:
+  86              	 .section .text.Flash_Spi_Xfer,"ax",%progbits
+  87              	 .align 1
+  88              	 .syntax unified
+  89              	 .thumb
+  90              	 .thumb_func
+  91              	 .fpu fpv4-sp-d16
+  93              	Flash_Spi_Xfer:
+  94              	.LFB20:
+  68:spi.c         **** 
+  69:spi.c         **** static uint32_t Flash_Spi_Xfer(const void *tx_buf, unsigned int tx_len, void *rx_buf, unsigned int 
+  70:spi.c         **** {
+  95              	 .loc 1 70 0
+  96              	 .cfi_startproc
+  97              	 
+  98              	 
+  99              	.LVL5:
+ 100 0000 2DE9F041 	 push {r4,r5,r6,r7,r8,lr}
+ 101              	 .cfi_def_cfa_offset 24
+ 102              	 .cfi_offset 4,-24
+ARM GAS   			page 4
+
+
+ 103              	 .cfi_offset 5,-20
+ 104              	 .cfi_offset 6,-16
+ 105              	 .cfi_offset 7,-12
+ 106              	 .cfi_offset 8,-8
+ 107              	 .cfi_offset 14,-4
+ 108 0004 ADF5067D 	 sub sp,sp,#536
+ 109              	 .cfi_def_cfa_offset 560
+ 110 0008 8046     	 mov r8,r0
+ 111 000a 0C46     	 mov r4,r1
+ 112 000c 1746     	 mov r7,r2
+ 113 000e 1E46     	 mov r6,r3
+  71:spi.c         ****     uint32_t max_len = tx_len + rx_len;
+ 114              	 .loc 1 71 0
+ 115 0010 CD18     	 adds r5,r1,r3
+ 116              	.LVL6:
+  72:spi.c         ****     uint8_t spi_tx_buf[SPI_BUF_SIZE] = {0};
+ 117              	 .loc 1 72 0
+ 118 0012 40F20512 	 movw r2,#261
+ 119              	.LVL7:
+ 120 0016 0021     	 movs r1,#0
+ 121              	.LVL8:
+ 122 0018 44A8     	 add r0,sp,#272
+ 123              	.LVL9:
+ 124 001a FFF7FEFF 	 bl memset
+ 125              	.LVL10:
+  73:spi.c         ****     uint8_t spi_rx_buf[SPI_BUF_SIZE];
+  74:spi.c         ****     gsdk_status_t status;
+  75:spi.c         **** 
+  76:spi.c         ****     if (max_len > SPI_BUF_SIZE) {
+ 126              	 .loc 1 76 0
+ 127 001e B5F5837F 	 cmp r5,#262
+ 128 0022 1BD2     	 bcs .L15
+  77:spi.c         ****         FLOGE("Flash spi buffer overflow!\r\n");
+  78:spi.c         ****         goto _fail;
+  79:spi.c         ****     }
+  80:spi.c         **** 
+  81:spi.c         ****     memcpy(spi_tx_buf, tx_buf, tx_len);
+ 129              	 .loc 1 81 0
+ 130 0024 2246     	 mov r2,r4
+ 131 0026 4146     	 mov r1,r8
+ 132 0028 44A8     	 add r0,sp,#272
+ 133 002a FFF7FEFF 	 bl memcpy
+ 134              	.LVL11:
+  82:spi.c         **** 
+  83:spi.c         ****     FLOGD("Flash_Spi_Xfer: tx_len: %u, rx_len: %u\r\n", tx_len, rx_len);
+ 135              	 .loc 1 83 0
+ 136 002e 3246     	 mov r2,r6
+ 137 0030 2146     	 mov r1,r4
+ 138 0032 1A48     	 ldr r0,.L19
+ 139 0034 FFF7FEFF 	 bl printf
+ 140              	.LVL12:
+  84:spi.c         **** 
+  85:spi.c         ****     if (rx_buf == NULL) {
+ 141              	 .loc 1 85 0
+ 142 0038 B7B1     	 cbz r7,.L16
+  86:spi.c         ****         status = gsdk_spi_transmit_and_receive(pspi, spi_tx_buf, NULL, tx_len, 0, ms);
+  87:spi.c         ****     } else {
+ARM GAS   			page 5
+
+
+  88:spi.c         ****         status = gsdk_spi_transmit_and_receive(pspi, spi_tx_buf, spi_rx_buf, tx_len, rx_len + tx_le
+ 143              	 .loc 1 88 0
+ 144 003a 194B     	 ldr r3,.L19+4
+ 145 003c 1868     	 ldr r0,[r3]
+ 146 003e 8C9B     	 ldr r3,[sp,#560]
+ 147 0040 0193     	 str r3,[sp,#4]
+ 148 0042 0095     	 str r5,[sp]
+ 149 0044 2346     	 mov r3,r4
+ 150 0046 02AA     	 add r2,sp,#8
+ 151 0048 44A9     	 add r1,sp,#272
+ 152 004a FFF7FEFF 	 bl gsdk_spi_transmit_and_receive
+ 153              	.LVL13:
+ 154              	.L12:
+  89:spi.c         ****     }
+  90:spi.c         **** 
+  91:spi.c         ****     if (status != GSDK_SUCCESS) {
+ 155              	 .loc 1 91 0
+ 156 004e B0B9     	 cbnz r0,.L17
+  92:spi.c         ****         FLOGE("HAL_SPI_TransmitReceive error %d!\r\n", status);
+  93:spi.c         ****         goto _fail;
+  94:spi.c         ****     }
+  95:spi.c         **** 
+  96:spi.c         ****     if (rx_len) {
+ 157              	 .loc 1 96 0
+ 158 0050 E6B9     	 cbnz r6,.L18
+ 159              	.LVL14:
+ 160              	.L8:
+  97:spi.c         ****         memcpy(rx_buf, &spi_rx_buf[tx_len], rx_len);
+  98:spi.c         ****     }
+  99:spi.c         **** 
+ 100:spi.c         ****     return max_len;
+ 101:spi.c         **** 
+ 102:spi.c         **** _fail:
+ 103:spi.c         ****     return FLASH_SPI_TIMEOUT;
+ 104:spi.c         **** }
+ 161              	 .loc 1 104 0
+ 162 0052 2846     	 mov r0,r5
+ 163 0054 0DF5067D 	 add sp,sp,#536
+ 164              	 .cfi_remember_state
+ 165              	 .cfi_def_cfa_offset 24
+ 166              	 
+ 167 0058 BDE8F081 	 pop {r4,r5,r6,r7,r8,pc}
+ 168              	.LVL15:
+ 169              	.L15:
+ 170              	 .cfi_restore_state
+  77:spi.c         ****         goto _fail;
+ 171              	 .loc 1 77 0
+ 172 005c 1148     	 ldr r0,.L19+8
+ 173 005e FFF7FEFF 	 bl puts
+ 174              	.LVL16:
+ 103:spi.c         **** }
+ 175              	 .loc 1 103 0
+ 176 0062 4FF0FF35 	 mov r5,#-1
+ 177              	.LVL17:
+  78:spi.c         ****     }
+ 178              	 .loc 1 78 0
+ 179 0066 F4E7     	 b .L8
+ARM GAS   			page 6
+
+
+ 180              	.LVL18:
+ 181              	.L16:
+  86:spi.c         ****     } else {
+ 182              	 .loc 1 86 0
+ 183 0068 0D4B     	 ldr r3,.L19+4
+ 184 006a 1868     	 ldr r0,[r3]
+ 185 006c 8C9B     	 ldr r3,[sp,#560]
+ 186 006e 0193     	 str r3,[sp,#4]
+ 187 0070 0022     	 movs r2,#0
+ 188 0072 0092     	 str r2,[sp]
+ 189 0074 2346     	 mov r3,r4
+ 190 0076 44A9     	 add r1,sp,#272
+ 191 0078 FFF7FEFF 	 bl gsdk_spi_transmit_and_receive
+ 192              	.LVL19:
+ 193 007c E7E7     	 b .L12
+ 194              	.L17:
+  92:spi.c         ****         goto _fail;
+ 195              	 .loc 1 92 0
+ 196 007e 0146     	 mov r1,r0
+ 197 0080 0948     	 ldr r0,.L19+12
+ 198              	.LVL20:
+ 199 0082 FFF7FEFF 	 bl printf
+ 200              	.LVL21:
+ 103:spi.c         **** }
+ 201              	 .loc 1 103 0
+ 202 0086 4FF0FF35 	 mov r5,#-1
+ 203              	.LVL22:
+  93:spi.c         ****     }
+ 204              	 .loc 1 93 0
+ 205 008a E2E7     	 b .L8
+ 206              	.LVL23:
+ 207              	.L18:
+  97:spi.c         ****     }
+ 208              	 .loc 1 97 0
+ 209 008c 3246     	 mov r2,r6
+ 210 008e 02AB     	 add r3,sp,#8
+ 211 0090 1919     	 adds r1,r3,r4
+ 212 0092 3846     	 mov r0,r7
+ 213              	.LVL24:
+ 214 0094 FFF7FEFF 	 bl memcpy
+ 215              	.LVL25:
+ 216 0098 DBE7     	 b .L8
+ 217              	.L20:
+ 218 009a 00BF     	 .align 2
+ 219              	.L19:
+ 220 009c 1C000000 	 .word .LC2
+ 221 00a0 00000000 	 .word .LANCHOR0
+ 222 00a4 00000000 	 .word .LC1
+ 223 00a8 48000000 	 .word .LC3
+ 224              	 .cfi_endproc
+ 225              	.LFE20:
+ 227              	 .section .text.Flash_Ext_ReadID,"ax",%progbits
+ 228              	 .align 1
+ 229              	 .syntax unified
+ 230              	 .thumb
+ 231              	 .thumb_func
+ 232              	 .fpu fpv4-sp-d16
+ARM GAS   			page 7
+
+
+ 234              	Flash_Ext_ReadID:
+ 235              	.LFB27:
+ 105:spi.c         **** 
+ 106:spi.c         **** static int Flash_Ext_ReadStatus(uint8_t *status)
+ 107:spi.c         **** {
+ 108:spi.c         ****     static const uint8_t tx_buf[] = {0x05};
+ 109:spi.c         ****     uint8_t rx_buf[1];
+ 110:spi.c         ****     uint32_t ret;
+ 111:spi.c         **** 
+ 112:spi.c         ****     ret = Flash_Spi_Xfer(tx_buf, sizeof(tx_buf), rx_buf, sizeof(rx_buf), 1000);
+ 113:spi.c         ****     if (ret ==  FLASH_SPI_TIMEOUT) {
+ 114:spi.c         ****         FLOGE("Read status timeout!\r\n");
+ 115:spi.c         ****         return FLASHIF_ERROR;
+ 116:spi.c         ****     }
+ 117:spi.c         **** 
+ 118:spi.c         ****     if (status)
+ 119:spi.c         ****         *status = rx_buf[0];
+ 120:spi.c         **** 
+ 121:spi.c         ****     return FLASHIF_OK;
+ 122:spi.c         **** }
+ 123:spi.c         **** 
+ 124:spi.c         **** static int Flash_Ext_WriteStatus(uint8_t status)
+ 125:spi.c         **** {
+ 126:spi.c         ****     uint8_t tx_buf[2] = {0x01, 0};
+ 127:spi.c         ****     uint32_t ret;
+ 128:spi.c         **** 
+ 129:spi.c         ****     tx_buf[1] = status;
+ 130:spi.c         ****     ret = Flash_Spi_Xfer(tx_buf, sizeof(tx_buf), NULL, 0, 1000);
+ 131:spi.c         ****     if (ret ==  FLASH_SPI_TIMEOUT) {
+ 132:spi.c         ****         FLOGE("Write status timeout!\r\n");
+ 133:spi.c         ****         return FLASHIF_ERROR;
+ 134:spi.c         ****     }
+ 135:spi.c         **** 
+ 136:spi.c         ****     return FLASHIF_OK;
+ 137:spi.c         **** }
+ 138:spi.c         **** 
+ 139:spi.c         **** static int Flash_Ext_WriteEnable(int enable)
+ 140:spi.c         **** {
+ 141:spi.c         ****     uint8_t tx_buf[1];
+ 142:spi.c         ****     uint32_t ret;
+ 143:spi.c         **** 
+ 144:spi.c         ****     if (enable)
+ 145:spi.c         ****         tx_buf[0] = 0x06;
+ 146:spi.c         ****     else
+ 147:spi.c         ****         tx_buf[0] = 0x04;
+ 148:spi.c         **** 
+ 149:spi.c         ****     ret = Flash_Spi_Xfer(tx_buf, sizeof(tx_buf), NULL, 0, 1000);
+ 150:spi.c         ****     if (ret ==  FLASH_SPI_TIMEOUT) {
+ 151:spi.c         ****         FLOGE("Write enable timeout!\r\n");
+ 152:spi.c         ****         return FLASHIF_ERROR;
+ 153:spi.c         ****     }
+ 154:spi.c         **** 
+ 155:spi.c         ****     return FLASHIF_OK;
+ 156:spi.c         **** }
+ 157:spi.c         **** 
+ 158:spi.c         **** static int Flash_Ext_Program(uint32_t dst, const char * src, uint32_t len)
+ 159:spi.c         **** {
+ARM GAS   			page 8
+
+
+ 160:spi.c         ****     uint8_t tx_buf[4 + FLASH_EXT_PAGE_SIZE];
+ 161:spi.c         ****     uint32_t data_len;
+ 162:spi.c         ****     uint32_t page_num;
+ 163:spi.c         ****     uint32_t ret;
+ 164:spi.c         ****     uint8_t status;
+ 165:spi.c         ****     uint32_t start_tick;
+ 166:spi.c         **** 
+ 167:spi.c         **** #if 0
+ 168:spi.c         ****     if (dst != ALIGN(dst, FLASH_EXT_PAGE_SIZE)) {
+ 169:spi.c         ****         LOGE("Flash alignment error 0x%08lx\r\n", dst);
+ 170:spi.c         ****         return FLASHIF_ERROR;
+ 171:spi.c         ****     }
+ 172:spi.c         **** #endif
+ 173:spi.c         ****     page_num = ALIGN(len, FLASH_EXT_PAGE_SIZE) / FLASH_EXT_PAGE_SIZE;
+ 174:spi.c         **** 
+ 175:spi.c         ****     FLOGD("ExtProg: 0x%08lx %ld %ld\r\n", dst, len, page_num);
+ 176:spi.c         **** 
+ 177:spi.c         ****     tx_buf[0] = 0x02;
+ 178:spi.c         ****     while (page_num--) {
+ 179:spi.c         ****         if (Flash_Ext_WriteEnable(1)) {
+ 180:spi.c         ****             return FLASHIF_ERROR;
+ 181:spi.c         ****         }
+ 182:spi.c         ****         tx_buf[1] = (dst >> 16) & 0xff;
+ 183:spi.c         ****         tx_buf[2] = (dst >> 8) & 0xff;
+ 184:spi.c         ****         tx_buf[3] = dst & 0xff;
+ 185:spi.c         **** 
+ 186:spi.c         ****         if (len >= FLASH_EXT_PAGE_SIZE) {
+ 187:spi.c         ****             data_len = FLASH_EXT_PAGE_SIZE;
+ 188:spi.c         ****         } else {
+ 189:spi.c         ****             data_len = len;
+ 190:spi.c         ****             memset(&tx_buf[4], 0xff, FLASH_EXT_PAGE_SIZE);
+ 191:spi.c         ****         }
+ 192:spi.c         **** 
+ 193:spi.c         ****         memcpy(&tx_buf[4], (void *)src, data_len);
+ 194:spi.c         **** 
+ 195:spi.c         ****         ret = Flash_Spi_Xfer(tx_buf, sizeof(tx_buf), NULL, 0, 1000);
+ 196:spi.c         ****         if (ret ==  FLASH_SPI_TIMEOUT) {
+ 197:spi.c         ****             return FLASHIF_ERROR;
+ 198:spi.c         ****         }
+ 199:spi.c         **** 
+ 200:spi.c         ****         start_tick = 0;
+ 201:spi.c         ****         do {
+ 202:spi.c         ****             ret = Flash_Ext_ReadStatus(&status);
+ 203:spi.c         ****             if (ret ==  FLASH_SPI_TIMEOUT) {
+ 204:spi.c         ****                 return FLASHIF_ERROR;
+ 205:spi.c         ****             }
+ 206:spi.c         ****             vTaskDelay(1);
+ 207:spi.c         ****             if (start_tick > 10) {
+ 208:spi.c         ****                 break;
+ 209:spi.c         ****             }
+ 210:spi.c         ****             start_tick++;
+ 211:spi.c         ****         } while (status & 0x01);
+ 212:spi.c         **** 
+ 213:spi.c         ****         src += data_len;
+ 214:spi.c         ****         dst += data_len;
+ 215:spi.c         ****     }
+ 216:spi.c         **** 
+ARM GAS   			page 9
+
+
+ 217:spi.c         ****     return FLASHIF_OK;
+ 218:spi.c         **** }
+ 219:spi.c         **** 
+ 220:spi.c         **** static int Flash_Ext_Erase(uint32_t start, uint32_t size)
+ 221:spi.c         **** {
+ 222:spi.c         ****     uint32_t block_num, block_size;
+ 223:spi.c         ****     uint8_t tx_buf[4];
+ 224:spi.c         ****     uint32_t ret;
+ 225:spi.c         ****     uint8_t status;
+ 226:spi.c         ****     uint32_t start_tick;
+ 227:spi.c         **** 
+ 228:spi.c         ****     if (size < FLASH_EXT_BLOCK_SIZE) {
+ 229:spi.c         ****         block_size = FLASH_EXT_SECTOR_SIZE;
+ 230:spi.c         ****         tx_buf[0] = 0x20;
+ 231:spi.c         ****     } else {
+ 232:spi.c         ****         block_size = FLASH_EXT_BLOCK_SIZE;
+ 233:spi.c         ****         tx_buf[0] = 0x52;
+ 234:spi.c         ****     }
+ 235:spi.c         ****     start &= ~(block_size - 1);
+ 236:spi.c         ****     size = ALIGN(size, block_size);
+ 237:spi.c         ****     block_num = size / block_size;
+ 238:spi.c         **** 
+ 239:spi.c         ****     FLOGD("ExtErase: 0x%08lx 0x%08lx %ld\r\n", start, size, block_num);
+ 240:spi.c         **** 
+ 241:spi.c         ****     while (block_num--) {
+ 242:spi.c         ****         FLOGD("0x%08lx %ld\r\n", start, block_num);
+ 243:spi.c         ****         if (Flash_Ext_WriteEnable(1)) {
+ 244:spi.c         ****             return FLASHIF_ERROR;
+ 245:spi.c         ****         }
+ 246:spi.c         ****         tx_buf[1] = (start >> 16) & 0xff;
+ 247:spi.c         ****         tx_buf[2] = (start >> 8) & 0xff;
+ 248:spi.c         ****         tx_buf[3] = start & 0xff;
+ 249:spi.c         ****         ret = Flash_Spi_Xfer(tx_buf, sizeof(tx_buf), NULL, 0, 1000);
+ 250:spi.c         ****         if (ret ==  FLASH_SPI_TIMEOUT) {
+ 251:spi.c         ****             return FLASHIF_ERROR;
+ 252:spi.c         ****         }
+ 253:spi.c         **** 
+ 254:spi.c         ****         start_tick = 0;
+ 255:spi.c         ****         do {
+ 256:spi.c         ****             vTaskDelay(1);
+ 257:spi.c         ****             ret = Flash_Ext_ReadStatus(&status);
+ 258:spi.c         ****             if (ret ==  FLASH_SPI_TIMEOUT) {
+ 259:spi.c         ****                 return FLASHIF_ERROR;
+ 260:spi.c         ****             }
+ 261:spi.c         ****             if (start_tick > 10) {
+ 262:spi.c         ****                 break;
+ 263:spi.c         ****             }
+ 264:spi.c         ****             start_tick++;
+ 265:spi.c         ****         } while (status & 0x01);
+ 266:spi.c         ****         start += block_size;
+ 267:spi.c         ****     }
+ 268:spi.c         **** 
+ 269:spi.c         ****     return FLASHIF_OK;
+ 270:spi.c         **** }
+ 271:spi.c         **** 
+ 272:spi.c         **** static int Flash_Ext_Read(void *buf, uint32_t start, uint32_t len)
+ 273:spi.c         **** {
+ARM GAS   			page 10
+
+
+ 274:spi.c         ****     uint8_t tx_buf[4];
+ 275:spi.c         ****     uint32_t ret;
+ 276:spi.c         ****     uint32_t rx_len, offset = 0;
+ 277:spi.c         **** 
+ 278:spi.c         ****     FLOGD("ExtRead: 0x%08lx %ld\r\n", start, len);
+ 279:spi.c         **** 
+ 280:spi.c         ****     tx_buf[0] = 0x03; /* read  */
+ 281:spi.c         **** 
+ 282:spi.c         ****     while (len) {
+ 283:spi.c         ****         rx_len = len > FLASH_EXT_PAGE_SIZE ? FLASH_EXT_PAGE_SIZE : len;
+ 284:spi.c         ****         tx_buf[1] = ((start + offset) >> 16) & 0xff;
+ 285:spi.c         ****         tx_buf[2] = ((start + offset) >> 8) & 0xff;
+ 286:spi.c         ****         tx_buf[3] = (start + offset) & 0xff;
+ 287:spi.c         ****         ret = Flash_Spi_Xfer(tx_buf, sizeof(tx_buf), (uint8_t *)buf + offset, rx_len, 1000);
+ 288:spi.c         ****         if (ret ==  FLASH_SPI_TIMEOUT) {
+ 289:spi.c         ****             return FLASHIF_ERROR;
+ 290:spi.c         ****         }
+ 291:spi.c         ****         len -= rx_len;
+ 292:spi.c         ****         offset += rx_len;
+ 293:spi.c         ****     }
+ 294:spi.c         ****     return FLASHIF_OK;
+ 295:spi.c         **** }
+ 296:spi.c         **** 
+ 297:spi.c         **** static int Flash_Ext_ReadID(void *id)
+ 298:spi.c         **** {
+ 236              	 .loc 1 298 0
+ 237              	 .cfi_startproc
+ 238              	 
+ 239              	 
+ 240              	.LVL26:
+ 241 0000 10B5     	 push {r4,lr}
+ 242              	 .cfi_def_cfa_offset 8
+ 243              	 .cfi_offset 4,-8
+ 244              	 .cfi_offset 14,-4
+ 245 0002 84B0     	 sub sp,sp,#16
+ 246              	 .cfi_def_cfa_offset 24
+ 247 0004 0446     	 mov r4,r0
+ 299:spi.c         ****     static const uint8_t tx_buf[] = {0x9f};
+ 300:spi.c         ****     uint8_t rx_buf[4];
+ 301:spi.c         ****     uint32_t ret;
+ 302:spi.c         **** 
+ 303:spi.c         ****     ret = Flash_Spi_Xfer(tx_buf, sizeof(tx_buf), rx_buf, sizeof(rx_buf), 1000);
+ 248              	 .loc 1 303 0
+ 249 0006 4FF47A73 	 mov r3,#1000
+ 250 000a 0093     	 str r3,[sp]
+ 251 000c 0423     	 movs r3,#4
+ 252 000e 03AA     	 add r2,sp,#12
+ 253 0010 0121     	 movs r1,#1
+ 254 0012 0848     	 ldr r0,.L26
+ 255              	.LVL27:
+ 256 0014 FFF7FEFF 	 bl Flash_Spi_Xfer
+ 257              	.LVL28:
+ 304:spi.c         ****     if (ret ==  FLASH_SPI_TIMEOUT) {
+ 258              	 .loc 1 304 0
+ 259 0018 B0F1FF3F 	 cmp r0,#-1
+ 260 001c 05D0     	 beq .L23
+ 305:spi.c         ****         return FLASHIF_ERROR;
+ARM GAS   			page 11
+
+
+ 306:spi.c         ****     }
+ 307:spi.c         **** 
+ 308:spi.c         ****     if (id) {
+ 261              	 .loc 1 308 0
+ 262 001e 3CB1     	 cbz r4,.L24
+ 309:spi.c         ****         memcpy(id, rx_buf, sizeof(rx_buf));
+ 263              	 .loc 1 309 0
+ 264 0020 039B     	 ldr r3,[sp,#12]
+ 265 0022 2360     	 str r3,[r4]
+ 310:spi.c         ****     }
+ 311:spi.c         **** 
+ 312:spi.c         ****     return FLASHIF_OK;
+ 266              	 .loc 1 312 0
+ 267 0024 0020     	 movs r0,#0
+ 268              	.LVL29:
+ 269              	.L21:
+ 313:spi.c         **** }
+ 270              	 .loc 1 313 0
+ 271 0026 04B0     	 add sp,sp,#16
+ 272              	 .cfi_remember_state
+ 273              	 .cfi_def_cfa_offset 8
+ 274              	 
+ 275 0028 10BD     	 pop {r4,pc}
+ 276              	.LVL30:
+ 277              	.L23:
+ 278              	 .cfi_restore_state
+ 305:spi.c         ****     }
+ 279              	 .loc 1 305 0
+ 280 002a 4FF0FF30 	 mov r0,#-1
+ 281              	.LVL31:
+ 282 002e FAE7     	 b .L21
+ 283              	.LVL32:
+ 284              	.L24:
+ 312:spi.c         **** }
+ 285              	 .loc 1 312 0
+ 286 0030 0020     	 movs r0,#0
+ 287              	.LVL33:
+ 288 0032 F8E7     	 b .L21
+ 289              	.L27:
+ 290              	 .align 2
+ 291              	.L26:
+ 292 0034 00000000 	 .word .LANCHOR1
+ 293              	 .cfi_endproc
+ 294              	.LFE27:
+ 296              	 .section .text.Flash_Ext_WriteStatus,"ax",%progbits
+ 297              	 .align 1
+ 298              	 .syntax unified
+ 299              	 .thumb
+ 300              	 .thumb_func
+ 301              	 .fpu fpv4-sp-d16
+ 303              	Flash_Ext_WriteStatus:
+ 304              	.LFB22:
+ 125:spi.c         ****     uint8_t tx_buf[2] = {0x01, 0};
+ 305              	 .loc 1 125 0
+ 306              	 .cfi_startproc
+ 307              	 
+ 308              	 
+ARM GAS   			page 12
+
+
+ 309              	.LVL34:
+ 310 0000 00B5     	 push {lr}
+ 311              	 .cfi_def_cfa_offset 4
+ 312              	 .cfi_offset 14,-4
+ 313 0002 85B0     	 sub sp,sp,#20
+ 314              	 .cfi_def_cfa_offset 24
+ 126:spi.c         ****     uint32_t ret;
+ 315              	 .loc 1 126 0
+ 316 0004 0123     	 movs r3,#1
+ 317 0006 8DF80C30 	 strb r3,[sp,#12]
+ 129:spi.c         ****     ret = Flash_Spi_Xfer(tx_buf, sizeof(tx_buf), NULL, 0, 1000);
+ 318              	 .loc 1 129 0
+ 319 000a 8DF80D00 	 strb r0,[sp,#13]
+ 130:spi.c         ****     if (ret ==  FLASH_SPI_TIMEOUT) {
+ 320              	 .loc 1 130 0
+ 321 000e 4FF47A73 	 mov r3,#1000
+ 322 0012 0093     	 str r3,[sp]
+ 323 0014 0023     	 movs r3,#0
+ 324 0016 1A46     	 mov r2,r3
+ 325 0018 0221     	 movs r1,#2
+ 326 001a 03A8     	 add r0,sp,#12
+ 327              	.LVL35:
+ 328 001c FFF7FEFF 	 bl Flash_Spi_Xfer
+ 329              	.LVL36:
+ 131:spi.c         ****         FLOGE("Write status timeout!\r\n");
+ 330              	 .loc 1 131 0
+ 331 0020 B0F1FF3F 	 cmp r0,#-1
+ 332 0024 03D0     	 beq .L32
+ 136:spi.c         **** }
+ 333              	 .loc 1 136 0
+ 334 0026 0020     	 movs r0,#0
+ 335              	.LVL37:
+ 336              	.L28:
+ 137:spi.c         **** 
+ 337              	 .loc 1 137 0
+ 338 0028 05B0     	 add sp,sp,#20
+ 339              	 .cfi_remember_state
+ 340              	 .cfi_def_cfa_offset 4
+ 341              	 
+ 342 002a 5DF804FB 	 ldr pc,[sp],#4
+ 343              	.LVL38:
+ 344              	.L32:
+ 345              	 .cfi_restore_state
+ 132:spi.c         ****         return FLASHIF_ERROR;
+ 346              	 .loc 1 132 0
+ 347 002e 0348     	 ldr r0,.L33
+ 348              	.LVL39:
+ 349 0030 FFF7FEFF 	 bl puts
+ 350              	.LVL40:
+ 133:spi.c         ****     }
+ 351              	 .loc 1 133 0
+ 352 0034 4FF0FF30 	 mov r0,#-1
+ 353 0038 F6E7     	 b .L28
+ 354              	.L34:
+ 355 003a 00BF     	 .align 2
+ 356              	.L33:
+ 357 003c 00000000 	 .word .LC4
+ARM GAS   			page 13
+
+
+ 358              	 .cfi_endproc
+ 359              	.LFE22:
+ 361              	 .section .text.Flash_Ext_ReadStatus,"ax",%progbits
+ 362              	 .align 1
+ 363              	 .syntax unified
+ 364              	 .thumb
+ 365              	 .thumb_func
+ 366              	 .fpu fpv4-sp-d16
+ 368              	Flash_Ext_ReadStatus:
+ 369              	.LFB21:
+ 107:spi.c         ****     static const uint8_t tx_buf[] = {0x05};
+ 370              	 .loc 1 107 0
+ 371              	 .cfi_startproc
+ 372              	 
+ 373              	 
+ 374              	.LVL41:
+ 375 0000 10B5     	 push {r4,lr}
+ 376              	 .cfi_def_cfa_offset 8
+ 377              	 .cfi_offset 4,-8
+ 378              	 .cfi_offset 14,-4
+ 379 0002 84B0     	 sub sp,sp,#16
+ 380              	 .cfi_def_cfa_offset 24
+ 381 0004 0446     	 mov r4,r0
+ 112:spi.c         ****     if (ret ==  FLASH_SPI_TIMEOUT) {
+ 382              	 .loc 1 112 0
+ 383 0006 4FF47A73 	 mov r3,#1000
+ 384 000a 0093     	 str r3,[sp]
+ 385 000c 0123     	 movs r3,#1
+ 386 000e 03AA     	 add r2,sp,#12
+ 387 0010 1946     	 mov r1,r3
+ 388 0012 0A48     	 ldr r0,.L41
+ 389              	.LVL42:
+ 390 0014 FFF7FEFF 	 bl Flash_Spi_Xfer
+ 391              	.LVL43:
+ 113:spi.c         ****         FLOGE("Read status timeout!\r\n");
+ 392              	 .loc 1 113 0
+ 393 0018 B0F1FF3F 	 cmp r0,#-1
+ 394 001c 06D0     	 beq .L40
+ 118:spi.c         ****         *status = rx_buf[0];
+ 395              	 .loc 1 118 0
+ 396 001e 5CB1     	 cbz r4,.L38
+ 119:spi.c         **** 
+ 397              	 .loc 1 119 0
+ 398 0020 9DF80C30 	 ldrb r3,[sp,#12]
+ 399 0024 2370     	 strb r3,[r4]
+ 121:spi.c         **** }
+ 400              	 .loc 1 121 0
+ 401 0026 0020     	 movs r0,#0
+ 402              	.LVL44:
+ 403              	.L35:
+ 122:spi.c         **** 
+ 404              	 .loc 1 122 0
+ 405 0028 04B0     	 add sp,sp,#16
+ 406              	 .cfi_remember_state
+ 407              	 .cfi_def_cfa_offset 8
+ 408              	 
+ 409 002a 10BD     	 pop {r4,pc}
+ARM GAS   			page 14
+
+
+ 410              	.LVL45:
+ 411              	.L40:
+ 412              	 .cfi_restore_state
+ 114:spi.c         ****         return FLASHIF_ERROR;
+ 413              	 .loc 1 114 0
+ 414 002c 0448     	 ldr r0,.L41+4
+ 415              	.LVL46:
+ 416 002e FFF7FEFF 	 bl puts
+ 417              	.LVL47:
+ 115:spi.c         ****     }
+ 418              	 .loc 1 115 0
+ 419 0032 4FF0FF30 	 mov r0,#-1
+ 420 0036 F7E7     	 b .L35
+ 421              	.LVL48:
+ 422              	.L38:
+ 121:spi.c         **** }
+ 423              	 .loc 1 121 0
+ 424 0038 0020     	 movs r0,#0
+ 425              	.LVL49:
+ 426 003a F5E7     	 b .L35
+ 427              	.L42:
+ 428              	 .align 2
+ 429              	.L41:
+ 430 003c 00000000 	 .word .LANCHOR2
+ 431 0040 00000000 	 .word .LC5
+ 432              	 .cfi_endproc
+ 433              	.LFE21:
+ 435              	 .section .text.Flash_Ext_Init,"ax",%progbits
+ 436              	 .align 1
+ 437              	 .syntax unified
+ 438              	 .thumb
+ 439              	 .thumb_func
+ 440              	 .fpu fpv4-sp-d16
+ 442              	Flash_Ext_Init:
+ 443              	.LFB28:
+ 314:spi.c         **** 
+ 315:spi.c         **** static void Flash_Ext_Init(void)
+ 316:spi.c         **** {
+ 444              	 .loc 1 316 0
+ 445              	 .cfi_startproc
+ 446              	 
+ 447              	 
+ 448 0000 00B5     	 push {lr}
+ 449              	 .cfi_def_cfa_offset 4
+ 450              	 .cfi_offset 14,-4
+ 451 0002 85B0     	 sub sp,sp,#20
+ 452              	 .cfi_def_cfa_offset 24
+ 317:spi.c         ****     uint8_t status;
+ 318:spi.c         ****     uint8_t flash_id[4] = {0};
+ 453              	 .loc 1 318 0
+ 454 0004 0023     	 movs r3,#0
+ 455 0006 0293     	 str r3,[sp,#8]
+ 319:spi.c         **** 
+ 320:spi.c         ****     if (Flash_Spi_Init())
+ 456              	 .loc 1 320 0
+ 457 0008 FFF7FEFF 	 bl Flash_Spi_Init
+ 458              	.LVL50:
+ARM GAS   			page 15
+
+
+ 459 000c 18B9     	 cbnz r0,.L44
+ 321:spi.c         ****         goto _fail;
+ 322:spi.c         **** 
+ 323:spi.c         ****     if (Flash_Ext_ReadID(flash_id) != FLASHIF_OK) {
+ 460              	 .loc 1 323 0
+ 461 000e 02A8     	 add r0,sp,#8
+ 462 0010 FFF7FEFF 	 bl Flash_Ext_ReadID
+ 463              	.LVL51:
+ 464 0014 28B1     	 cbz r0,.L47
+ 465              	.L44:
+ 324:spi.c         ****         goto _fail;
+ 325:spi.c         ****     }
+ 326:spi.c         ****     FLOGD("Ext flash ID: 0x%02x 0x%02x 0x%02x 0x%02x\r\n", flash_id[0], flash_id[1], flash_id[2], f
+ 327:spi.c         ****     if (Flash_Ext_ReadStatus(&status))
+ 328:spi.c         ****         goto _fail;
+ 329:spi.c         ****     FLOGD("Ext flash status: 0x%02x\r\n", status);
+ 330:spi.c         ****     if (status != 0) {
+ 331:spi.c         ****         if (Flash_Ext_WriteStatus(0))
+ 332:spi.c         ****             goto _fail;
+ 333:spi.c         ****         if (Flash_Ext_ReadStatus(&status))
+ 334:spi.c         ****             goto _fail;
+ 335:spi.c         ****         FLOGD("Ext flash status: 0x%02x\r\n", status);
+ 336:spi.c         ****     }
+ 337:spi.c         ****     return;
+ 338:spi.c         **** 
+ 339:spi.c         **** _fail:
+ 340:spi.c         ****     FLOGE("External flash init failed!\r\n");
+ 466              	 .loc 1 340 0
+ 467 0016 1948     	 ldr r0,.L48
+ 468 0018 FFF7FEFF 	 bl puts
+ 469              	.LVL52:
+ 470              	.L43:
+ 341:spi.c         ****     return;
+ 342:spi.c         **** }
+ 471              	 .loc 1 342 0
+ 472 001c 05B0     	 add sp,sp,#20
+ 473              	 .cfi_remember_state
+ 474              	 .cfi_def_cfa_offset 4
+ 475              	 
+ 476 001e 5DF804FB 	 ldr pc,[sp],#4
+ 477              	.L47:
+ 478              	 .cfi_restore_state
+ 326:spi.c         ****     if (Flash_Ext_ReadStatus(&status))
+ 479              	 .loc 1 326 0
+ 480 0022 9DF80810 	 ldrb r1,[sp,#8]
+ 481 0026 9DF80920 	 ldrb r2,[sp,#9]
+ 482 002a 9DF80A30 	 ldrb r3,[sp,#10]
+ 483 002e 9DF80B00 	 ldrb r0,[sp,#11]
+ 484 0032 0090     	 str r0,[sp]
+ 485 0034 1248     	 ldr r0,.L48+4
+ 486 0036 FFF7FEFF 	 bl printf
+ 487              	.LVL53:
+ 327:spi.c         ****         goto _fail;
+ 488              	 .loc 1 327 0
+ 489 003a 0DF10F00 	 add r0,sp,#15
+ 490 003e FFF7FEFF 	 bl Flash_Ext_ReadStatus
+ 491              	.LVL54:
+ARM GAS   			page 16
+
+
+ 492 0042 0028     	 cmp r0,#0
+ 493 0044 E7D1     	 bne .L44
+ 329:spi.c         ****     if (status != 0) {
+ 494              	 .loc 1 329 0
+ 495 0046 9DF80F10 	 ldrb r1,[sp,#15]
+ 496 004a 0E48     	 ldr r0,.L48+8
+ 497 004c FFF7FEFF 	 bl printf
+ 498              	.LVL55:
+ 330:spi.c         ****         if (Flash_Ext_WriteStatus(0))
+ 499              	 .loc 1 330 0
+ 500 0050 9DF80F30 	 ldrb r3,[sp,#15]
+ 501 0054 002B     	 cmp r3,#0
+ 502 0056 E1D0     	 beq .L43
+ 331:spi.c         ****             goto _fail;
+ 503              	 .loc 1 331 0
+ 504 0058 0020     	 movs r0,#0
+ 505 005a FFF7FEFF 	 bl Flash_Ext_WriteStatus
+ 506              	.LVL56:
+ 507 005e 0028     	 cmp r0,#0
+ 508 0060 D9D1     	 bne .L44
+ 333:spi.c         ****             goto _fail;
+ 509              	 .loc 1 333 0
+ 510 0062 0DF10F00 	 add r0,sp,#15
+ 511 0066 FFF7FEFF 	 bl Flash_Ext_ReadStatus
+ 512              	.LVL57:
+ 513 006a 0028     	 cmp r0,#0
+ 514 006c D3D1     	 bne .L44
+ 335:spi.c         ****     }
+ 515              	 .loc 1 335 0
+ 516 006e 9DF80F10 	 ldrb r1,[sp,#15]
+ 517 0072 0448     	 ldr r0,.L48+8
+ 518 0074 FFF7FEFF 	 bl printf
+ 519              	.LVL58:
+ 520 0078 D0E7     	 b .L43
+ 521              	.L49:
+ 522 007a 00BF     	 .align 2
+ 523              	.L48:
+ 524 007c 48000000 	 .word .LC8
+ 525 0080 00000000 	 .word .LC6
+ 526 0084 2C000000 	 .word .LC7
+ 527              	 .cfi_endproc
+ 528              	.LFE28:
+ 530              	 .section .text.Flash_Ext_WriteEnable,"ax",%progbits
+ 531              	 .align 1
+ 532              	 .syntax unified
+ 533              	 .thumb
+ 534              	 .thumb_func
+ 535              	 .fpu fpv4-sp-d16
+ 537              	Flash_Ext_WriteEnable:
+ 538              	.LFB23:
+ 140:spi.c         ****     uint8_t tx_buf[1];
+ 539              	 .loc 1 140 0
+ 540              	 .cfi_startproc
+ 541              	 
+ 542              	 
+ 543              	.LVL59:
+ 544 0000 00B5     	 push {lr}
+ARM GAS   			page 17
+
+
+ 545              	 .cfi_def_cfa_offset 4
+ 546              	 .cfi_offset 14,-4
+ 547 0002 85B0     	 sub sp,sp,#20
+ 548              	 .cfi_def_cfa_offset 24
+ 144:spi.c         ****         tx_buf[0] = 0x06;
+ 549              	 .loc 1 144 0
+ 550 0004 90B1     	 cbz r0,.L51
+ 145:spi.c         ****     else
+ 551              	 .loc 1 145 0
+ 552 0006 0623     	 movs r3,#6
+ 553 0008 8DF80C30 	 strb r3,[sp,#12]
+ 554              	.L52:
+ 149:spi.c         ****     if (ret ==  FLASH_SPI_TIMEOUT) {
+ 555              	 .loc 1 149 0
+ 556 000c 4FF47A73 	 mov r3,#1000
+ 557 0010 0093     	 str r3,[sp]
+ 558 0012 0023     	 movs r3,#0
+ 559 0014 1A46     	 mov r2,r3
+ 560 0016 0121     	 movs r1,#1
+ 561 0018 03A8     	 add r0,sp,#12
+ 562              	.LVL60:
+ 563 001a FFF7FEFF 	 bl Flash_Spi_Xfer
+ 564              	.LVL61:
+ 150:spi.c         ****         FLOGE("Write enable timeout!\r\n");
+ 565              	 .loc 1 150 0
+ 566 001e B0F1FF3F 	 cmp r0,#-1
+ 567 0022 07D0     	 beq .L56
+ 155:spi.c         **** }
+ 568              	 .loc 1 155 0
+ 569 0024 0020     	 movs r0,#0
+ 570              	.LVL62:
+ 571              	.L50:
+ 156:spi.c         **** 
+ 572              	 .loc 1 156 0
+ 573 0026 05B0     	 add sp,sp,#20
+ 574              	 .cfi_remember_state
+ 575              	 .cfi_def_cfa_offset 4
+ 576              	 
+ 577 0028 5DF804FB 	 ldr pc,[sp],#4
+ 578              	.LVL63:
+ 579              	.L51:
+ 580              	 .cfi_restore_state
+ 147:spi.c         **** 
+ 581              	 .loc 1 147 0
+ 582 002c 0423     	 movs r3,#4
+ 583 002e 8DF80C30 	 strb r3,[sp,#12]
+ 584 0032 EBE7     	 b .L52
+ 585              	.LVL64:
+ 586              	.L56:
+ 151:spi.c         ****         return FLASHIF_ERROR;
+ 587              	 .loc 1 151 0
+ 588 0034 0248     	 ldr r0,.L57
+ 589              	.LVL65:
+ 590 0036 FFF7FEFF 	 bl puts
+ 591              	.LVL66:
+ 152:spi.c         ****     }
+ 592              	 .loc 1 152 0
+ARM GAS   			page 18
+
+
+ 593 003a 4FF0FF30 	 mov r0,#-1
+ 594 003e F2E7     	 b .L50
+ 595              	.L58:
+ 596              	 .align 2
+ 597              	.L57:
+ 598 0040 00000000 	 .word .LC9
+ 599              	 .cfi_endproc
+ 600              	.LFE23:
+ 602              	 .section .text.Flash_Ext_Read,"ax",%progbits
+ 603              	 .align 1
+ 604              	 .syntax unified
+ 605              	 .thumb
+ 606              	 .thumb_func
+ 607              	 .fpu fpv4-sp-d16
+ 609              	Flash_Ext_Read:
+ 610              	.LFB26:
+ 273:spi.c         ****     uint8_t tx_buf[4];
+ 611              	 .loc 1 273 0
+ 612              	 .cfi_startproc
+ 613              	 
+ 614              	 
+ 615              	.LVL67:
+ 616 0000 2DE9F041 	 push {r4,r5,r6,r7,r8,lr}
+ 617              	 .cfi_def_cfa_offset 24
+ 618              	 .cfi_offset 4,-24
+ 619              	 .cfi_offset 5,-20
+ 620              	 .cfi_offset 6,-16
+ 621              	 .cfi_offset 7,-12
+ 622              	 .cfi_offset 8,-8
+ 623              	 .cfi_offset 14,-4
+ 624 0004 84B0     	 sub sp,sp,#16
+ 625              	 .cfi_def_cfa_offset 40
+ 626 0006 8046     	 mov r8,r0
+ 627 0008 0F46     	 mov r7,r1
+ 628 000a 1546     	 mov r5,r2
+ 629              	.LVL68:
+ 278:spi.c         **** 
+ 630              	 .loc 1 278 0
+ 631 000c 1748     	 ldr r0,.L66
+ 632              	.LVL69:
+ 633 000e FFF7FEFF 	 bl printf
+ 634              	.LVL70:
+ 280:spi.c         **** 
+ 635              	 .loc 1 280 0
+ 636 0012 0323     	 movs r3,#3
+ 637 0014 8DF80C30 	 strb r3,[sp,#12]
+ 276:spi.c         **** 
+ 638              	 .loc 1 276 0
+ 639 0018 0024     	 movs r4,#0
+ 640              	.LVL71:
+ 641              	.L60:
+ 282:spi.c         ****         rx_len = len > FLASH_EXT_PAGE_SIZE ? FLASH_EXT_PAGE_SIZE : len;
+ 642              	 .loc 1 282 0
+ 643 001a FDB1     	 cbz r5,.L65
+ 283:spi.c         ****         tx_buf[1] = ((start + offset) >> 16) & 0xff;
+ 644              	 .loc 1 283 0
+ 645 001c 2E46     	 mov r6,r5
+ARM GAS   			page 19
+
+
+ 646 001e B5F5807F 	 cmp r5,#256
+ 647 0022 28BF     	 it cs
+ 648 0024 4FF48076 	 movcs r6,#256
+ 649              	.LVL72:
+ 284:spi.c         ****         tx_buf[2] = ((start + offset) >> 8) & 0xff;
+ 650              	 .loc 1 284 0
+ 651 0028 E319     	 adds r3,r4,r7
+ 652 002a 1A0C     	 lsrs r2,r3,#16
+ 653 002c 8DF80D20 	 strb r2,[sp,#13]
+ 285:spi.c         ****         tx_buf[3] = (start + offset) & 0xff;
+ 654              	 .loc 1 285 0
+ 655 0030 1B0A     	 lsrs r3,r3,#8
+ 656 0032 8DF80E30 	 strb r3,[sp,#14]
+ 286:spi.c         ****         ret = Flash_Spi_Xfer(tx_buf, sizeof(tx_buf), (uint8_t *)buf + offset, rx_len, 1000);
+ 657              	 .loc 1 286 0
+ 658 0036 3B19     	 adds r3,r7,r4
+ 659 0038 8DF80F30 	 strb r3,[sp,#15]
+ 287:spi.c         ****         if (ret ==  FLASH_SPI_TIMEOUT) {
+ 660              	 .loc 1 287 0
+ 661 003c 4FF47A73 	 mov r3,#1000
+ 662 0040 0093     	 str r3,[sp]
+ 663 0042 3346     	 mov r3,r6
+ 664 0044 08EB0402 	 add r2,r8,r4
+ 665 0048 0421     	 movs r1,#4
+ 666 004a 03A8     	 add r0,sp,#12
+ 667 004c FFF7FEFF 	 bl Flash_Spi_Xfer
+ 668              	.LVL73:
+ 288:spi.c         ****             return FLASHIF_ERROR;
+ 669              	 .loc 1 288 0
+ 670 0050 B0F1FF3F 	 cmp r0,#-1
+ 671 0054 06D0     	 beq .L63
+ 291:spi.c         ****         offset += rx_len;
+ 672              	 .loc 1 291 0
+ 673 0056 AD1B     	 subs r5,r5,r6
+ 674              	.LVL74:
+ 292:spi.c         ****     }
+ 675              	 .loc 1 292 0
+ 676 0058 3444     	 add r4,r4,r6
+ 677              	.LVL75:
+ 678 005a DEE7     	 b .L60
+ 679              	.LVL76:
+ 680              	.L65:
+ 294:spi.c         **** }
+ 681              	 .loc 1 294 0
+ 682 005c 0020     	 movs r0,#0
+ 683              	.L59:
+ 295:spi.c         **** 
+ 684              	 .loc 1 295 0
+ 685 005e 04B0     	 add sp,sp,#16
+ 686              	 .cfi_remember_state
+ 687              	 .cfi_def_cfa_offset 24
+ 688              	 
+ 689 0060 BDE8F081 	 pop {r4,r5,r6,r7,r8,pc}
+ 690              	.LVL77:
+ 691              	.L63:
+ 692              	 .cfi_restore_state
+ 289:spi.c         ****         }
+ARM GAS   			page 20
+
+
+ 693              	 .loc 1 289 0
+ 694 0064 4FF0FF30 	 mov r0,#-1
+ 695              	.LVL78:
+ 696 0068 F9E7     	 b .L59
+ 697              	.L67:
+ 698 006a 00BF     	 .align 2
+ 699              	.L66:
+ 700 006c 00000000 	 .word .LC10
+ 701              	 .cfi_endproc
+ 702              	.LFE26:
+ 704              	 .section .text.Flash_Ext_Erase,"ax",%progbits
+ 705              	 .align 1
+ 706              	 .syntax unified
+ 707              	 .thumb
+ 708              	 .thumb_func
+ 709              	 .fpu fpv4-sp-d16
+ 711              	Flash_Ext_Erase:
+ 712              	.LFB25:
+ 221:spi.c         ****     uint32_t block_num, block_size;
+ 713              	 .loc 1 221 0
+ 714              	 .cfi_startproc
+ 715              	 
+ 716              	 
+ 717              	.LVL79:
+ 718 0000 F0B5     	 push {r4,r5,r6,r7,lr}
+ 719              	 .cfi_def_cfa_offset 20
+ 720              	 .cfi_offset 4,-20
+ 721              	 .cfi_offset 5,-16
+ 722              	 .cfi_offset 6,-12
+ 723              	 .cfi_offset 7,-8
+ 724              	 .cfi_offset 14,-4
+ 725 0002 85B0     	 sub sp,sp,#20
+ 726              	 .cfi_def_cfa_offset 40
+ 228:spi.c         ****         block_size = FLASH_EXT_SECTOR_SIZE;
+ 727              	 .loc 1 228 0
+ 728 0004 B1F5803F 	 cmp r1,#65536
+ 729 0008 12D2     	 bcs .L69
+ 730              	.LVL80:
+ 230:spi.c         ****     } else {
+ 731              	 .loc 1 230 0
+ 732 000a 2023     	 movs r3,#32
+ 733 000c 8DF80C30 	 strb r3,[sp,#12]
+ 229:spi.c         ****         tx_buf[0] = 0x20;
+ 734              	 .loc 1 229 0
+ 735 0010 4FF48057 	 mov r7,#4096
+ 736              	.LVL81:
+ 737              	.L70:
+ 235:spi.c         ****     size = ALIGN(size, block_size);
+ 738              	 .loc 1 235 0
+ 739 0014 7A42     	 negs r2,r7
+ 740 0016 02EA0005 	 and r5,r2,r0
+ 741              	.LVL82:
+ 236:spi.c         ****     block_num = size / block_size;
+ 742              	 .loc 1 236 0
+ 743 001a 3944     	 add r1,r1,r7
+ 744              	.LVL83:
+ 745 001c 0139     	 subs r1,r1,#1
+ARM GAS   			page 21
+
+
+ 746 001e 0A40     	 ands r2,r2,r1
+ 747              	.LVL84:
+ 237:spi.c         **** 
+ 748              	 .loc 1 237 0
+ 749 0020 B2FBF7F4 	 udiv r4,r2,r7
+ 750              	.LVL85:
+ 239:spi.c         **** 
+ 751              	 .loc 1 239 0
+ 752 0024 2346     	 mov r3,r4
+ 753 0026 2946     	 mov r1,r5
+ 754 0028 2348     	 ldr r0,.L80
+ 755 002a FFF7FEFF 	 bl printf
+ 756              	.LVL86:
+ 241:spi.c         ****         FLOGD("0x%08lx %ld\r\n", start, block_num);
+ 757              	 .loc 1 241 0
+ 758 002e 07E0     	 b .L71
+ 759              	.LVL87:
+ 760              	.L69:
+ 233:spi.c         ****     }
+ 761              	 .loc 1 233 0
+ 762 0030 5223     	 movs r3,#82
+ 763 0032 8DF80C30 	 strb r3,[sp,#12]
+ 232:spi.c         ****         tx_buf[0] = 0x52;
+ 764              	 .loc 1 232 0
+ 765 0036 4FF48037 	 mov r7,#65536
+ 766 003a EBE7     	 b .L70
+ 767              	.LVL88:
+ 768              	.L73:
+ 266:spi.c         ****     }
+ 769              	 .loc 1 266 0
+ 770 003c 3D44     	 add r5,r5,r7
+ 771              	.LVL89:
+ 241:spi.c         ****         FLOGD("0x%08lx %ld\r\n", start, block_num);
+ 772              	 .loc 1 241 0
+ 773 003e 3446     	 mov r4,r6
+ 774              	.LVL90:
+ 775              	.L71:
+ 776 0040 661E     	 subs r6,r4,#1
+ 777              	.LVL91:
+ 778 0042 84B3     	 cbz r4,.L79
+ 242:spi.c         ****         if (Flash_Ext_WriteEnable(1)) {
+ 779              	 .loc 1 242 0
+ 780 0044 3246     	 mov r2,r6
+ 781 0046 2946     	 mov r1,r5
+ 782 0048 1C48     	 ldr r0,.L80+4
+ 783 004a FFF7FEFF 	 bl printf
+ 784              	.LVL92:
+ 243:spi.c         ****             return FLASHIF_ERROR;
+ 785              	 .loc 1 243 0
+ 786 004e 0120     	 movs r0,#1
+ 787 0050 FFF7FEFF 	 bl Flash_Ext_WriteEnable
+ 788              	.LVL93:
+ 789 0054 50BB     	 cbnz r0,.L76
+ 246:spi.c         ****         tx_buf[2] = (start >> 8) & 0xff;
+ 790              	 .loc 1 246 0
+ 791 0056 2B0C     	 lsrs r3,r5,#16
+ 792 0058 8DF80D30 	 strb r3,[sp,#13]
+ARM GAS   			page 22
+
+
+ 247:spi.c         ****         tx_buf[3] = start & 0xff;
+ 793              	 .loc 1 247 0
+ 794 005c 2B0A     	 lsrs r3,r5,#8
+ 795 005e 8DF80E30 	 strb r3,[sp,#14]
+ 248:spi.c         ****         ret = Flash_Spi_Xfer(tx_buf, sizeof(tx_buf), NULL, 0, 1000);
+ 796              	 .loc 1 248 0
+ 797 0062 8DF80F50 	 strb r5,[sp,#15]
+ 249:spi.c         ****         if (ret ==  FLASH_SPI_TIMEOUT) {
+ 798              	 .loc 1 249 0
+ 799 0066 4FF47A73 	 mov r3,#1000
+ 800 006a 0093     	 str r3,[sp]
+ 801 006c 0023     	 movs r3,#0
+ 802 006e 1A46     	 mov r2,r3
+ 803 0070 0421     	 movs r1,#4
+ 804 0072 03A8     	 add r0,sp,#12
+ 805 0074 FFF7FEFF 	 bl Flash_Spi_Xfer
+ 806              	.LVL94:
+ 250:spi.c         ****             return FLASHIF_ERROR;
+ 807              	 .loc 1 250 0
+ 808 0078 B0F1FF3F 	 cmp r0,#-1
+ 809 007c 19D0     	 beq .L77
+ 254:spi.c         ****         do {
+ 810              	 .loc 1 254 0
+ 811 007e 0024     	 movs r4,#0
+ 812              	.L74:
+ 813              	.LVL95:
+ 256:spi.c         ****             ret = Flash_Ext_ReadStatus(&status);
+ 814              	 .loc 1 256 0
+ 815 0080 0120     	 movs r0,#1
+ 816              	.LVL96:
+ 817 0082 FFF7FEFF 	 bl vTaskDelay
+ 818              	.LVL97:
+ 257:spi.c         ****             if (ret ==  FLASH_SPI_TIMEOUT) {
+ 819              	 .loc 1 257 0
+ 820 0086 0DF10B00 	 add r0,sp,#11
+ 821 008a FFF7FEFF 	 bl Flash_Ext_ReadStatus
+ 822              	.LVL98:
+ 258:spi.c         ****                 return FLASHIF_ERROR;
+ 823              	 .loc 1 258 0
+ 824 008e B0F1FF3F 	 cmp r0,#-1
+ 825 0092 09D0     	 beq .L68
+ 261:spi.c         ****                 break;
+ 826              	 .loc 1 261 0
+ 827 0094 0A2C     	 cmp r4,#10
+ 828 0096 D1D8     	 bhi .L73
+ 264:spi.c         ****         } while (status & 0x01);
+ 829              	 .loc 1 264 0
+ 830 0098 0134     	 adds r4,r4,#1
+ 831              	.LVL99:
+ 265:spi.c         ****         start += block_size;
+ 832              	 .loc 1 265 0
+ 833 009a 9DF80B30 	 ldrb r3,[sp,#11]
+ 834 009e 13F0010F 	 tst r3,#1
+ 835 00a2 EDD1     	 bne .L74
+ 836 00a4 CAE7     	 b .L73
+ 837              	.LVL100:
+ 838              	.L79:
+ARM GAS   			page 23
+
+
+ 269:spi.c         **** }
+ 839              	 .loc 1 269 0
+ 840 00a6 0020     	 movs r0,#0
+ 841              	.L68:
+ 270:spi.c         **** 
+ 842              	 .loc 1 270 0
+ 843 00a8 05B0     	 add sp,sp,#20
+ 844              	 .cfi_remember_state
+ 845              	 .cfi_def_cfa_offset 20
+ 846              	 
+ 847 00aa F0BD     	 pop {r4,r5,r6,r7,pc}
+ 848              	.LVL101:
+ 849              	.L76:
+ 850              	 .cfi_restore_state
+ 244:spi.c         ****         }
+ 851              	 .loc 1 244 0
+ 852 00ac 4FF0FF30 	 mov r0,#-1
+ 853 00b0 FAE7     	 b .L68
+ 854              	.LVL102:
+ 855              	.L77:
+ 251:spi.c         ****         }
+ 856              	 .loc 1 251 0
+ 857 00b2 4FF0FF30 	 mov r0,#-1
+ 858              	.LVL103:
+ 859 00b6 F7E7     	 b .L68
+ 860              	.L81:
+ 861              	 .align 2
+ 862              	.L80:
+ 863 00b8 00000000 	 .word .LC11
+ 864 00bc 20000000 	 .word .LC12
+ 865              	 .cfi_endproc
+ 866              	.LFE25:
+ 868              	 .section .text.Flash_Ext_Program,"ax",%progbits
+ 869              	 .align 1
+ 870              	 .syntax unified
+ 871              	 .thumb
+ 872              	 .thumb_func
+ 873              	 .fpu fpv4-sp-d16
+ 875              	Flash_Ext_Program:
+ 876              	.LFB24:
+ 159:spi.c         ****     uint8_t tx_buf[4 + FLASH_EXT_PAGE_SIZE];
+ 877              	 .loc 1 159 0
+ 878              	 .cfi_startproc
+ 879              	 
+ 880              	 
+ 881              	.LVL104:
+ 882 0000 2DE9F043 	 push {r4,r5,r6,r7,r8,r9,lr}
+ 883              	 .cfi_def_cfa_offset 28
+ 884              	 .cfi_offset 4,-28
+ 885              	 .cfi_offset 5,-24
+ 886              	 .cfi_offset 6,-20
+ 887              	 .cfi_offset 7,-16
+ 888              	 .cfi_offset 8,-12
+ 889              	 .cfi_offset 9,-8
+ 890              	 .cfi_offset 14,-4
+ 891 0004 C5B0     	 sub sp,sp,#276
+ 892              	 .cfi_def_cfa_offset 304
+ARM GAS   			page 24
+
+
+ 893 0006 0546     	 mov r5,r0
+ 894 0008 0E46     	 mov r6,r1
+ 895 000a 1746     	 mov r7,r2
+ 173:spi.c         **** 
+ 896              	 .loc 1 173 0
+ 897 000c 02F1FF04 	 add r4,r2,#255
+ 898 0010 240A     	 lsrs r4,r4,#8
+ 899              	.LVL105:
+ 175:spi.c         **** 
+ 900              	 .loc 1 175 0
+ 901 0012 2346     	 mov r3,r4
+ 902 0014 0146     	 mov r1,r0
+ 903              	.LVL106:
+ 904 0016 2A48     	 ldr r0,.L95
+ 905              	.LVL107:
+ 906 0018 FFF7FEFF 	 bl printf
+ 907              	.LVL108:
+ 177:spi.c         ****     while (page_num--) {
+ 908              	 .loc 1 177 0
+ 909 001c 0223     	 movs r3,#2
+ 910 001e 8DF80C30 	 strb r3,[sp,#12]
+ 178:spi.c         ****         if (Flash_Ext_WriteEnable(1)) {
+ 911              	 .loc 1 178 0
+ 912 0022 0AE0     	 b .L83
+ 913              	.LVL109:
+ 914              	.L94:
+ 190:spi.c         ****         }
+ 915              	 .loc 1 190 0
+ 916 0024 4FF48072 	 mov r2,#256
+ 917 0028 FF21     	 movs r1,#255
+ 918 002a 04A8     	 add r0,sp,#16
+ 919 002c FFF7FEFF 	 bl memset
+ 920              	.LVL110:
+ 189:spi.c         ****             memset(&tx_buf[4], 0xff, FLASH_EXT_PAGE_SIZE);
+ 921              	 .loc 1 189 0
+ 922 0030 B946     	 mov r9,r7
+ 923 0032 15E0     	 b .L85
+ 924              	.LVL111:
+ 925              	.L86:
+ 213:spi.c         ****         dst += data_len;
+ 926              	 .loc 1 213 0
+ 927 0034 4E44     	 add r6,r6,r9
+ 928              	.LVL112:
+ 214:spi.c         ****     }
+ 929              	 .loc 1 214 0
+ 930 0036 4D44     	 add r5,r5,r9
+ 931              	.LVL113:
+ 178:spi.c         ****         if (Flash_Ext_WriteEnable(1)) {
+ 932              	 .loc 1 178 0
+ 933 0038 4446     	 mov r4,r8
+ 934              	.LVL114:
+ 935              	.L83:
+ 936 003a 04F1FF38 	 add r8,r4,#-1
+ 937              	.LVL115:
+ 938 003e ACB3     	 cbz r4,.L93
+ 179:spi.c         ****             return FLASHIF_ERROR;
+ 939              	 .loc 1 179 0
+ARM GAS   			page 25
+
+
+ 940 0040 0120     	 movs r0,#1
+ 941 0042 FFF7FEFF 	 bl Flash_Ext_WriteEnable
+ 942              	.LVL116:
+ 943 0046 A8BB     	 cbnz r0,.L89
+ 182:spi.c         ****         tx_buf[2] = (dst >> 8) & 0xff;
+ 944              	 .loc 1 182 0
+ 945 0048 2B0C     	 lsrs r3,r5,#16
+ 946 004a 8DF80D30 	 strb r3,[sp,#13]
+ 183:spi.c         ****         tx_buf[3] = dst & 0xff;
+ 947              	 .loc 1 183 0
+ 948 004e 2B0A     	 lsrs r3,r5,#8
+ 949 0050 8DF80E30 	 strb r3,[sp,#14]
+ 184:spi.c         **** 
+ 950              	 .loc 1 184 0
+ 951 0054 8DF80F50 	 strb r5,[sp,#15]
+ 186:spi.c         ****             data_len = FLASH_EXT_PAGE_SIZE;
+ 952              	 .loc 1 186 0
+ 953 0058 FF2F     	 cmp r7,#255
+ 954 005a E3D9     	 bls .L94
+ 187:spi.c         ****         } else {
+ 955              	 .loc 1 187 0
+ 956 005c 4FF48079 	 mov r9,#256
+ 957              	.L85:
+ 958              	.LVL117:
+ 193:spi.c         **** 
+ 959              	 .loc 1 193 0
+ 960 0060 4A46     	 mov r2,r9
+ 961 0062 3146     	 mov r1,r6
+ 962 0064 04A8     	 add r0,sp,#16
+ 963 0066 FFF7FEFF 	 bl memcpy
+ 964              	.LVL118:
+ 195:spi.c         ****         if (ret ==  FLASH_SPI_TIMEOUT) {
+ 965              	 .loc 1 195 0
+ 966 006a 4FF47A73 	 mov r3,#1000
+ 967 006e 0093     	 str r3,[sp]
+ 968 0070 0023     	 movs r3,#0
+ 969 0072 1A46     	 mov r2,r3
+ 970 0074 4FF48271 	 mov r1,#260
+ 971 0078 03A8     	 add r0,sp,#12
+ 972 007a FFF7FEFF 	 bl Flash_Spi_Xfer
+ 973              	.LVL119:
+ 196:spi.c         ****             return FLASHIF_ERROR;
+ 974              	 .loc 1 196 0
+ 975 007e B0F1FF3F 	 cmp r0,#-1
+ 976 0082 1AD0     	 beq .L91
+ 200:spi.c         ****         do {
+ 977              	 .loc 1 200 0
+ 978 0084 0024     	 movs r4,#0
+ 979              	.LVL120:
+ 980              	.L87:
+ 202:spi.c         ****             if (ret ==  FLASH_SPI_TIMEOUT) {
+ 981              	 .loc 1 202 0
+ 982 0086 0DF10B00 	 add r0,sp,#11
+ 983 008a FFF7FEFF 	 bl Flash_Ext_ReadStatus
+ 984              	.LVL121:
+ 203:spi.c         ****                 return FLASHIF_ERROR;
+ 985              	 .loc 1 203 0
+ARM GAS   			page 26
+
+
+ 986 008e B0F1FF3F 	 cmp r0,#-1
+ 987 0092 0CD0     	 beq .L82
+ 206:spi.c         ****             if (start_tick > 10) {
+ 988              	 .loc 1 206 0
+ 989 0094 0120     	 movs r0,#1
+ 990              	.LVL122:
+ 991 0096 FFF7FEFF 	 bl vTaskDelay
+ 992              	.LVL123:
+ 207:spi.c         ****                 break;
+ 993              	 .loc 1 207 0
+ 994 009a 0A2C     	 cmp r4,#10
+ 995 009c CAD8     	 bhi .L86
+ 210:spi.c         ****         } while (status & 0x01);
+ 996              	 .loc 1 210 0
+ 997 009e 0134     	 adds r4,r4,#1
+ 998              	.LVL124:
+ 211:spi.c         **** 
+ 999              	 .loc 1 211 0
+ 1000 00a0 9DF80B30 	 ldrb r3,[sp,#11]
+ 1001 00a4 13F0010F 	 tst r3,#1
+ 1002 00a8 EDD1     	 bne .L87
+ 1003 00aa C3E7     	 b .L86
+ 1004              	.LVL125:
+ 1005              	.L93:
+ 217:spi.c         **** }
+ 1006              	 .loc 1 217 0
+ 1007 00ac 0020     	 movs r0,#0
+ 1008              	.L82:
+ 218:spi.c         **** 
+ 1009              	 .loc 1 218 0
+ 1010 00ae 45B0     	 add sp,sp,#276
+ 1011              	 .cfi_remember_state
+ 1012              	 .cfi_def_cfa_offset 28
+ 1013              	 
+ 1014 00b0 BDE8F083 	 pop {r4,r5,r6,r7,r8,r9,pc}
+ 1015              	.LVL126:
+ 1016              	.L89:
+ 1017              	 .cfi_restore_state
+ 180:spi.c         ****         }
+ 1018              	 .loc 1 180 0
+ 1019 00b4 4FF0FF30 	 mov r0,#-1
+ 1020 00b8 F9E7     	 b .L82
+ 1021              	.LVL127:
+ 1022              	.L91:
+ 197:spi.c         ****         }
+ 1023              	 .loc 1 197 0
+ 1024 00ba 4FF0FF30 	 mov r0,#-1
+ 1025              	.LVL128:
+ 1026 00be F6E7     	 b .L82
+ 1027              	.L96:
+ 1028              	 .align 2
+ 1029              	.L95:
+ 1030 00c0 00000000 	 .word .LC13
+ 1031              	 .cfi_endproc
+ 1032              	.LFE24:
+ 1034              	 .section .text.__io_puts,"ax",%progbits
+ 1035              	 .align 1
+ARM GAS   			page 27
+
+
+ 1036              	 .global __io_puts
+ 1037              	 .syntax unified
+ 1038              	 .thumb
+ 1039              	 .thumb_func
+ 1040              	 .fpu fpv4-sp-d16
+ 1042              	__io_puts:
+ 1043              	.LFB29:
+ 343:spi.c         **** 
+ 344:spi.c         **** int __io_puts(char *data, int len)
+ 345:spi.c         **** {
+ 1044              	 .loc 1 345 0
+ 1045              	 .cfi_startproc
+ 1046              	 
+ 1047              	 
+ 1048              	.LVL129:
+ 1049 0000 10B5     	 push {r4,lr}
+ 1050              	 .cfi_def_cfa_offset 8
+ 1051              	 .cfi_offset 4,-8
+ 1052              	 .cfi_offset 14,-4
+ 1053              	.LVL130:
+ 346:spi.c         ****     int ret = 0;
+ 347:spi.c         ****     if (g_huart) {
+ 1054              	 .loc 1 347 0
+ 1055 0002 064B     	 ldr r3,.L101
+ 1056 0004 1C68     	 ldr r4,[r3]
+ 1057 0006 3CB1     	 cbz r4,.L99
+ 1058 0008 0A46     	 mov r2,r1
+ 1059 000a 0146     	 mov r1,r0
+ 1060              	.LVL131:
+ 348:spi.c         ****         ret = gsdk_uart_write(g_huart, (uint8_t *)data, len, 1000);
+ 1061              	 .loc 1 348 0
+ 1062 000c 4FF47A73 	 mov r3,#1000
+ 1063 0010 2046     	 mov r0,r4
+ 1064              	.LVL132:
+ 1065 0012 FFF7FEFF 	 bl gsdk_uart_write
+ 1066              	.LVL133:
+ 1067              	.L97:
+ 349:spi.c         ****     }
+ 350:spi.c         ****     return ret;
+ 351:spi.c         **** }
+ 1068              	 .loc 1 351 0
+ 1069 0016 10BD     	 pop {r4,pc}
+ 1070              	.LVL134:
+ 1071              	.L99:
+ 346:spi.c         ****     if (g_huart) {
+ 1072              	 .loc 1 346 0
+ 1073 0018 0020     	 movs r0,#0
+ 1074              	.LVL135:
+ 350:spi.c         **** }
+ 1075              	 .loc 1 350 0
+ 1076 001a FCE7     	 b .L97
+ 1077              	.L102:
+ 1078              	 .align 2
+ 1079              	.L101:
+ 1080 001c 00000000 	 .word .LANCHOR3
+ 1081              	 .cfi_endproc
+ 1082              	.LFE29:
+ARM GAS   			page 28
+
+
+ 1084              	 .section .text.log_init,"ax",%progbits
+ 1085              	 .align 1
+ 1086              	 .global log_init
+ 1087              	 .syntax unified
+ 1088              	 .thumb
+ 1089              	 .thumb_func
+ 1090              	 .fpu fpv4-sp-d16
+ 1092              	log_init:
+ 1093              	.LFB30:
+ 352:spi.c         **** 
+ 353:spi.c         **** int log_init(void)
+ 354:spi.c         **** {
+ 1094              	 .loc 1 354 0
+ 1095              	 .cfi_startproc
+ 1096              	 
+ 1097              	 
+ 1098 0000 00B5     	 push {lr}
+ 1099              	 .cfi_def_cfa_offset 4
+ 1100              	 .cfi_offset 14,-4
+ 1101 0002 83B0     	 sub sp,sp,#12
+ 1102              	 .cfi_def_cfa_offset 16
+ 355:spi.c         ****     uart_config_t uart_config;
+ 356:spi.c         ****     gsdk_status_t status;
+ 357:spi.c         **** 
+ 358:spi.c         ****     uart_config.baudrate    = UART_BAUDRATE_115200;
+ 1103              	 .loc 1 358 0
+ 1104 0004 0923     	 movs r3,#9
+ 1105 0006 8DF80430 	 strb r3,[sp,#4]
+ 359:spi.c         ****     uart_config.parity      = UART_PARITY_NONE;
+ 1106              	 .loc 1 359 0
+ 1107 000a 0020     	 movs r0,#0
+ 1108 000c 8DF80700 	 strb r0,[sp,#7]
+ 360:spi.c         ****     uart_config.stop_bit    = UART_STOP_BIT_1;
+ 1109              	 .loc 1 360 0
+ 1110 0010 8DF80600 	 strb r0,[sp,#6]
+ 361:spi.c         ****     uart_config.word_length = UART_WORD_LENGTH_8;
+ 1111              	 .loc 1 361 0
+ 1112 0014 0323     	 movs r3,#3
+ 1113 0016 8DF80530 	 strb r3,[sp,#5]
+ 362:spi.c         **** 
+ 363:spi.c         ****     status = gsdk_uart_open(UART_0, &uart_config, &g_huart);
+ 1114              	 .loc 1 363 0
+ 1115 001a 094A     	 ldr r2,.L108
+ 1116 001c 01A9     	 add r1,sp,#4
+ 1117 001e FFF7FEFF 	 bl gsdk_uart_open
+ 1118              	.LVL136:
+ 364:spi.c         ****     if (status != GSDK_SUCCESS) {
+ 1119              	 .loc 1 364 0
+ 1120 0022 30B9     	 cbnz r0,.L107
+ 365:spi.c         ****         gsdk_syslog_printf("[OEM_DEMO]: failed to open uart %d\r\n", status);
+ 366:spi.c         ****         return -1;
+ 367:spi.c         ****     }
+ 368:spi.c         **** 
+ 369:spi.c         ****     printf("[OEM_DEMO] log init....OK\r\n");
+ 1121              	 .loc 1 369 0
+ 1122 0024 0748     	 ldr r0,.L108+4
+ 1123              	.LVL137:
+ARM GAS   			page 29
+
+
+ 1124 0026 FFF7FEFF 	 bl puts
+ 1125              	.LVL138:
+ 370:spi.c         **** 
+ 371:spi.c         ****     return 0;
+ 1126              	 .loc 1 371 0
+ 1127 002a 0020     	 movs r0,#0
+ 1128              	.L103:
+ 372:spi.c         **** }
+ 1129              	 .loc 1 372 0
+ 1130 002c 03B0     	 add sp,sp,#12
+ 1131              	 .cfi_remember_state
+ 1132              	 .cfi_def_cfa_offset 4
+ 1133              	 
+ 1134 002e 5DF804FB 	 ldr pc,[sp],#4
+ 1135              	.LVL139:
+ 1136              	.L107:
+ 1137              	 .cfi_restore_state
+ 1138 0032 0146     	 mov r1,r0
+ 365:spi.c         ****         gsdk_syslog_printf("[OEM_DEMO]: failed to open uart %d\r\n", status);
+ 1139              	 .loc 1 365 0
+ 1140 0034 0448     	 ldr r0,.L108+8
+ 1141              	.LVL140:
+ 1142 0036 FFF7FEFF 	 bl gsdk_syslog_printf
+ 1143              	.LVL141:
+ 366:spi.c         ****     }
+ 1144              	 .loc 1 366 0
+ 1145 003a 4FF0FF30 	 mov r0,#-1
+ 1146 003e F5E7     	 b .L103
+ 1147              	.L109:
+ 1148              	 .align 2
+ 1149              	.L108:
+ 1150 0040 00000000 	 .word .LANCHOR3
+ 1151 0044 28000000 	 .word .LC15
+ 1152 0048 00000000 	 .word .LC14
+ 1153              	 .cfi_endproc
+ 1154              	.LFE30:
+ 1156              	 .section .text.main,"ax",%progbits
+ 1157              	 .align 1
+ 1158              	 .global main
+ 1159              	 .syntax unified
+ 1160              	 .thumb
+ 1161              	 .thumb_func
+ 1162              	 .fpu fpv4-sp-d16
+ 1164              	main:
+ 1165              	.LFB31:
+ 373:spi.c         **** 
+ 374:spi.c         **** static const char gsdk_test_data[] =
+ 375:spi.c         ****     "-----BEGIN CERTIFICATE-----\r\n"
+ 376:spi.c         ****     "MIIDhTCCAm2gAwIBAgIBBDANBgkqhkiG9w0BAQsFADA7MQswCQYDVQQGEwJOTDER\r\n"
+ 377:spi.c         ****     "MA8GA1UECgwIUG9sYXJTU0wxGTAXBgNVBAMMEFBvbGFyU1NMIFRlc3QgQ0EwHhcN\r\n"
+ 378:spi.c         ****     "MTcwNTA1MTMwNzU5WhcNMjcwNTA2MTMwNzU5WjA8MQswCQYDVQQGEwJOTDERMA8G\r\n"
+ 379:spi.c         ****     "A1UECgwIUG9sYXJTU0wxGjAYBgNVBAMMEVBvbGFyU1NMIENsaWVudCAyMIIBIjAN\r\n"
+ 380:spi.c         ****     "BgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyHTEzLn5tXnpRdkUYLB9u5Pyax6f\r\n"
+ 381:spi.c         ****     "M60Nj4o8VmXl3ETZzGaFB9X4J7BKNdBjngpuG7fa8H6r7gwQk4ZJGDTzqCrSV/Uu\r\n"
+ 382:spi.c         ****     "1C93KYRhTYJQj6eVSHD1bk2y1RPD0hrt5kPqQhTrdOrA7R/UV06p86jt0uDBMHEw\r\n"
+ 383:spi.c         ****     "MjDV0/YI0FZPRo7yX/k9Z5GIMC5Cst99++UMd//sMcB4j7/Cf8qtbCHWjdmLao5v\r\n"
+ 384:spi.c         ****     "4Jv4EFbMs44TFeY0BGbH7vk2DmqV9gmaBmf0ZXH4yqSxJeD+PIs1BGe64E92hfx/\r\n"
+ARM GAS   			page 30
+
+
+ 385:spi.c         ****     "/DZrtenNLQNiTrM9AM+vdqBpVoNq0qjU51Bx5rU2BXcFbXvI5MT9TNUhXwIDAQAB\r\n"
+ 386:spi.c         ****     "o4GSMIGPMB0GA1UdDgQWBBRxoQBzckAvVHZeM/xSj7zx3WtGITBjBgNVHSMEXDBa\r\n"
+ 387:spi.c         ****     "gBS0WuSls97SUva51aaVD+s+vMf9/6E/pD0wOzELMAkGA1UEBhMCTkwxETAPBgNV\r\n"
+ 388:spi.c         ****     "BAoMCFBvbGFyU1NMMRkwFwYDVQQDDBBQb2xhclNTTCBUZXN0IENBggEAMAkGA1Ud\r\n"
+ 389:spi.c         ****     "EwQCMAAwDQYJKoZIhvcNAQELBQADggEBAC7yO786NvcHpK8UovKIG9cB32oSQQom\r\n"
+ 390:spi.c         ****     "LoR0eHDRzdqEkoq7yGZufHFiRAAzbMqJfogRtxlrWAeB4y/jGaMBV25IbFOIcH2W\r\n"
+ 391:spi.c         ****     "iCEaMMbG+VQLKNvuC63kmw/Zewc9ThM6Pa1Hcy0axT0faf1B/U01j0FIcw/6mTfK\r\n"
+ 392:spi.c         ****     "D8w48OIwc1yr0JtutCVjig5DC0yznGMt32RyseOLcUe+lfq005v2PAiCozr5X8rE\r\n"
+ 393:spi.c         ****     "ofGZpiM2NqRPePgYy+Vc75Zk28xkRQq1ncprgQb3S4vTsZdScpM9hLf+eMlrgqlj\r\n"
+ 394:spi.c         ****     "c5PLSkXBeLE5+fedkyfTaLxxQlgCpuoOhKBm04/R1pWNzUHyqagjO9Q=\r\n"
+ 395:spi.c         ****     "-----END CERTIFICATE-----\r\n";
+ 396:spi.c         **** 
+ 397:spi.c         **** /*************************************************************************
+ 398:spi.c         ****   * first: initialise spi controller, read spi flash ID and status
+ 399:spi.c         ****   * second: erase spi flash
+ 400:spi.c         ****   * write: write the gsdk_test_data to spi flash
+ 401:spi.c         ****   * read: read data from spi flash
+ 402:spi.c         ****   * compare: compare gsdk_test_data with the data read from spi flash
+ 403:spi.c         ****   ***********************************************************************/
+ 404:spi.c         **** int main(void)
+ 405:spi.c         **** {
+ 1166              	 .loc 1 405 0
+ 1167              	 .cfi_startproc
+ 1168              	 
+ 1169              	 
+ 1170 0000 B0B5     	 push {r4,r5,r7,lr}
+ 1171              	 .cfi_def_cfa_offset 16
+ 1172              	 .cfi_offset 4,-16
+ 1173              	 .cfi_offset 5,-12
+ 1174              	 .cfi_offset 7,-8
+ 1175              	 .cfi_offset 14,-4
+ 1176 0002 00AF     	 add r7,sp,#0
+ 1177              	 .cfi_def_cfa_register 7
+ 1178              	.LVL142:
+ 406:spi.c         ****     int  ret;
+ 407:spi.c         ****     int  buf_size = sizeof(gsdk_test_data);
+ 408:spi.c         ****     char buf[buf_size];
+ 1179              	 .loc 1 408 0
+ 1180 0004 ADF5A36D 	 sub sp,sp,#1304
+ 1181              	.LVL143:
+ 409:spi.c         **** 
+ 410:spi.c         ****     log_init();
+ 1182              	 .loc 1 410 0
+ 1183 0008 FFF7FEFF 	 bl log_init
+ 1184              	.LVL144:
+ 411:spi.c         **** 
+ 412:spi.c         ****     printf("Flash_Ext_Init\r\n");
+ 1185              	 .loc 1 412 0
+ 1186 000c 2548     	 ldr r0,.L121
+ 1187 000e FFF7FEFF 	 bl puts
+ 1188              	.LVL145:
+ 413:spi.c         **** 
+ 414:spi.c         ****     Flash_Ext_Init();
+ 1189              	 .loc 1 414 0
+ 1190 0012 FFF7FEFF 	 bl Flash_Ext_Init
+ 1191              	.LVL146:
+ 415:spi.c         **** 
+ARM GAS   			page 31
+
+
+ 416:spi.c         ****     printf("Flash_Ext_Erase\r\n");
+ 1192              	 .loc 1 416 0
+ 1193 0016 2448     	 ldr r0,.L121+4
+ 1194 0018 FFF7FEFF 	 bl puts
+ 1195              	.LVL147:
+ 417:spi.c         **** 
+ 418:spi.c         ****     ret = Flash_Ext_Erase(TEST_ADDR, buf_size);
+ 1196              	 .loc 1 418 0
+ 1197 001c 40F21751 	 movw r1,#1303
+ 1198 0020 4FF40030 	 mov r0,#131072
+ 1199 0024 FFF7FEFF 	 bl Flash_Ext_Erase
+ 1200              	.LVL148:
+ 419:spi.c         ****     if (ret != FLASHIF_OK) {
+ 1201              	 .loc 1 419 0
+ 1202 0028 20BB     	 cbnz r0,.L117
+ 1203 002a 6C46     	 mov r4,sp
+ 420:spi.c         ****         printf("Flash_Ext_Erase Failed.\r\n");
+ 421:spi.c         ****         return -1;
+ 422:spi.c         ****     }
+ 423:spi.c         **** 
+ 424:spi.c         ****     printf("Flash_Ext_Program\r\n");
+ 1204              	 .loc 1 424 0
+ 1205 002c 1F48     	 ldr r0,.L121+8
+ 1206              	.LVL149:
+ 1207 002e FFF7FEFF 	 bl puts
+ 1208              	.LVL150:
+ 425:spi.c         **** 
+ 426:spi.c         ****     ret = Flash_Ext_Program(TEST_ADDR, gsdk_test_data, buf_size);
+ 1209              	 .loc 1 426 0
+ 1210 0032 40F21752 	 movw r2,#1303
+ 1211 0036 1E49     	 ldr r1,.L121+12
+ 1212 0038 4FF40030 	 mov r0,#131072
+ 1213 003c FFF7FEFF 	 bl Flash_Ext_Program
+ 1214              	.LVL151:
+ 427:spi.c         ****     if (ret != FLASHIF_OK) {
+ 1215              	 .loc 1 427 0
+ 1216 0040 F0B9     	 cbnz r0,.L118
+ 1217              	.LVL152:
+ 428:spi.c         ****         printf("Flash_Ext_Program Failed.\r\n");
+ 429:spi.c         ****         return -1;
+ 430:spi.c         ****     }
+ 431:spi.c         **** 
+ 432:spi.c         ****     printf("Flash_Ext_Read\r\n");
+ 1218              	 .loc 1 432 0
+ 1219 0042 1C48     	 ldr r0,.L121+16
+ 1220              	.LVL153:
+ 1221 0044 FFF7FEFF 	 bl puts
+ 1222              	.LVL154:
+ 433:spi.c         **** 
+ 434:spi.c         ****     ret = Flash_Ext_Read(buf, TEST_ADDR, buf_size);
+ 1223              	 .loc 1 434 0
+ 1224 0048 40F21752 	 movw r2,#1303
+ 1225 004c 4FF40031 	 mov r1,#131072
+ 1226 0050 2046     	 mov r0,r4
+ 1227 0052 FFF7FEFF 	 bl Flash_Ext_Read
+ 1228              	.LVL155:
+ 435:spi.c         ****     if (ret != FLASHIF_OK) {
+ARM GAS   			page 32
+
+
+ 1229              	 .loc 1 435 0
+ 1230 0056 0546     	 mov r5,r0
+ 1231 0058 C0B9     	 cbnz r0,.L119
+ 436:spi.c         ****         printf("Flash_Ext_Read Failed.\r\n");
+ 437:spi.c         ****         return -1;
+ 438:spi.c         ****     }
+ 439:spi.c         **** 
+ 440:spi.c         ****     ret = strcmp(gsdk_test_data, buf);
+ 1232              	 .loc 1 440 0
+ 1233 005a 2146     	 mov r1,r4
+ 1234 005c 1448     	 ldr r0,.L121+12
+ 1235              	.LVL156:
+ 1236 005e FFF7FEFF 	 bl strcmp
+ 1237              	.LVL157:
+ 441:spi.c         ****     if (!ret) {
+ 1238              	 .loc 1 441 0
+ 1239 0062 0446     	 mov r4,r0
+ 1240              	.LVL158:
+ 1241 0064 C0B1     	 cbz r0,.L120
+ 442:spi.c         ****         printf("Flash Test OK!\r\n");
+ 443:spi.c         ****     } else {
+ 444:spi.c         ****         printf("Flash Test Failed: %d!\r\n", ret);
+ 1242              	 .loc 1 444 0
+ 1243 0066 0146     	 mov r1,r0
+ 1244 0068 1348     	 ldr r0,.L121+20
+ 1245              	.LVL159:
+ 1246 006a FFF7FEFF 	 bl printf
+ 1247              	.LVL160:
+ 1248              	.L110:
+ 445:spi.c         ****     }
+ 446:spi.c         ****     return 0;
+ 447:spi.c         **** }
+ 1249              	 .loc 1 447 0
+ 1250 006e 2846     	 mov r0,r5
+ 1251 0070 BD46     	 mov sp,r7
+ 1252              	 .cfi_remember_state
+ 1253              	 .cfi_def_cfa_register 13
+ 1254              	.LVL161:
+ 1255              	 
+ 1256 0072 B0BD     	 pop {r4,r5,r7,pc}
+ 1257              	.LVL162:
+ 1258              	.L117:
+ 1259              	 .cfi_restore_state
+ 420:spi.c         ****         return -1;
+ 1260              	 .loc 1 420 0
+ 1261 0074 1148     	 ldr r0,.L121+24
+ 1262              	.LVL163:
+ 1263 0076 FFF7FEFF 	 bl puts
+ 1264              	.LVL164:
+ 421:spi.c         ****     }
+ 1265              	 .loc 1 421 0
+ 1266 007a 4FF0FF35 	 mov r5,#-1
+ 1267 007e F6E7     	 b .L110
+ 1268              	.LVL165:
+ 1269              	.L118:
+ 428:spi.c         ****         return -1;
+ 1270              	 .loc 1 428 0
+ARM GAS   			page 33
+
+
+ 1271 0080 0F48     	 ldr r0,.L121+28
+ 1272              	.LVL166:
+ 1273 0082 FFF7FEFF 	 bl puts
+ 1274              	.LVL167:
+ 429:spi.c         ****     }
+ 1275              	 .loc 1 429 0
+ 1276 0086 4FF0FF35 	 mov r5,#-1
+ 1277 008a F0E7     	 b .L110
+ 1278              	.LVL168:
+ 1279              	.L119:
+ 436:spi.c         ****         return -1;
+ 1280              	 .loc 1 436 0
+ 1281 008c 0D48     	 ldr r0,.L121+32
+ 1282              	.LVL169:
+ 1283 008e FFF7FEFF 	 bl puts
+ 1284              	.LVL170:
+ 437:spi.c         ****     }
+ 1285              	 .loc 1 437 0
+ 1286 0092 4FF0FF35 	 mov r5,#-1
+ 1287              	.LVL171:
+ 1288 0096 EAE7     	 b .L110
+ 1289              	.LVL172:
+ 1290              	.L120:
+ 442:spi.c         ****     } else {
+ 1291              	 .loc 1 442 0
+ 1292 0098 0B48     	 ldr r0,.L121+36
+ 1293              	.LVL173:
+ 1294 009a FFF7FEFF 	 bl puts
+ 1295              	.LVL174:
+ 446:spi.c         **** }
+ 1296              	 .loc 1 446 0
+ 1297 009e 2546     	 mov r5,r4
+ 1298 00a0 E5E7     	 b .L110
+ 1299              	.L122:
+ 1300 00a2 00BF     	 .align 2
+ 1301              	.L121:
+ 1302 00a4 00000000 	 .word .LC16
+ 1303 00a8 10000000 	 .word .LC17
+ 1304 00ac 40000000 	 .word .LC19
+ 1305 00b0 00000000 	 .word .LANCHOR4
+ 1306 00b4 70000000 	 .word .LC21
+ 1307 00b8 A8000000 	 .word .LC24
+ 1308 00bc 24000000 	 .word .LC18
+ 1309 00c0 54000000 	 .word .LC20
+ 1310 00c4 80000000 	 .word .LC22
+ 1311 00c8 98000000 	 .word .LC23
+ 1312              	 .cfi_endproc
+ 1313              	.LFE31:
+ 1315              	 .section .bss.g_huart,"aw",%nobits
+ 1316              	 .align 2
+ 1317              	 .set .LANCHOR3,.+0
+ 1320              	g_huart:
+ 1321 0000 00000000 	 .space 4
+ 1322              	 .section .bss.pspi,"aw",%nobits
+ 1323              	 .align 2
+ 1324              	 .set .LANCHOR0,.+0
+ 1327              	pspi:
+ARM GAS   			page 34
+
+
+ 1328 0000 00000000 	 .space 4
+ 1329              	 .section .rodata.Flash_Ext_Erase.str1.4,"aMS",%progbits,1
+ 1330              	 .align 2
+ 1331              	.LC11:
+ 1332 0000 45787445 	 .ascii "ExtErase: 0x%08lx 0x%08lx %ld\015\012\000"
+ 1332      72617365 
+ 1332      3A203078 
+ 1332      2530386C 
+ 1332      78203078 
+ 1333              	.LC12:
+ 1334 0020 30782530 	 .ascii "0x%08lx %ld\015\012\000"
+ 1334      386C7820 
+ 1334      256C640D 
+ 1334      0A00
+ 1335              	 .section .rodata.Flash_Ext_Init.str1.4,"aMS",%progbits,1
+ 1336              	 .align 2
+ 1337              	.LC6:
+ 1338 0000 45787420 	 .ascii "Ext flash ID: 0x%02x 0x%02x 0x%02x 0x%02x\015\012\000"
+ 1338      666C6173 
+ 1338      68204944 
+ 1338      3A203078 
+ 1338      25303278 
+ 1339              	.LC7:
+ 1340 002c 45787420 	 .ascii "Ext flash status: 0x%02x\015\012\000"
+ 1340      666C6173 
+ 1340      68207374 
+ 1340      61747573 
+ 1340      3A203078 
+ 1341 0047 00       	 .space 1
+ 1342              	.LC8:
+ 1343 0048 45787465 	 .ascii "External flash init failed!\015\000"
+ 1343      726E616C 
+ 1343      20666C61 
+ 1343      73682069 
+ 1343      6E697420 
+ 1344              	 .section .rodata.Flash_Ext_Program.str1.4,"aMS",%progbits,1
+ 1345              	 .align 2
+ 1346              	.LC13:
+ 1347 0000 45787450 	 .ascii "ExtProg: 0x%08lx %ld %ld\015\012\000"
+ 1347      726F673A 
+ 1347      20307825 
+ 1347      30386C78 
+ 1347      20256C64 
+ 1348              	 .section .rodata.Flash_Ext_Read.str1.4,"aMS",%progbits,1
+ 1349              	 .align 2
+ 1350              	.LC10:
+ 1351 0000 45787452 	 .ascii "ExtRead: 0x%08lx %ld\015\012\000"
+ 1351      6561643A 
+ 1351      20307825 
+ 1351      30386C78 
+ 1351      20256C64 
+ 1352              	 .section .rodata.Flash_Ext_ReadStatus.str1.4,"aMS",%progbits,1
+ 1353              	 .align 2
+ 1354              	.LC5:
+ 1355 0000 52656164 	 .ascii "Read status timeout!\015\000"
+ 1355      20737461 
+ 1355      74757320 
+ARM GAS   			page 35
+
+
+ 1355      74696D65 
+ 1355      6F757421 
+ 1356              	 .section .rodata.Flash_Ext_WriteEnable.str1.4,"aMS",%progbits,1
+ 1357              	 .align 2
+ 1358              	.LC9:
+ 1359 0000 57726974 	 .ascii "Write enable timeout!\015\000"
+ 1359      6520656E 
+ 1359      61626C65 
+ 1359      2074696D 
+ 1359      656F7574 
+ 1360              	 .section .rodata.Flash_Ext_WriteStatus.str1.4,"aMS",%progbits,1
+ 1361              	 .align 2
+ 1362              	.LC4:
+ 1363 0000 57726974 	 .ascii "Write status timeout!\015\000"
+ 1363      65207374 
+ 1363      61747573 
+ 1363      2074696D 
+ 1363      656F7574 
+ 1364              	 .section .rodata.Flash_Spi_Init.str1.4,"aMS",%progbits,1
+ 1365              	 .align 2
+ 1366              	.LC0:
+ 1367 0000 5B535049 	 .ascii "[SPI_DEMO] Wakeup in callback init failed\015\000"
+ 1367      5F44454D 
+ 1367      4F5D2057 
+ 1367      616B6575 
+ 1367      7020696E 
+ 1368              	 .section .rodata.Flash_Spi_Xfer.str1.4,"aMS",%progbits,1
+ 1369              	 .align 2
+ 1370              	.LC1:
+ 1371 0000 466C6173 	 .ascii "Flash spi buffer overflow!\015\000"
+ 1371      68207370 
+ 1371      69206275 
+ 1371      66666572 
+ 1371      206F7665 
+ 1372              	.LC2:
+ 1373 001c 466C6173 	 .ascii "Flash_Spi_Xfer: tx_len: %u, rx_len: %u\015\012\000"
+ 1373      685F5370 
+ 1373      695F5866 
+ 1373      65723A20 
+ 1373      74785F6C 
+ 1374 0045 000000   	 .space 3
+ 1375              	.LC3:
+ 1376 0048 48414C5F 	 .ascii "HAL_SPI_TransmitReceive error %d!\015\012\000"
+ 1376      5350495F 
+ 1376      5472616E 
+ 1376      736D6974 
+ 1376      52656365 
+ 1377              	 .section .rodata.gsdk_test_data,"a",%progbits
+ 1378              	 .align 2
+ 1379              	 .set .LANCHOR4,.+0
+ 1382              	gsdk_test_data:
+ 1383 0000 2D2D2D2D 	 .ascii "-----BEGIN CERTIFICATE-----\015\012MIIDhTCCAm2gAwIB"
+ 1383      2D424547 
+ 1383      494E2043 
+ 1383      45525449 
+ 1383      46494341 
+ 1384 002d 41674942 	 .ascii "AgIBBDANBgkqhkiG9w0BAQsFADA7MQswCQYDVQQGEwJOTDER\015"
+ARM GAS   			page 36
+
+
+ 1384      4244414E 
+ 1384      42676B71 
+ 1384      686B6947 
+ 1384      39773042 
+ 1385 005e 0A4D4138 	 .ascii "\012MA8GA1UECgwIUG9sYXJTU0wxGTAXBgNVBAMMEFBvbGFyU1N"
+ 1385      47413155 
+ 1385      45436777 
+ 1385      49554739 
+ 1385      7359584A 
+ 1386 008e 4D494652 	 .ascii "MIFRlc3QgQ0EwHhcN\015\012MTcwNTA1MTMwNzU5WhcNMjcwNT"
+ 1386      6C633351 
+ 1386      67513045 
+ 1386      77486863 
+ 1386      4E0D0A4D 
+ 1387 00bb 41324D54 	 .ascii "A2MTMwNzU5WjA8MQswCQYDVQQGEwJOTDERMA8G\015\012A1UEC"
+ 1387      4D774E7A 
+ 1387      5535576A 
+ 1387      41384D51 
+ 1387      73774351 
+ 1388 00e8 67774955 	 .ascii "gwIUG9sYXJTU0wxGjAYBgNVBAMMEVBvbGFyU1NMIENsaWVudCAy"
+ 1388      47397359 
+ 1388      584A5455 
+ 1388      30777847 
+ 1388      6A415942 
+ 1389 011b 4D494942 	 .ascii "MIIBIjAN\015\012BgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQE"
+ 1389      496A414E 
+ 1389      0D0A4267 
+ 1389      6B71686B 
+ 1389      69473977 
+ 1390 0148 41794854 	 .ascii "AyHTEzLn5tXnpRdkUYLB9u5Pyax6f\015\012M60Nj4o8VmXl3E"
+ 1390      457A4C6E 
+ 1390      3574586E 
+ 1390      7052646B 
+ 1390      55594C42 
+ 1391 0175 545A7A47 	 .ascii "TZzGaFB9X4J7BKNdBjngpuG7fa8H6r7gwQk4ZJGDTzqCrSV/Uu\015"
+ 1391      61464239 
+ 1391      58344A37 
+ 1391      424B4E64 
+ 1391      426A6E67 
+ 1392 01a8 0A314339 	 .ascii "\0121C93KYRhTYJQj6eVSHD1bk2y1RPD0hrt5kPqQhTrdOrA7R/"
+ 1392      334B5952 
+ 1392      6854594A 
+ 1392      516A3665 
+ 1392      56534844 
+ 1393 01d8 55563036 	 .ascii "UV06p86jt0uDBMHEw\015\012MjDV0/YI0FZPRo7yX/k9Z5GIMC"
+ 1393      7038366A 
+ 1393      74307544 
+ 1393      424D4845 
+ 1393      770D0A4D 
+ 1394 0205 35437374 	 .ascii "5Cst99++UMd//sMcB4j7/Cf8qtbCHWjdmLao5v\015\0124Jv4E"
+ 1394      39392B2B 
+ 1394      554D642F 
+ 1394      2F734D63 
+ 1394      42346A37 
+ 1395 0232 46624D73 	 .ascii "FbMs44TFeY0BGbH7vk2DmqV9gmaBmf0ZXH4yqSxJeD+PIs1BGe6"
+ 1395      34345446 
+ 1395      65593042 
+ARM GAS   			page 37
+
+
+ 1395      47624837 
+ 1395      766B3244 
+ 1396 0265 34453932 	 .ascii "4E92hfx/\015\012/DZrtenNLQNiTrM9AM+vdqBpVoNq0qjU51B"
+ 1396      6866782F 
+ 1396      0D0A2F44 
+ 1396      5A727465 
+ 1396      6E4E4C51 
+ 1397 0292 78357255 	 .ascii "x5rU2BXcFbXvI5MT9TNUhXwIDAQAB\015\012o4GSMIGPMB0GA1"
+ 1397      32425863 
+ 1397      46625876 
+ 1397      49354D54 
+ 1397      39544E55 
+ 1398 02bf 55644467 	 .ascii "UdDgQWBBRxoQBzckAvVHZeM/xSj7zx3WtGITBjBgNVHSMEXDBa\015"
+ 1398      51574242 
+ 1398      52786F51 
+ 1398      427A636B 
+ 1398      41765648 
+ 1399 02f2 0A674253 	 .ascii "\012gBS0WuSls97SUva51aaVD+s+vMf9/6E/pD0wOzELMAkGA1U"
+ 1399      30577553 
+ 1399      6C733937 
+ 1399      53557661 
+ 1399      35316161 
+ 1400 0322 4542684D 	 .ascii "EBhMCTkwxETAPBgNV\015\012BAoMCFBvbGFyU1NMMRkwFwYDVQ"
+ 1400      43546B77 
+ 1400      78455441 
+ 1400      5042674E 
+ 1400      560D0A42 
+ 1401 034f 51444442 	 .ascii "QDDBBQb2xhclNTTCBUZXN0IENBggEAMAkGA1Ud\015\012EwQCM"
+ 1401      42516232 
+ 1401      7868636C 
+ 1401      4E545443 
+ 1401      42555A58 
+ 1402 037c 41417744 	 .ascii "AAwDQYJKoZIhvcNAQELBQADggEBAC7yO786NvcHpK8UovKIG9cB"
+ 1402      51594A4B 
+ 1402      6F5A4968 
+ 1402      76634E41 
+ 1402      51454C42 
+ 1403 03af 33326F53 	 .ascii "32oSQQom\015\012LoR0eHDRzdqEkoq7yGZufHFiRAAzbMqJfog"
+ 1403      51516F6D 
+ 1403      0D0A4C6F 
+ 1403      52306548 
+ 1403      44527A64 
+ 1404 03dc 5274786C 	 .ascii "RtxlrWAeB4y/jGaMBV25IbFOIcH2W\015\012iCEaMMbG+VQLKN"
+ 1404      72574165 
+ 1404      4234792F 
+ 1404      6A47614D 
+ 1404      42563235 
+ 1405 0409 76754336 	 .ascii "vuC63kmw/Zewc9ThM6Pa1Hcy0axT0faf1B/U01j0FIcw/6mTfK\015"
+ 1405      336B6D77 
+ 1405      2F5A6577 
+ 1405      63395468 
+ 1405      4D365061 
+ 1406 043c 0A443877 	 .ascii "\012D8w48OIwc1yr0JtutCVjig5DC0yznGMt32RyseOLcUe+lfq"
+ 1406      34384F49 
+ 1406      77633179 
+ 1406      72304A74 
+ 1406      75744356 
+ARM GAS   			page 38
+
+
+ 1407 046c 30303576 	 .ascii "005v2PAiCozr5X8rE\015\012ofGZpiM2NqRPePgYy+Vc75Zk28"
+ 1407      32504169 
+ 1407      436F7A72 
+ 1407      35583872 
+ 1407      450D0A6F 
+ 1408 0499 786B5251 	 .ascii "xkRQq1ncprgQb3S4vTsZdScpM9hLf+eMlrgqlj\015\012c5PLS"
+ 1408      71316E63 
+ 1408      70726751 
+ 1408      62335334 
+ 1408      7654735A 
+ 1409 04c6 6B584265 	 .ascii "kXBeLE5+fedkyfTaLxxQlgCpuoOhKBm04/R1pWNzUHyqagjO9Q="
+ 1409      4C45352B 
+ 1409      6665646B 
+ 1409      79665461 
+ 1409      4C787851 
+ 1410 04f9 0D0A2D2D 	 .ascii "\015\012-----END CERTIFICATE-----\015\012\000"
+ 1410      2D2D2D45 
+ 1410      4E442043 
+ 1410      45525449 
+ 1410      46494341 
+ 1411              	 .section .rodata.log_init.str1.4,"aMS",%progbits,1
+ 1412              	 .align 2
+ 1413              	.LC14:
+ 1414 0000 5B4F454D 	 .ascii "[OEM_DEMO]: failed to open uart %d\015\012\000"
+ 1414      5F44454D 
+ 1414      4F5D3A20 
+ 1414      6661696C 
+ 1414      65642074 
+ 1415 0025 000000   	 .space 3
+ 1416              	.LC15:
+ 1417 0028 5B4F454D 	 .ascii "[OEM_DEMO] log init....OK\015\000"
+ 1417      5F44454D 
+ 1417      4F5D206C 
+ 1417      6F672069 
+ 1417      6E69742E 
+ 1418              	 .section .rodata.main.str1.4,"aMS",%progbits,1
+ 1419              	 .align 2
+ 1420              	.LC16:
+ 1421 0000 466C6173 	 .ascii "Flash_Ext_Init\015\000"
+ 1421      685F4578 
+ 1421      745F496E 
+ 1421      69740D00 
+ 1422              	.LC17:
+ 1423 0010 466C6173 	 .ascii "Flash_Ext_Erase\015\000"
+ 1423      685F4578 
+ 1423      745F4572 
+ 1423      6173650D 
+ 1423      00
+ 1424 0021 000000   	 .space 3
+ 1425              	.LC18:
+ 1426 0024 466C6173 	 .ascii "Flash_Ext_Erase Failed.\015\000"
+ 1426      685F4578 
+ 1426      745F4572 
+ 1426      61736520 
+ 1426      4661696C 
+ 1427 003d 000000   	 .space 3
+ 1428              	.LC19:
+ARM GAS   			page 39
+
+
+ 1429 0040 466C6173 	 .ascii "Flash_Ext_Program\015\000"
+ 1429      685F4578 
+ 1429      745F5072 
+ 1429      6F677261 
+ 1429      6D0D00
+ 1430 0053 00       	 .space 1
+ 1431              	.LC20:
+ 1432 0054 466C6173 	 .ascii "Flash_Ext_Program Failed.\015\000"
+ 1432      685F4578 
+ 1432      745F5072 
+ 1432      6F677261 
+ 1432      6D204661 
+ 1433 006f 00       	 .space 1
+ 1434              	.LC21:
+ 1435 0070 466C6173 	 .ascii "Flash_Ext_Read\015\000"
+ 1435      685F4578 
+ 1435      745F5265 
+ 1435      61640D00 
+ 1436              	.LC22:
+ 1437 0080 466C6173 	 .ascii "Flash_Ext_Read Failed.\015\000"
+ 1437      685F4578 
+ 1437      745F5265 
+ 1437      61642046 
+ 1437      61696C65 
+ 1438              	.LC23:
+ 1439 0098 466C6173 	 .ascii "Flash Test OK!\015\000"
+ 1439      68205465 
+ 1439      7374204F 
+ 1439      4B210D00 
+ 1440              	.LC24:
+ 1441 00a8 466C6173 	 .ascii "Flash Test Failed: %d!\015\012\000"
+ 1441      68205465 
+ 1441      73742046 
+ 1441      61696C65 
+ 1441      643A2025 
+ 1442              	 .section .rodata.tx_buf.9487,"a",%progbits
+ 1443              	 .align 2
+ 1444              	 .set .LANCHOR2,.+0
+ 1447              	tx_buf.9487:
+ 1448 0000 05       	 .byte 5
+ 1449              	 .section .rodata.tx_buf.9546,"a",%progbits
+ 1450              	 .align 2
+ 1451              	 .set .LANCHOR1,.+0
+ 1454              	tx_buf.9546:
+ 1455 0000 9F       	 .byte -97
+ 1456              	 .text
+ 1457              	.Letext0:
+ 1458              	 .file 2 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 1459              	 .file 3 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\lock.h"
+ 1460              	 .file 4 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\_types.h"
+ 1461              	 .file 5 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\lib\\gcc\\arm-none-eabi\\7.3.1\\include\\stddef.h"
+ 1462              	 .file 6 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\reent.h"
+ 1463              	 .file 7 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\_stdint.h"
+ 1464              	 .file 8 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\stdlib.h"
+ 1465              	 .file 9 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/include/FreeRTOSConfig.h"
+ 1466              	 .file 10 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\errno.h"
+ 1467              	 .file 11 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\time.h"
+ARM GAS   			page 40
+
+
+ 1468              	 .file 12 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/ports/include/arch/cc.h"
+ 1469              	 .file 13 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/ip4_addr.h"
+ 1470              	 .file 14 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/ip6_addr.h"
+ 1471              	 .file 15 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/ip_addr.h"
+ 1472              	 .file 16 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/err.h"
+ 1473              	 .file 17 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/pbuf.h"
+ 1474              	 .file 18 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/netif.h"
+ 1475              	 .file 19 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/inet.h"
+ 1476              	 .file 20 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/ip4.h"
+ 1477              	 .file 21 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/ip6.h"
+ 1478              	 .file 22 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/ip.h"
+ 1479              	 .file 23 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_common.h"
+ 1480              	 .file 24 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_uart.h"
+ 1481              	 .file 25 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_flash.h"
+ 1482              	 .file 26 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_spi.h"
+ 1483              	 .file 27 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\string.h"
+ 1484              	 .file 28 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\stdio.h"
+ 1485              	 .file 29 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_api.h"
+ 1486              	 .file 30 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/include/task.h"
+ 1487              	 .file 31 "<built-in>"
+ARM GAS   			page 41
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 spi.c
+    {standard input}:18     .text.Flash_Spi_Init:00000000 $t
+    {standard input}:24     .text.Flash_Spi_Init:00000000 Flash_Spi_Init
+    {standard input}:80     .text.Flash_Spi_Init:0000003c $d
+    {standard input}:87     .text.Flash_Spi_Xfer:00000000 $t
+    {standard input}:93     .text.Flash_Spi_Xfer:00000000 Flash_Spi_Xfer
+    {standard input}:220    .text.Flash_Spi_Xfer:0000009c $d
+    {standard input}:228    .text.Flash_Ext_ReadID:00000000 $t
+    {standard input}:234    .text.Flash_Ext_ReadID:00000000 Flash_Ext_ReadID
+    {standard input}:292    .text.Flash_Ext_ReadID:00000034 $d
+    {standard input}:297    .text.Flash_Ext_WriteStatus:00000000 $t
+    {standard input}:303    .text.Flash_Ext_WriteStatus:00000000 Flash_Ext_WriteStatus
+    {standard input}:357    .text.Flash_Ext_WriteStatus:0000003c $d
+    {standard input}:362    .text.Flash_Ext_ReadStatus:00000000 $t
+    {standard input}:368    .text.Flash_Ext_ReadStatus:00000000 Flash_Ext_ReadStatus
+    {standard input}:430    .text.Flash_Ext_ReadStatus:0000003c $d
+    {standard input}:436    .text.Flash_Ext_Init:00000000 $t
+    {standard input}:442    .text.Flash_Ext_Init:00000000 Flash_Ext_Init
+    {standard input}:524    .text.Flash_Ext_Init:0000007c $d
+    {standard input}:531    .text.Flash_Ext_WriteEnable:00000000 $t
+    {standard input}:537    .text.Flash_Ext_WriteEnable:00000000 Flash_Ext_WriteEnable
+    {standard input}:598    .text.Flash_Ext_WriteEnable:00000040 $d
+    {standard input}:603    .text.Flash_Ext_Read:00000000 $t
+    {standard input}:609    .text.Flash_Ext_Read:00000000 Flash_Ext_Read
+    {standard input}:700    .text.Flash_Ext_Read:0000006c $d
+    {standard input}:705    .text.Flash_Ext_Erase:00000000 $t
+    {standard input}:711    .text.Flash_Ext_Erase:00000000 Flash_Ext_Erase
+    {standard input}:863    .text.Flash_Ext_Erase:000000b8 $d
+    {standard input}:869    .text.Flash_Ext_Program:00000000 $t
+    {standard input}:875    .text.Flash_Ext_Program:00000000 Flash_Ext_Program
+    {standard input}:1030   .text.Flash_Ext_Program:000000c0 $d
+    {standard input}:1035   .text.__io_puts:00000000 $t
+    {standard input}:1042   .text.__io_puts:00000000 __io_puts
+    {standard input}:1080   .text.__io_puts:0000001c $d
+    {standard input}:1085   .text.log_init:00000000 $t
+    {standard input}:1092   .text.log_init:00000000 log_init
+    {standard input}:1150   .text.log_init:00000040 $d
+    {standard input}:1157   .text.main:00000000 $t
+    {standard input}:1164   .text.main:00000000 main
+    {standard input}:1302   .text.main:000000a4 $d
+    {standard input}:1316   .bss.g_huart:00000000 $d
+    {standard input}:1320   .bss.g_huart:00000000 g_huart
+    {standard input}:1323   .bss.pspi:00000000 $d
+    {standard input}:1327   .bss.pspi:00000000 pspi
+    {standard input}:1330   .rodata.Flash_Ext_Erase.str1.4:00000000 $d
+    {standard input}:1336   .rodata.Flash_Ext_Init.str1.4:00000000 $d
+    {standard input}:1345   .rodata.Flash_Ext_Program.str1.4:00000000 $d
+    {standard input}:1349   .rodata.Flash_Ext_Read.str1.4:00000000 $d
+    {standard input}:1353   .rodata.Flash_Ext_ReadStatus.str1.4:00000000 $d
+    {standard input}:1357   .rodata.Flash_Ext_WriteEnable.str1.4:00000000 $d
+    {standard input}:1361   .rodata.Flash_Ext_WriteStatus.str1.4:00000000 $d
+    {standard input}:1365   .rodata.Flash_Spi_Init.str1.4:00000000 $d
+    {standard input}:1369   .rodata.Flash_Spi_Xfer.str1.4:00000000 $d
+    {standard input}:1378   .rodata.gsdk_test_data:00000000 $d
+    {standard input}:1382   .rodata.gsdk_test_data:00000000 gsdk_test_data
+    {standard input}:1412   .rodata.log_init.str1.4:00000000 $d
+ARM GAS   			page 42
+
+
+    {standard input}:1419   .rodata.main.str1.4:00000000 $d
+    {standard input}:1443   .rodata.tx_buf.9487:00000000 $d
+    {standard input}:1447   .rodata.tx_buf.9487:00000000 tx_buf.9487
+    {standard input}:1450   .rodata.tx_buf.9546:00000000 $d
+    {standard input}:1454   .rodata.tx_buf.9546:00000000 tx_buf.9546
+                           .group:00000000 wm4.0.8fab1e1450c2b74bdd5e2aed4c325bf1
+                           .group:00000000 wm4._newlib_version.h.4.875b979a44719054cd750d0952ad3fd6
+                           .group:00000000 wm4.newlib.h.18.5e5ca3429233af402d406a202f1fc1ac
+                           .group:00000000 wm4.ieeefp.h.77.220d9cccac42cd58761758bee2df4ce6
+                           .group:00000000 wm4.features.h.22.fad1cec3bc7ff06488171438dbdcfd02
+                           .group:00000000 wm4.config.h.220.6cac6a9685cfce5e83c17784171638d9
+                           .group:00000000 wm4._ansi.h.31.de524f58584151836e90d8620a16f8e8
+                           .group:00000000 wm4.stdio.h.31.7c0e28c411445f3f9c5b11accf882760
+                           .group:00000000 wm4._default_types.h.6.959254cf5f09734ea7516c89e8bb21bd
+                           .group:00000000 wm4.stddef.h.187.2ff233552538c6ff9b8575ca8ea52cb3
+                           .group:00000000 wm4.cdefs.h.47.0bcdf94cb40e176393dd1404056825b4
+                           .group:00000000 wm4.stddef.h.39.ec95e8feac892e292b69dc7ae75b0d64
+                           .group:00000000 wm4.stdarg.h.34.3a23a216c0c293b3d2ea2e89281481e6
+                           .group:00000000 wm4.lock.h.2.1461d1fff82dffe8bfddc23307f6484f
+                           .group:00000000 wm4._types.h.125.5cf8a495f1f7ef36777ad868a1e32068
+                           .group:00000000 wm4.stddef.h.161.5349cb105733e8777bfb0cf53c4e3f34
+                           .group:00000000 wm4._types.h.184.03611d4f6b5bec9997bcf4279eceba07
+                           .group:00000000 wm4.reent.h.17.90c2574d4acdcfce933db5cb09ff35fe
+                           .group:00000000 wm4.types.h.40.e8c16e7ec36ba55f133d0616070e25fc
+                           .group:00000000 wm4._stdint.h.10.c24fa3af3bc1706662bb5593a907e841
+                           .group:00000000 wm4._endian.h.31.65a10590763c3dde1ac4a7f66d7d4891
+                           .group:00000000 wm4.endian.h.9.49f3a4695c1b61e8a0808de3c4a106cb
+                           .group:00000000 wm4._timeval.h.30.0e8bfd94e85db17dda3286ee81496fe6
+                           .group:00000000 wm4.timespec.h.41.d855182eb0e690443ab8651bcedca6e1
+                           .group:00000000 wm4.select.h.19.97ca6fd0c752a0f3b6719fd314d361e6
+                           .group:00000000 wm4.types.h.69.ed3eae3cf73030a737515151ebcab7a1
+                           .group:00000000 wm4.sched.h.22.c60982713a5c428609783c78f9c78d95
+                           .group:00000000 wm4._pthreadtypes.h.36.fcee9961c35163dde6267ef772ad1972
+                           .group:00000000 wm4.stdio.h.2.4aa87247282eca6c8f36f9de33d8df1a
+                           .group:00000000 wm4.stdio.h.81.932d0c162786b883f622b8d05c120c78
+                           .group:00000000 wm4.stdlib.h.13.4ed386f5c1a80d71e72172885d946ef2
+                           .group:00000000 wm4.stddef.h.161.19e15733342b50ead2919490b095303e
+                           .group:00000000 wm4.alloca.h.8.dfc0c703c47ec3e69746825b17d9e66d
+                           .group:00000000 wm4.stdlib.h.56.d4493cd3736e51e9d56335045f26df45
+                           .group:00000000 wm4.string.h.8.c4b8571ce60dff2817f43fec8b86aecd
+                           .group:00000000 wm4._intsup.h.10.cce27fed8484c08a33f522034c30d2b5
+                           .group:00000000 wm4.stdint.h.23.d53047a68f4a85177f80b422d52785ed
+                           .group:00000000 wm4.FreeRTOSConfig.h.68.1d0dd6b8cda279d0020827f5584733bd
+                           .group:00000000 wm4.projdefs.h.71.1734cd3501e070360596dd847bb9d813
+                           .group:00000000 wm4.portmacro.h.72.3d5d774f718d157a637f7eb960850f27
+                           .group:00000000 wm4.portable.h.98.f435842f50d7864fba6a318a13e72513
+                           .group:00000000 wm4.mpu_wrappers.h.71.dd245fe44d82bd40288b5a47f895c82c
+                           .group:00000000 wm4.FreeRTOS.h.175.3abf49eaca38658a192da8d7c86d5374
+                           .group:00000000 wm4.queue.h.72.3695320c7600effec3d17b83c99d3c0b
+                           .group:00000000 wm4.semphr.h.81.476996112f7cf2dd045dbdd37a9136bc
+                           .group:00000000 wm4.list.h.103.6a12b7b9a7a136c3cca0ee53675c5498
+                           .group:00000000 wm4.task.h.88.da474b04c368050657453c137d8efe45
+                           .group:00000000 wm4.timers.h.96.b62a20effad09455c0ed06e5f17e2a48
+                           .group:00000000 wm4.lwipopts.h.39.6b59604adf87dc94bbbda24564503740
+                           .group:00000000 wm4.errno.h.2.ba016d646105af6cad23be83630b6a3f
+                           .group:00000000 wm4.errno.h.9.1ecd7b1049497a0ab61da0f6cbd4b0c6
+                           .group:00000000 wm4.time.h.38.20beed93add9f31905d3a626e4660be9
+ARM GAS   			page 43
+
+
+                           .group:00000000 wm4.time.h.8.db4619001f026d0b4874c029fef0e91f
+                           .group:00000000 wm4.time.h.2.4581ce0ffb6627cfc02162c94bf846c9
+                           .group:00000000 wm4.time.h.25.483ee9b7e27a5dcca3d222ded0e25e01
+                           .group:00000000 wm4.cc.h.48.d6d2c2bb4a8eeb217c55b9ca1943b7a0
+                           .group:00000000 wm4.arch.h.65.8829bb52e9eb86f038bc22f28844c005
+                           .group:00000000 wm4.debug.h.44.85dd174371aa97df303e04153d799135
+                           .group:00000000 wm4.opt.h.77.035e4f6feedd8c96216e0818f09a9265
+                           .group:00000000 wm4.def.h.33.687716bada84b2810fdf97c9d167aeeb
+                           .group:00000000 wm4.ip4_addr.h.33.1a8b96da9c9099dd4d4b421392c24416
+                           .group:00000000 wm4.ip6_addr.h.43.f0356dc1c9eb4011a6824b272ca0bdec
+                           .group:00000000 wm4.ip_addr.h.58.d7bcbad6cfa9a793708e54980ac1c34d
+                           .group:00000000 wm4.netif.h.33.379f236f9670aafd30086e50d1a89f89
+                           .group:00000000 wm4.err.h.33.f97d15a7862198a77a6b19a8b190fee7
+                           .group:00000000 wm4.pbuf.h.34.202868ef9162d4cb74cfc854b7b74f63
+                           .group:00000000 wm4.netif.h.67.da8672002bd78982c4ab50b84285a595
+                           .group:00000000 wm4.inet.h.41.0cf9f502d748021afadf1fe4fba638f4
+                           .group:00000000 wm4.sockets.h.72.bc82e899e862bc38df9aee17d977f9be
+                           .group:00000000 wm4.ip4.h.33.2db1e45313b1f472e08d288657c61499
+                           .group:00000000 wm4.ip6.h.42.4c9fe14607f20e2a534215f8047124e1
+                           .group:00000000 wm4.ip.h.49.1a1fbae54cafc9b96064363517198239
+                           .group:00000000 wm4.gsdk_common.h.25.69f333dc5f5113dd7092f6831560754f
+                           .group:00000000 wm4.gsdk_flash.h.25.4d08791083e4af07d64570151ac0803c
+                           .group:00000000 wm4.app_loader.h.25.aa64c8d4536aca920728cda79a275eeb
+                           .group:00000000 wm4.gsdk_ril.h.43.ec5a175e110d1c70143139b168262c34
+                           .group:00000000 wm4.gsdk_ril_cmds.h.25.9576f30a39fa8fd69cc4f6c2fc4c8bd9
+
+UNDEFINED SYMBOLS
+gsdk_spi_open
+puts
+memset
+memcpy
+printf
+gsdk_spi_transmit_and_receive
+vTaskDelay
+gsdk_uart_write
+gsdk_uart_open
+gsdk_syslog_printf
+strcmp

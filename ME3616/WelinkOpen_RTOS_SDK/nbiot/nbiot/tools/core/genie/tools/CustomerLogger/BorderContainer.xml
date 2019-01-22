@@ -1,0 +1,652 @@
+<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+BorderContainer
+</name>
+</assembly>
+<members>
+<member name="M:BorderContainer.ColorUtilities.RGB_to_HSL(System.Drawing.Color)">
+	<summary>
+ Converts a standard RGB Color (c) into Hue Saturation Luminescence values
+ 
+ It's interesting to note that while these conversions are what ADOBE posted in their tech pages, 
+ NOT EVERYONE agrees as to their accuracy.
+ 
+ That means that THIS RGB to HSL conversion is the ADOBE STANDARD and should not imply its the INDUSTRY STANDARD.
+ I'll also comment that IMO - Adobe IS the Industry Standard!
+ </summary>
+</member><member name="M:BorderContainer.ColorUtilities.HSL_to_RGB(BorderContainer.HSL)">
+	<summary>
+ Converts an HSL value to a standard RBG color
+ 
+ See RBG_to_HSL for comments regarding "Industry Standard" vs "Adobe Standard"
+ </summary>
+</member><member name="M:BorderContainer.ColorUtilities.RGB_to_CMYK(System.Drawing.Color)">
+	<summary>
+ Converts an RGB Color (c) to Cyan Magenta Yellow Black
+ </summary>
+</member><member name="M:BorderContainer.ColorUtilities.CMYK_to_RGB(BorderContainer.CMYK)">
+	<summary>
+ CYMK to RGB 
+ </summary>
+</member><member name="M:BorderContainer.ColorUtilities.GetColor(System.String)">
+	<summary>
+ Converts a string formatted like this, "###, ###, ###" into a color
+ </summary>
+	<param name="ColorString"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BorderContainer.ColorUtilities.GetDarkVersion(System.Drawing.Color)">
+	<summary>
+ Takes a color and returns a "Dark" version of that color.
+ All I did here was decrease the Red, Green and Blue values by 50 (or set them to zero
+ if the resulting math was less than zero)
+ </summary>
+</member><member name="T:BorderContainer.AdobeColors">
+	<summary>
+ These are ADOBE specific routines that allow me to Set and Modify each of the Adobe Specific color values:
+ Brightness, Saturation and Hue.
+ 
+ At a glance, SET and MODIFY look the same but look closer!
+ SET actually changes the color to the specific value 
+ MODIFY takes the current value and adds the specific value to it (by order of magnification)
+ </summary>
+</member><member name="M:BorderContainer.ContainerControls.Add(BorderContainer.ControlStructure)">
+	<summary>
+ The BorderContainer is a Container Control that can be "collapsed"
+ When the user Collapses the control - ALL Child Controls must have their Visible property set to False
+ The problem comes when the user re-opens the control.  When the control was collapsed, its possible that
+ NOT ALL child controls were previously visible...so we cant just take all child controls and set their
+ Visible Property = True...instead we have to reset Visible back to whatever it was when the control was 
+ collapsed...this collection will keep tabs over all of the child controls and allows me to reset the Visible property
+ back to its original state.
+ </summary>
+</member><member name="P:BorderContainer.BorderDetailClass.bgColorBegin">
+	<summary>
+ The color of the border
+ </summary>
+</member><member name="P:BorderContainer.BorderDetailClass.bgColorCenter">
+	<summary>
+ The color of the border
+ </summary>
+</member><member name="P:BorderContainer.BorderDetailClass.bgColorEnd">
+	<summary>
+ The color of the border
+ </summary>
+</member><member name="P:BorderContainer.BorderDetailClass.HeaderDetails">
+	<summary>
+ Holds all of our Header-Details.  See HeaderDetailClass.vb for specifics
+ </summary>
+</member><member name="P:BorderContainer.BorderDetailClass.BorderLines">
+	<summary>
+ Holds all of our Header-Details.  See HeaderDetailClass.vb for specifics
+ </summary>
+</member><member name="P:BorderContainer.BorderDetailClass.BorderColor">
+	<summary>
+ The color of the border
+ </summary>
+</member><member name="P:BorderContainer.BorderDetailClass.DisplayHeader">
+	<summary>
+ Set to True if you want to display the Header for this control.
+ </summary>
+</member><member name="T:BorderContainer.BorderDetailConverter">
+	<summary>
+ This is the converter for our BorderDetail type - its what makes this property collapsable
+ </summary>
+	<remarks></remarks>
+</member><member name="P:BorderContainer.cp.RGB">
+	<summary>
+ Gets or Sets the RGB value used by the ColorBox
+ </summary>
+</member><member name="P:BorderContainer.cp.HeaderText">
+	<summary>
+ Gets or Sets the Text displayed in the Border of the Dialog Box
+ </summary>
+</member><member name="P:BorderContainer.cp.DialogLabel">
+	<summary>
+ Gets or sets the Label used to ask the user to select a color
+ This is the label found inside the Dialog Box
+ </summary>
+</member><member name="M:BorderContainer.cp.cp_Load(System.Object,System.EventArgs)">
+	<summary>
+ We'll create the two additional custom controls and add them to our main control here.
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="T:BorderContainer.cp">
+	<summary>
+ The Color Picker dialog box.
+ 
+ Pass in a startup-color and header-text (it will default to black if no color is set)
+ If the Cancel button is clicked - the original color will be returned.
+ If the OK button is clicked - the selected color is returned as the property cp.RGB
+ 
+ I have built-in the ability to get the HSL and CMYK values as well but for now, I have not 
+ exposed those properties 
+ </summary>
+</member><member name="P:BorderContainer.bfBorderDetClass.bgColorBegin">
+	<summary>
+ The color of the border
+ </summary>
+</member><member name="P:BorderContainer.bfBorderDetClass.bgColorCenter">
+	<summary>
+ The color of the border
+ </summary>
+</member><member name="P:BorderContainer.bfBorderDetClass.bgColorEnd">
+	<summary>
+ The color of the border
+ </summary>
+</member><member name="P:BorderContainer.bfBorderDetClass.HeaderDetails">
+	<summary>
+ Holds all of our Header-Details.  See bfHeaderDetClass.vb for specifics
+ </summary>
+</member><member name="P:BorderContainer.bfBorderDetClass.BorderLines">
+	<summary>
+ Holds all of our Header-Details.  See bfHeaderDetClass.vb for specifics
+ </summary>
+</member><member name="P:BorderContainer.bfBorderDetClass.BorderColor">
+	<summary>
+ The color of the border
+ </summary>
+</member><member name="P:BorderContainer.bfBorderDetClass.DisplayHeader">
+	<summary>
+ Set to True if you want to display the Header for this control.
+ </summary>
+</member><member name="T:BorderContainer.bfBorderDetConverter">
+	<summary>
+ This is the converter for our BorderDetail type - its what makes this property collapsable
+ </summary>
+	<remarks></remarks>
+</member><member name="M:BorderContainer.ColorEditor.GetEditControl(System.String,System.Object)">
+	<summary>
+ Displays our custom color picker
+ </summary>
+</member><member name="M:BorderContainer.ColorEditor.GetEditedValue(System.Windows.Forms.Control,System.String,System.Object)">
+	<summary>
+ Gets the edited value and returns that value to the class...or the user clicked the escape or cancel
+ in which case, the original value is returned
+ </summary>
+</member><member name="M:BorderContainer.ColorEditor.GetPaintValueSupported(System.ComponentModel.ITypeDescriptorContext)">
+	<summary>
+ Tells the Property Window that we are going to use the small, painted rectangle in the 'Values' cell.
+ </summary>
+</member><member name="M:BorderContainer.ColorEditor.PaintValue(System.Drawing.Design.PaintValueEventArgs)">
+	<summary>
+ Fills the rectangle with the color the user selected.
+ Notice how I reduced the width and height by 1 AND that the fillrectangle IS NOT starting
+ at 0, 0 like you might expect?  Thats because the Property Window has already drawn a black-border
+ around the fill area... so if I dont adjust where I fill, I will paint over the top of this border.
+ For lighter colors, it's nice to have that border to give contrast to the filled color.
+ </summary>
+</member><member name="T:BorderContainer.ColorEditor">
+	<summary>
+ This is my replacement for the Visual Studio's Color Editor...I mean come on?  Have you SEEN the Visual Studio color editor?
+ That's the same thing that was used for Visual Basic 2.0 back in 1995...blech
+ 
+ Whenever a Developer clicks on a Color Property for the BorderContainer, this is the editor that will be used.
+ This editor pops up a Color Property Form (source can be found in cp.vb) which is a UserControl that holds two
+ child controls: 
+    Color Box (source can be found in _Controls/ColorBox.vb)
+    Vertical Color Slider (source: _Controls/VerticalColorSlider.vb)
+ </summary>
+</member><member name="P:BorderContainer.CollapseContainer.OpenHeight">
+	<summary>
+ This returns the height of the control when it's fully opened
+ </summary>
+	<value></value>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="P:BorderContainer.CollapseContainer.HeaderText">
+	<summary>
+ The text to be displayed in the control
+ </summary>
+	<value></value>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="P:BorderContainer.CollapseContainer.Collapsable">
+	<summary>
+ If true, the control can be collapsed.  If false, it cannot
+ </summary>
+	<value></value>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="P:BorderContainer.CollapseContainer.PanelOpen">
+	<summary>
+ Sets or returns the current panels open or closed status
+ </summary>
+	<value></value>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="P:BorderContainer.CollapseContainer.DisplayRectangle">
+	<summary>
+ Override this to simulate the header panel
+ Notice I leave one pixel at the bottom for the bottom line :)
+ </summary>
+	<value></value>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BorderContainer.CollapseContainer.CollapseContainer_FontChanged(System.Object,System.EventArgs)">
+	<summary>
+ If the user changes the header font - resize the header area and refresh the controls layout engine
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:BorderContainer.CollapseContainer.CollapseContainer_Paint(System.Object,System.Windows.Forms.PaintEventArgs)">
+	<summary>
+ The primary purpose of trapping the Paint is to add the seperator bar - but since we're trapping the entire paint event, 
+ we need to fill in the backcolor as well
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:BorderContainer.CollapseContainer.CollapseContainer_SizeChanged(System.Object,System.EventArgs)">
+	<summary>
+ When our size changes, we'll get ghosting from the custom lines - so to ensure the lines are drawn properly, we force a refresh
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:BorderContainer.CollapseContainer.CollapseContainer_MouseMove(System.Object,System.Windows.Forms.MouseEventArgs)">
+	<summary>
+ We're only interested in lighting up the header when the control is collapsable
+ We also only want to light up the header - if it's not ALREADY lit up...this prevents blinking
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:BorderContainer.CollapseContainer.CollapseContainer_MouseLeave(System.Object,System.EventArgs)">
+	<summary>
+ If we're collapsable and the header was lit - go turn it off and refresh the painting
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:BorderContainer.CollapseContainer.CollapseContainer_Click(System.Object,System.EventArgs)">
+	<summary>
+ If we're collapsable and the user clicked...toggle the collapse state
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:BorderContainer.CollapseContainer.SetContentPanel">
+	<summary>
+ Adjusts the Height of the control based on the _PanelOpen settings
+ </summary>
+	<remarks></remarks>
+</member><member name="P:BorderContainer.BorderLinesClass.ShowAllOutlines">
+	<summary>
+ I'm not going to comment on all five of the 'Show' properties seperately
+ ShowAll sets all five to True - this will be set to False if any of the five are also false.
+ You cannot change this value to "False"
+ </summary>
+</member><member name="P:BorderContainer.BorderLinesClass.InnerPanelShowAll">
+	<summary>
+ I'm not going to comment on all five of the 'Show' properties seperately
+ ShowAll sets all five to True - this will be set to False if any of the five are also false.
+ You cannot change this value to "False"
+ </summary>
+</member><member name="P:BorderContainer.My.Resources.Resources.ResourceManager">
+	<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member><member name="P:BorderContainer.My.Resources.Resources.Culture">
+	<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member><member name="T:BorderContainer.My.Resources.Resources">
+	<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member><member name="T:BorderContainer.CMYK">
+	<summary>
+ This is my CMYK Class.
+ C = Cyan
+ M = Magenta
+ Y = Yellow
+ K = Black
+ 
+ This holds the CYMK value for the current RGB color set in the ColorEditor.
+ ALL CMYK properties have a min of 0 and a max of 1
+ </summary>
+</member><member name="T:BorderContainer.BorderContainer.ResizePosition">
+	<summary>
+ The control collapses in a very specific direction.  
+ This enum is a numeric representation of those directions
+ </summary>
+</member><member name="T:BorderContainer.BorderContainer.ResizeType">
+	<summary>
+ I can be: 
+ -1 = Not Collapsable (the property _BorderDetails.HeaderDetails.AllowCollapse = False
+  0 = Collapsable but currently opened
+  1 = Collapsable and currently closed
+ </summary>
+</member><member name="T:BorderContainer.BorderContainer.HeaderAlignmentType">
+	<summary>
+ Pretty obvious what this does
+ </summary>
+</member><member name="P:BorderContainer.BorderContainer.AutoCollapse">
+	<summary>
+ If AutoCollapse is true, the control will 'collapse' when the header is double-clicked on
+ Prerequisite:  ShowHeader = True
+ If ShowHeader = False, there's nothing for the user to double-click on but the control will
+ retain this value in case the Developer allows the user to hide/show the header at run-time
+ </summary>
+</member><member name="P:BorderContainer.BorderContainer.BorderDetails">
+	<summary>
+ This is the bulk of our Border Container control.
+ </summary>
+</member><member name="P:BorderContainer.BorderContainer.DisplayRectangle">
+	<summary>
+ Create a custom Display Rectangle that returns the "Client Area" to the user
+ </summary>
+</member><member name="P:BorderContainer.BorderContainer.CurrentState">
+	<summary>
+ Current State can set or return the Closed or Open status of the Border Control
+ </summary>
+</member><member name="P:BorderContainer.BorderContainer.OpenRectangle">
+	<summary>
+ The true Rectangle of the control (including the Header space)
+ </summary>
+</member><member name="P:BorderContainer.BorderContainer.HeaderImage">
+	<summary>
+ Holds the image to be drawn in the header (if any)
+ </summary>
+</member><member name="P:BorderContainer.BorderContainer.HeaderImageAlignment">
+	<summary>
+ Position to draw the Header Image (if any)
+ </summary>
+</member><member name="M:BorderContainer.BorderContainer.OnCreateControl">
+	<summary>
+ FOR REASONS UNKNOWN TO ME:  Whenever you drop this control on your form and edit
+ either of the expandableproperties... the update is immediate and "live" - i.e. the control
+ repaints and you see the effect of the change instantly - Are you waiting for the "But" ??
+ BUT
+ 1) Place the control on a form
+ 2) Set some properties (everything repaints as you make the changes)
+ 3) Run the ap - make sure you are seeing the form with this control on it.
+ 4) Stop the ap and re-edit the control
+ 5) The repainting STOPS - the properties are getting set but the Paint event is not 
+ automatically firing...and I have no clue why.  From what I've read, setting each property
+ to "NotifyParentProperty(True)" was supposed to do this for me...but it does not work.
+ 
+ Perhaps someone far more experienced at writing custom controls can offer a solution?
+ 
+ In the mean time - I've written this hack to get around the fact that the designer seems
+ to be "forgetting" about the controls sub properties.
+ </summary>
+	<remarks></remarks>
+</member><member name="M:BorderContainer.BorderContainer.BorderContainer_Click(System.Object,System.EventArgs)">
+	<summary>
+ If we have a header - indicate that the header was clicked
+ </summary>
+</member><member name="M:BorderContainer.BorderContainer.BorderContainer_DoubleClick(System.Object,System.EventArgs)">
+	<summary>
+ If we have a header - we want to raise an event indicating the header was double-clicked
+ </summary>
+</member><member name="M:BorderContainer.BorderContainer.BorderContainer_SizeChanged(System.Object,System.EventArgs)">
+	<summary>
+ If we are using a collapse panel and our size is changing - resize the collapse panel too since
+ its the collapse panel is not docked.
+ </summary>
+</member><member name="M:BorderContainer.BorderContainer.BorderContainer_Paint(System.Object,System.Windows.Forms.PaintEventArgs)">
+	<summary>
+ Paints the Control:
+    Header
+    Buttons
+    Header Image and Text
+    Outer and Inner borders
+    Resize Panels
+ </summary>
+</member><member name="M:BorderContainer.BorderContainer.SetChildControlVisible(System.Boolean)">
+	<summary>
+ When the user collapses the control we want to "hide" all the child controls found within it
+ Here's the rub:  The developer MIGHT have placed controls inside the BorderControl and set
+ the .Visible property to "False" - so I dont want to just hide everything then SHOW everything!
+ 
+ I want to store all of the controls and their original visibility properties - then restore them
+ back to their original state once the BorderControl is re-opened.
+ 
+ Thats what this routine does.
+ </summary>
+	<param name="Status"></param>
+	<remarks></remarks>
+</member><member name="T:BorderContainer.BorderContainer">
+	<summary>
+ BorderContainer inherits from the Panel class but *most* of the Border-Specific properties are 
+ found in the sub-property called, "BorderDetails" (source can be found in _Classes/BorderDetailClass.vb)
+ 
+ The BorderDetails class holds all of the UI properties for the base class and includes another
+ sub-property called HeaderDetails (source can be found in the _Classes/HeaderDetailClass.vb)
+ 
+ I say *most* because there are two "header-detail" properties which are found here in the base class:
+ HeaderImage and HeaderImageAlign
+ 
+ The reason for that is in order for me to store an Image as a sub-property, I have to be able to
+ convert it from its base class into a string for storage in the property bag - there is a more elegant
+ way of doing that by references the resources but I'm not at this time smart enough to know how to do that...
+ 
+ Time-permitting, I will figure this out but in the mean time...the HeaderImage will remain here.
+ Since I cannot put the HeaderImage inside the HeaderDetailsClass - I wanted to keep HeaderImageAlign right next
+ to the HeaderImage property so that too is here in the base class.
+
+ </summary>
+</member><member name="T:BorderContainer.HSL">
+	<summary>
+ HSL class for my ColorEditor
+ H = Hue
+ S = Saturation
+ L = Luminoscity
+ 
+ ALL HSL properties have a min value of 0 and a max value of 1
+ </summary>
+</member><member name="T:BorderContainer.BorderForm.HeaderAlignmentType">
+	<summary>
+ Pretty obvious what this does
+ </summary>
+</member><member name="P:BorderContainer.BorderForm.DragOpacity">
+	<summary>
+ Dragging a form with a DragOpacity less than one on machines with horrible video cards 
+ will have horrific performance issues - highly recommend you do not set this unless
+ you know your target machines can handle it.
+ </summary>
+</member><member name="P:BorderContainer.BorderForm.BorderDetails">
+	<summary>
+ This is the bulk of our Border Container control.
+ </summary>
+</member><member name="P:BorderContainer.BorderForm.DisplayRectangle">
+	<summary>
+ Create a custom Display Rectangle that returns the "Client Area" to the user
+ </summary>
+</member><member name="P:BorderContainer.BorderForm.OpenRectangle">
+	<summary>
+ The true Rectangle of the control (including the Header space)
+ </summary>
+</member><member name="P:BorderContainer.BorderForm.HeaderImage">
+	<summary>
+ Holds the image to be drawn in the header (if any)
+ </summary>
+</member><member name="P:BorderContainer.BorderForm.HeaderImageAlignment">
+	<summary>
+ Position to draw the Header Image (if any)
+ </summary>
+</member><member name="M:BorderContainer.BorderForm.OnCreateControl">
+	<summary>
+ FOR REASONS UNKNOWN TO ME:  Whenever you drop this control on your form and edit
+ either of the expandableproperties... the update is immediate and "live" - i.e. the control
+ repaints and you see the effect of the change instantly - Are you waiting for the "But" ??
+ BUT
+ 1) Place the control on a form
+ 2) Set some properties (everything repaints as you make the changes)
+ 3) Run the ap - make sure you are seeing the form with this control on it.
+ 4) Stop the ap and re-edit the control
+ 5) The repainting STOPS - the properties are getting set but the Paint event is not 
+ automatically firing...and I have no clue why.  From what I've read, setting each property
+ to "NotifyParentProperty(True)" was supposed to do this for me...but it does not work.
+ 
+ Perhaps someone far more experienced at writing custom controls can offer a solution?
+ 
+ In the mean time - I've written this hack to get around the fact that the designer seems
+ to be "forgetting" about the controls sub properties.
+ </summary>
+	<remarks></remarks>
+</member><member name="M:BorderContainer.BorderForm.BorderContainer_Paint(System.Object,System.Windows.Forms.PaintEventArgs)">
+	<summary>
+ Paints the Control:
+    Header
+    Buttons
+    Header Image and Text
+    Outer and Inner borders
+    Resize Panels
+ </summary>
+</member><member name="P:BorderContainer.HeaderDetailClass.ShowActivationMenu">
+	<summary>
+ If ShowActivationMenu is true, the control will attempt to popup the internal Activation Menu
+ returning to the calling form which Menu was clicked for further processing.
+ </summary>
+</member><member name="P:BorderContainer.HeaderDetailClass.ShowCollapse">
+	<summary>
+ If true, the collapse button will be displayed.
+ The image used for the collapse button will change based on where the control is docked.
+ 
+ If the border container is not docked or is dock.filled, the collapse button will be hidden.
+ </summary>
+</member><member name="P:BorderContainer.HeaderDetailClass.ShowClose">
+	<summary>
+ If true, the close button will be displayed.
+ </summary>
+</member><member name="P:BorderContainer.HeaderDetailClass.RoundedCorners">
+	<summary>
+ Set to true if you want rounded corners in the header
+ </summary>
+</member><member name="P:BorderContainer.HeaderDetailClass.RoundSize">
+	<summary>
+ This is the size of the arc created for the rounded corner.
+ </summary>
+</member><member name="P:BorderContainer.HeaderDetailClass.ActivationMenu">
+	<summary>
+ The Serialization is required to maintain the values of the menus added
+ during design-time
+ </summary>
+</member><member name="P:BorderContainer.HeaderDetailClass.AntiAliasText">
+	<summary>
+ If AntiAliasText is true, the control will anti-alias the Header Text
+ </summary>
+</member><member name="P:BorderContainer.HeaderDetailClass.Text">
+	<summary>
+ This is the text that is displayed on the Header - uses the control's Font
+ 
+ The painting routine uses character elipses for truncating the displayed text if
+ the control is not wide enough to display all of the text.
+ 
+ </summary>
+</member><member name="P:BorderContainer.HeaderDetailClass.TextAlignment">
+	<summary>
+ Text Alignment:
+ Default is "Left"
+ Can be set to "Left", "Center" or "Right"
+ </summary>
+</member><member name="P:BorderContainer.HeaderDetailClass.bgColorBegin">
+	<summary>
+ Header Background Color - START
+ SPECIAL NOTE:
+    While this is a 'Color' property - the TYPE is 'String'
+    You may be asking, why not just use the type, "Color" ?
+    Because for reasons unknown to me - the Property Window refused to allow a custom
+    editor for a property of type, "Color."  I think thats because a color property 
+    ALREADY uses a custom editor - and I was never able to figure out how to override that.
+ </summary>
+</member><member name="P:BorderContainer.HeaderDetailClass.bgColorCenter">
+	<summary>
+ Header Background Color - MIDDLE
+ </summary>
+</member><member name="P:BorderContainer.HeaderDetailClass.bgColorEnd">
+	<summary>
+ Header Background Color - END
+ </summary>
+</member><member name="P:BorderContainer.HeaderDetailClass.ForegroundColor">
+	<summary>
+ Header Foreground Color
+ About the only thing that uses this is the Header Text
+ See "BackgroundColor" property for a special note.
+ </summary>
+</member><member name="P:BorderContainer.HeaderDetailClass.HeaderHeight">
+	<summary>
+ This is the height in pixels of the Header including the border that lines it
+ Keep in mind that we could be displaying the Activation picture as well as the Hider picture
+ so if you make set this value too small, you could get some ugly, visual results.
+ </summary>
+</member><member name="P:BorderContainer.bfHeaderDetClass.ShowActivationMenu">
+	<summary>
+ If ShowActivationMenu is true, the control will attempt to popup the internal Activation Menu
+ returning to the calling form which Menu was clicked for further processing.
+ </summary>
+</member><member name="P:BorderContainer.bfHeaderDetClass.ShowClose">
+	<summary>
+ If true, the Close button will be displayed.
+ </summary>
+</member><member name="P:BorderContainer.bfHeaderDetClass.ActivationMenu">
+	<summary>
+ The Serialization is required to maintain the values of the menus added
+ during design-time
+ </summary>
+</member><member name="P:BorderContainer.bfHeaderDetClass.AntiAliasText">
+	<summary>
+ If AntiAliasText is true, the control will anti-alias the Header Text
+ </summary>
+</member><member name="P:BorderContainer.bfHeaderDetClass.Text">
+	<summary>
+ This is the text that is displayed on the Header - uses the control's Font
+ 
+ The painting routine uses character elipses for truncating the displayed text if
+ the control is not wide enough to display all of the text.
+ 
+ </summary>
+</member><member name="P:BorderContainer.bfHeaderDetClass.TextAlignment">
+	<summary>
+ Text Alignment:
+ Default is "Left"
+ Can be set to "Left", "Center" or "Right"
+ </summary>
+</member><member name="P:BorderContainer.bfHeaderDetClass.bgColorBegin">
+	<summary>
+ Header Background Color - START
+ SPECIAL NOTE:
+    While this is a 'Color' property - the TYPE is 'String'
+    You may be asking, why not just use the type, "Color" ?
+    Because for reasons unknown to me - the Property Window refused to allow a custom
+    editor for a property of type, "Color."  I think thats because a color property 
+    ALREADY uses a custom editor - and I was never able to figure out how to override that.
+ </summary>
+</member><member name="P:BorderContainer.bfHeaderDetClass.bgColorCenter">
+	<summary>
+ Header Background Color - MIDDLE
+ </summary>
+</member><member name="P:BorderContainer.bfHeaderDetClass.bgColorEnd">
+	<summary>
+ Header Background Color - END
+ </summary>
+</member><member name="P:BorderContainer.bfHeaderDetClass.ForegroundColor">
+	<summary>
+ Header Foreground Color
+ About the only thing that uses this is the Header Text
+ See "BackgroundColor" property for a special note.
+ </summary>
+</member><member name="P:BorderContainer.bfHeaderDetClass.HeaderHeight">
+	<summary>
+ This is the height in pixels of the Header including the border that lines it
+ Keep in mind that we could be displaying the Activation picture as well as the Hider picture
+ so if you make set this value too small, you could get some ugly, visual results.
+ </summary>
+</member><member name="T:BorderContainer.PropertyEditorBase">
+	<summary>
+ This is my replacement for the Standard Visual Studio editor base.
+ This allows me to capture the Editor(s) in the Properties window and replace them with my own as needed.
+ That means - I can have popup windows, drop downs, forms...whatever I want.
+ </summary>
+</member>
+</members>
+</doc>

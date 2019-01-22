@@ -1,0 +1,1814 @@
+Archive member included to satisfy reference by file (symbol)
+
+E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(head.s.o)
+                              (Main_Entry)
+E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+                              obj/tcp.c.o (lwip_connect)
+E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+                              E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(head.s.o) (_start)
+E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+                              E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o) (_exit)
+c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-errno.o)
+                              E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o) (__errno)
+c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-impure.o)
+                              c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-errno.o) (_impure_ptr)
+c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-memset.o)
+                              obj/tcp.c.o (memset)
+c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-puts.o)
+                              obj/tcp.c.o (puts)
+c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-strlen.o)
+                              obj/tcp.c.o (strlen)
+c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-wbuf.o)
+                              c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-puts.o) (__swbuf_r)
+c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-wsetup.o)
+                              c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-puts.o) (__swsetup_r)
+c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fflush.o)
+                              c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-wbuf.o) (_fflush_r)
+c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+                              c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-puts.o) (__sinit)
+c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fwalk.o)
+                              c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o) (_fwalk)
+c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-makebuf.o)
+                              c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-wsetup.o) (__smakebuf_r)
+c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-nano-freer.o)
+                              c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-wsetup.o) (_free_r)
+c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-nano-mallocr.o)
+                              c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o) (_malloc_r)
+c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-sbrkr.o)
+                              c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-nano-mallocr.o) (_sbrk_r)
+c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-stdio.o)
+                              c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o) (__sread)
+c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-writer.o)
+                              c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-stdio.o) (_write_r)
+c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-closer.o)
+                              c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-stdio.o) (_close_r)
+c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fstatr.o)
+                              c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-makebuf.o) (_fstat_r)
+c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-isattyr.o)
+                              c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-makebuf.o) (_isatty_r)
+c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-lseekr.o)
+                              c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-stdio.o) (_lseek_r)
+c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-readr.o)
+                              c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-stdio.o) (_read_r)
+c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-reent.o)
+                              c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-sbrkr.o) (errno)
+
+Allocating common symbols
+Common symbol       size              file
+
+errno               0x4               c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-reent.o)
+
+Discarded input sections
+
+ .group         0x00000000        0xc obj/tcp.c.o
+ .group         0x00000000        0xc obj/tcp.c.o
+ .group         0x00000000        0xc obj/tcp.c.o
+ .group         0x00000000        0xc obj/tcp.c.o
+ .group         0x00000000        0xc obj/tcp.c.o
+ .group         0x00000000        0xc obj/tcp.c.o
+ .group         0x00000000        0xc obj/tcp.c.o
+ .group         0x00000000        0xc obj/tcp.c.o
+ .group         0x00000000        0xc obj/tcp.c.o
+ .group         0x00000000        0xc obj/tcp.c.o
+ .group         0x00000000        0xc obj/tcp.c.o
+ .group         0x00000000        0xc obj/tcp.c.o
+ .group         0x00000000        0xc obj/tcp.c.o
+ .group         0x00000000        0xc obj/tcp.c.o
+ .group         0x00000000        0xc obj/tcp.c.o
+ .group         0x00000000        0xc obj/tcp.c.o
+ .group         0x00000000        0xc obj/tcp.c.o
+ .group         0x00000000        0xc obj/tcp.c.o
+ .group         0x00000000        0xc obj/tcp.c.o
+ .group         0x00000000        0xc obj/tcp.c.o
+ .group         0x00000000        0xc obj/tcp.c.o
+ .group         0x00000000        0xc obj/tcp.c.o
+ .group         0x00000000        0xc obj/tcp.c.o
+ .group         0x00000000        0xc obj/tcp.c.o
+ .group         0x00000000        0xc obj/tcp.c.o
+ .group         0x00000000        0xc obj/tcp.c.o
+ .group         0x00000000        0xc obj/tcp.c.o
+ .group         0x00000000        0xc obj/tcp.c.o
+ .group         0x00000000        0xc obj/tcp.c.o
+ .group         0x00000000        0xc obj/tcp.c.o
+ .group         0x00000000        0xc obj/tcp.c.o
+ .group         0x00000000        0xc obj/tcp.c.o
+ .group         0x00000000        0xc obj/tcp.c.o
+ .group         0x00000000        0xc obj/tcp.c.o
+ .group         0x00000000        0xc obj/tcp.c.o
+ .group         0x00000000        0xc obj/tcp.c.o
+ .group         0x00000000        0xc obj/tcp.c.o
+ .group         0x00000000        0xc obj/tcp.c.o
+ .group         0x00000000        0xc obj/tcp.c.o
+ .group         0x00000000        0xc obj/tcp.c.o
+ .group         0x00000000        0xc obj/tcp.c.o
+ .group         0x00000000        0xc obj/tcp.c.o
+ .group         0x00000000        0xc obj/tcp.c.o
+ .group         0x00000000        0xc obj/tcp.c.o
+ .group         0x00000000        0xc obj/tcp.c.o
+ .group         0x00000000        0xc obj/tcp.c.o
+ .group         0x00000000        0xc obj/tcp.c.o
+ .group         0x00000000        0xc obj/tcp.c.o
+ .group         0x00000000        0xc obj/tcp.c.o
+ .group         0x00000000        0xc obj/tcp.c.o
+ .group         0x00000000        0xc obj/tcp.c.o
+ .group         0x00000000        0xc obj/tcp.c.o
+ .group         0x00000000        0xc obj/tcp.c.o
+ .group         0x00000000        0xc obj/tcp.c.o
+ .group         0x00000000        0xc obj/tcp.c.o
+ .group         0x00000000        0xc obj/tcp.c.o
+ .group         0x00000000        0xc obj/tcp.c.o
+ .group         0x00000000        0xc obj/tcp.c.o
+ .group         0x00000000        0xc obj/tcp.c.o
+ .group         0x00000000        0xc obj/tcp.c.o
+ .group         0x00000000        0xc obj/tcp.c.o
+ .group         0x00000000        0xc obj/tcp.c.o
+ .group         0x00000000        0xc obj/tcp.c.o
+ .group         0x00000000        0xc obj/tcp.c.o
+ .group         0x00000000        0xc obj/tcp.c.o
+ .text          0x00000000        0x0 obj/tcp.c.o
+ .data          0x00000000        0x0 obj/tcp.c.o
+ .bss           0x00000000        0x0 obj/tcp.c.o
+ .text          0x00000000        0x0 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(head.s.o)
+ .data          0x00000000        0x0 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(head.s.o)
+ .bss           0x00000000        0x0 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(head.s.o)
+ .text          0x00000000        0x0 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .data          0x00000000        0x0 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .bss           0x00000000        0x0 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_flash_read
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.vTaskMissedYield
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.xTaskPriorityDisinherit
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_log_printf
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.vTaskSwitchContext
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.xTaskGetTickCount
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.lwip_gethostbyname_r
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.lwip_htonl
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.lwip_ioctl
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.vTaskGetRunTimeStats
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_adc_read
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_sleeplock_close
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_pwm_open
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_atport_write
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_gpt_timer_open
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.uxTaskGetTaskNumber
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.vTaskSetTaskNumber
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_uart_close
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_rtc_time_write
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.vTaskPlaceOnEventListRestricted
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_pwm_start
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_gpio_interrupt_enable
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.lwip_write
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_i2c_master_close
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.uxListRemove
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.uxEventGroupGetNumber
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_atport_status
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.lwip_fcntl
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.uxTaskGetSystemState
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_uart_ioctl
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_rtc_close
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.uxQueueSpacesAvailable
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.xTaskGetCurrentTaskHandle
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.vQueueSetQueueNumber
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_uart_read
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_rtc_cal_alarm_enable
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_gpio_write
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_gpio_set_driving_current
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.vTaskPrioritySet
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.vTaskPriorityInherit
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_gpt_timer_close
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.xEventGroupClearBits
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.ulTaskNotifyTake
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.ip4addr_aton
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_rtc_time_read
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_gpt_timer_start
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_rtc_open
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.xQueueGenericReset
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.xTaskRemoveFromUnorderedEventList
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_sleep_islocked
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_spi_transmit_and_receive
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.ucQueueGetQueueType
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.vEventGroupSetBitsCallback
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.ip4_addr_isbroadcast_u32
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_alarm_start
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_wakeup_in_open
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.xEventGroupSync
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.pvTimerGetTimerID
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.lwip_bind
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_sleeplock_release
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.vTaskResume
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.xQueueGenericCreate
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.syslog_write
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.uxTaskGetStackHighWaterMark
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_log_vprintf
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.xEventGroupSetBits
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.print_hex_dump_bytes
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_rtc_alarm_disable
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.uxTaskGetBottomOfStack
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.vEventGroupDelete
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.xQueueAddToSet
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.pvTaskIncrementMutexHeldCount
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.lwip_getsockname
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.xTimerPendFunctionCall
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.xQueueGenericSend
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_spi_close
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.lwip_freeaddrinfo
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_alarm_stop
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.ip4_addr_netmask_valid
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.vQueueUnregisterQueue
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_i2c_read
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_gpio_set_high_impedance
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.vTaskEndScheduler
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.vListInitialise
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.lwip_ntohl
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_flash_open
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_pwm_stop
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_gpio_close
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.xTaskCheckForTimeOut
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.xQueueCreateCountingSemaphore
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.uxQueueMessagesWaiting
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_gpio_set_pinmux
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.xTaskGetSchedulerState
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.xEventGroupCreate
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.xTimerGenericCommand
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.xQueueTakeMutexRecursive
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_pwm_get_duty_cycle
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.vListInitialiseItem
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_atport_open
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.vTaskDelayUntil
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.uxQueueGetQueueNumber
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_flash_close
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.lwip_recvfrom_ext
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.vListInsert
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.vTaskPlaceOnUnorderedEventList
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_flash_write
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.vTaskSetTimeOutState
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_gpio_open
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.uxTaskResetEventItemValue
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_i2c_write
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_atport_read
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.vTaskPlaceOnEventList
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.xQueueRemoveFromSet
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_gpio_clear_high_impedance
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.xQueueCreateSet
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.vQueueAddToRegistry
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.xQueueGenericReceive
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_sleeplock_acquire
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.vTaskClearTaskRunTimeCounter
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.xTimerCreateTimerTask
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_gpio_toggle
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.xTimerIsTimerActive
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.vTaskDelay
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.vListInsertEnd
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.xEventGroupWaitBits
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_alarm_open
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.lwip_read
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.vTaskStepTick
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.xTimerCreate
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.lwip_getpeername
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.xTaskNotify
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.vTaskList
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.uxTaskGetNumberOfTasks
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_atport_close
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.lwip_getsockopt
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.eTaskConfirmSleepModeStatus
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.ip4addr_ntoa_r
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.lwip_shutdown
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_spi_open
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.xQueueCreateMutex
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.lwip_ntohs
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.lwip_recvfrom
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.xTaskNotifyWait
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.vQueueDelete
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.xQueueGiveMutexRecursive
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_flash_erase
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_sys_get_boot_mode
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_alarm_close
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.vTaskSuspend
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.lwip_sendto
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.lwip_listen
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.vTaskStartScheduler
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_gpt_timer_stop
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.pcTaskGetTaskName
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.uxTaskPriorityGet
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_i2c_master_init
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.vEventGroupClearBitsCallback
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_pwm_get_frequency
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.xTaskIncrementTick
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.lwip_select
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.lwip_setsockopt
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_pwm_close
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_gpio_get_driving_current
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.xQueueSelectFromSet
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_wakeup_in_close
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_sleeplock_open
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.lwip_accept
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.xTaskRemoveFromEventList
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.xTaskGenericCreate
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.lwip_gethostbyname
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.eTaskGetState
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.vQueueWaitForMessageRestricted
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.gsdk_gpio_read
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.ip4addr_ntoa
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.lwip_getaddrinfo
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .text.pcTimerGetTimerName
+                0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .text          0x00000000        0x0 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .data          0x00000000        0x0 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .bss           0x00000000        0x0 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .debug_macro   0x00000000      0xa4e E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .debug_macro   0x00000000       0x22 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .debug_macro   0x00000000       0xef E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .debug_macro   0x00000000       0x6a E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .debug_macro   0x00000000      0x1df E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .debug_macro   0x00000000       0x18 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .debug_macro   0x00000000       0x35 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .debug_macro   0x00000000       0x34 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .debug_macro   0x00000000      0x330 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .debug_macro   0x00000000       0x10 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .debug_macro   0x00000000       0x58 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .debug_macro   0x00000000       0x1f E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .debug_macro   0x00000000       0x43 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .debug_macro   0x00000000       0x20 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .debug_macro   0x00000000       0x1c E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .debug_macro   0x00000000       0x52 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .debug_macro   0x00000000       0x40 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .debug_macro   0x00000000       0x10 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .debug_macro   0x00000000       0x40 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .debug_macro   0x00000000       0xd7 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .debug_macro   0x00000000       0x1c E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .debug_macro   0x00000000       0x3d E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .group         0x00000000        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .text          0x00000000        0x0 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .data          0x00000000        0x0 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .bss           0x00000000        0x0 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .text._chown   0x00000000       0x10 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .text._execve  0x00000000       0x10 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .text._fork    0x00000000       0x10 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .text._getpid  0x00000000       0x10 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .text._gettimeofday
+                0x00000000       0x10 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .text._kill    0x00000000       0x10 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .text._link    0x00000000       0x10 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .text._open    0x00000000       0x10 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .text._readlink
+                0x00000000       0x10 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .text._stat    0x00000000       0x10 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .text._symlink
+                0x00000000       0x10 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .text._times   0x00000000       0x10 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .text._unlink  0x00000000       0x10 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .text._wait    0x00000000       0x10 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .text.abort    0x00000000        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .bss.__dso_handle
+                0x00000000        0x4 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .bss.__env     0x00000000        0x4 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .data.environ  0x00000000        0x4 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000      0xa4e E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000       0x22 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000       0x58 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000       0x18 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000       0x94 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000       0x35 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000       0x34 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000       0x10 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000      0x174 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000       0x57 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000       0x58 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000       0x1f E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000       0x43 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000       0x20 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000      0x18e E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000      0x330 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000       0x10 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000       0x6a E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000       0x1c E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000       0x52 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000       0x40 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000       0x10 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000       0x40 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000       0xd7 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000       0x1c E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000       0x3d E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000       0x35 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000       0x10 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000       0x88 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000       0x16 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000       0x16 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000       0x29 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000       0xef E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000      0x1df E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000       0x10 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000       0x16 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00000000      0x16f E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .text          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-errno.o)
+ .data          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-errno.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-errno.o)
+ .text          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-impure.o)
+ .data          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-impure.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-impure.o)
+ .text          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-memset.o)
+ .data          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-memset.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-memset.o)
+ .text          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-puts.o)
+ .data          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-puts.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-puts.o)
+ .data          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-strlen.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-strlen.o)
+ .text          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-wbuf.o)
+ .data          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-wbuf.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-wbuf.o)
+ .text.__swbuf  0x00000000       0x10 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-wbuf.o)
+ .text          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-wsetup.o)
+ .data          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-wsetup.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-wsetup.o)
+ .text          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fflush.o)
+ .data          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fflush.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fflush.o)
+ .text.fflush   0x00000000       0x24 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fflush.o)
+ .text          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+ .data          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+ .text.__fp_lock
+                0x00000000        0x4 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+ .text.__fp_unlock
+                0x00000000        0x4 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+ .text._cleanup
+                0x00000000        0xc c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+ .text.__sfp_lock_acquire
+                0x00000000        0x2 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+ .text.__sfp_lock_release
+                0x00000000        0x2 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+ .text.__sinit_lock_acquire
+                0x00000000        0x2 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+ .text.__sinit_lock_release
+                0x00000000        0x2 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+ .text.__fp_lock_all
+                0x00000000       0x14 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+ .text.__fp_unlock_all
+                0x00000000       0x14 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+ .text          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fwalk.o)
+ .data          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fwalk.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fwalk.o)
+ .text._fwalk   0x00000000       0x38 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fwalk.o)
+ .text          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-makebuf.o)
+ .data          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-makebuf.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-makebuf.o)
+ .text          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-nano-freer.o)
+ .data          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-nano-freer.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-nano-freer.o)
+ .text          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-nano-mallocr.o)
+ .data          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-nano-mallocr.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-nano-mallocr.o)
+ .text          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-sbrkr.o)
+ .data          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-sbrkr.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-sbrkr.o)
+ .text          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-stdio.o)
+ .data          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-stdio.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-stdio.o)
+ .text.__seofread
+                0x00000000        0x4 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-stdio.o)
+ .text          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-writer.o)
+ .data          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-writer.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-writer.o)
+ .text          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-closer.o)
+ .data          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-closer.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-closer.o)
+ .text          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fstatr.o)
+ .data          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fstatr.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fstatr.o)
+ .text          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-isattyr.o)
+ .data          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-isattyr.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-isattyr.o)
+ .text          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-lseekr.o)
+ .data          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-lseekr.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-lseekr.o)
+ .text          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-readr.o)
+ .data          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-readr.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-readr.o)
+ .text          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-reent.o)
+ .data          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-reent.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-reent.o)
+ .text.cleanup_glue
+                0x00000000       0x1a c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-reent.o)
+ .text._reclaim_reent
+                0x00000000       0xb8 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-reent.o)
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+FLASH            0x08277800         0x00020000         xr
+RAM              0x10174000         0x00040000         rw
+RETSRAM          0x04300700         0x00000080         rw
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+LOAD obj/tcp.c.o
+LOAD E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a
+START GROUP
+LOAD c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v7e-m/fpv4-sp/hard\libgcc.a
+LOAD c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a
+END GROUP
+START GROUP
+LOAD c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v7e-m/fpv4-sp/hard\libgcc.a
+LOAD c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a
+END GROUP
+                0x00001000                _main_stack_size = 0x1000
+                0x00001000                _callback_stack_size = 0x1000
+                0x00000000                _main_task_priority = 0x0
+                0x00000000                _callback_task_priority = 0x0
+                0x00000001                _api_version = 0x1
+                0xa5a5a5a5                _app_properties = 0xa5a5a5a5
+                0x00000001                _app_version = 0x1
+                0x5a5a5a5a                _app_id = 0x5a5a5a5a
+                0x08277800                _load_address = ORIGIN (FLASH)
+                0x00001000                _Minimum_Heap_Size = 0x1000
+                0x10176098                PROVIDE (_Heap_Begin = _end_noinit)
+                0x101b4000                PROVIDE (_Heap_Limit = (ORIGIN (RAM) + LENGTH (RAM)))
+
+.preamble       0x08277800      0x100
+                0x08277800                . = ALIGN (0x4)
+ FILL mask 0xff
+ *(.preamble .preamble.*)
+ .preamble      0x08277800       0x50 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(head.s.o)
+                0x08277900                . = ALIGN (0x100)
+ *fill*         0x08277850       0xb0 ff
+                0x08277900                _preamble_limit = .
+
+.inits          0x08277900       0x14
+                0x08277900                __data_regions_array_start = .
+                0x08277900        0x4 LONG 0x827870c LOADADDR (.data)
+                0x08277904        0x4 LONG 0x10176004 ADDR (.data)
+                0x08277908        0x4 LONG 0x10176078 (ADDR (.data) + SIZEOF (.data))
+                0x0827790c                __data_regions_array_end = .
+                0x0827790c                __bss_regions_array_start = .
+                0x0827790c        0x4 LONG 0x10176078 ADDR (.bss)
+                0x08277910        0x4 LONG 0x10176098 (ADDR (.bss) + SIZEOF (.bss))
+                0x08277914                __bss_regions_array_end = .
+ *(.init)
+ *(.fini)
+                0x08277914                . = ALIGN (0x4)
+                0x08277914                PROVIDE (__preinit_array_start = .)
+ *(.preinit_array_sysinit .preinit_array_sysinit.*)
+ *(.preinit_array_platform .preinit_array_platform.*)
+ *(.preinit_array .preinit_array.*)
+                0x08277914                PROVIDE (__preinit_array_end = .)
+                0x08277914                . = ALIGN (0x4)
+                0x08277914                PROVIDE (__init_array_start = .)
+ *(SORT_BY_NAME(.init_array.*))
+ *(.init_array)
+                0x08277914                PROVIDE (__init_array_end = .)
+                0x08277914                . = ALIGN (0x4)
+                0x08277914                PROVIDE (__fini_array_start = .)
+ *(SORT_BY_NAME(.fini_array.*))
+ *(.fini_array)
+                0x08277914                PROVIDE (__fini_array_end = .)
+
+.text           0x08277914      0xdf8
+ *(.text .text.*)
+ .text.__io_puts
+                0x08277914       0x20 obj/tcp.c.o
+                0x08277914                __io_puts
+ .text.log_init
+                0x08277934       0x4c obj/tcp.c.o
+                0x08277934                log_init
+ .text.main     0x08277980       0xe0 obj/tcp.c.o
+                0x08277980                main
+ .text.Main_Entry
+                0x08277a60       0x14 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(head.s.o)
+                0x08277a60                Main_Entry
+ .text.__asm_exit
+                0x08277a74        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(head.s.o)
+                0x08277a74                __asm_exit
+ .text.Default_Callback_Entry
+                0x08277a80        0x2 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(head.s.o)
+                0x08277a80                Callback_Entry
+ *fill*         0x08277a82        0x2 
+ .text.vTaskSuspendAll
+                0x08277a84        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+                0x08277a84                vTaskSuspendAll
+ .text.lwip_connect
+                0x08277a8c        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+                0x08277a8c                lwip_connect
+ .text.ipaddr_addr
+                0x08277a94        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+                0x08277a94                ipaddr_addr
+ .text.gsdk_uart_write
+                0x08277a9c        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+                0x08277a9c                gsdk_uart_write
+ .text.lwip_socket
+                0x08277aa4        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+                0x08277aa4                lwip_socket
+ .text.lwip_htons
+                0x08277aac        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+                0x08277aac                lwip_htons
+ .text.gsdk_uart_open
+                0x08277ab4        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+                0x08277ab4                gsdk_uart_open
+ .text.xTaskResumeAll
+                0x08277abc        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+                0x08277abc                xTaskResumeAll
+ .text.lwip_recv
+                0x08277ac4        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+                0x08277ac4                lwip_recv
+ .text.gsdk_syslog_printf
+                0x08277acc        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+                0x08277acc                gsdk_syslog_printf
+ .text.lwip_close
+                0x08277ad4        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+                0x08277ad4                lwip_close
+ .text.lwip_send
+                0x08277adc        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+                0x08277adc                lwip_send
+ .text.__initialize_args
+                0x08277ae4       0x10 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .text._start   0x08277af4      0x134 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+                0x08277af4                _start
+ .text._close   0x08277c28       0x10 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+                0x08277c28                _close
+ .text._fstat   0x08277c38       0x10 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+                0x08277c38                _fstat
+ .text._isatty  0x08277c48        0xe E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+                0x08277c48                _isatty
+ .text._lseek   0x08277c56       0x10 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+                0x08277c56                _lseek
+ .text._read    0x08277c66        0xc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+                0x08277c66                _read
+ .text._write   0x08277c72       0x10 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+                0x08277c72                _write
+ .text._exit    0x08277c82        0x6 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+                0x08277c82                _exit
+ .text._sbrk    0x08277c88       0x44 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+                0x08277c88                _sbrk
+ .text.__malloc_lock
+                0x08277ccc        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+                0x08277ccc                __malloc_lock
+ .text.__malloc_unlock
+                0x08277cd4        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+                0x08277cd4                __malloc_unlock
+ .text.__errno  0x08277cdc        0xc c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-errno.o)
+                0x08277cdc                __errno
+ .text.memset   0x08277ce8       0x10 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-memset.o)
+                0x08277ce8                memset
+ .text._puts_r  0x08277cf8       0xb8 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-puts.o)
+                0x08277cf8                _puts_r
+ .text.puts     0x08277db0       0x10 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-puts.o)
+                0x08277db0                puts
+ .text          0x08277dc0       0x10 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-strlen.o)
+                0x08277dc0                strlen
+ .text.__swbuf_r
+                0x08277dd0       0xa4 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-wbuf.o)
+                0x08277dd0                __swbuf_r
+ .text.__swsetup_r
+                0x08277e74       0xdc c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-wsetup.o)
+                0x08277e74                __swsetup_r
+ .text.__sflush_r
+                0x08277f50      0x10c c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fflush.o)
+                0x08277f50                __sflush_r
+ .text._fflush_r
+                0x0827805c       0x54 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fflush.o)
+                0x0827805c                _fflush_r
+ .text.std      0x082780b0       0x48 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+ .text._cleanup_r
+                0x082780f8        0xc c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+                0x082780f8                _cleanup_r
+ .text.__sfmoreglue
+                0x08278104       0x2c c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+                0x08278104                __sfmoreglue
+ .text.__sinit  0x08278130       0x60 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+                0x08278130                __sinit
+ .text.__sfp    0x08278190       0x78 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+                0x08278190                __sfp
+ .text._fwalk_reent
+                0x08278208       0x3c c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fwalk.o)
+                0x08278208                _fwalk_reent
+ .text.__swhatbuf_r
+                0x08278244       0x48 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-makebuf.o)
+                0x08278244                __swhatbuf_r
+ .text.__smakebuf_r
+                0x0827828c       0x80 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-makebuf.o)
+                0x0827828c                __smakebuf_r
+ .text._free_r  0x0827830c       0x9c c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-nano-freer.o)
+                0x0827830c                _free_r
+ .text._malloc_r
+                0x082783a8       0xb4 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-nano-mallocr.o)
+                0x082783a8                _malloc_r
+ .text._sbrk_r  0x0827845c       0x20 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-sbrkr.o)
+                0x0827845c                _sbrk_r
+ .text.__sread  0x0827847c       0x22 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-stdio.o)
+                0x0827847c                __sread
+ .text.__swrite
+                0x0827849e       0x38 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-stdio.o)
+                0x0827849e                __swrite
+ .text.__sseek  0x082784d6       0x24 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-stdio.o)
+                0x082784d6                __sseek
+ .text.__sclose
+                0x082784fa        0x8 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-stdio.o)
+                0x082784fa                __sclose
+ *fill*         0x08278502        0x2 
+ .text._write_r
+                0x08278504       0x24 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-writer.o)
+                0x08278504                _write_r
+ .text._close_r
+                0x08278528       0x20 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-closer.o)
+                0x08278528                _close_r
+ .text._fstat_r
+                0x08278548       0x24 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fstatr.o)
+                0x08278548                _fstat_r
+ .text._isatty_r
+                0x0827856c       0x20 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-isattyr.o)
+                0x0827856c                _isatty_r
+ .text._lseek_r
+                0x0827858c       0x24 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-lseekr.o)
+                0x0827858c                _lseek_r
+ .text._read_r  0x082785b0       0x24 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-readr.o)
+                0x082785b0                _read_r
+ *(.rodata .rodata.* .constdata .constdata.*)
+ .rodata.log_init.str1.4
+                0x082785d4       0x3f obj/tcp.c.o
+ *fill*         0x08278613        0x1 
+ .rodata.main.str1.4
+                0x08278614       0x84 obj/tcp.c.o
+                                 0x81 (size before relaxing)
+ .rodata._default_gpio_init_table
+                0x08278698       0x10 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(head.s.o)
+                0x08278698                _headware_init_table
+ .rodata._global_impure_ptr
+                0x082786a8        0x4 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-impure.o)
+                0x082786a8                _global_impure_ptr
+ .rodata.__sf_fake_stderr
+                0x082786ac       0x20 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+                0x082786ac                __sf_fake_stderr
+ .rodata.__sf_fake_stdin
+                0x082786cc       0x20 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+                0x082786cc                __sf_fake_stdin
+ .rodata.__sf_fake_stdout
+                0x082786ec       0x20 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+                0x082786ec                __sf_fake_stdout
+ *(vtable)
+ *(.eh_frame*)
+ *(.glue_7)
+ .glue_7        0x0827870c        0x0 linker stubs
+ *(.glue_7t)
+ .glue_7t       0x0827870c        0x0 linker stubs
+
+.vfp11_veneer   0x0827870c        0x0
+ .vfp11_veneer  0x0827870c        0x0 linker stubs
+
+.v4_bx          0x0827870c        0x0
+ .v4_bx         0x0827870c        0x0 linker stubs
+
+.iplt           0x0827870c        0x0
+ .iplt          0x0827870c        0x0 obj/tcp.c.o
+
+.rel.dyn        0x0827870c        0x0
+ .rel.iplt      0x0827870c        0x0 obj/tcp.c.o
+
+.ARM.extab
+ *(.ARM.extab* .gnu.linkonce.armextab.*)
+                0x0827870c                . = ALIGN (0x4)
+                0x0827870c                __exidx_start = .
+
+.ARM.exidx
+ *(.ARM.exidx* .gnu.linkonce.armexidx.*)
+                0x0827870c                __exidx_end = .
+                0x0827870c                . = ALIGN (0x4)
+                0x0827870c                _etext = .
+                0x0827870c                __etext = .
+
+.stacks         0x10174000     0x2000
+                0x10174000                . = ALIGN (0x8)
+                0x10174000                _main_stack_base = .
+                0x10175000                . = (. + _main_stack_size)
+ *fill*         0x10174000     0x1000 
+                0x10175000                . = ALIGN (0x8)
+                0x10175000                _callback_stack_base = .
+                0x10176000                . = (. + _callback_stack_size)
+ *fill*         0x10175000     0x1000 
+
+.init_data      0x10176000        0x4
+                0x10176000                . = ALIGN (0x4)
+ *(.init_data .init_data.*)
+ .init_data._exit_stack_pointer
+                0x10176000        0x4 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(head.s.o)
+                0x0827870c                _sidata = LOADADDR (.data)
+
+.data           0x10176004       0x74 load address 0x0827870c
+ FILL mask 0xff
+                0x10176004                __data_start__ = .
+ *(.data_begin .data_begin.*)
+ .data_begin    0x10176004        0x4 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+ *(.data .data.*)
+ .data.argv.5618
+                0x10176008        0x8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .data._impure_ptr
+                0x10176010        0x4 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-impure.o)
+                0x10176010                _impure_ptr
+ .data.impure_data
+                0x10176014       0x60 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-impure.o)
+ *(.data_end .data_end.*)
+ .data_end      0x10176074        0x4 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+                0x10176078                . = ALIGN (0x4)
+                0x10176078                __data_end__ = .
+
+.igot.plt       0x10176078        0x0 load address 0x08278780
+ .igot.plt      0x10176078        0x0 obj/tcp.c.o
+
+.bss            0x10176078       0x20 load address 0x08278780
+                0x10176078                __bss_start__ = .
+ *(.bss_begin .bss_begin.*)
+ .bss_begin     0x10176078        0x4 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+ *(.bss .bss.*)
+ .bss.g_huart   0x1017607c        0x4 obj/tcp.c.o
+ .bss.name.5617
+                0x10176080        0x1 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+ *fill*         0x10176081        0x3 
+ .bss.current_heap_end.7662
+                0x10176084        0x4 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .bss.__malloc_free_list
+                0x10176088        0x4 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-nano-mallocr.o)
+                0x10176088                __malloc_free_list
+ .bss.__malloc_sbrk_start
+                0x1017608c        0x4 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-nano-mallocr.o)
+                0x1017608c                __malloc_sbrk_start
+ *(COMMON)
+ COMMON         0x10176090        0x4 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-reent.o)
+                0x10176090                errno
+ *(.bss_end .bss_end.*)
+ .bss_end       0x10176094        0x4 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+                0x10176098                . = ALIGN (0x4)
+                0x10176098                __bss_end__ = .
+
+.noinit         0x10176098        0x0 load address 0x08278780
+                0x10176098                _noinit = .
+ *(.noinit .noinit.*)
+                0x10176098                . = ALIGN (0x4)
+                0x10176098                _end_noinit = .
+                [!provide]                PROVIDE (end = _end_noinit)
+                [!provide]                PROVIDE (_end = _end_noinit)
+                [!provide]                PROVIDE (__end = _end_noinit)
+                [!provide]                PROVIDE (__end__ = _end_noinit)
+                0x00000001                ASSERT ((_Minimum_Heap_Size <= (_end_noinit - ORIGIN (RAM))), RAM expired)
+
+.retsram_data   0x04300700        0x0
+                0x04300700                . = ALIGN (0x4)
+                0x04300700                _retsram_start = .
+ *(.retsram_data)
+                0x04300700                . = ALIGN (0x4)
+                0x04300700                _retsram_limit = .
+
+.end            0x08278780        0x0
+                0x08278780                . = ALIGN (0x4)
+                0x08278780                _app_limit = .
+
+.stab
+ *(.stab)
+
+.stabstr
+ *(.stabstr)
+
+.stab.excl
+ *(.stab.excl)
+
+.stab.exclstr
+ *(.stab.exclstr)
+
+.stab.index
+ *(.stab.index)
+
+.stab.indexstr
+ *(.stab.indexstr)
+
+.comment        0x00000000       0x7f
+ *(.comment)
+ .comment       0x00000000       0x7f obj/tcp.c.o
+                                 0x80 (size before relaxing)
+ .comment       0x0000007f       0x80 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .comment       0x0000007f       0x80 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+
+.ARM.attributes
+                0x00000000       0x37
+ .ARM.attributes
+                0x00000000       0x39 obj/tcp.c.o
+ .ARM.attributes
+                0x00000039       0x21 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(head.s.o)
+ .ARM.attributes
+                0x0000005a       0x21 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .ARM.attributes
+                0x0000007b       0x39 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .ARM.attributes
+                0x000000b4       0x39 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .ARM.attributes
+                0x000000ed       0x34 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-errno.o)
+ .ARM.attributes
+                0x00000121       0x34 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-impure.o)
+ .ARM.attributes
+                0x00000155       0x34 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-memset.o)
+ .ARM.attributes
+                0x00000189       0x34 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-puts.o)
+ .ARM.attributes
+                0x000001bd       0x1b c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-strlen.o)
+ .ARM.attributes
+                0x000001d8       0x34 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-wbuf.o)
+ .ARM.attributes
+                0x0000020c       0x34 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-wsetup.o)
+ .ARM.attributes
+                0x00000240       0x34 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fflush.o)
+ .ARM.attributes
+                0x00000274       0x34 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+ .ARM.attributes
+                0x000002a8       0x34 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fwalk.o)
+ .ARM.attributes
+                0x000002dc       0x34 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-makebuf.o)
+ .ARM.attributes
+                0x00000310       0x34 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-nano-freer.o)
+ .ARM.attributes
+                0x00000344       0x34 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-nano-mallocr.o)
+ .ARM.attributes
+                0x00000378       0x34 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-sbrkr.o)
+ .ARM.attributes
+                0x000003ac       0x34 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-stdio.o)
+ .ARM.attributes
+                0x000003e0       0x34 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-writer.o)
+ .ARM.attributes
+                0x00000414       0x34 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-closer.o)
+ .ARM.attributes
+                0x00000448       0x34 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fstatr.o)
+ .ARM.attributes
+                0x0000047c       0x34 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-isattyr.o)
+ .ARM.attributes
+                0x000004b0       0x34 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-lseekr.o)
+ .ARM.attributes
+                0x000004e4       0x34 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-readr.o)
+ .ARM.attributes
+                0x00000518       0x34 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-reent.o)
+
+.debug
+ *(.debug)
+
+.line
+ *(.line)
+
+.debug_srcinfo
+ *(.debug_srcinfo)
+
+.debug_sfnames
+ *(.debug_sfnames)
+
+.debug_aranges  0x00000000      0x760
+ *(.debug_aranges)
+ .debug_aranges
+                0x00000000       0x30 obj/tcp.c.o
+ .debug_aranges
+                0x00000030       0x30 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(head.s.o)
+ .debug_aranges
+                0x00000060      0x5f8 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .debug_aranges
+                0x00000658       0x28 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .debug_aranges
+                0x00000680       0xe0 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+
+.debug_pubnames
+ *(.debug_pubnames)
+
+.debug_info     0x00000000     0x2cb8
+ *(.debug_info .gnu.linkonce.wi.*)
+ .debug_info    0x00000000     0x1594 obj/tcp.c.o
+ .debug_info    0x00001594       0x22 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(head.s.o)
+ .debug_info    0x000015b6       0x22 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .debug_info    0x000015d8      0x49b E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .debug_info    0x00001a73     0x1245 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+
+.debug_abbrev   0x00000000      0x77b
+ *(.debug_abbrev)
+ .debug_abbrev  0x00000000      0x2aa obj/tcp.c.o
+ .debug_abbrev  0x000002aa       0x12 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(head.s.o)
+ .debug_abbrev  0x000002bc       0x12 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .debug_abbrev  0x000002ce      0x1cc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .debug_abbrev  0x0000049a      0x2e1 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+
+.debug_line     0x00000000     0x20be
+ *(.debug_line)
+ .debug_line    0x00000000      0x7c3 obj/tcp.c.o
+ .debug_line    0x000007c3       0x86 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(head.s.o)
+ .debug_line    0x00000849      0xcdd E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .debug_line    0x00001526      0x3de E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .debug_line    0x00001904      0x7ba E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+
+.debug_frame    0x00000000      0x910
+ *(.debug_frame)
+ .debug_frame   0x00000000       0x74 obj/tcp.c.o
+ .debug_frame   0x00000074       0x3c E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .debug_frame   0x000000b0      0x2cc E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_frame   0x0000037c       0x20 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-errno.o)
+ .debug_frame   0x0000039c       0x20 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-memset.o)
+ .debug_frame   0x000003bc       0x3c c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-puts.o)
+ .debug_frame   0x000003f8       0x40 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-wbuf.o)
+ .debug_frame   0x00000438       0x2c c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-wsetup.o)
+ .debug_frame   0x00000464       0x68 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fflush.o)
+ .debug_frame   0x000004cc      0x11c c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+ .debug_frame   0x000005e8       0x54 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fwalk.o)
+ .debug_frame   0x0000063c       0x58 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-makebuf.o)
+ .debug_frame   0x00000694       0x38 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-nano-freer.o)
+ .debug_frame   0x000006cc       0x2c c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-nano-mallocr.o)
+ .debug_frame   0x000006f8       0x2c c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-sbrkr.o)
+ .debug_frame   0x00000724       0x88 c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-stdio.o)
+ .debug_frame   0x000007ac       0x2c c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-writer.o)
+ .debug_frame   0x000007d8       0x2c c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-closer.o)
+ .debug_frame   0x00000804       0x2c c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fstatr.o)
+ .debug_frame   0x00000830       0x2c c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-isattyr.o)
+ .debug_frame   0x0000085c       0x2c c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-lseekr.o)
+ .debug_frame   0x00000888       0x2c c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-readr.o)
+ .debug_frame   0x000008b4       0x5c c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-reent.o)
+
+.debug_str      0x00000000    0x16717
+ *(.debug_str)
+ .debug_str     0x00000000    0x130a8 obj/tcp.c.o
+                              0x133f1 (size before relaxing)
+ .debug_str     0x000130a8       0x61 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(head.s.o)
+ .debug_str     0x00013109       0x49 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+                                 0x7b (size before relaxing)
+ .debug_str     0x00013152      0x2ef E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+                               0x6895 (size before relaxing)
+ .debug_str     0x00013441     0x32d6 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+                               0xbe46 (size before relaxing)
+
+.debug_loc      0x00000000      0x947
+ *(.debug_loc)
+ .debug_loc     0x00000000      0x15d obj/tcp.c.o
+ .debug_loc     0x0000015d      0x24b E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .debug_loc     0x000003a8      0x59f E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+
+.debug_macinfo
+ *(.debug_macinfo)
+
+.debug_weaknames
+ *(.debug_weaknames)
+
+.debug_funcnames
+ *(.debug_funcnames)
+
+.debug_typenames
+ *(.debug_typenames)
+
+.debug_varnames
+ *(.debug_varnames)
+OUTPUT(bin/tcp.elf elf32-littlearm)
+
+.debug_ranges   0x00000000      0x780
+ .debug_ranges  0x00000000       0x20 obj/tcp.c.o
+ .debug_ranges  0x00000020       0x28 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(head.s.o)
+ .debug_ranges  0x00000048      0x5f0 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ .debug_ranges  0x00000638       0x78 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .debug_ranges  0x000006b0       0xd0 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+
+.debug_macro    0x00000000     0x4ff5
+ .debug_macro   0x00000000      0x3da obj/tcp.c.o
+ .debug_macro   0x000003da      0xa4e obj/tcp.c.o
+ .debug_macro   0x00000e28       0x22 obj/tcp.c.o
+ .debug_macro   0x00000e4a       0x58 obj/tcp.c.o
+ .debug_macro   0x00000ea2       0x18 obj/tcp.c.o
+ .debug_macro   0x00000eba       0x94 obj/tcp.c.o
+ .debug_macro   0x00000f4e       0x35 obj/tcp.c.o
+ .debug_macro   0x00000f83       0x34 obj/tcp.c.o
+ .debug_macro   0x00000fb7       0x16 obj/tcp.c.o
+ .debug_macro   0x00000fcd       0x57 obj/tcp.c.o
+ .debug_macro   0x00001024       0x97 obj/tcp.c.o
+ .debug_macro   0x000010bb      0x330 obj/tcp.c.o
+ .debug_macro   0x000013eb       0xfd obj/tcp.c.o
+ .debug_macro   0x000014e8       0x10 obj/tcp.c.o
+ .debug_macro   0x000014f8       0x58 obj/tcp.c.o
+ .debug_macro   0x00001550       0x1f obj/tcp.c.o
+ .debug_macro   0x0000156f       0x43 obj/tcp.c.o
+ .debug_macro   0x000015b2       0x20 obj/tcp.c.o
+ .debug_macro   0x000015d2      0x18e obj/tcp.c.o
+ .debug_macro   0x00001760       0x10 obj/tcp.c.o
+ .debug_macro   0x00001770       0x6a obj/tcp.c.o
+ .debug_macro   0x000017da       0x1c obj/tcp.c.o
+ .debug_macro   0x000017f6       0x52 obj/tcp.c.o
+ .debug_macro   0x00001848       0x40 obj/tcp.c.o
+ .debug_macro   0x00001888       0x10 obj/tcp.c.o
+ .debug_macro   0x00001898       0x40 obj/tcp.c.o
+ .debug_macro   0x000018d8       0xd7 obj/tcp.c.o
+ .debug_macro   0x000019af       0x1c obj/tcp.c.o
+ .debug_macro   0x000019cb       0x3d obj/tcp.c.o
+ .debug_macro   0x00001a08       0x16 obj/tcp.c.o
+ .debug_macro   0x00001a1e      0x16f obj/tcp.c.o
+ .debug_macro   0x00001b8d       0x16 obj/tcp.c.o
+ .debug_macro   0x00001ba3       0x35 obj/tcp.c.o
+ .debug_macro   0x00001bd8       0x16 obj/tcp.c.o
+ .debug_macro   0x00001bee       0x29 obj/tcp.c.o
+ .debug_macro   0x00001c17       0x16 obj/tcp.c.o
+ .debug_macro   0x00001c2d       0xef obj/tcp.c.o
+ .debug_macro   0x00001d1c      0x1df obj/tcp.c.o
+ .debug_macro   0x00001efb       0x22 obj/tcp.c.o
+ .debug_macro   0x00001f1d       0x34 obj/tcp.c.o
+ .debug_macro   0x00001f51       0x72 obj/tcp.c.o
+ .debug_macro   0x00001fc3      0x10a obj/tcp.c.o
+ .debug_macro   0x000020cd      0x1c2 obj/tcp.c.o
+ .debug_macro   0x0000228f       0x10 obj/tcp.c.o
+ .debug_macro   0x0000229f      0x241 obj/tcp.c.o
+ .debug_macro   0x000024e0       0x88 obj/tcp.c.o
+ .debug_macro   0x00002568       0x16 obj/tcp.c.o
+ .debug_macro   0x0000257e       0x10 obj/tcp.c.o
+ .debug_macro   0x0000258e       0x41 obj/tcp.c.o
+ .debug_macro   0x000025cf       0x6c obj/tcp.c.o
+ .debug_macro   0x0000263b       0x28 obj/tcp.c.o
+ .debug_macro   0x00002663       0x4c obj/tcp.c.o
+ .debug_macro   0x000026af      0x60a obj/tcp.c.o
+ .debug_macro   0x00002cb9       0x58 obj/tcp.c.o
+ .debug_macro   0x00002d11      0x194 obj/tcp.c.o
+ .debug_macro   0x00002ea5      0x234 obj/tcp.c.o
+ .debug_macro   0x000030d9      0x11c obj/tcp.c.o
+ .debug_macro   0x000031f5       0x10 obj/tcp.c.o
+ .debug_macro   0x00003205       0x76 obj/tcp.c.o
+ .debug_macro   0x0000327b       0x4e obj/tcp.c.o
+ .debug_macro   0x000032c9       0x95 obj/tcp.c.o
+ .debug_macro   0x0000335e      0x12c obj/tcp.c.o
+ .debug_macro   0x0000348a      0x366 obj/tcp.c.o
+ .debug_macro   0x000037f0       0xb4 obj/tcp.c.o
+ .debug_macro   0x000038a4      0x11d obj/tcp.c.o
+ .debug_macro   0x000039c1      0x142 obj/tcp.c.o
+ .debug_macro   0x00003b03      0x194 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .debug_macro   0x00003c97       0x8e E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .debug_macro   0x00003d25       0x51 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .debug_macro   0x00003d76       0x5e E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .debug_macro   0x00003dd4      0x174 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+ .debug_macro   0x00003f48      0x30f E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00004257       0x1c E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00004273      0x23b E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x000044ae       0x10 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x000044be       0x10 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x000044ce       0x35 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00004503      0x122 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00004625       0x2b E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00004650      0x118 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00004768      0x189 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x000048f1       0x16 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00004907       0x1c E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00004923       0x10 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00004933      0x104 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00004a37       0x52 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00004a89       0xba E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00004b43       0x10 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00004b53       0x1f E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00004b72      0x35a E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00004ecc       0xc0 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+ .debug_macro   0x00004f8c       0x69 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+
+Cross Reference Table
+
+Symbol                                            File
+Callback_Entry                                    E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(head.s.o)
+Main_Entry                                        E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(head.s.o)
+_Heap_Begin                                       E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+_Heap_Limit                                       E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+__asm_exit                                        E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(head.s.o)
+                                                  E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+__bss_regions_array_end                           E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+__bss_regions_array_start                         E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+__data_regions_array_end                          E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+__data_regions_array_start                        E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+__dso_handle                                      E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+__env                                             E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+__errno                                           c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-errno.o)
+                                                  E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+__fini_array_end                                  E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+__fini_array_start                                E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+__fp_lock_all                                     c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+__fp_unlock_all                                   c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+__init_array_end                                  E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+__init_array_start                                E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+__initialize_hardware                             E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+__initialize_hardware_early                       E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+__io_gets                                         E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+__io_puts                                         obj/tcp.c.o
+                                                  E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+__malloc_free_list                                c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-nano-mallocr.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-nano-freer.o)
+__malloc_lock                                     E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-nano-mallocr.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-nano-freer.o)
+__malloc_sbrk_start                               c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-nano-mallocr.o)
+__malloc_unlock                                   E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-nano-mallocr.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-nano-freer.o)
+__preinit_array_end                               E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+__preinit_array_start                             E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+__sclose                                          c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-stdio.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+__seofread                                        c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-stdio.o)
+__sf_fake_stderr                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fflush.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-wsetup.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-wbuf.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-puts.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-impure.o)
+__sf_fake_stdin                                   c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fflush.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-wsetup.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-wbuf.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-puts.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-impure.o)
+__sf_fake_stdout                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fflush.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-wsetup.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-wbuf.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-puts.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-impure.o)
+__sflush_r                                        c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fflush.o)
+__sfmoreglue                                      c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+__sfp                                             c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+__sfp_lock_acquire                                c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+__sfp_lock_release                                c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+__sinit                                           c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fflush.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-wsetup.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-wbuf.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-puts.o)
+__sinit_lock_acquire                              c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+__sinit_lock_release                              c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+__smakebuf_r                                      c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-makebuf.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-wsetup.o)
+__sread                                           c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-stdio.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+__sseek                                           c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-stdio.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+__swbuf                                           c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-wbuf.o)
+__swbuf_r                                         c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-wbuf.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-puts.o)
+__swhatbuf_r                                      c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-makebuf.o)
+__swrite                                          c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-stdio.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+__swsetup_r                                       c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-wsetup.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-wbuf.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-puts.o)
+_api_version                                      E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(head.s.o)
+_app_id                                           E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(head.s.o)
+_app_limit                                        E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(head.s.o)
+_app_properties                                   E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(head.s.o)
+_app_version                                      E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(head.s.o)
+_callback_stack_base                              E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(head.s.o)
+_callback_stack_size                              E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(head.s.o)
+_callback_task_priority                           E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(head.s.o)
+_chown                                            E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+_cleanup                                          c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+_cleanup_r                                        c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-makebuf.o)
+_close                                            E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-closer.o)
+_close_r                                          c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-closer.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-stdio.o)
+_execve                                           E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+_exit                                             E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+                                                  E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+_fflush_r                                         c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fflush.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-wbuf.o)
+_fork                                             E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+_free_r                                           c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-nano-freer.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-reent.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fflush.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-wsetup.o)
+_fstat                                            E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fstatr.o)
+_fstat_r                                          c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fstatr.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-makebuf.o)
+_fwalk                                            c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fwalk.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+_fwalk_reent                                      c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fwalk.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fflush.o)
+_getpid                                           E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+_gettimeofday                                     E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+_global_impure_ptr                                c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-impure.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fflush.o)
+_headware_init_table                              E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(head.s.o)
+_impure_ptr                                       c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-impure.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-reent.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fflush.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-wsetup.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-wbuf.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-puts.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-errno.o)
+_isatty                                           E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-isattyr.o)
+_isatty_r                                         c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-isattyr.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-makebuf.o)
+_kill                                             E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+_link                                             E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+_load_address                                     E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(head.s.o)
+_lseek                                            E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-lseekr.o)
+_lseek_r                                          c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-lseekr.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-stdio.o)
+_main_stack_base                                  E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(head.s.o)
+_main_stack_size                                  E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(head.s.o)
+_main_task_priority                               E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(head.s.o)
+_malloc_r                                         c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-nano-mallocr.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-makebuf.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+_open                                             E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+_preamble_limit                                   E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(head.s.o)
+_puts_r                                           c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-puts.o)
+_read                                             E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-readr.o)
+_read_r                                           c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-readr.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-stdio.o)
+_readlink                                         E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+_reclaim_reent                                    c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-reent.o)
+_sbrk                                             E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-sbrkr.o)
+_sbrk_r                                           c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-sbrkr.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-nano-mallocr.o)
+_start                                            E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+                                                  E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(head.s.o)
+_stat                                             E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+_symlink                                          E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+_times                                            E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+_unlink                                           E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+_wait                                             E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+_write                                            E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-writer.o)
+_write_r                                          c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-writer.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-stdio.o)
+abort                                             E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+cleanup_glue                                      c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-reent.o)
+eTaskConfirmSleepModeStatus                       E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+eTaskGetState                                     E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+environ                                           E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+errno                                             c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-reent.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-readr.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-lseekr.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-isattyr.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fstatr.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-closer.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-writer.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-sbrkr.o)
+fflush                                            c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-fflush.o)
+gsdk_adc_read                                     E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_alarm_close                                  E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_alarm_open                                   E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_alarm_start                                  E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_alarm_stop                                   E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_atport_close                                 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_atport_open                                  E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_atport_read                                  E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_atport_status                                E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_atport_write                                 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_flash_close                                  E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_flash_erase                                  E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_flash_open                                   E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_flash_read                                   E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_flash_write                                  E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_gpio_clear_high_impedance                    E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_gpio_close                                   E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_gpio_get_driving_current                     E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_gpio_interrupt_enable                        E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_gpio_open                                    E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_gpio_read                                    E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_gpio_set_driving_current                     E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_gpio_set_high_impedance                      E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_gpio_set_pinmux                              E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_gpio_toggle                                  E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_gpio_write                                   E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_gpt_timer_close                              E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_gpt_timer_open                               E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_gpt_timer_start                              E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_gpt_timer_stop                               E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_i2c_master_close                             E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_i2c_master_init                              E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_i2c_read                                     E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_i2c_write                                    E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_log_printf                                   E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_log_vprintf                                  E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_pwm_close                                    E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_pwm_get_duty_cycle                           E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_pwm_get_frequency                            E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_pwm_open                                     E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_pwm_start                                    E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_pwm_stop                                     E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_rtc_alarm_disable                            E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_rtc_cal_alarm_enable                         E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_rtc_close                                    E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_rtc_open                                     E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_rtc_time_read                                E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_rtc_time_write                               E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_sleep_islocked                               E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_sleeplock_acquire                            E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_sleeplock_close                              E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_sleeplock_open                               E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_sleeplock_release                            E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_spi_close                                    E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_spi_open                                     E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_spi_transmit_and_receive                     E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_sys_get_boot_mode                            E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_syslog_printf                                E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+                                                  obj/tcp.c.o
+gsdk_uart_close                                   E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_uart_ioctl                                   E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_uart_open                                    E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+                                                  obj/tcp.c.o
+gsdk_uart_read                                    E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_uart_write                                   E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+                                                  obj/tcp.c.o
+gsdk_wakeup_in_close                              E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+gsdk_wakeup_in_open                               E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ip4_addr_isbroadcast_u32                          E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ip4_addr_netmask_valid                            E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ip4addr_aton                                      E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ip4addr_ntoa                                      E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ip4addr_ntoa_r                                    E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ipaddr_addr                                       E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+                                                  obj/tcp.c.o
+log_init                                          obj/tcp.c.o
+lwip_accept                                       E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+lwip_bind                                         E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+lwip_close                                        E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+                                                  obj/tcp.c.o
+lwip_connect                                      E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+                                                  obj/tcp.c.o
+lwip_fcntl                                        E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+lwip_freeaddrinfo                                 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+lwip_getaddrinfo                                  E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+lwip_gethostbyname                                E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+lwip_gethostbyname_r                              E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+lwip_getpeername                                  E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+lwip_getsockname                                  E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+lwip_getsockopt                                   E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+lwip_htonl                                        E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+lwip_htons                                        E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+                                                  obj/tcp.c.o
+lwip_ioctl                                        E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+lwip_listen                                       E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+lwip_ntohl                                        E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+lwip_ntohs                                        E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+lwip_read                                         E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+lwip_recv                                         E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+                                                  obj/tcp.c.o
+lwip_recvfrom                                     E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+lwip_recvfrom_ext                                 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+lwip_select                                       E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+lwip_send                                         E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+                                                  obj/tcp.c.o
+lwip_sendto                                       E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+lwip_setsockopt                                   E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+lwip_shutdown                                     E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+lwip_socket                                       E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+                                                  obj/tcp.c.o
+lwip_write                                        E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+main                                              obj/tcp.c.o
+                                                  E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(startup.c.o)
+memset                                            c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-memset.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+                                                  obj/tcp.c.o
+pcTaskGetTaskName                                 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+pcTimerGetTimerName                               E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+print_hex_dump_bytes                              E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+puts                                              c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-puts.o)
+                                                  obj/tcp.c.o
+pvTaskIncrementMutexHeldCount                     E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+pvTimerGetTimerID                                 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+strlen                                            c:/program files (x86)/gnu tools arm embedded/7 2018-q2-update/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-strlen.o)
+                                                  obj/tcp.c.o
+syslog_write                                      E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ucQueueGetQueueType                               E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+ulTaskNotifyTake                                  E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+uxEventGroupGetNumber                             E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+uxListRemove                                      E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+uxQueueGetQueueNumber                             E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+uxQueueMessagesWaiting                            E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+uxQueueSpacesAvailable                            E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+uxTaskGetBottomOfStack                            E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+uxTaskGetNumberOfTasks                            E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+uxTaskGetStackHighWaterMark                       E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+uxTaskGetSystemState                              E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+uxTaskGetTaskNumber                               E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+uxTaskPriorityGet                                 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+uxTaskResetEventItemValue                         E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+vEventGroupClearBitsCallback                      E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+vEventGroupDelete                                 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+vEventGroupSetBitsCallback                        E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+vListInitialise                                   E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+vListInitialiseItem                               E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+vListInsert                                       E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+vListInsertEnd                                    E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+vQueueAddToRegistry                               E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+vQueueDelete                                      E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+vQueueSetQueueNumber                              E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+vQueueUnregisterQueue                             E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+vQueueWaitForMessageRestricted                    E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+vTaskClearTaskRunTimeCounter                      E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+vTaskDelay                                        E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+vTaskDelayUntil                                   E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+vTaskEndScheduler                                 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+vTaskGetRunTimeStats                              E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+vTaskList                                         E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+vTaskMissedYield                                  E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+vTaskPlaceOnEventList                             E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+vTaskPlaceOnEventListRestricted                   E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+vTaskPlaceOnUnorderedEventList                    E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+vTaskPriorityInherit                              E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+vTaskPrioritySet                                  E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+vTaskResume                                       E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+vTaskSetTaskNumber                                E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+vTaskSetTimeOutState                              E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+vTaskStartScheduler                               E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+vTaskStepTick                                     E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+vTaskSuspend                                      E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+vTaskSuspendAll                                   E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+                                                  E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+vTaskSwitchContext                                E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+xEventGroupClearBits                              E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+xEventGroupCreate                                 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+xEventGroupSetBits                                E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+xEventGroupSync                                   E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+xEventGroupWaitBits                               E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+xQueueAddToSet                                    E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+xQueueCreateCountingSemaphore                     E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+xQueueCreateMutex                                 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+xQueueCreateSet                                   E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+xQueueGenericCreate                               E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+xQueueGenericReceive                              E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+xQueueGenericReset                                E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+xQueueGenericSend                                 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+xQueueGiveMutexRecursive                          E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+xQueueRemoveFromSet                               E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+xQueueSelectFromSet                               E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+xQueueTakeMutexRecursive                          E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+xTaskCheckForTimeOut                              E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+xTaskGenericCreate                                E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+xTaskGetCurrentTaskHandle                         E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+xTaskGetSchedulerState                            E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+xTaskGetTickCount                                 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+xTaskIncrementTick                                E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+xTaskNotify                                       E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+xTaskNotifyWait                                   E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+xTaskPriorityDisinherit                           E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+xTaskRemoveFromEventList                          E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+xTaskRemoveFromUnorderedEventList                 E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+xTaskResumeAll                                    E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+                                                  E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(syscalls.c.o)
+xTimerCreate                                      E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+xTimerCreateTimerTask                             E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+xTimerGenericCommand                              E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+xTimerIsTimerActive                               E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)
+xTimerPendFunctionCall                            E:/01工作目录/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lib\libgsdk.a(api_stub.s.o)

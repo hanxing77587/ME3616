@@ -1,0 +1,177 @@
+See what's new and improved in genie v1.1825.5!
+[New features/Enhancements]
+1£¬Update Throughput monitor:
+1)  Add ¡°Reset plot¡± and ¡°Time Format¡± option.
+2) Input the selection start and end points to calculate the average rate.
+3) Add ¡°Total Statistics¡± to show the Time Span and the average rate of RLC UL/RLC DL/MAC UL/MAC DL.
+2£¬Add MiniLogger into release package(Please refer to the MiniLogger SOP).
+Path : nbiot\tools\core\MiniLogger.
+
+See what's new and improved in genie v1.1824.5!
+[New features/Enhancements]
+1, Update RRCDEC2 to Version 1.4.8.2
+  1)Modify ¡°Copy asn string¡± to ¡°Copy asn string (Raw data)¡± , add ¡°Copy asn string(text)¡±;
+  2)Support multiple selection in signal listview and Add hot key ¡°Ctrl + C¡± link to ¡°Copy asn string(text)¡±;
+  3)Add decode all message by define log number range.
+
+
+
+See what's new and improved in genie v1.1821.5!
+[New features/Enhancements]
+1, Update Engineering Mode rules for extracting data: MCS UL/DL decode with ¡°N1_TRACE_NPDCCH_DATA_READY_N0¡± and ¡°N1_TRACE_NPDCCH_DATA_READY_N0¡±.
+
+[Bug Fixes]
+1£¬After capture log, stop test and in the unsaved log state, HSL log plugin increase or decrease will result in HSL log loss and the entire log cannot be saved.
+2£¬HSL log refresh slows when replay log.
+3£¬Internal version genie open customer log, GKI and HSL log local time is different in the same Framework.
+
+See what's new and improved in genie v1.1820.5!
+[New features/Enhancements]
+1£¬Double click ¡°AT Command Logger tool¡±  message can auto sync with genie log.
+[Bug Fixes]
+1,[BUGFIX] GKI Trace window Refresh issue : GKI Traces log just can display after click window.
+2,[BUGFIX] Failed to show local time after save log as *.TLG type.
+3,[BUGFIX] rrcdec2 bug: after Click ¡°Clear¡± option, Enable /Disable Sim0, the log will display again.
+
+See what's new and improved in genie v1.1817.5!
+[New features/Enhancements]
+1,The column if Signalling Display ListView adjust. FN(Frame Number) position adjusted to the front.
+2,Add menu: genie-> log->Save Fragments. Enable Fragments can automatically save log interval for a few minutes. This function avoid long time test that generate a large size log.  Interval time>2 minutes. please refer to Genie Logging Tool.pdf page:13
+3, Add new menu of rrcdec2, ¡°Decode Nas and Out Pcap Data¡±, ¡°Decode Nas and Out Pcap Data¡±is faster than ¡°Decode All and Out Pcap Data¡±.
+
+
+See what's new and improved in genie v1.1816.5!
+[SPECIAL NOTES]
+
+Because of adding winmux3 tool, please reinstall the com0com driver to support the use of  winmux3 tool and VirtualAT of genie logging tool. 
+The latest com0com driver installation path: nbiot\tools\core\genie\tools\com0com\install.bat. 
+The winmux3 tool path: nbiot\tools\core\genie\tools\WinMux. 
+
+[New features/Enhancements]
+1, [Enhancement]The column of signalling display listview is controlled by button and add button of local time.
+
+[Bug Fixes]
+
+1,[BUGFIX] VirtualAT:Fix the bug that an error message in the path of install.bat when com0com driver installation error occurred.
+2,[BUGFIX] Change winmux3 default N1 value from 31 to 1500.
+
+
+See what's new and improved in genie v1.1815.5!
+[SPECIAL NOTES]
+
+Because of adding winmux3 tool, please reinstall the com0com driver to support the use of  winmux3 tool and VirtualAT of genie logging tool. 
+The latest com0com driver installation path: nbiot\tools\core\genie\tools\com0com\install.bat. 
+The winmux3 tool path: nbiot\tools\core\genie\tools\WinMux. 
+
+[New features/Enhancements]
+1,[Enhancement] Engineering Mode UI: add unit ¡°dBm¡± for RSSI.
+[New] add winmux3 tool in the genie logging tool package.
+Path:nbiot\tools\core\genie\tools\WinMux.
+PS: need to reinstall com0com. Path: nbiot\tools\core\genie\tools\com0com\install.bat.
+
+[Bug Fixes]
+1£¬Add function: If the disk space is less than 10M, it will check the disk and stop capturing data.
+
+See what's new and improved in genie v1.1812.5!
+[New features/Enhancements]
+[Enhancement]Add message Box to save log in the following scenarios: 
+1.	Select the close log option if you do not save the log after stopping the test. 
+2.	Select the open log option if you do not save the log after stopping the test.
+3.	Select the new config option if you do not save the log after stopping the test.
+4.	Select the open config option if you do not save the log after stopping the test.
+5.	Select the start test option if you do not save the log after stopping the test. 
+
+[Bug Fixes]
+1.[BUGFIX] The scroll of the Engineering mode form page will follow the mouse movement.
+
+2.[BUGFIX] Online state. Engineering Mode RRC state show delay. 
+
+
+See what's new and improved in genie v1.1811.5!
+[New features/Enhancements]
+1,Add"Trigger UE assert"option. genie->special->Trigger UE assert
+[Bug fixes]
+1.Fix TeraHSL crash issue: Click ¡°save current¡± option after the log is closed.
+2.The log is closed without clearing the Log point count.
+
+See what's new and improved in genie v1.1810.5!
+[New features/Enhancements]
+1, genie can Automatically register MSXML4.0 components automatically.
+2, Adjust the GUI layout and add DL/UL MCS Parameter.
+[Bug fixes]
+1, The configuration file is configured, but the plug-in file does not exist. TeraHSL system is not available.
+2, Synchronization to the signal windows after double checking the genie trace window.
+3£¬solve the TeraHSL crash when the specified pcap file is used by another process.
+
+
+See what's new and improved in genie v1.1809.5!
+[New features/Enhancements]
+1£¬Add GKIS Client tool: Customer Logger to view L4/AP/ATCI log,
+2£¬Add HSL Traces Plugin for Engineering Mode, Tracing RRC/EMM State,RSRP/RSRQ/TxPower etc.
+3£¬update src of RRCDEC2: make the SIG_NAS_DEBUG_MESSAGE_IND message displayed in blue font at signal list 
+
+[Bug fixes]
+1£¬when the genie tool stopped running, the extension tool closed abnormally.
+
+See what's new and improved in genie v1.1806.5!
+
+[New features/Enhancements]
+1,Updata RRCDEC2.exe
+1) Add ¡°Copy List Content ¡° of Options.
+2) Modify the signal format of ¡°SIG_NAS_DEBUG_MESSAGE_IND¡± .
+3) Modify ¡°Pcap Data Extra¡± function which just extract data from ¡°SIG_NAS_DEBUG_MESSAGE_IND¡±
+
+[Bug fixes]
+1£¬Fix issue:After using ¡°write text file¡± function in the genie tool, try to save log will be failed because of HSL log is closed.
+
+See what's new and improved in genie v1.1805.5!
+[SPECIAL NOTES]
+
+Because of adding Local time at HSL Log, please use the latest core tool release_20180202 version ,otherwise, may not be able to open the log which  captured by the latest genie logging tool.
+
+[New features/Enhancements]
+1. Enable customer version genie tool has the capacity to extract Pcap data from HSL log. 
+[Bug fixes]
+1. Enhance TeraHSL tool to avoid crash when save log to text.
+2. The first time genie open the *.GLP file, the title bar can¡¯t show the correct full path of log file.
+3. The last HSL record was not processed when searching LogID.
+
+
+See what's new and improved in genie v1.1804.5!
+
+[New featureS/Enhancements]
+
+1£¬Add an argument ¡®-LM¡¯ to specify extracting only the M_FrGkiPrintf  sentence.
+2£¬Move Log menu:¡± Rrc and Nas Message Decoder¡± option  to Special menu.
+
+[Bug fixes]
+
+1,Fixed the bug of after exporting the text ,the genie toolbar is in the wrong state.
+2, Fix the bug of saving log fail while the genie tool path include chinses  character.
+3,Fix the bug of incorrect GKI trace time stamp information when online logging with customer version tool
+
+
+
+
+
+See what's new and improved in genie v1.1803.5!
+
+[SPECIAL NOTES]
+Because of adding sleep ticks for timestamp, please use the latest core tool release_20180119 version ,otherwise, may not be able to open the log which  captured by the latest genie logging tool.
+
+[New featureS/Enhancements]
+
+1,The PcapDataSaver plugin of TeraHSL plugin enable in customer version logging tool .
+2,Add Pcap Data Saver from RRC DECODER Option: Decode all and Output Pcap Data,
+3,set the genie config option£ºEnable HSL logging to default.
+
+[Bug Fixes]
+
+1,Fixed RrcDec2 cannot show the correct time if the timespan of log more than 24 hours.
+
+2,Fixed log playback on customer version tool , the TeraHSL Crash
+
+
+before 2018.01.19
+
+please refer to genie_logging_tool.pdf

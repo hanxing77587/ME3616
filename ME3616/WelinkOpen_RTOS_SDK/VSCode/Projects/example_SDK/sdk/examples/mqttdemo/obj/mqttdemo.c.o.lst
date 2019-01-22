@@ -1,0 +1,2134 @@
+ARM GAS   			page 1
+
+
+   1              	 .cpu cortex-m4
+   2              	 .eabi_attribute 27,1
+   3              	 .eabi_attribute 28,1
+   4              	 .eabi_attribute 20,1
+   5              	 .eabi_attribute 21,1
+   6              	 .eabi_attribute 23,3
+   7              	 .eabi_attribute 24,1
+   8              	 .eabi_attribute 25,1
+   9              	 .eabi_attribute 26,1
+  10              	 .eabi_attribute 30,1
+  11              	 .eabi_attribute 34,1
+  12              	 .eabi_attribute 18,4
+  13              	 .file "mqttdemo.c"
+  14              	 .text
+  15              	.Ltext0:
+  16              	 .cfi_sections .debug_frame
+  17              	 .section .text.oemdebuglog_open,"ax",%progbits
+  18              	 .align 1
+  19              	 .global oemdebuglog_open
+  20              	 .syntax unified
+  21              	 .thumb
+  22              	 .thumb_func
+  23              	 .fpu fpv4-sp-d16
+  25              	oemdebuglog_open:
+  26              	.LFB19:
+  27              	 .file 1 "mqttdemo.c"
+   1:mqttdemo.c    **** /*
+   2:mqttdemo.c    **** ** File   : mqttdemo.c
+   3:mqttdemo.c    **** **
+   4:mqttdemo.c    **** ** Copyright (C) 2013-2018 Gosuncn. All rights reserved.
+   5:mqttdemo.c    **** **
+   6:mqttdemo.c    **** ** Licensed under the Apache License, Version 2.0 (the "License");
+   7:mqttdemo.c    **** ** you may not use this file except in compliance with the License.
+   8:mqttdemo.c    **** ** You may obtain a copy of the License at
+   9:mqttdemo.c    **** **
+  10:mqttdemo.c    **** **      http://www.apache.org/licenses/LICENSE-2.0
+  11:mqttdemo.c    **** **
+  12:mqttdemo.c    **** ** Unless required by applicable law or agreed to in writing, software
+  13:mqttdemo.c    **** ** distributed under the License is distributed on an "AS IS" BASIS,
+  14:mqttdemo.c    **** ** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  15:mqttdemo.c    **** ** See the License for the specific language governing permissions and
+  16:mqttdemo.c    **** ** limitations under the License.
+  17:mqttdemo.c    **** **
+  18:mqttdemo.c    **** ** Author : chengkai2@gosuncn.cn
+  19:mqttdemo.c    **** **
+  20:mqttdemo.c    **** **  $Date: 2018/06/04 08:45:36GMT+08:00 $
+  21:mqttdemo.c    **** **
+  22:mqttdemo.c    **** */
+  23:mqttdemo.c    **** #include <stdio.h>
+  24:mqttdemo.c    **** #include <stdlib.h>
+  25:mqttdemo.c    **** #include <string.h>
+  26:mqttdemo.c    **** #include "gsdk_api.h"
+  27:mqttdemo.c    **** #include "FreeRTOS.h"
+  28:mqttdemo.c    **** #include "semphr.h"
+  29:mqttdemo.c    **** #include "task.h"
+  30:mqttdemo.c    **** #include "gsdk_ril.h"
+  31:mqttdemo.c    **** #include "lwip/sockets.h"
+ARM GAS   			page 2
+
+
+  32:mqttdemo.c    **** #include "lwip/ip.h"
+  33:mqttdemo.c    **** 
+  34:mqttdemo.c    **** static gsdk_handle_t g_huart;
+  35:mqttdemo.c    **** 
+  36:mqttdemo.c    **** int oem_debuglog = 1;
+  37:mqttdemo.c    **** int mqtt_id = -1;
+  38:mqttdemo.c    **** 
+  39:mqttdemo.c    **** /* call this to open oem log */
+  40:mqttdemo.c    **** int oemdebuglog_open(void)
+  41:mqttdemo.c    **** {
+  28              	 .loc 1 41 0
+  29              	 .cfi_startproc
+  30              	 
+  31              	 
+  32              	 
+  42:mqttdemo.c    ****     oem_debuglog = 1;
+  33              	 .loc 1 42 0
+  34 0000 0120     	 movs r0,#1
+  35 0002 014B     	 ldr r3,.L2
+  36 0004 1860     	 str r0,[r3]
+  43:mqttdemo.c    ****     return oem_debuglog;
+  44:mqttdemo.c    **** }
+  37              	 .loc 1 44 0
+  38 0006 7047     	 bx lr
+  39              	.L3:
+  40              	 .align 2
+  41              	.L2:
+  42 0008 00000000 	 .word .LANCHOR0
+  43              	 .cfi_endproc
+  44              	.LFE19:
+  46              	 .section .text.OEM_PRINTF,"ax",%progbits
+  47              	 .align 1
+  48              	 .global OEM_PRINTF
+  49              	 .syntax unified
+  50              	 .thumb
+  51              	 .thumb_func
+  52              	 .fpu fpv4-sp-d16
+  54              	OEM_PRINTF:
+  55              	.LFB20:
+  45:mqttdemo.c    **** 
+  46:mqttdemo.c    **** /* OEM use this to printf log */
+  47:mqttdemo.c    **** void OEM_PRINTF(char *fmt, ...)
+  48:mqttdemo.c    **** {
+  56              	 .loc 1 48 0
+  57              	 .cfi_startproc
+  58              	 
+  59              	 
+  60              	.LVL0:
+  61 0000 0FB4     	 push {r0,r1,r2,r3}
+  62              	 .cfi_def_cfa_offset 16
+  63              	 .cfi_offset 0,-16
+  64              	 .cfi_offset 1,-12
+  65              	 .cfi_offset 2,-8
+  66              	 .cfi_offset 3,-4
+  67 0002 08B5     	 push {r3,lr}
+  68              	 .cfi_def_cfa_offset 24
+  69              	 .cfi_offset 3,-24
+ARM GAS   			page 3
+
+
+  70              	 .cfi_offset 14,-20
+  49:mqttdemo.c    ****     if (oem_debuglog == 1){
+  71              	 .loc 1 49 0
+  72 0004 054B     	 ldr r3,.L8
+  73 0006 1B68     	 ldr r3,[r3]
+  74 0008 012B     	 cmp r3,#1
+  75 000a 03D0     	 beq .L7
+  76              	.L4:
+  50:mqttdemo.c    ****         printf(fmt);
+  51:mqttdemo.c    ****     }
+  52:mqttdemo.c    ****     else if (oem_debuglog == 0){
+  53:mqttdemo.c    ****     }
+  54:mqttdemo.c    **** }
+  77              	 .loc 1 54 0
+  78 000c BDE80840 	 pop {r3,lr}
+  79              	 .cfi_remember_state
+  80              	 .cfi_restore 14
+  81              	 .cfi_restore 3
+  82              	 .cfi_def_cfa_offset 16
+  83 0010 04B0     	 add sp,sp,#16
+  84              	 .cfi_restore 3
+  85              	 .cfi_restore 2
+  86              	 .cfi_restore 1
+  87              	 .cfi_restore 0
+  88              	 .cfi_def_cfa_offset 0
+  89 0012 7047     	 bx lr
+  90              	.L7:
+  91              	 .cfi_restore_state
+  50:mqttdemo.c    ****         printf(fmt);
+  92              	 .loc 1 50 0
+  93 0014 0298     	 ldr r0,[sp,#8]
+  94 0016 FFF7FEFF 	 bl printf
+  95              	.LVL1:
+  96              	 .loc 1 54 0
+  97 001a F7E7     	 b .L4
+  98              	.L9:
+  99              	 .align 2
+ 100              	.L8:
+ 101 001c 00000000 	 .word .LANCHOR0
+ 102              	 .cfi_endproc
+ 103              	.LFE20:
+ 105              	 .section .text.mqtt_pub_cb,"ax",%progbits
+ 106              	 .align 1
+ 107              	 .global mqtt_pub_cb
+ 108              	 .syntax unified
+ 109              	 .thumb
+ 110              	 .thumb_func
+ 111              	 .fpu fpv4-sp-d16
+ 113              	mqtt_pub_cb:
+ 114              	.LFB31:
+  55:mqttdemo.c    **** 
+  56:mqttdemo.c    **** int __io_puts(char *data, int len)
+  57:mqttdemo.c    **** {
+  58:mqttdemo.c    ****     int ret = 0;
+  59:mqttdemo.c    ****     if (g_huart) {
+  60:mqttdemo.c    ****         ret = gsdk_uart_write(g_huart, (uint8_t *)data, len, 1000);
+  61:mqttdemo.c    ****     }
+ARM GAS   			page 4
+
+
+  62:mqttdemo.c    ****     return ret;
+  63:mqttdemo.c    **** }
+  64:mqttdemo.c    **** 
+  65:mqttdemo.c    **** int log_init(void)
+  66:mqttdemo.c    **** {
+  67:mqttdemo.c    ****     uart_config_t uart_config;
+  68:mqttdemo.c    ****     gsdk_status_t status;
+  69:mqttdemo.c    **** 
+  70:mqttdemo.c    ****     uart_config.baudrate    = UART_BAUDRATE_115200;
+  71:mqttdemo.c    ****     uart_config.parity      = UART_PARITY_NONE;
+  72:mqttdemo.c    ****     uart_config.stop_bit    = UART_STOP_BIT_1;
+  73:mqttdemo.c    ****     uart_config.word_length = UART_WORD_LENGTH_8;
+  74:mqttdemo.c    **** 
+  75:mqttdemo.c    ****     status = gsdk_uart_open(UART_0, &uart_config, &g_huart);
+  76:mqttdemo.c    ****     if (status != GSDK_SUCCESS) {
+  77:mqttdemo.c    ****         //syslog_printf("[MQTT_DEMO]: failed to open uart %d\n", status);
+  78:mqttdemo.c    ****         return -1;
+  79:mqttdemo.c    ****     }
+  80:mqttdemo.c    **** 
+  81:mqttdemo.c    ****     OEM_PRINTF("[MQTT_DEMO] log init....OK\r\n");
+  82:mqttdemo.c    **** 
+  83:mqttdemo.c    ****     return 0;
+  84:mqttdemo.c    **** }
+  85:mqttdemo.c    **** 
+  86:mqttdemo.c    **** int gsdk_ril_init_func(void)
+  87:mqttdemo.c    **** {
+  88:mqttdemo.c    ****     gsdk_status_t status;
+  89:mqttdemo.c    ****     status = gsdk_ril_init();
+  90:mqttdemo.c    ****     if (status != GSDK_SUCCESS) {
+  91:mqttdemo.c    ****         OEM_PRINTF("[MQTT_DEMO] gsdk_ril_init error!\r\n");
+  92:mqttdemo.c    ****         return -1;
+  93:mqttdemo.c    ****     }
+  94:mqttdemo.c    ****     return 0;
+  95:mqttdemo.c    **** }
+  96:mqttdemo.c    **** 
+  97:mqttdemo.c    **** int init_func()
+  98:mqttdemo.c    **** {
+  99:mqttdemo.c    ****     if(log_init() != 0)
+ 100:mqttdemo.c    ****         goto init_fail;
+ 101:mqttdemo.c    ****     if(gsdk_ril_init_func() != 0)
+ 102:mqttdemo.c    ****         goto init_fail;
+ 103:mqttdemo.c    **** 
+ 104:mqttdemo.c    ****     OEM_PRINTF("[MQTT_DEMO] init_func end!\r\n");
+ 105:mqttdemo.c    ****     return 0;
+ 106:mqttdemo.c    **** init_fail:
+ 107:mqttdemo.c    **** 
+ 108:mqttdemo.c    ****     OEM_PRINTF("[MQTT_DEMO] init_func error!\r\n");
+ 109:mqttdemo.c    ****     return -1;
+ 110:mqttdemo.c    **** }
+ 111:mqttdemo.c    **** 
+ 112:mqttdemo.c    **** int mqtt_new_func(void)
+ 113:mqttdemo.c    **** {
+ 114:mqttdemo.c    ****     char server[32] = "106.14.195.26";
+ 115:mqttdemo.c    ****     char port[16] = "1883";
+ 116:mqttdemo.c    ****     unsigned int timeout = 50000;
+ 117:mqttdemo.c    ****     unsigned int bufsize = 100;
+ 118:mqttdemo.c    **** 	
+ARM GAS   			page 5
+
+
+ 119:mqttdemo.c    ****     mqtt_new mqtt_s;
+ 120:mqttdemo.c    ****     memset(&mqtt_s, 0x0, sizeof(mqtt_new));
+ 121:mqttdemo.c    **** 
+ 122:mqttdemo.c    ****     mqtt_s.server_t = server;
+ 123:mqttdemo.c    ****     mqtt_s.port_t = port;
+ 124:mqttdemo.c    ****     mqtt_s.timeout_t = timeout;
+ 125:mqttdemo.c    ****     mqtt_s.bufsize_t = bufsize;
+ 126:mqttdemo.c    **** 
+ 127:mqttdemo.c    ****     if (GSDK_SUCCESS != gsdk_ril_get_mqtt_new_result(&mqtt_s, &mqtt_id)){
+ 128:mqttdemo.c    ****         OEM_PRINTF("[MQTT_DEMO] mqtt new error!\r\n");
+ 129:mqttdemo.c    ****         return -1;
+ 130:mqttdemo.c    ****     }
+ 131:mqttdemo.c    ****     OEM_PRINTF("[MQTT_DEMO] mqtt new end!\r\n");
+ 132:mqttdemo.c    ****     return 0;
+ 133:mqttdemo.c    **** }
+ 134:mqttdemo.c    **** 
+ 135:mqttdemo.c    **** int mqtt_connect_func(void)
+ 136:mqttdemo.c    **** {
+ 137:mqttdemo.c    ****     /********* mqtt con ***********/
+ 138:mqttdemo.c    ****     int mqtt_ver = 4;
+ 139:mqttdemo.c    ****     char client_id[32] = "myclientid";
+ 140:mqttdemo.c    ****     int keepalive = 1000;
+ 141:mqttdemo.c    ****     int cleansession = 1;
+ 142:mqttdemo.c    ****     int will_flag = 0;
+ 143:mqttdemo.c    ****     char will_options[64] = {0};
+ 144:mqttdemo.c    ****     char username[16] = "test";
+ 145:mqttdemo.c    ****     char password[16] = "123456";
+ 146:mqttdemo.c    **** 
+ 147:mqttdemo.c    ****     mqtt_con mqtt_con_c;
+ 148:mqttdemo.c    ****     memset(&mqtt_con_c, 0x0, sizeof(mqtt_con));
+ 149:mqttdemo.c    **** 
+ 150:mqttdemo.c    ****     mqtt_con_c.mqtt_id_t = mqtt_id;
+ 151:mqttdemo.c    ****     mqtt_con_c.mqtt_ver_t = mqtt_ver;
+ 152:mqttdemo.c    ****     mqtt_con_c.client_id_t = client_id;
+ 153:mqttdemo.c    ****     mqtt_con_c.keepalive_t = keepalive;
+ 154:mqttdemo.c    ****     mqtt_con_c.cleansession_t = cleansession;
+ 155:mqttdemo.c    ****     mqtt_con_c.will_flag_t = will_flag;
+ 156:mqttdemo.c    ****     mqtt_con_c.will_options_t = will_options;
+ 157:mqttdemo.c    ****     mqtt_con_c.username_t = username;
+ 158:mqttdemo.c    ****     mqtt_con_c.password_t = password;
+ 159:mqttdemo.c    **** 
+ 160:mqttdemo.c    ****     if (GSDK_SUCCESS != gsdk_ril_get_mqtt_con_result(&mqtt_con_c)){
+ 161:mqttdemo.c    ****         OEM_PRINTF("[MQTT_DEMO] mqtt connect error!\r\n");
+ 162:mqttdemo.c    ****         return -1;
+ 163:mqttdemo.c    ****     }
+ 164:mqttdemo.c    ****     OEM_PRINTF("[MQTT_DEMO] mqtt connect end!\r\n");
+ 165:mqttdemo.c    ****     return 0;
+ 166:mqttdemo.c    **** }
+ 167:mqttdemo.c    **** 
+ 168:mqttdemo.c    **** int mqtt_subscribe_func(void)
+ 169:mqttdemo.c    **** {
+ 170:mqttdemo.c    ****     /********* mqtt sub **********/
+ 171:mqttdemo.c    ****     char topic[32] = "/moekon/substopic";
+ 172:mqttdemo.c    ****     int Qos = 0;
+ 173:mqttdemo.c    **** 
+ 174:mqttdemo.c    ****     mqtt_sub_unsub_t mqtt_sub_s;
+ 175:mqttdemo.c    ****     memset(&mqtt_sub_s, 0x0, sizeof(mqtt_sub_unsub_t));
+ARM GAS   			page 6
+
+
+ 176:mqttdemo.c    **** 
+ 177:mqttdemo.c    ****     mqtt_sub_s.mqtt_id_t = mqtt_id;
+ 178:mqttdemo.c    ****     mqtt_sub_s.topic_t = topic;
+ 179:mqttdemo.c    ****     mqtt_sub_s.Qos_t = Qos;
+ 180:mqttdemo.c    **** 
+ 181:mqttdemo.c    ****     if (GSDK_SUCCESS != gsdk_ril_get_mqtt_sub_result(&mqtt_sub_s)){
+ 182:mqttdemo.c    ****         OEM_PRINTF("[MQTT_DEMO] mqtt subscribe error!\r\n");
+ 183:mqttdemo.c    ****         return -1;
+ 184:mqttdemo.c    ****     }
+ 185:mqttdemo.c    ****     OEM_PRINTF("[MQTT_DEMO] mqtt subscribe end!\r\n");
+ 186:mqttdemo.c    ****     return 0;
+ 187:mqttdemo.c    **** }
+ 188:mqttdemo.c    **** 
+ 189:mqttdemo.c    **** int mqtt_publish_func(void)
+ 190:mqttdemo.c    **** {
+ 191:mqttdemo.c    ****     /************* mqtt pub ************/
+ 192:mqttdemo.c    ****     char topic2[32] = "/moekon/substopic";
+ 193:mqttdemo.c    ****     int Qos2 = 1;
+ 194:mqttdemo.c    ****     int retained = 0;
+ 195:mqttdemo.c    ****     int dup = 0;
+ 196:mqttdemo.c    ****     int message_len = 4;
+ 197:mqttdemo.c    ****     char message[128] = "31323334";
+ 198:mqttdemo.c    **** 
+ 199:mqttdemo.c    ****     mqtt_pub mqtt_pub_p;
+ 200:mqttdemo.c    ****     memset(&mqtt_pub_p, 0x0, sizeof(mqtt_pub));
+ 201:mqttdemo.c    **** 
+ 202:mqttdemo.c    ****     mqtt_pub_p.mqtt_id_t = mqtt_id;
+ 203:mqttdemo.c    ****     mqtt_pub_p.topic_t = topic2;
+ 204:mqttdemo.c    ****     mqtt_pub_p.Qos_t = Qos2;
+ 205:mqttdemo.c    ****     mqtt_pub_p.retained_t = retained;
+ 206:mqttdemo.c    ****     mqtt_pub_p.dup_t = dup;
+ 207:mqttdemo.c    ****     mqtt_pub_p.message_len_t = message_len;
+ 208:mqttdemo.c    ****     mqtt_pub_p.message_t = message;
+ 209:mqttdemo.c    **** 
+ 210:mqttdemo.c    ****     if (GSDK_SUCCESS != gsdk_ril_get_mqtt_pub_result(&mqtt_pub_p)){
+ 211:mqttdemo.c    ****         OEM_PRINTF("[MQTT_DEMO] mqtt publish error!\r\n");
+ 212:mqttdemo.c    ****         return -1;
+ 213:mqttdemo.c    ****     }
+ 214:mqttdemo.c    ****     OEM_PRINTF("[MQTT_DEMO] mqtt publish end!\r\n");
+ 215:mqttdemo.c    ****     return 0;
+ 216:mqttdemo.c    **** }
+ 217:mqttdemo.c    **** 
+ 218:mqttdemo.c    **** int mqtt_unsubscribe_func(void)
+ 219:mqttdemo.c    **** {
+ 220:mqttdemo.c    ****     /************ mqtt unsub start **********/
+ 221:mqttdemo.c    ****     char topic3[32] = "/moekon/substopic";
+ 222:mqttdemo.c    **** 
+ 223:mqttdemo.c    ****     mqtt_sub_unsub_t mqtt_sub_unsub;
+ 224:mqttdemo.c    ****     memset(&mqtt_sub_unsub, 0x0, sizeof(mqtt_sub_unsub_t));
+ 225:mqttdemo.c    **** 
+ 226:mqttdemo.c    ****     mqtt_sub_unsub.mqtt_id_t = mqtt_id;
+ 227:mqttdemo.c    ****     mqtt_sub_unsub.topic_t = topic3;
+ 228:mqttdemo.c    **** 
+ 229:mqttdemo.c    ****     if (GSDK_SUCCESS != gsdk_ril_get_mqtt_unsub_result(&mqtt_sub_unsub)){
+ 230:mqttdemo.c    ****         OEM_PRINTF("[MQTT_DEMO] mqtt unsubscribe error!\r\n");
+ 231:mqttdemo.c    ****         return -1;
+ 232:mqttdemo.c    ****     }
+ARM GAS   			page 7
+
+
+ 233:mqttdemo.c    ****     OEM_PRINTF("[MQTT_DEMO] mqtt unsubscribe end!\r\n");
+ 234:mqttdemo.c    ****     return 0;
+ 235:mqttdemo.c    **** }
+ 236:mqttdemo.c    **** 
+ 237:mqttdemo.c    **** int mqtt_disconnect_func(void)
+ 238:mqttdemo.c    **** {
+ 239:mqttdemo.c    ****     /************ mqtt discon start **********/
+ 240:mqttdemo.c    ****     if (GSDK_SUCCESS != gsdk_ril_get_mqtt_discon_result(mqtt_id)){
+ 241:mqttdemo.c    ****         OEM_PRINTF("[MQTT_DEMO] mqtt disconnect error!\r\n");
+ 242:mqttdemo.c    ****         return -1;
+ 243:mqttdemo.c    ****     }
+ 244:mqttdemo.c    ****     OEM_PRINTF("[MQTT_DEMO] mqtt disconnect end!\r\n");
+ 245:mqttdemo.c    ****     return 0;
+ 246:mqttdemo.c    **** }
+ 247:mqttdemo.c    **** 
+ 248:mqttdemo.c    **** void mqtt_pub_cb(const char *s, const char * extra, int len, void *user_data)
+ 249:mqttdemo.c    **** {
+ 115              	 .loc 1 249 0
+ 116              	 .cfi_startproc
+ 117              	 
+ 118              	 
+ 119              	.LVL2:
+ 120 0000 10B5     	 push {r4,lr}
+ 121              	 .cfi_def_cfa_offset 8
+ 122              	 .cfi_offset 4,-8
+ 123              	 .cfi_offset 14,-4
+ 124 0002 A0B0     	 sub sp,sp,#128
+ 125              	 .cfi_def_cfa_offset 136
+ 126 0004 0446     	 mov r4,r0
+ 250:mqttdemo.c    ****     char mqtt_pub_cb_buf[128] = {0};
+ 127              	 .loc 1 250 0
+ 128 0006 8022     	 movs r2,#128
+ 129              	.LVL3:
+ 130 0008 0021     	 movs r1,#0
+ 131              	.LVL4:
+ 132 000a 6846     	 mov r0,sp
+ 133              	.LVL5:
+ 134 000c FFF7FEFF 	 bl memset
+ 135              	.LVL6:
+ 251:mqttdemo.c    ****     if(NULL == s){
+ 136              	 .loc 1 251 0
+ 137 0010 4CB1     	 cbz r4,.L14
+ 252:mqttdemo.c    ****         OEM_PRINTF("callbace error!\r\n");
+ 253:mqttdemo.c    ****         return;
+ 254:mqttdemo.c    ****     }
+ 255:mqttdemo.c    ****     strcpy(mqtt_pub_cb_buf, s);
+ 138              	 .loc 1 255 0
+ 139 0012 2146     	 mov r1,r4
+ 140 0014 6846     	 mov r0,sp
+ 141 0016 FFF7FEFF 	 bl strcpy
+ 142              	.LVL7:
+ 256:mqttdemo.c    ****     OEM_PRINTF("%s\r\n", mqtt_pub_cb_buf);
+ 143              	 .loc 1 256 0
+ 144 001a 6946     	 mov r1,sp
+ 145 001c 0448     	 ldr r0,.L15
+ 146 001e FFF7FEFF 	 bl OEM_PRINTF
+ 147              	.LVL8:
+ARM GAS   			page 8
+
+
+ 148              	.L10:
+ 257:mqttdemo.c    **** }
+ 149              	 .loc 1 257 0
+ 150 0022 20B0     	 add sp,sp,#128
+ 151              	 .cfi_remember_state
+ 152              	 .cfi_def_cfa_offset 8
+ 153              	 
+ 154 0024 10BD     	 pop {r4,pc}
+ 155              	.LVL9:
+ 156              	.L14:
+ 157              	 .cfi_restore_state
+ 252:mqttdemo.c    ****         OEM_PRINTF("callbace error!\r\n");
+ 158              	 .loc 1 252 0
+ 159 0026 0348     	 ldr r0,.L15+4
+ 160 0028 FFF7FEFF 	 bl OEM_PRINTF
+ 161              	.LVL10:
+ 162 002c F9E7     	 b .L10
+ 163              	.L16:
+ 164 002e 00BF     	 .align 2
+ 165              	.L15:
+ 166 0030 14000000 	 .word .LC1
+ 167 0034 00000000 	 .word .LC0
+ 168              	 .cfi_endproc
+ 169              	.LFE31:
+ 171              	 .section .text.__io_puts,"ax",%progbits
+ 172              	 .align 1
+ 173              	 .global __io_puts
+ 174              	 .syntax unified
+ 175              	 .thumb
+ 176              	 .thumb_func
+ 177              	 .fpu fpv4-sp-d16
+ 179              	__io_puts:
+ 180              	.LFB21:
+  57:mqttdemo.c    ****     int ret = 0;
+ 181              	 .loc 1 57 0
+ 182              	 .cfi_startproc
+ 183              	 
+ 184              	 
+ 185              	.LVL11:
+ 186 0000 10B5     	 push {r4,lr}
+ 187              	 .cfi_def_cfa_offset 8
+ 188              	 .cfi_offset 4,-8
+ 189              	 .cfi_offset 14,-4
+ 190              	.LVL12:
+  59:mqttdemo.c    ****         ret = gsdk_uart_write(g_huart, (uint8_t *)data, len, 1000);
+ 191              	 .loc 1 59 0
+ 192 0002 064B     	 ldr r3,.L21
+ 193 0004 1C68     	 ldr r4,[r3]
+ 194 0006 3CB1     	 cbz r4,.L19
+ 195 0008 0A46     	 mov r2,r1
+ 196 000a 0146     	 mov r1,r0
+ 197              	.LVL13:
+  60:mqttdemo.c    ****     }
+ 198              	 .loc 1 60 0
+ 199 000c 4FF47A73 	 mov r3,#1000
+ 200 0010 2046     	 mov r0,r4
+ 201              	.LVL14:
+ARM GAS   			page 9
+
+
+ 202 0012 FFF7FEFF 	 bl gsdk_uart_write
+ 203              	.LVL15:
+ 204              	.L17:
+  63:mqttdemo.c    **** 
+ 205              	 .loc 1 63 0
+ 206 0016 10BD     	 pop {r4,pc}
+ 207              	.LVL16:
+ 208              	.L19:
+  58:mqttdemo.c    ****     if (g_huart) {
+ 209              	 .loc 1 58 0
+ 210 0018 0020     	 movs r0,#0
+ 211              	.LVL17:
+  62:mqttdemo.c    **** }
+ 212              	 .loc 1 62 0
+ 213 001a FCE7     	 b .L17
+ 214              	.L22:
+ 215              	 .align 2
+ 216              	.L21:
+ 217 001c 00000000 	 .word .LANCHOR1
+ 218              	 .cfi_endproc
+ 219              	.LFE21:
+ 221              	 .section .text.log_init,"ax",%progbits
+ 222              	 .align 1
+ 223              	 .global log_init
+ 224              	 .syntax unified
+ 225              	 .thumb
+ 226              	 .thumb_func
+ 227              	 .fpu fpv4-sp-d16
+ 229              	log_init:
+ 230              	.LFB22:
+  66:mqttdemo.c    ****     uart_config_t uart_config;
+ 231              	 .loc 1 66 0
+ 232              	 .cfi_startproc
+ 233              	 
+ 234              	 
+ 235 0000 00B5     	 push {lr}
+ 236              	 .cfi_def_cfa_offset 4
+ 237              	 .cfi_offset 14,-4
+ 238 0002 83B0     	 sub sp,sp,#12
+ 239              	 .cfi_def_cfa_offset 16
+  70:mqttdemo.c    ****     uart_config.parity      = UART_PARITY_NONE;
+ 240              	 .loc 1 70 0
+ 241 0004 0923     	 movs r3,#9
+ 242 0006 8DF80430 	 strb r3,[sp,#4]
+  71:mqttdemo.c    ****     uart_config.stop_bit    = UART_STOP_BIT_1;
+ 243              	 .loc 1 71 0
+ 244 000a 0020     	 movs r0,#0
+ 245 000c 8DF80700 	 strb r0,[sp,#7]
+  72:mqttdemo.c    ****     uart_config.word_length = UART_WORD_LENGTH_8;
+ 246              	 .loc 1 72 0
+ 247 0010 8DF80600 	 strb r0,[sp,#6]
+  73:mqttdemo.c    **** 
+ 248              	 .loc 1 73 0
+ 249 0014 0323     	 movs r3,#3
+ 250 0016 8DF80530 	 strb r3,[sp,#5]
+  75:mqttdemo.c    ****     if (status != GSDK_SUCCESS) {
+ 251              	 .loc 1 75 0
+ARM GAS   			page 10
+
+
+ 252 001a 074A     	 ldr r2,.L27
+ 253 001c 01A9     	 add r1,sp,#4
+ 254 001e FFF7FEFF 	 bl gsdk_uart_open
+ 255              	.LVL18:
+  76:mqttdemo.c    ****         //syslog_printf("[MQTT_DEMO]: failed to open uart %d\n", status);
+ 256              	 .loc 1 76 0
+ 257 0022 30B9     	 cbnz r0,.L25
+  81:mqttdemo.c    **** 
+ 258              	 .loc 1 81 0
+ 259 0024 0548     	 ldr r0,.L27+4
+ 260              	.LVL19:
+ 261 0026 FFF7FEFF 	 bl OEM_PRINTF
+ 262              	.LVL20:
+  83:mqttdemo.c    **** }
+ 263              	 .loc 1 83 0
+ 264 002a 0020     	 movs r0,#0
+ 265              	.L23:
+  84:mqttdemo.c    **** 
+ 266              	 .loc 1 84 0
+ 267 002c 03B0     	 add sp,sp,#12
+ 268              	 .cfi_remember_state
+ 269              	 .cfi_def_cfa_offset 4
+ 270              	 
+ 271 002e 5DF804FB 	 ldr pc,[sp],#4
+ 272              	.LVL21:
+ 273              	.L25:
+ 274              	 .cfi_restore_state
+  78:mqttdemo.c    ****     }
+ 275              	 .loc 1 78 0
+ 276 0032 4FF0FF30 	 mov r0,#-1
+ 277              	.LVL22:
+ 278 0036 F9E7     	 b .L23
+ 279              	.L28:
+ 280              	 .align 2
+ 281              	.L27:
+ 282 0038 00000000 	 .word .LANCHOR1
+ 283 003c 00000000 	 .word .LC2
+ 284              	 .cfi_endproc
+ 285              	.LFE22:
+ 287              	 .section .text.gsdk_ril_init_func,"ax",%progbits
+ 288              	 .align 1
+ 289              	 .global gsdk_ril_init_func
+ 290              	 .syntax unified
+ 291              	 .thumb
+ 292              	 .thumb_func
+ 293              	 .fpu fpv4-sp-d16
+ 295              	gsdk_ril_init_func:
+ 296              	.LFB23:
+  87:mqttdemo.c    ****     gsdk_status_t status;
+ 297              	 .loc 1 87 0
+ 298              	 .cfi_startproc
+ 299              	 
+ 300              	 
+ 301 0000 08B5     	 push {r3,lr}
+ 302              	 .cfi_def_cfa_offset 8
+ 303              	 .cfi_offset 3,-8
+ 304              	 .cfi_offset 14,-4
+ARM GAS   			page 11
+
+
+  89:mqttdemo.c    ****     if (status != GSDK_SUCCESS) {
+ 305              	 .loc 1 89 0
+ 306 0002 FFF7FEFF 	 bl gsdk_ril_init
+ 307              	.LVL23:
+  90:mqttdemo.c    ****         OEM_PRINTF("[MQTT_DEMO] gsdk_ril_init error!\r\n");
+ 308              	 .loc 1 90 0
+ 309 0006 08B9     	 cbnz r0,.L33
+  94:mqttdemo.c    **** }
+ 310              	 .loc 1 94 0
+ 311 0008 0020     	 movs r0,#0
+ 312              	.LVL24:
+ 313              	.L29:
+  95:mqttdemo.c    **** 
+ 314              	 .loc 1 95 0
+ 315 000a 08BD     	 pop {r3,pc}
+ 316              	.LVL25:
+ 317              	.L33:
+  91:mqttdemo.c    ****         return -1;
+ 318              	 .loc 1 91 0
+ 319 000c 0248     	 ldr r0,.L34
+ 320              	.LVL26:
+ 321 000e FFF7FEFF 	 bl OEM_PRINTF
+ 322              	.LVL27:
+  92:mqttdemo.c    ****     }
+ 323              	 .loc 1 92 0
+ 324 0012 4FF0FF30 	 mov r0,#-1
+ 325 0016 F8E7     	 b .L29
+ 326              	.L35:
+ 327              	 .align 2
+ 328              	.L34:
+ 329 0018 00000000 	 .word .LC3
+ 330              	 .cfi_endproc
+ 331              	.LFE23:
+ 333              	 .section .text.init_func,"ax",%progbits
+ 334              	 .align 1
+ 335              	 .global init_func
+ 336              	 .syntax unified
+ 337              	 .thumb
+ 338              	 .thumb_func
+ 339              	 .fpu fpv4-sp-d16
+ 341              	init_func:
+ 342              	.LFB24:
+  98:mqttdemo.c    ****     if(log_init() != 0)
+ 343              	 .loc 1 98 0
+ 344              	 .cfi_startproc
+ 345              	 
+ 346              	 
+ 347 0000 10B5     	 push {r4,lr}
+ 348              	 .cfi_def_cfa_offset 8
+ 349              	 .cfi_offset 4,-8
+ 350              	 .cfi_offset 14,-4
+  99:mqttdemo.c    ****         goto init_fail;
+ 351              	 .loc 1 99 0
+ 352 0002 FFF7FEFF 	 bl log_init
+ 353              	.LVL28:
+ 354 0006 40B9     	 cbnz r0,.L37
+ 101:mqttdemo.c    ****         goto init_fail;
+ARM GAS   			page 12
+
+
+ 355              	 .loc 1 101 0
+ 356 0008 FFF7FEFF 	 bl gsdk_ril_init_func
+ 357              	.LVL29:
+ 358 000c 0446     	 mov r4,r0
+ 359 000e 20B9     	 cbnz r0,.L37
+ 104:mqttdemo.c    ****     return 0;
+ 360              	 .loc 1 104 0
+ 361 0010 0548     	 ldr r0,.L40
+ 362 0012 FFF7FEFF 	 bl OEM_PRINTF
+ 363              	.LVL30:
+ 364              	.L36:
+ 110:mqttdemo.c    **** 
+ 365              	 .loc 1 110 0
+ 366 0016 2046     	 mov r0,r4
+ 367 0018 10BD     	 pop {r4,pc}
+ 368              	.L37:
+ 108:mqttdemo.c    ****     return -1;
+ 369              	 .loc 1 108 0
+ 370 001a 0448     	 ldr r0,.L40+4
+ 371 001c FFF7FEFF 	 bl OEM_PRINTF
+ 372              	.LVL31:
+ 109:mqttdemo.c    **** }
+ 373              	 .loc 1 109 0
+ 374 0020 4FF0FF34 	 mov r4,#-1
+ 375 0024 F7E7     	 b .L36
+ 376              	.L41:
+ 377 0026 00BF     	 .align 2
+ 378              	.L40:
+ 379 0028 00000000 	 .word .LC4
+ 380 002c 20000000 	 .word .LC5
+ 381              	 .cfi_endproc
+ 382              	.LFE24:
+ 384              	 .section .text.mqtt_new_func,"ax",%progbits
+ 385              	 .align 1
+ 386              	 .global mqtt_new_func
+ 387              	 .syntax unified
+ 388              	 .thumb
+ 389              	 .thumb_func
+ 390              	 .fpu fpv4-sp-d16
+ 392              	mqtt_new_func:
+ 393              	.LFB25:
+ 113:mqttdemo.c    ****     char server[32] = "106.14.195.26";
+ 394              	 .loc 1 113 0
+ 395              	 .cfi_startproc
+ 396              	 
+ 397              	 
+ 398 0000 30B5     	 push {r4,r5,lr}
+ 399              	 .cfi_def_cfa_offset 12
+ 400              	 .cfi_offset 4,-12
+ 401              	 .cfi_offset 5,-8
+ 402              	 .cfi_offset 14,-4
+ 403 0002 93B0     	 sub sp,sp,#76
+ 404              	 .cfi_def_cfa_offset 88
+ 114:mqttdemo.c    ****     char port[16] = "1883";
+ 405              	 .loc 1 114 0
+ 406 0004 1B4C     	 ldr r4,.L47
+ 407 0006 0AAD     	 add r5,sp,#40
+ARM GAS   			page 13
+
+
+ 408 0008 94E80F00 	 ldm r4,{r0,r1,r2,r3}
+ 409 000c 07C5     	 stmia r5!,{r0,r1,r2}
+ 410 000e 2B80     	 strh r3,[r5]
+ 411 0010 0023     	 movs r3,#0
+ 412 0012 CDF83630 	 str r3,[sp,#54]
+ 413 0016 CDF83A30 	 str r3,[sp,#58]
+ 414 001a CDF83E30 	 str r3,[sp,#62]
+ 415 001e CDF84230 	 str r3,[sp,#66]
+ 416 0022 ADF84630 	 strh r3,[sp,#70]
+ 115:mqttdemo.c    ****     unsigned int timeout = 50000;
+ 417              	 .loc 1 115 0
+ 418 0026 2034     	 adds r4,r4,#32
+ 419 0028 94E80300 	 ldm r4,{r0,r1}
+ 420 002c 0690     	 str r0,[sp,#24]
+ 421 002e 8DF81C10 	 strb r1,[sp,#28]
+ 422 0032 CDF81D30 	 str r3,[sp,#29]
+ 423 0036 CDF82130 	 str r3,[sp,#33]
+ 424 003a 0993     	 str r3,[sp,#36]
+ 425              	.LVL32:
+ 120:mqttdemo.c    **** 
+ 426              	 .loc 1 120 0
+ 427 003c 0593     	 str r3,[sp,#20]
+ 122:mqttdemo.c    ****     mqtt_s.port_t = port;
+ 428              	 .loc 1 122 0
+ 429 003e 0AAB     	 add r3,sp,#40
+ 430 0040 0193     	 str r3,[sp,#4]
+ 123:mqttdemo.c    ****     mqtt_s.timeout_t = timeout;
+ 431              	 .loc 1 123 0
+ 432 0042 06AB     	 add r3,sp,#24
+ 433 0044 0293     	 str r3,[sp,#8]
+ 124:mqttdemo.c    ****     mqtt_s.bufsize_t = bufsize;
+ 434              	 .loc 1 124 0
+ 435 0046 4CF25033 	 movw r3,#50000
+ 436 004a 0393     	 str r3,[sp,#12]
+ 125:mqttdemo.c    **** 
+ 437              	 .loc 1 125 0
+ 438 004c 6423     	 movs r3,#100
+ 439 004e 0493     	 str r3,[sp,#16]
+ 127:mqttdemo.c    ****         OEM_PRINTF("[MQTT_DEMO] mqtt new error!\r\n");
+ 440              	 .loc 1 127 0
+ 441 0050 0949     	 ldr r1,.L47+4
+ 442 0052 01A8     	 add r0,sp,#4
+ 443 0054 FFF7FEFF 	 bl gsdk_ril_get_mqtt_new_result
+ 444              	.LVL33:
+ 445 0058 28B9     	 cbnz r0,.L46
+ 131:mqttdemo.c    ****     return 0;
+ 446              	 .loc 1 131 0
+ 447 005a 0848     	 ldr r0,.L47+8
+ 448 005c FFF7FEFF 	 bl OEM_PRINTF
+ 449              	.LVL34:
+ 132:mqttdemo.c    **** }
+ 450              	 .loc 1 132 0
+ 451 0060 0020     	 movs r0,#0
+ 452              	.L42:
+ 133:mqttdemo.c    **** 
+ 453              	 .loc 1 133 0
+ 454 0062 13B0     	 add sp,sp,#76
+ARM GAS   			page 14
+
+
+ 455              	 .cfi_remember_state
+ 456              	 .cfi_def_cfa_offset 12
+ 457              	 
+ 458 0064 30BD     	 pop {r4,r5,pc}
+ 459              	.L46:
+ 460              	 .cfi_restore_state
+ 128:mqttdemo.c    ****         return -1;
+ 461              	 .loc 1 128 0
+ 462 0066 0648     	 ldr r0,.L47+12
+ 463 0068 FFF7FEFF 	 bl OEM_PRINTF
+ 464              	.LVL35:
+ 129:mqttdemo.c    ****     }
+ 465              	 .loc 1 129 0
+ 466 006c 4FF0FF30 	 mov r0,#-1
+ 467 0070 F7E7     	 b .L42
+ 468              	.L48:
+ 469 0072 00BF     	 .align 2
+ 470              	.L47:
+ 471 0074 00000000 	 .word .LANCHOR2
+ 472 0078 00000000 	 .word .LANCHOR3
+ 473 007c 20000000 	 .word .LC9
+ 474 0080 00000000 	 .word .LC8
+ 475              	 .cfi_endproc
+ 476              	.LFE25:
+ 478              	 .section .text.mqtt_connect_func,"ax",%progbits
+ 479              	 .align 1
+ 480              	 .global mqtt_connect_func
+ 481              	 .syntax unified
+ 482              	 .thumb
+ 483              	 .thumb_func
+ 484              	 .fpu fpv4-sp-d16
+ 486              	mqtt_connect_func:
+ 487              	.LFB26:
+ 136:mqttdemo.c    ****     /********* mqtt con ***********/
+ 488              	 .loc 1 136 0
+ 489              	 .cfi_startproc
+ 490              	 
+ 491              	 
+ 492 0000 70B5     	 push {r4,r5,r6,lr}
+ 493              	 .cfi_def_cfa_offset 16
+ 494              	 .cfi_offset 4,-16
+ 495              	 .cfi_offset 5,-12
+ 496              	 .cfi_offset 6,-8
+ 497              	 .cfi_offset 14,-4
+ 498 0002 AAB0     	 sub sp,sp,#168
+ 499              	 .cfi_def_cfa_offset 184
+ 500              	.LVL36:
+ 139:mqttdemo.c    ****     int keepalive = 1000;
+ 501              	 .loc 1 139 0
+ 502 0004 2C4D     	 ldr r5,.L54
+ 503 0006 22AB     	 add r3,sp,#136
+ 504 0008 05F13002 	 add r2,r5,#48
+ 505 000c 07CA     	 ldm r2,{r0,r1,r2}
+ 506 000e 03C3     	 stmia r3!,{r0,r1}
+ 507 0010 23F8022B 	 strh r2,[r3],#2
+ 508 0014 120C     	 lsrs r2,r2,#16
+ 509 0016 1A70     	 strb r2,[r3]
+ARM GAS   			page 15
+
+
+ 510 0018 0024     	 movs r4,#0
+ 511 001a CDF89340 	 str r4,[sp,#147]
+ 512 001e CDF89740 	 str r4,[sp,#151]
+ 513 0022 CDF89B40 	 str r4,[sp,#155]
+ 514 0026 CDF89F40 	 str r4,[sp,#159]
+ 515 002a CDF8A340 	 str r4,[sp,#163]
+ 516 002e 8DF8A740 	 strb r4,[sp,#167]
+ 517              	.LVL37:
+ 143:mqttdemo.c    ****     char username[16] = "test";
+ 518              	 .loc 1 143 0
+ 519 0032 12AE     	 add r6,sp,#72
+ 520 0034 4022     	 movs r2,#64
+ 521 0036 2146     	 mov r1,r4
+ 522 0038 3046     	 mov r0,r6
+ 523 003a FFF7FEFF 	 bl memset
+ 524              	.LVL38:
+ 144:mqttdemo.c    ****     char password[16] = "123456";
+ 525              	 .loc 1 144 0
+ 526 003e 05F15003 	 add r3,r5,#80
+ 527 0042 93E80300 	 ldm r3,{r0,r1}
+ 528 0046 0E90     	 str r0,[sp,#56]
+ 529 0048 8DF83C10 	 strb r1,[sp,#60]
+ 530 004c CDF83D40 	 str r4,[sp,#61]
+ 531 0050 CDF84140 	 str r4,[sp,#65]
+ 532 0054 1194     	 str r4,[sp,#68]
+ 145:mqttdemo.c    **** 
+ 533              	 .loc 1 145 0
+ 534 0056 6035     	 adds r5,r5,#96
+ 535 0058 95E80300 	 ldm r5,{r0,r1}
+ 536 005c 0A90     	 str r0,[sp,#40]
+ 537 005e ADF82C10 	 strh r1,[sp,#44]
+ 538 0062 090C     	 lsrs r1,r1,#16
+ 539 0064 8DF82E10 	 strb r1,[sp,#46]
+ 540 0068 CDF82F40 	 str r4,[sp,#47]
+ 541 006c CDF83340 	 str r4,[sp,#51]
+ 542 0070 8DF83740 	 strb r4,[sp,#55]
+ 148:mqttdemo.c    **** 
+ 543              	 .loc 1 148 0
+ 544 0074 0694     	 str r4,[sp,#24]
+ 150:mqttdemo.c    ****     mqtt_con_c.mqtt_ver_t = mqtt_ver;
+ 545              	 .loc 1 150 0
+ 546 0076 114B     	 ldr r3,.L54+4
+ 547 0078 1B68     	 ldr r3,[r3]
+ 548 007a 0193     	 str r3,[sp,#4]
+ 151:mqttdemo.c    ****     mqtt_con_c.client_id_t = client_id;
+ 549              	 .loc 1 151 0
+ 550 007c 0423     	 movs r3,#4
+ 551 007e 0293     	 str r3,[sp,#8]
+ 152:mqttdemo.c    ****     mqtt_con_c.keepalive_t = keepalive;
+ 552              	 .loc 1 152 0
+ 553 0080 22AB     	 add r3,sp,#136
+ 554 0082 0393     	 str r3,[sp,#12]
+ 153:mqttdemo.c    ****     mqtt_con_c.cleansession_t = cleansession;
+ 555              	 .loc 1 153 0
+ 556 0084 4FF47A73 	 mov r3,#1000
+ 557 0088 0493     	 str r3,[sp,#16]
+ 154:mqttdemo.c    ****     mqtt_con_c.will_flag_t = will_flag;
+ARM GAS   			page 16
+
+
+ 558              	 .loc 1 154 0
+ 559 008a 0123     	 movs r3,#1
+ 560 008c 0593     	 str r3,[sp,#20]
+ 156:mqttdemo.c    ****     mqtt_con_c.username_t = username;
+ 561              	 .loc 1 156 0
+ 562 008e 0796     	 str r6,[sp,#28]
+ 157:mqttdemo.c    ****     mqtt_con_c.password_t = password;
+ 563              	 .loc 1 157 0
+ 564 0090 0EAB     	 add r3,sp,#56
+ 565 0092 0893     	 str r3,[sp,#32]
+ 158:mqttdemo.c    **** 
+ 566              	 .loc 1 158 0
+ 567 0094 0AAB     	 add r3,sp,#40
+ 568 0096 0993     	 str r3,[sp,#36]
+ 160:mqttdemo.c    ****         OEM_PRINTF("[MQTT_DEMO] mqtt connect error!\r\n");
+ 569              	 .loc 1 160 0
+ 570 0098 01A8     	 add r0,sp,#4
+ 571 009a FFF7FEFF 	 bl gsdk_ril_get_mqtt_con_result
+ 572              	.LVL39:
+ 573 009e 28B9     	 cbnz r0,.L53
+ 164:mqttdemo.c    ****     return 0;
+ 574              	 .loc 1 164 0
+ 575 00a0 0748     	 ldr r0,.L54+8
+ 576 00a2 FFF7FEFF 	 bl OEM_PRINTF
+ 577              	.LVL40:
+ 165:mqttdemo.c    **** }
+ 578              	 .loc 1 165 0
+ 579 00a6 0020     	 movs r0,#0
+ 580              	.L49:
+ 166:mqttdemo.c    **** 
+ 581              	 .loc 1 166 0
+ 582 00a8 2AB0     	 add sp,sp,#168
+ 583              	 .cfi_remember_state
+ 584              	 .cfi_def_cfa_offset 16
+ 585              	 
+ 586 00aa 70BD     	 pop {r4,r5,r6,pc}
+ 587              	.L53:
+ 588              	 .cfi_restore_state
+ 161:mqttdemo.c    ****         return -1;
+ 589              	 .loc 1 161 0
+ 590 00ac 0548     	 ldr r0,.L54+12
+ 591 00ae FFF7FEFF 	 bl OEM_PRINTF
+ 592              	.LVL41:
+ 162:mqttdemo.c    ****     }
+ 593              	 .loc 1 162 0
+ 594 00b2 4FF0FF30 	 mov r0,#-1
+ 595 00b6 F7E7     	 b .L49
+ 596              	.L55:
+ 597              	 .align 2
+ 598              	.L54:
+ 599 00b8 00000000 	 .word .LANCHOR2
+ 600 00bc 00000000 	 .word .LANCHOR3
+ 601 00c0 24000000 	 .word .LC14
+ 602 00c4 00000000 	 .word .LC13
+ 603              	 .cfi_endproc
+ 604              	.LFE26:
+ 606              	 .section .text.mqtt_subscribe_func,"ax",%progbits
+ARM GAS   			page 17
+
+
+ 607              	 .align 1
+ 608              	 .global mqtt_subscribe_func
+ 609              	 .syntax unified
+ 610              	 .thumb
+ 611              	 .thumb_func
+ 612              	 .fpu fpv4-sp-d16
+ 614              	mqtt_subscribe_func:
+ 615              	.LFB27:
+ 169:mqttdemo.c    ****     /********* mqtt sub **********/
+ 616              	 .loc 1 169 0
+ 617              	 .cfi_startproc
+ 618              	 
+ 619              	 
+ 620 0000 30B5     	 push {r4,r5,lr}
+ 621              	 .cfi_def_cfa_offset 12
+ 622              	 .cfi_offset 4,-12
+ 623              	 .cfi_offset 5,-8
+ 624              	 .cfi_offset 14,-4
+ 625 0002 8DB0     	 sub sp,sp,#52
+ 626              	 .cfi_def_cfa_offset 64
+ 171:mqttdemo.c    ****     int Qos = 0;
+ 627              	 .loc 1 171 0
+ 628 0004 04AC     	 add r4,sp,#16
+ 629 0006 124D     	 ldr r5,.L61
+ 630 0008 0FCD     	 ldmia r5!,{r0,r1,r2,r3}
+ 631 000a 0FC4     	 stmia r4!,{r0,r1,r2,r3}
+ 632 000c 2B68     	 ldr r3,[r5]
+ 633 000e 2380     	 strh r3,[r4]
+ 634 0010 0023     	 movs r3,#0
+ 635 0012 CDF82230 	 str r3,[sp,#34]
+ 636 0016 CDF82630 	 str r3,[sp,#38]
+ 637 001a CDF82A30 	 str r3,[sp,#42]
+ 638 001e ADF82E30 	 strh r3,[sp,#46]
+ 639              	.LVL42:
+ 175:mqttdemo.c    **** 
+ 640              	 .loc 1 175 0
+ 641 0022 0393     	 str r3,[sp,#12]
+ 177:mqttdemo.c    ****     mqtt_sub_s.topic_t = topic;
+ 642              	 .loc 1 177 0
+ 643 0024 0B4B     	 ldr r3,.L61+4
+ 644 0026 1B68     	 ldr r3,[r3]
+ 645 0028 0193     	 str r3,[sp,#4]
+ 178:mqttdemo.c    ****     mqtt_sub_s.Qos_t = Qos;
+ 646              	 .loc 1 178 0
+ 647 002a 04AB     	 add r3,sp,#16
+ 648 002c 0293     	 str r3,[sp,#8]
+ 181:mqttdemo.c    ****         OEM_PRINTF("[MQTT_DEMO] mqtt subscribe error!\r\n");
+ 649              	 .loc 1 181 0
+ 650 002e 01A8     	 add r0,sp,#4
+ 651 0030 FFF7FEFF 	 bl gsdk_ril_get_mqtt_sub_result
+ 652              	.LVL43:
+ 653 0034 28B9     	 cbnz r0,.L60
+ 185:mqttdemo.c    ****     return 0;
+ 654              	 .loc 1 185 0
+ 655 0036 0848     	 ldr r0,.L61+8
+ 656 0038 FFF7FEFF 	 bl OEM_PRINTF
+ 657              	.LVL44:
+ARM GAS   			page 18
+
+
+ 186:mqttdemo.c    **** }
+ 658              	 .loc 1 186 0
+ 659 003c 0020     	 movs r0,#0
+ 660              	.L56:
+ 187:mqttdemo.c    **** 
+ 661              	 .loc 1 187 0
+ 662 003e 0DB0     	 add sp,sp,#52
+ 663              	 .cfi_remember_state
+ 664              	 .cfi_def_cfa_offset 12
+ 665              	 
+ 666 0040 30BD     	 pop {r4,r5,pc}
+ 667              	.L60:
+ 668              	 .cfi_restore_state
+ 182:mqttdemo.c    ****         return -1;
+ 669              	 .loc 1 182 0
+ 670 0042 0648     	 ldr r0,.L61+12
+ 671 0044 FFF7FEFF 	 bl OEM_PRINTF
+ 672              	.LVL45:
+ 183:mqttdemo.c    ****     }
+ 673              	 .loc 1 183 0
+ 674 0048 4FF0FF30 	 mov r0,#-1
+ 675 004c F7E7     	 b .L56
+ 676              	.L62:
+ 677 004e 00BF     	 .align 2
+ 678              	.L61:
+ 679 0050 70000000 	 .word .LANCHOR2+112
+ 680 0054 00000000 	 .word .LANCHOR3
+ 681 0058 24000000 	 .word .LC17
+ 682 005c 00000000 	 .word .LC16
+ 683              	 .cfi_endproc
+ 684              	.LFE27:
+ 686              	 .section .text.mqtt_publish_func,"ax",%progbits
+ 687              	 .align 1
+ 688              	 .global mqtt_publish_func
+ 689              	 .syntax unified
+ 690              	 .thumb
+ 691              	 .thumb_func
+ 692              	 .fpu fpv4-sp-d16
+ 694              	mqtt_publish_func:
+ 695              	.LFB28:
+ 190:mqttdemo.c    ****     /************* mqtt pub ************/
+ 696              	 .loc 1 190 0
+ 697              	 .cfi_startproc
+ 698              	 
+ 699              	 
+ 700 0000 70B5     	 push {r4,r5,r6,lr}
+ 701              	 .cfi_def_cfa_offset 16
+ 702              	 .cfi_offset 4,-16
+ 703              	 .cfi_offset 5,-12
+ 704              	 .cfi_offset 6,-8
+ 705              	 .cfi_offset 14,-4
+ 706 0002 B0B0     	 sub sp,sp,#192
+ 707              	 .cfi_def_cfa_offset 208
+ 192:mqttdemo.c    ****     int Qos2 = 1;
+ 708              	 .loc 1 192 0
+ 709 0004 1D4E     	 ldr r6,.L68
+ 710 0006 28AC     	 add r4,sp,#160
+ARM GAS   			page 19
+
+
+ 711 0008 06F17005 	 add r5,r6,#112
+ 712 000c 0FCD     	 ldmia r5!,{r0,r1,r2,r3}
+ 713 000e 0FC4     	 stmia r4!,{r0,r1,r2,r3}
+ 714 0010 2B68     	 ldr r3,[r5]
+ 715 0012 2380     	 strh r3,[r4]
+ 716 0014 0024     	 movs r4,#0
+ 717 0016 CDF8B240 	 str r4,[sp,#178]
+ 718 001a CDF8B640 	 str r4,[sp,#182]
+ 719 001e CDF8BA40 	 str r4,[sp,#186]
+ 720 0022 ADF8BE40 	 strh r4,[sp,#190]
+ 721              	.LVL46:
+ 197:mqttdemo.c    **** 
+ 722              	 .loc 1 197 0
+ 723 0026 08AD     	 add r5,sp,#32
+ 724 0028 06F19003 	 add r3,r6,#144
+ 725 002c 93E80700 	 ldm r3,{r0,r1,r2}
+ 726 0030 03C5     	 stmia r5!,{r0,r1}
+ 727 0032 2A70     	 strb r2,[r5]
+ 728 0034 7722     	 movs r2,#119
+ 729 0036 2146     	 mov r1,r4
+ 730 0038 0DF12900 	 add r0,sp,#41
+ 731 003c FFF7FEFF 	 bl memset
+ 732              	.LVL47:
+ 200:mqttdemo.c    **** 
+ 733              	 .loc 1 200 0
+ 734 0040 0494     	 str r4,[sp,#16]
+ 735 0042 0594     	 str r4,[sp,#20]
+ 202:mqttdemo.c    ****     mqtt_pub_p.topic_t = topic2;
+ 736              	 .loc 1 202 0
+ 737 0044 0E4B     	 ldr r3,.L68+4
+ 738 0046 1B68     	 ldr r3,[r3]
+ 739 0048 0193     	 str r3,[sp,#4]
+ 203:mqttdemo.c    ****     mqtt_pub_p.Qos_t = Qos2;
+ 740              	 .loc 1 203 0
+ 741 004a 28AB     	 add r3,sp,#160
+ 742 004c 0293     	 str r3,[sp,#8]
+ 204:mqttdemo.c    ****     mqtt_pub_p.retained_t = retained;
+ 743              	 .loc 1 204 0
+ 744 004e 0123     	 movs r3,#1
+ 745 0050 0393     	 str r3,[sp,#12]
+ 207:mqttdemo.c    ****     mqtt_pub_p.message_t = message;
+ 746              	 .loc 1 207 0
+ 747 0052 0423     	 movs r3,#4
+ 748 0054 0693     	 str r3,[sp,#24]
+ 208:mqttdemo.c    **** 
+ 749              	 .loc 1 208 0
+ 750 0056 08AB     	 add r3,sp,#32
+ 751 0058 0793     	 str r3,[sp,#28]
+ 210:mqttdemo.c    ****         OEM_PRINTF("[MQTT_DEMO] mqtt publish error!\r\n");
+ 752              	 .loc 1 210 0
+ 753 005a 01A8     	 add r0,sp,#4
+ 754 005c FFF7FEFF 	 bl gsdk_ril_get_mqtt_pub_result
+ 755              	.LVL48:
+ 756 0060 28B9     	 cbnz r0,.L67
+ 214:mqttdemo.c    ****     return 0;
+ 757              	 .loc 1 214 0
+ 758 0062 0848     	 ldr r0,.L68+8
+ARM GAS   			page 20
+
+
+ 759 0064 FFF7FEFF 	 bl OEM_PRINTF
+ 760              	.LVL49:
+ 215:mqttdemo.c    **** }
+ 761              	 .loc 1 215 0
+ 762 0068 0020     	 movs r0,#0
+ 763              	.L63:
+ 216:mqttdemo.c    **** 
+ 764              	 .loc 1 216 0
+ 765 006a 30B0     	 add sp,sp,#192
+ 766              	 .cfi_remember_state
+ 767              	 .cfi_def_cfa_offset 16
+ 768              	 
+ 769 006c 70BD     	 pop {r4,r5,r6,pc}
+ 770              	.L67:
+ 771              	 .cfi_restore_state
+ 211:mqttdemo.c    ****         return -1;
+ 772              	 .loc 1 211 0
+ 773 006e 0648     	 ldr r0,.L68+12
+ 774 0070 FFF7FEFF 	 bl OEM_PRINTF
+ 775              	.LVL50:
+ 212:mqttdemo.c    ****     }
+ 776              	 .loc 1 212 0
+ 777 0074 4FF0FF30 	 mov r0,#-1
+ 778 0078 F7E7     	 b .L63
+ 779              	.L69:
+ 780 007a 00BF     	 .align 2
+ 781              	.L68:
+ 782 007c 00000000 	 .word .LANCHOR2
+ 783 0080 00000000 	 .word .LANCHOR3
+ 784 0084 24000000 	 .word .LC20
+ 785 0088 00000000 	 .word .LC19
+ 786              	 .cfi_endproc
+ 787              	.LFE28:
+ 789              	 .section .text.mqtt_unsubscribe_func,"ax",%progbits
+ 790              	 .align 1
+ 791              	 .global mqtt_unsubscribe_func
+ 792              	 .syntax unified
+ 793              	 .thumb
+ 794              	 .thumb_func
+ 795              	 .fpu fpv4-sp-d16
+ 797              	mqtt_unsubscribe_func:
+ 798              	.LFB29:
+ 219:mqttdemo.c    ****     /************ mqtt unsub start **********/
+ 799              	 .loc 1 219 0
+ 800              	 .cfi_startproc
+ 801              	 
+ 802              	 
+ 803 0000 30B5     	 push {r4,r5,lr}
+ 804              	 .cfi_def_cfa_offset 12
+ 805              	 .cfi_offset 4,-12
+ 806              	 .cfi_offset 5,-8
+ 807              	 .cfi_offset 14,-4
+ 808 0002 8DB0     	 sub sp,sp,#52
+ 809              	 .cfi_def_cfa_offset 64
+ 221:mqttdemo.c    **** 
+ 810              	 .loc 1 221 0
+ 811 0004 04AC     	 add r4,sp,#16
+ARM GAS   			page 21
+
+
+ 812 0006 124D     	 ldr r5,.L75
+ 813 0008 0FCD     	 ldmia r5!,{r0,r1,r2,r3}
+ 814 000a 0FC4     	 stmia r4!,{r0,r1,r2,r3}
+ 815 000c 2B68     	 ldr r3,[r5]
+ 816 000e 2380     	 strh r3,[r4]
+ 817 0010 0023     	 movs r3,#0
+ 818 0012 CDF82230 	 str r3,[sp,#34]
+ 819 0016 CDF82630 	 str r3,[sp,#38]
+ 820 001a CDF82A30 	 str r3,[sp,#42]
+ 821 001e ADF82E30 	 strh r3,[sp,#46]
+ 224:mqttdemo.c    **** 
+ 822              	 .loc 1 224 0
+ 823 0022 0393     	 str r3,[sp,#12]
+ 226:mqttdemo.c    ****     mqtt_sub_unsub.topic_t = topic3;
+ 824              	 .loc 1 226 0
+ 825 0024 0B4B     	 ldr r3,.L75+4
+ 826 0026 1B68     	 ldr r3,[r3]
+ 827 0028 0193     	 str r3,[sp,#4]
+ 227:mqttdemo.c    **** 
+ 828              	 .loc 1 227 0
+ 829 002a 04AB     	 add r3,sp,#16
+ 830 002c 0293     	 str r3,[sp,#8]
+ 229:mqttdemo.c    ****         OEM_PRINTF("[MQTT_DEMO] mqtt unsubscribe error!\r\n");
+ 831              	 .loc 1 229 0
+ 832 002e 01A8     	 add r0,sp,#4
+ 833 0030 FFF7FEFF 	 bl gsdk_ril_get_mqtt_unsub_result
+ 834              	.LVL51:
+ 835 0034 28B9     	 cbnz r0,.L74
+ 233:mqttdemo.c    ****     return 0;
+ 836              	 .loc 1 233 0
+ 837 0036 0848     	 ldr r0,.L75+8
+ 838 0038 FFF7FEFF 	 bl OEM_PRINTF
+ 839              	.LVL52:
+ 234:mqttdemo.c    **** }
+ 840              	 .loc 1 234 0
+ 841 003c 0020     	 movs r0,#0
+ 842              	.L70:
+ 235:mqttdemo.c    **** 
+ 843              	 .loc 1 235 0
+ 844 003e 0DB0     	 add sp,sp,#52
+ 845              	 .cfi_remember_state
+ 846              	 .cfi_def_cfa_offset 12
+ 847              	 
+ 848 0040 30BD     	 pop {r4,r5,pc}
+ 849              	.L74:
+ 850              	 .cfi_restore_state
+ 230:mqttdemo.c    ****         return -1;
+ 851              	 .loc 1 230 0
+ 852 0042 0648     	 ldr r0,.L75+12
+ 853 0044 FFF7FEFF 	 bl OEM_PRINTF
+ 854              	.LVL53:
+ 231:mqttdemo.c    ****     }
+ 855              	 .loc 1 231 0
+ 856 0048 4FF0FF30 	 mov r0,#-1
+ 857 004c F7E7     	 b .L70
+ 858              	.L76:
+ 859 004e 00BF     	 .align 2
+ARM GAS   			page 22
+
+
+ 860              	.L75:
+ 861 0050 70000000 	 .word .LANCHOR2+112
+ 862 0054 00000000 	 .word .LANCHOR3
+ 863 0058 28000000 	 .word .LC22
+ 864 005c 00000000 	 .word .LC21
+ 865              	 .cfi_endproc
+ 866              	.LFE29:
+ 868              	 .section .text.mqtt_disconnect_func,"ax",%progbits
+ 869              	 .align 1
+ 870              	 .global mqtt_disconnect_func
+ 871              	 .syntax unified
+ 872              	 .thumb
+ 873              	 .thumb_func
+ 874              	 .fpu fpv4-sp-d16
+ 876              	mqtt_disconnect_func:
+ 877              	.LFB30:
+ 238:mqttdemo.c    ****     /************ mqtt discon start **********/
+ 878              	 .loc 1 238 0
+ 879              	 .cfi_startproc
+ 880              	 
+ 881              	 
+ 882 0000 08B5     	 push {r3,lr}
+ 883              	 .cfi_def_cfa_offset 8
+ 884              	 .cfi_offset 3,-8
+ 885              	 .cfi_offset 14,-4
+ 240:mqttdemo.c    ****         OEM_PRINTF("[MQTT_DEMO] mqtt disconnect error!\r\n");
+ 886              	 .loc 1 240 0
+ 887 0002 084B     	 ldr r3,.L82
+ 888 0004 1868     	 ldr r0,[r3]
+ 889 0006 FFF7FEFF 	 bl gsdk_ril_get_mqtt_discon_result
+ 890              	.LVL54:
+ 891 000a 20B9     	 cbnz r0,.L81
+ 244:mqttdemo.c    ****     return 0;
+ 892              	 .loc 1 244 0
+ 893 000c 0648     	 ldr r0,.L82+4
+ 894 000e FFF7FEFF 	 bl OEM_PRINTF
+ 895              	.LVL55:
+ 245:mqttdemo.c    **** }
+ 896              	 .loc 1 245 0
+ 897 0012 0020     	 movs r0,#0
+ 898              	.L77:
+ 246:mqttdemo.c    **** 
+ 899              	 .loc 1 246 0
+ 900 0014 08BD     	 pop {r3,pc}
+ 901              	.L81:
+ 241:mqttdemo.c    ****         return -1;
+ 902              	 .loc 1 241 0
+ 903 0016 0548     	 ldr r0,.L82+8
+ 904 0018 FFF7FEFF 	 bl OEM_PRINTF
+ 905              	.LVL56:
+ 242:mqttdemo.c    ****     }
+ 906              	 .loc 1 242 0
+ 907 001c 4FF0FF30 	 mov r0,#-1
+ 908 0020 F8E7     	 b .L77
+ 909              	.L83:
+ 910 0022 00BF     	 .align 2
+ 911              	.L82:
+ARM GAS   			page 23
+
+
+ 912 0024 00000000 	 .word .LANCHOR3
+ 913 0028 28000000 	 .word .LC24
+ 914 002c 00000000 	 .word .LC23
+ 915              	 .cfi_endproc
+ 916              	.LFE30:
+ 918              	 .section .text.mqtt_pub_unsolicited_func,"ax",%progbits
+ 919              	 .align 1
+ 920              	 .global mqtt_pub_unsolicited_func
+ 921              	 .syntax unified
+ 922              	 .thumb
+ 923              	 .thumb_func
+ 924              	 .fpu fpv4-sp-d16
+ 926              	mqtt_pub_unsolicited_func:
+ 927              	.LFB32:
+ 258:mqttdemo.c    **** 
+ 259:mqttdemo.c    **** static unsolicited_handler_t mqtt_pub_handler;
+ 260:mqttdemo.c    **** void mqtt_pub_unsolicited_func(void)
+ 261:mqttdemo.c    **** {
+ 928              	 .loc 1 261 0
+ 929              	 .cfi_startproc
+ 930              	 
+ 931              	 
+ 932 0000 08B5     	 push {r3,lr}
+ 933              	 .cfi_def_cfa_offset 8
+ 934              	 .cfi_offset 3,-8
+ 935              	 .cfi_offset 14,-4
+ 262:mqttdemo.c    ****     mqtt_pub_handler.prefix = "+EMQPUB:";
+ 936              	 .loc 1 262 0
+ 937 0002 0548     	 ldr r0,.L86
+ 938 0004 054B     	 ldr r3,.L86+4
+ 939 0006 4360     	 str r3,[r0,#4]
+ 263:mqttdemo.c    ****     mqtt_pub_handler.user_data = NULL;
+ 940              	 .loc 1 263 0
+ 941 0008 0023     	 movs r3,#0
+ 942 000a 8360     	 str r3,[r0,#8]
+ 264:mqttdemo.c    ****     mqtt_pub_handler.func = (unsolicited_handler_func)mqtt_pub_cb;
+ 943              	 .loc 1 264 0
+ 944 000c 044B     	 ldr r3,.L86+8
+ 945 000e 0360     	 str r3,[r0]
+ 265:mqttdemo.c    ****     gsdk_at_register_unsolicited_handler(&mqtt_pub_handler);
+ 946              	 .loc 1 265 0
+ 947 0010 FFF7FEFF 	 bl gsdk_at_register_unsolicited_handler
+ 948              	.LVL57:
+ 266:mqttdemo.c    **** }
+ 949              	 .loc 1 266 0
+ 950 0014 08BD     	 pop {r3,pc}
+ 951              	.L87:
+ 952 0016 00BF     	 .align 2
+ 953              	.L86:
+ 954 0018 00000000 	 .word .LANCHOR4
+ 955 001c 00000000 	 .word .LC25
+ 956 0020 00000000 	 .word mqtt_pub_cb
+ 957              	 .cfi_endproc
+ 958              	.LFE32:
+ 960              	 .section .text.ip_wait_func,"ax",%progbits
+ 961              	 .align 1
+ 962              	 .global ip_wait_func
+ARM GAS   			page 24
+
+
+ 963              	 .syntax unified
+ 964              	 .thumb
+ 965              	 .thumb_func
+ 966              	 .fpu fpv4-sp-d16
+ 968              	ip_wait_func:
+ 969              	.LFB33:
+ 267:mqttdemo.c    **** 
+ 268:mqttdemo.c    **** int ip_wait_func()
+ 269:mqttdemo.c    **** {
+ 970              	 .loc 1 269 0
+ 971              	 .cfi_startproc
+ 972              	 
+ 973              	 
+ 974 0000 30B5     	 push {r4,r5,lr}
+ 975              	 .cfi_def_cfa_offset 12
+ 976              	 .cfi_offset 4,-12
+ 977              	 .cfi_offset 5,-8
+ 978              	 .cfi_offset 14,-4
+ 979 0002 91B0     	 sub sp,sp,#68
+ 980              	 .cfi_def_cfa_offset 80
+ 981              	.LVL58:
+ 270:mqttdemo.c    ****     int count = 0;
+ 271:mqttdemo.c    ****     gsdk_status_t status;
+ 272:mqttdemo.c    ****     char ip_buf[64] = {0};
+ 982              	 .loc 1 272 0
+ 983 0004 4022     	 movs r2,#64
+ 984 0006 0021     	 movs r1,#0
+ 985 0008 6846     	 mov r0,sp
+ 986 000a FFF7FEFF 	 bl memset
+ 987              	.LVL59:
+ 270:mqttdemo.c    ****     int count = 0;
+ 988              	 .loc 1 270 0
+ 989 000e 0025     	 movs r5,#0
+ 990              	.LVL60:
+ 991              	.L92:
+ 273:mqttdemo.c    **** 
+ 274:mqttdemo.c    ****     while(1){
+ 275:mqttdemo.c    ****         if(count > 100){
+ 992              	 .loc 1 275 0
+ 993 0010 642D     	 cmp r5,#100
+ 994 0012 13DC     	 bgt .L94
+ 276:mqttdemo.c    ****             OEM_PRINTF("wait for IP timeout\r\n");
+ 277:mqttdemo.c    ****             return -1;
+ 278:mqttdemo.c    ****         }
+ 279:mqttdemo.c    ****         memset(ip_buf, 0, 64);
+ 995              	 .loc 1 279 0
+ 996 0014 4024     	 movs r4,#64
+ 997 0016 2246     	 mov r2,r4
+ 998 0018 0021     	 movs r1,#0
+ 999 001a 6846     	 mov r0,sp
+ 1000 001c FFF7FEFF 	 bl memset
+ 1001              	.LVL61:
+ 280:mqttdemo.c    ****         status = gsdk_ril_get_local_ipaddr(ip_buf, 64);
+ 1002              	 .loc 1 280 0
+ 1003 0020 2146     	 mov r1,r4
+ 1004 0022 6846     	 mov r0,sp
+ 1005 0024 FFF7FEFF 	 bl gsdk_ril_get_local_ipaddr
+ARM GAS   			page 25
+
+
+ 1006              	.LVL62:
+ 281:mqttdemo.c    ****         if(status == 1){
+ 1007              	 .loc 1 281 0
+ 1008 0028 0128     	 cmp r0,#1
+ 1009 002a 0DD0     	 beq .L95
+ 282:mqttdemo.c    ****             OEM_PRINTF("get ip success!\r\n");
+ 283:mqttdemo.c    ****             break;
+ 284:mqttdemo.c    ****         }
+ 285:mqttdemo.c    ****         OEM_PRINTF("get ip failed!\r\n");
+ 1010              	 .loc 1 285 0
+ 1011 002c 0B48     	 ldr r0,.L96
+ 1012              	.LVL63:
+ 1013 002e FFF7FEFF 	 bl OEM_PRINTF
+ 1014              	.LVL64:
+ 286:mqttdemo.c    ****         vTaskDelay(100);
+ 1015              	 .loc 1 286 0
+ 1016 0032 6420     	 movs r0,#100
+ 1017 0034 FFF7FEFF 	 bl vTaskDelay
+ 1018              	.LVL65:
+ 287:mqttdemo.c    ****         count++;
+ 1019              	 .loc 1 287 0
+ 1020 0038 0135     	 adds r5,r5,#1
+ 1021              	.LVL66:
+ 275:mqttdemo.c    ****             OEM_PRINTF("wait for IP timeout\r\n");
+ 1022              	 .loc 1 275 0
+ 1023 003a E9E7     	 b .L92
+ 1024              	.L94:
+ 276:mqttdemo.c    ****             return -1;
+ 1025              	 .loc 1 276 0
+ 1026 003c 0848     	 ldr r0,.L96+4
+ 1027 003e FFF7FEFF 	 bl OEM_PRINTF
+ 1028              	.LVL67:
+ 277:mqttdemo.c    ****         }
+ 1029              	 .loc 1 277 0
+ 1030 0042 4FF0FF30 	 mov r0,#-1
+ 1031 0046 06E0     	 b .L88
+ 1032              	.LVL68:
+ 1033              	.L95:
+ 282:mqttdemo.c    ****             break;
+ 1034              	 .loc 1 282 0
+ 1035 0048 0648     	 ldr r0,.L96+8
+ 1036              	.LVL69:
+ 1037 004a FFF7FEFF 	 bl OEM_PRINTF
+ 1038              	.LVL70:
+ 288:mqttdemo.c    ****     }
+ 289:mqttdemo.c    **** 	OEM_PRINTF("ip registered\r\n");
+ 1039              	 .loc 1 289 0
+ 1040 004e 0648     	 ldr r0,.L96+12
+ 1041 0050 FFF7FEFF 	 bl OEM_PRINTF
+ 1042              	.LVL71:
+ 290:mqttdemo.c    **** 	return 0;
+ 1043              	 .loc 1 290 0
+ 1044 0054 0020     	 movs r0,#0
+ 1045              	.L88:
+ 291:mqttdemo.c    **** }
+ 1046              	 .loc 1 291 0
+ 1047 0056 11B0     	 add sp,sp,#68
+ARM GAS   			page 26
+
+
+ 1048              	 .cfi_def_cfa_offset 12
+ 1049              	 
+ 1050 0058 30BD     	 pop {r4,r5,pc}
+ 1051              	.LVL72:
+ 1052              	.L97:
+ 1053 005a 00BF     	 .align 2
+ 1054              	.L96:
+ 1055 005c 3C000000 	 .word .LC29
+ 1056 0060 00000000 	 .word .LC26
+ 1057 0064 18000000 	 .word .LC27
+ 1058 0068 2C000000 	 .word .LC28
+ 1059              	 .cfi_endproc
+ 1060              	.LFE33:
+ 1062              	 .section .text.main,"ax",%progbits
+ 1063              	 .align 1
+ 1064              	 .global main
+ 1065              	 .syntax unified
+ 1066              	 .thumb
+ 1067              	 .thumb_func
+ 1068              	 .fpu fpv4-sp-d16
+ 1070              	main:
+ 1071              	.LFB34:
+ 292:mqttdemo.c    **** 
+ 293:mqttdemo.c    **** int main(void)
+ 294:mqttdemo.c    **** {
+ 1072              	 .loc 1 294 0
+ 1073              	 .cfi_startproc
+ 1074              	 
+ 1075              	 
+ 1076 0000 08B5     	 push {r3,lr}
+ 1077              	 .cfi_def_cfa_offset 8
+ 1078              	 .cfi_offset 3,-8
+ 1079              	 .cfi_offset 14,-4
+ 295:mqttdemo.c    ****     oemdebuglog_open();
+ 1080              	 .loc 1 295 0
+ 1081 0002 FFF7FEFF 	 bl oemdebuglog_open
+ 1082              	.LVL73:
+ 296:mqttdemo.c    ****     if(init_func() != 0) goto _fail;
+ 1083              	 .loc 1 296 0
+ 1084 0006 FFF7FEFF 	 bl init_func
+ 1085              	.LVL74:
+ 1086 000a 10B9     	 cbnz r0,.L99
+ 297:mqttdemo.c    **** 	if(ip_wait_func() != 0) goto _fail;
+ 1087              	 .loc 1 297 0
+ 1088 000c FFF7FEFF 	 bl ip_wait_func
+ 1089              	.LVL75:
+ 1090 0010 20B1     	 cbz r0,.L102
+ 1091              	.L99:
+ 298:mqttdemo.c    ****     mqtt_pub_unsolicited_func();
+ 299:mqttdemo.c    ****     if(mqtt_new_func() != 0) goto _fail;
+ 300:mqttdemo.c    ****     if(mqtt_connect_func() != 0) goto _fail;
+ 301:mqttdemo.c    ****     if(mqtt_subscribe_func() != 0) goto _fail;
+ 302:mqttdemo.c    ****     if(mqtt_publish_func() != 0) goto _fail;
+ 303:mqttdemo.c    **** 
+ 304:mqttdemo.c    ****     vTaskDelay(3 * 1000 / portTICK_RATE_MS);    // wait 3s
+ 305:mqttdemo.c    **** 
+ 306:mqttdemo.c    ****     if(mqtt_unsubscribe_func() != 0) goto _fail;
+ARM GAS   			page 27
+
+
+ 307:mqttdemo.c    ****     if(mqtt_disconnect_func() != 0) goto _fail;
+ 308:mqttdemo.c    ****     OEM_PRINTF("[MQTT_DEMO] mqtt demo over!!!\r\n");
+ 309:mqttdemo.c    ****     while(1){
+ 310:mqttdemo.c    ****         vTaskDelay(100);
+ 311:mqttdemo.c    ****     }
+ 312:mqttdemo.c    **** 
+ 313:mqttdemo.c    **** _fail:
+ 314:mqttdemo.c    **** 
+ 315:mqttdemo.c    ****     OEM_PRINTF("[MQTT_DEMO] main function abnormal exit!\r\n");
+ 1092              	 .loc 1 315 0
+ 1093 0012 1548     	 ldr r0,.L103
+ 1094 0014 FFF7FEFF 	 bl OEM_PRINTF
+ 1095              	.LVL76:
+ 316:mqttdemo.c    ****     return 0;
+ 317:mqttdemo.c    **** }
+ 1096              	 .loc 1 317 0
+ 1097 0018 0020     	 movs r0,#0
+ 1098 001a 08BD     	 pop {r3,pc}
+ 1099              	.L102:
+ 298:mqttdemo.c    ****     mqtt_pub_unsolicited_func();
+ 1100              	 .loc 1 298 0
+ 1101 001c FFF7FEFF 	 bl mqtt_pub_unsolicited_func
+ 1102              	.LVL77:
+ 299:mqttdemo.c    ****     if(mqtt_connect_func() != 0) goto _fail;
+ 1103              	 .loc 1 299 0
+ 1104 0020 FFF7FEFF 	 bl mqtt_new_func
+ 1105              	.LVL78:
+ 1106 0024 0028     	 cmp r0,#0
+ 1107 0026 F4D1     	 bne .L99
+ 300:mqttdemo.c    ****     if(mqtt_subscribe_func() != 0) goto _fail;
+ 1108              	 .loc 1 300 0
+ 1109 0028 FFF7FEFF 	 bl mqtt_connect_func
+ 1110              	.LVL79:
+ 1111 002c 0028     	 cmp r0,#0
+ 1112 002e F0D1     	 bne .L99
+ 301:mqttdemo.c    ****     if(mqtt_publish_func() != 0) goto _fail;
+ 1113              	 .loc 1 301 0
+ 1114 0030 FFF7FEFF 	 bl mqtt_subscribe_func
+ 1115              	.LVL80:
+ 1116 0034 0028     	 cmp r0,#0
+ 1117 0036 ECD1     	 bne .L99
+ 302:mqttdemo.c    **** 
+ 1118              	 .loc 1 302 0
+ 1119 0038 FFF7FEFF 	 bl mqtt_publish_func
+ 1120              	.LVL81:
+ 1121 003c 0028     	 cmp r0,#0
+ 1122 003e E8D1     	 bne .L99
+ 304:mqttdemo.c    **** 
+ 1123              	 .loc 1 304 0
+ 1124 0040 4FF49670 	 mov r0,#300
+ 1125 0044 FFF7FEFF 	 bl vTaskDelay
+ 1126              	.LVL82:
+ 306:mqttdemo.c    ****     if(mqtt_disconnect_func() != 0) goto _fail;
+ 1127              	 .loc 1 306 0
+ 1128 0048 FFF7FEFF 	 bl mqtt_unsubscribe_func
+ 1129              	.LVL83:
+ 1130 004c 0028     	 cmp r0,#0
+ARM GAS   			page 28
+
+
+ 1131 004e E0D1     	 bne .L99
+ 307:mqttdemo.c    ****     OEM_PRINTF("[MQTT_DEMO] mqtt demo over!!!\r\n");
+ 1132              	 .loc 1 307 0
+ 1133 0050 FFF7FEFF 	 bl mqtt_disconnect_func
+ 1134              	.LVL84:
+ 1135 0054 0028     	 cmp r0,#0
+ 1136 0056 DCD1     	 bne .L99
+ 308:mqttdemo.c    ****     while(1){
+ 1137              	 .loc 1 308 0
+ 1138 0058 0448     	 ldr r0,.L103+4
+ 1139 005a FFF7FEFF 	 bl OEM_PRINTF
+ 1140              	.LVL85:
+ 1141              	.L100:
+ 310:mqttdemo.c    ****     }
+ 1142              	 .loc 1 310 0 discriminator 1
+ 1143 005e 6420     	 movs r0,#100
+ 1144 0060 FFF7FEFF 	 bl vTaskDelay
+ 1145              	.LVL86:
+ 1146 0064 FBE7     	 b .L100
+ 1147              	.L104:
+ 1148 0066 00BF     	 .align 2
+ 1149              	.L103:
+ 1150 0068 20000000 	 .word .LC31
+ 1151 006c 00000000 	 .word .LC30
+ 1152              	 .cfi_endproc
+ 1153              	.LFE34:
+ 1155              	 .global mqtt_id
+ 1156              	 .global oem_debuglog
+ 1157              	 .section .rodata
+ 1158              	 .align 2
+ 1159              	 .set .LANCHOR2,.+0
+ 1160              	.LC6:
+ 1161 0000 3130362E 	 .ascii "106.14.195.26\000"
+ 1161      31342E31 
+ 1161      39352E32 
+ 1161      3600
+ 1162 000e 00000000 	 .space 18
+ 1162      00000000 
+ 1162      00000000 
+ 1162      00000000 
+ 1162      0000
+ 1163              	.LC7:
+ 1164 0020 31383833 	 .ascii "1883\000"
+ 1164      00
+ 1165 0025 00000000 	 .space 11
+ 1165      00000000 
+ 1165      000000
+ 1166              	.LC10:
+ 1167 0030 6D79636C 	 .ascii "myclientid\000"
+ 1167      69656E74 
+ 1167      696400
+ 1168 003b 00000000 	 .space 21
+ 1168      00000000 
+ 1168      00000000 
+ 1168      00000000 
+ 1168      00000000 
+ 1169              	.LC11:
+ARM GAS   			page 29
+
+
+ 1170 0050 74657374 	 .ascii "test\000"
+ 1170      00
+ 1171 0055 00000000 	 .space 11
+ 1171      00000000 
+ 1171      000000
+ 1172              	.LC12:
+ 1173 0060 31323334 	 .ascii "123456\000"
+ 1173      353600
+ 1174 0067 00000000 	 .space 9
+ 1174      00000000 
+ 1174      00
+ 1175              	.LC15:
+ 1176 0070 2F6D6F65 	 .ascii "/moekon/substopic\000"
+ 1176      6B6F6E2F 
+ 1176      73756273 
+ 1176      746F7069 
+ 1176      6300
+ 1177 0082 00000000 	 .space 14
+ 1177      00000000 
+ 1177      00000000 
+ 1177      0000
+ 1178              	.LC18:
+ 1179 0090 33313332 	 .ascii "31323334\000"
+ 1179      33333334 
+ 1179      00
+ 1180 0099 00000000 	 .space 119
+ 1180      00000000 
+ 1180      00000000 
+ 1180      00000000 
+ 1180      00000000 
+ 1181              	 .section .bss.g_huart,"aw",%nobits
+ 1182              	 .align 2
+ 1183              	 .set .LANCHOR1,.+0
+ 1186              	g_huart:
+ 1187 0000 00000000 	 .space 4
+ 1188              	 .section .bss.mqtt_pub_handler,"aw",%nobits
+ 1189              	 .align 2
+ 1190              	 .set .LANCHOR4,.+0
+ 1193              	mqtt_pub_handler:
+ 1194 0000 00000000 	 .space 16
+ 1194      00000000 
+ 1194      00000000 
+ 1194      00000000 
+ 1195              	 .section .data.mqtt_id,"aw",%progbits
+ 1196              	 .align 2
+ 1197              	 .set .LANCHOR3,.+0
+ 1200              	mqtt_id:
+ 1201 0000 FFFFFFFF 	 .word -1
+ 1202              	 .section .data.oem_debuglog,"aw",%progbits
+ 1203              	 .align 2
+ 1204              	 .set .LANCHOR0,.+0
+ 1207              	oem_debuglog:
+ 1208 0000 01000000 	 .word 1
+ 1209              	 .section .rodata.gsdk_ril_init_func.str1.4,"aMS",%progbits,1
+ 1210              	 .align 2
+ 1211              	.LC3:
+ 1212 0000 5B4D5154 	 .ascii "[MQTT_DEMO] gsdk_ril_init error!\015\012\000"
+ARM GAS   			page 30
+
+
+ 1212      545F4445 
+ 1212      4D4F5D20 
+ 1212      6773646B 
+ 1212      5F72696C 
+ 1213              	 .section .rodata.init_func.str1.4,"aMS",%progbits,1
+ 1214              	 .align 2
+ 1215              	.LC4:
+ 1216 0000 5B4D5154 	 .ascii "[MQTT_DEMO] init_func end!\015\012\000"
+ 1216      545F4445 
+ 1216      4D4F5D20 
+ 1216      696E6974 
+ 1216      5F66756E 
+ 1217 001d 000000   	 .space 3
+ 1218              	.LC5:
+ 1219 0020 5B4D5154 	 .ascii "[MQTT_DEMO] init_func error!\015\012\000"
+ 1219      545F4445 
+ 1219      4D4F5D20 
+ 1219      696E6974 
+ 1219      5F66756E 
+ 1220              	 .section .rodata.ip_wait_func.str1.4,"aMS",%progbits,1
+ 1221              	 .align 2
+ 1222              	.LC26:
+ 1223 0000 77616974 	 .ascii "wait for IP timeout\015\012\000"
+ 1223      20666F72 
+ 1223      20495020 
+ 1223      74696D65 
+ 1223      6F75740D 
+ 1224 0016 0000     	 .space 2
+ 1225              	.LC27:
+ 1226 0018 67657420 	 .ascii "get ip success!\015\012\000"
+ 1226      69702073 
+ 1226      75636365 
+ 1226      7373210D 
+ 1226      0A00
+ 1227 002a 0000     	 .space 2
+ 1228              	.LC28:
+ 1229 002c 69702072 	 .ascii "ip registered\015\012\000"
+ 1229      65676973 
+ 1229      74657265 
+ 1229      640D0A00 
+ 1230              	.LC29:
+ 1231 003c 67657420 	 .ascii "get ip failed!\015\012\000"
+ 1231      69702066 
+ 1231      61696C65 
+ 1231      64210D0A 
+ 1231      00
+ 1232              	 .section .rodata.log_init.str1.4,"aMS",%progbits,1
+ 1233              	 .align 2
+ 1234              	.LC2:
+ 1235 0000 5B4D5154 	 .ascii "[MQTT_DEMO] log init....OK\015\012\000"
+ 1235      545F4445 
+ 1235      4D4F5D20 
+ 1235      6C6F6720 
+ 1235      696E6974 
+ 1236              	 .section .rodata.main.str1.4,"aMS",%progbits,1
+ 1237              	 .align 2
+ 1238              	.LC30:
+ARM GAS   			page 31
+
+
+ 1239 0000 5B4D5154 	 .ascii "[MQTT_DEMO] mqtt demo over!!!\015\012\000"
+ 1239      545F4445 
+ 1239      4D4F5D20 
+ 1239      6D717474 
+ 1239      2064656D 
+ 1240              	.LC31:
+ 1241 0020 5B4D5154 	 .ascii "[MQTT_DEMO] main function abnormal exit!\015\012\000"
+ 1241      545F4445 
+ 1241      4D4F5D20 
+ 1241      6D61696E 
+ 1241      2066756E 
+ 1242              	 .section .rodata.mqtt_connect_func.str1.4,"aMS",%progbits,1
+ 1243              	 .align 2
+ 1244              	.LC13:
+ 1245 0000 5B4D5154 	 .ascii "[MQTT_DEMO] mqtt connect error!\015\012\000"
+ 1245      545F4445 
+ 1245      4D4F5D20 
+ 1245      6D717474 
+ 1245      20636F6E 
+ 1246 0022 0000     	 .space 2
+ 1247              	.LC14:
+ 1248 0024 5B4D5154 	 .ascii "[MQTT_DEMO] mqtt connect end!\015\012\000"
+ 1248      545F4445 
+ 1248      4D4F5D20 
+ 1248      6D717474 
+ 1248      20636F6E 
+ 1249              	 .section .rodata.mqtt_disconnect_func.str1.4,"aMS",%progbits,1
+ 1250              	 .align 2
+ 1251              	.LC23:
+ 1252 0000 5B4D5154 	 .ascii "[MQTT_DEMO] mqtt disconnect error!\015\012\000"
+ 1252      545F4445 
+ 1252      4D4F5D20 
+ 1252      6D717474 
+ 1252      20646973 
+ 1253 0025 000000   	 .space 3
+ 1254              	.LC24:
+ 1255 0028 5B4D5154 	 .ascii "[MQTT_DEMO] mqtt disconnect end!\015\012\000"
+ 1255      545F4445 
+ 1255      4D4F5D20 
+ 1255      6D717474 
+ 1255      20646973 
+ 1256              	 .section .rodata.mqtt_new_func.str1.4,"aMS",%progbits,1
+ 1257              	 .align 2
+ 1258              	.LC8:
+ 1259 0000 5B4D5154 	 .ascii "[MQTT_DEMO] mqtt new error!\015\012\000"
+ 1259      545F4445 
+ 1259      4D4F5D20 
+ 1259      6D717474 
+ 1259      206E6577 
+ 1260 001e 0000     	 .space 2
+ 1261              	.LC9:
+ 1262 0020 5B4D5154 	 .ascii "[MQTT_DEMO] mqtt new end!\015\012\000"
+ 1262      545F4445 
+ 1262      4D4F5D20 
+ 1262      6D717474 
+ 1262      206E6577 
+ 1263              	 .section .rodata.mqtt_pub_cb.str1.4,"aMS",%progbits,1
+ARM GAS   			page 32
+
+
+ 1264              	 .align 2
+ 1265              	.LC0:
+ 1266 0000 63616C6C 	 .ascii "callbace error!\015\012\000"
+ 1266      62616365 
+ 1266      20657272 
+ 1266      6F72210D 
+ 1266      0A00
+ 1267 0012 0000     	 .space 2
+ 1268              	.LC1:
+ 1269 0014 25730D0A 	 .ascii "%s\015\012\000"
+ 1269      00
+ 1270              	 .section .rodata.mqtt_pub_unsolicited_func.str1.4,"aMS",%progbits,1
+ 1271              	 .align 2
+ 1272              	.LC25:
+ 1273 0000 2B454D51 	 .ascii "+EMQPUB:\000"
+ 1273      5055423A 
+ 1273      00
+ 1274              	 .section .rodata.mqtt_publish_func.str1.4,"aMS",%progbits,1
+ 1275              	 .align 2
+ 1276              	.LC19:
+ 1277 0000 5B4D5154 	 .ascii "[MQTT_DEMO] mqtt publish error!\015\012\000"
+ 1277      545F4445 
+ 1277      4D4F5D20 
+ 1277      6D717474 
+ 1277      20707562 
+ 1278 0022 0000     	 .space 2
+ 1279              	.LC20:
+ 1280 0024 5B4D5154 	 .ascii "[MQTT_DEMO] mqtt publish end!\015\012\000"
+ 1280      545F4445 
+ 1280      4D4F5D20 
+ 1280      6D717474 
+ 1280      20707562 
+ 1281              	 .section .rodata.mqtt_subscribe_func.str1.4,"aMS",%progbits,1
+ 1282              	 .align 2
+ 1283              	.LC16:
+ 1284 0000 5B4D5154 	 .ascii "[MQTT_DEMO] mqtt subscribe error!\015\012\000"
+ 1284      545F4445 
+ 1284      4D4F5D20 
+ 1284      6D717474 
+ 1284      20737562 
+ 1285              	.LC17:
+ 1286 0024 5B4D5154 	 .ascii "[MQTT_DEMO] mqtt subscribe end!\015\012\000"
+ 1286      545F4445 
+ 1286      4D4F5D20 
+ 1286      6D717474 
+ 1286      20737562 
+ 1287              	 .section .rodata.mqtt_unsubscribe_func.str1.4,"aMS",%progbits,1
+ 1288              	 .align 2
+ 1289              	.LC21:
+ 1290 0000 5B4D5154 	 .ascii "[MQTT_DEMO] mqtt unsubscribe error!\015\012\000"
+ 1290      545F4445 
+ 1290      4D4F5D20 
+ 1290      6D717474 
+ 1290      20756E73 
+ 1291 0026 0000     	 .space 2
+ 1292              	.LC22:
+ 1293 0028 5B4D5154 	 .ascii "[MQTT_DEMO] mqtt unsubscribe end!\015\012\000"
+ARM GAS   			page 33
+
+
+ 1293      545F4445 
+ 1293      4D4F5D20 
+ 1293      6D717474 
+ 1293      20756E73 
+ 1294              	 .text
+ 1295              	.Letext0:
+ 1296              	 .file 2 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 1297              	 .file 3 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\lock.h"
+ 1298              	 .file 4 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\_types.h"
+ 1299              	 .file 5 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\lib\\gcc\\arm-none-eabi\\7.3.1\\include\\stddef.h"
+ 1300              	 .file 6 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\reent.h"
+ 1301              	 .file 7 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\_stdint.h"
+ 1302              	 .file 8 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\stdlib.h"
+ 1303              	 .file 9 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_common.h"
+ 1304              	 .file 10 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_uart.h"
+ 1305              	 .file 11 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_flash.h"
+ 1306              	 .file 12 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/include/FreeRTOSConfig.h"
+ 1307              	 .file 13 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/GCC/mt2625/ARM_CM4F/portmacro.h"
+ 1308              	 .file 14 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_ril.h"
+ 1309              	 .file 15 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_ril_cmds.h"
+ 1310              	 .file 16 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\errno.h"
+ 1311              	 .file 17 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\time.h"
+ 1312              	 .file 18 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/ports/include/arch/cc.h"
+ 1313              	 .file 19 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/ip4_addr.h"
+ 1314              	 .file 20 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/ip6_addr.h"
+ 1315              	 .file 21 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/ip_addr.h"
+ 1316              	 .file 22 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/err.h"
+ 1317              	 .file 23 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/pbuf.h"
+ 1318              	 .file 24 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/netif.h"
+ 1319              	 .file 25 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/inet.h"
+ 1320              	 .file 26 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/ip4.h"
+ 1321              	 .file 27 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/ip6.h"
+ 1322              	 .file 28 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/ip.h"
+ 1323              	 .file 29 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/include/task.h"
+ 1324              	 .file 30 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\string.h"
+ 1325              	 .file 31 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\stdio.h"
+ 1326              	 .file 32 "<built-in>"
+ARM GAS   			page 34
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 mqttdemo.c
+    {standard input}:18     .text.oemdebuglog_open:00000000 $t
+    {standard input}:25     .text.oemdebuglog_open:00000000 oemdebuglog_open
+    {standard input}:42     .text.oemdebuglog_open:00000008 $d
+    {standard input}:47     .text.OEM_PRINTF:00000000 $t
+    {standard input}:54     .text.OEM_PRINTF:00000000 OEM_PRINTF
+    {standard input}:101    .text.OEM_PRINTF:0000001c $d
+    {standard input}:106    .text.mqtt_pub_cb:00000000 $t
+    {standard input}:113    .text.mqtt_pub_cb:00000000 mqtt_pub_cb
+    {standard input}:166    .text.mqtt_pub_cb:00000030 $d
+    {standard input}:172    .text.__io_puts:00000000 $t
+    {standard input}:179    .text.__io_puts:00000000 __io_puts
+    {standard input}:217    .text.__io_puts:0000001c $d
+    {standard input}:222    .text.log_init:00000000 $t
+    {standard input}:229    .text.log_init:00000000 log_init
+    {standard input}:282    .text.log_init:00000038 $d
+    {standard input}:288    .text.gsdk_ril_init_func:00000000 $t
+    {standard input}:295    .text.gsdk_ril_init_func:00000000 gsdk_ril_init_func
+    {standard input}:329    .text.gsdk_ril_init_func:00000018 $d
+    {standard input}:334    .text.init_func:00000000 $t
+    {standard input}:341    .text.init_func:00000000 init_func
+    {standard input}:379    .text.init_func:00000028 $d
+    {standard input}:385    .text.mqtt_new_func:00000000 $t
+    {standard input}:392    .text.mqtt_new_func:00000000 mqtt_new_func
+    {standard input}:471    .text.mqtt_new_func:00000074 $d
+    {standard input}:479    .text.mqtt_connect_func:00000000 $t
+    {standard input}:486    .text.mqtt_connect_func:00000000 mqtt_connect_func
+    {standard input}:599    .text.mqtt_connect_func:000000b8 $d
+    {standard input}:607    .text.mqtt_subscribe_func:00000000 $t
+    {standard input}:614    .text.mqtt_subscribe_func:00000000 mqtt_subscribe_func
+    {standard input}:679    .text.mqtt_subscribe_func:00000050 $d
+    {standard input}:687    .text.mqtt_publish_func:00000000 $t
+    {standard input}:694    .text.mqtt_publish_func:00000000 mqtt_publish_func
+    {standard input}:782    .text.mqtt_publish_func:0000007c $d
+    {standard input}:790    .text.mqtt_unsubscribe_func:00000000 $t
+    {standard input}:797    .text.mqtt_unsubscribe_func:00000000 mqtt_unsubscribe_func
+    {standard input}:861    .text.mqtt_unsubscribe_func:00000050 $d
+    {standard input}:869    .text.mqtt_disconnect_func:00000000 $t
+    {standard input}:876    .text.mqtt_disconnect_func:00000000 mqtt_disconnect_func
+    {standard input}:912    .text.mqtt_disconnect_func:00000024 $d
+    {standard input}:919    .text.mqtt_pub_unsolicited_func:00000000 $t
+    {standard input}:926    .text.mqtt_pub_unsolicited_func:00000000 mqtt_pub_unsolicited_func
+    {standard input}:954    .text.mqtt_pub_unsolicited_func:00000018 $d
+    {standard input}:961    .text.ip_wait_func:00000000 $t
+    {standard input}:968    .text.ip_wait_func:00000000 ip_wait_func
+    {standard input}:1055   .text.ip_wait_func:0000005c $d
+    {standard input}:1063   .text.main:00000000 $t
+    {standard input}:1070   .text.main:00000000 main
+    {standard input}:1150   .text.main:00000068 $d
+    {standard input}:1200   .data.mqtt_id:00000000 mqtt_id
+    {standard input}:1207   .data.oem_debuglog:00000000 oem_debuglog
+    {standard input}:1158   .rodata:00000000 $d
+    {standard input}:1182   .bss.g_huart:00000000 $d
+    {standard input}:1186   .bss.g_huart:00000000 g_huart
+    {standard input}:1189   .bss.mqtt_pub_handler:00000000 $d
+    {standard input}:1193   .bss.mqtt_pub_handler:00000000 mqtt_pub_handler
+ARM GAS   			page 35
+
+
+    {standard input}:1196   .data.mqtt_id:00000000 $d
+    {standard input}:1203   .data.oem_debuglog:00000000 $d
+    {standard input}:1210   .rodata.gsdk_ril_init_func.str1.4:00000000 $d
+    {standard input}:1214   .rodata.init_func.str1.4:00000000 $d
+    {standard input}:1221   .rodata.ip_wait_func.str1.4:00000000 $d
+    {standard input}:1233   .rodata.log_init.str1.4:00000000 $d
+    {standard input}:1237   .rodata.main.str1.4:00000000 $d
+    {standard input}:1243   .rodata.mqtt_connect_func.str1.4:00000000 $d
+    {standard input}:1250   .rodata.mqtt_disconnect_func.str1.4:00000000 $d
+    {standard input}:1257   .rodata.mqtt_new_func.str1.4:00000000 $d
+    {standard input}:1264   .rodata.mqtt_pub_cb.str1.4:00000000 $d
+    {standard input}:1271   .rodata.mqtt_pub_unsolicited_func.str1.4:00000000 $d
+    {standard input}:1275   .rodata.mqtt_publish_func.str1.4:00000000 $d
+    {standard input}:1282   .rodata.mqtt_subscribe_func.str1.4:00000000 $d
+    {standard input}:1288   .rodata.mqtt_unsubscribe_func.str1.4:00000000 $d
+                           .group:00000000 wm4.0.8fab1e1450c2b74bdd5e2aed4c325bf1
+                           .group:00000000 wm4._newlib_version.h.4.875b979a44719054cd750d0952ad3fd6
+                           .group:00000000 wm4.newlib.h.18.5e5ca3429233af402d406a202f1fc1ac
+                           .group:00000000 wm4.ieeefp.h.77.220d9cccac42cd58761758bee2df4ce6
+                           .group:00000000 wm4.features.h.22.fad1cec3bc7ff06488171438dbdcfd02
+                           .group:00000000 wm4.config.h.220.6cac6a9685cfce5e83c17784171638d9
+                           .group:00000000 wm4._ansi.h.31.de524f58584151836e90d8620a16f8e8
+                           .group:00000000 wm4.stdio.h.31.7c0e28c411445f3f9c5b11accf882760
+                           .group:00000000 wm4._default_types.h.6.959254cf5f09734ea7516c89e8bb21bd
+                           .group:00000000 wm4.stddef.h.187.2ff233552538c6ff9b8575ca8ea52cb3
+                           .group:00000000 wm4.cdefs.h.47.0bcdf94cb40e176393dd1404056825b4
+                           .group:00000000 wm4.stddef.h.39.ec95e8feac892e292b69dc7ae75b0d64
+                           .group:00000000 wm4.stdarg.h.34.3a23a216c0c293b3d2ea2e89281481e6
+                           .group:00000000 wm4.lock.h.2.1461d1fff82dffe8bfddc23307f6484f
+                           .group:00000000 wm4._types.h.125.5cf8a495f1f7ef36777ad868a1e32068
+                           .group:00000000 wm4.stddef.h.161.5349cb105733e8777bfb0cf53c4e3f34
+                           .group:00000000 wm4._types.h.184.03611d4f6b5bec9997bcf4279eceba07
+                           .group:00000000 wm4.reent.h.17.90c2574d4acdcfce933db5cb09ff35fe
+                           .group:00000000 wm4.types.h.40.e8c16e7ec36ba55f133d0616070e25fc
+                           .group:00000000 wm4._stdint.h.10.c24fa3af3bc1706662bb5593a907e841
+                           .group:00000000 wm4._endian.h.31.65a10590763c3dde1ac4a7f66d7d4891
+                           .group:00000000 wm4.endian.h.9.49f3a4695c1b61e8a0808de3c4a106cb
+                           .group:00000000 wm4._timeval.h.30.0e8bfd94e85db17dda3286ee81496fe6
+                           .group:00000000 wm4.timespec.h.41.d855182eb0e690443ab8651bcedca6e1
+                           .group:00000000 wm4.select.h.19.97ca6fd0c752a0f3b6719fd314d361e6
+                           .group:00000000 wm4.types.h.69.ed3eae3cf73030a737515151ebcab7a1
+                           .group:00000000 wm4.sched.h.22.c60982713a5c428609783c78f9c78d95
+                           .group:00000000 wm4._pthreadtypes.h.36.fcee9961c35163dde6267ef772ad1972
+                           .group:00000000 wm4.stdio.h.2.4aa87247282eca6c8f36f9de33d8df1a
+                           .group:00000000 wm4.stdio.h.81.932d0c162786b883f622b8d05c120c78
+                           .group:00000000 wm4.stdlib.h.13.4ed386f5c1a80d71e72172885d946ef2
+                           .group:00000000 wm4.stddef.h.161.19e15733342b50ead2919490b095303e
+                           .group:00000000 wm4.alloca.h.8.dfc0c703c47ec3e69746825b17d9e66d
+                           .group:00000000 wm4.stdlib.h.56.d4493cd3736e51e9d56335045f26df45
+                           .group:00000000 wm4.string.h.8.c4b8571ce60dff2817f43fec8b86aecd
+                           .group:00000000 wm4._intsup.h.10.cce27fed8484c08a33f522034c30d2b5
+                           .group:00000000 wm4.stdint.h.23.d53047a68f4a85177f80b422d52785ed
+                           .group:00000000 wm4.gsdk_common.h.47.22de8ea3659fbd5af0e08ced1ae1b062
+                           .group:00000000 wm4.gsdk_flash.h.25.4d08791083e4af07d64570151ac0803c
+                           .group:00000000 wm4.app_loader.h.25.aa64c8d4536aca920728cda79a275eeb
+                           .group:00000000 wm4.FreeRTOSConfig.h.68.1d0dd6b8cda279d0020827f5584733bd
+                           .group:00000000 wm4.projdefs.h.71.1734cd3501e070360596dd847bb9d813
+ARM GAS   			page 36
+
+
+                           .group:00000000 wm4.portmacro.h.72.3d5d774f718d157a637f7eb960850f27
+                           .group:00000000 wm4.portable.h.98.f435842f50d7864fba6a318a13e72513
+                           .group:00000000 wm4.mpu_wrappers.h.71.dd245fe44d82bd40288b5a47f895c82c
+                           .group:00000000 wm4.FreeRTOS.h.175.3abf49eaca38658a192da8d7c86d5374
+                           .group:00000000 wm4.queue.h.72.3695320c7600effec3d17b83c99d3c0b
+                           .group:00000000 wm4.semphr.h.81.476996112f7cf2dd045dbdd37a9136bc
+                           .group:00000000 wm4.list.h.103.6a12b7b9a7a136c3cca0ee53675c5498
+                           .group:00000000 wm4.task.h.88.da474b04c368050657453c137d8efe45
+                           .group:00000000 wm4.gsdk_ril.h.43.ec5a175e110d1c70143139b168262c34
+                           .group:00000000 wm4.gsdk_ril_cmds.h.25.9576f30a39fa8fd69cc4f6c2fc4c8bd9
+                           .group:00000000 wm4.lwipopts.h.39.6b59604adf87dc94bbbda24564503740
+                           .group:00000000 wm4.errno.h.2.ba016d646105af6cad23be83630b6a3f
+                           .group:00000000 wm4.errno.h.9.1ecd7b1049497a0ab61da0f6cbd4b0c6
+                           .group:00000000 wm4.time.h.38.20beed93add9f31905d3a626e4660be9
+                           .group:00000000 wm4.time.h.8.db4619001f026d0b4874c029fef0e91f
+                           .group:00000000 wm4.time.h.2.4581ce0ffb6627cfc02162c94bf846c9
+                           .group:00000000 wm4.time.h.25.483ee9b7e27a5dcca3d222ded0e25e01
+                           .group:00000000 wm4.cc.h.48.d6d2c2bb4a8eeb217c55b9ca1943b7a0
+                           .group:00000000 wm4.arch.h.65.8829bb52e9eb86f038bc22f28844c005
+                           .group:00000000 wm4.debug.h.44.85dd174371aa97df303e04153d799135
+                           .group:00000000 wm4.opt.h.77.035e4f6feedd8c96216e0818f09a9265
+                           .group:00000000 wm4.def.h.33.687716bada84b2810fdf97c9d167aeeb
+                           .group:00000000 wm4.ip4_addr.h.33.1a8b96da9c9099dd4d4b421392c24416
+                           .group:00000000 wm4.ip6_addr.h.43.f0356dc1c9eb4011a6824b272ca0bdec
+                           .group:00000000 wm4.ip_addr.h.58.d7bcbad6cfa9a793708e54980ac1c34d
+                           .group:00000000 wm4.netif.h.33.379f236f9670aafd30086e50d1a89f89
+                           .group:00000000 wm4.err.h.33.f97d15a7862198a77a6b19a8b190fee7
+                           .group:00000000 wm4.pbuf.h.34.202868ef9162d4cb74cfc854b7b74f63
+                           .group:00000000 wm4.netif.h.67.da8672002bd78982c4ab50b84285a595
+                           .group:00000000 wm4.inet.h.41.0cf9f502d748021afadf1fe4fba638f4
+                           .group:00000000 wm4.sockets.h.72.bc82e899e862bc38df9aee17d977f9be
+                           .group:00000000 wm4.ip4.h.33.2db1e45313b1f472e08d288657c61499
+                           .group:00000000 wm4.ip6.h.42.4c9fe14607f20e2a534215f8047124e1
+                           .group:00000000 wm4.ip.h.49.1a1fbae54cafc9b96064363517198239
+
+UNDEFINED SYMBOLS
+printf
+memset
+strcpy
+gsdk_uart_write
+gsdk_uart_open
+gsdk_ril_init
+gsdk_ril_get_mqtt_new_result
+gsdk_ril_get_mqtt_con_result
+gsdk_ril_get_mqtt_sub_result
+gsdk_ril_get_mqtt_pub_result
+gsdk_ril_get_mqtt_unsub_result
+gsdk_ril_get_mqtt_discon_result
+gsdk_at_register_unsolicited_handler
+gsdk_ril_get_local_ipaddr
+vTaskDelay

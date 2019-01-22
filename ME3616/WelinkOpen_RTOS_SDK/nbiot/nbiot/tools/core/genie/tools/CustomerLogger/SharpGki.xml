@@ -1,0 +1,1695 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SharpGki</name>
+    </assembly>
+    <members>
+        <member name="T:GKIS.GeGkisShutdownDelegate">
+            <summary>
+            Called by wait-thread to shut down application on Genie request.
+            User can specify function that will be called to shut-down application.
+            </summary>
+        </member>
+        <member name="T:GKIS.GeAfterConnectingToGenie">
+            <summary>
+            This delegate is fired after connection to Genie was established (but before GKIS will tell genie - "GKIS entity startup completed")
+            This allows to for example set application filter before Genie will start sending messages to our app.
+            </summary>
+        </member>
+        <member name="T:GKIS.GkisPassThrough">
+            <summary>
+            This class is used to allow to build GKIS C# pass-thur tasks that are intended to run
+            inside Genie
+            </summary>
+        </member>
+        <member name="M:GKIS.GkisPassThrough.GeGkisCreateStopThread(GKIS.GeGkisShutdownDelegate)">
+            <summary>
+            Creates a thread that waits for Genie notification to shut down application
+            </summary>
+            <param name="shutdownDelegate">Function to call on Genie exit request (can be null)</param>
+        </member>
+        <member name="M:GKIS.GkisPassThrough.GeGkisAttemptConnectToParentGenie(GKIS.GkiExeServer,GKIS.GeGkisShutdownDelegate,GKIS.GeAfterConnectingToGenie,System.Int32@)">
+            <summary>
+            Function attempts to connect GKIS pass-thur taks application to parent Genie
+            </summary>
+            <param name="gkiSrv">Reference to GKIS connection</param>
+            <param name="shutdownDelegate">Function to call to shut down application on Genie request. You can pass null to call default: Application.Exit() - this is fine for GUI based applications.</param>
+            <param name="afterConnDelegate">Function to call (optional) after connecting to Genie - but before notifing Genie that startup of this GKIS entity finished</param>
+            <param name="geniePid">Will hold the Genie parent pid once connected</param>
+        </member>
+        <member name="M:GKIS.GkisPassThrough.GeGkisAttemptConnectToParentGenie(GKIS.GkiExeServer,GKIS.GeGkisShutdownDelegate)">
+            <summary>
+            Function attempts to connect GKIS pass-thur taks application to parent Genie
+            </summary>
+            <param name="gkiSrv">Reference to GKIS connection</param>
+            <param name="shutdownDelegate">Function to call to shut down application on Genie request. You can pass null to call default: Application.Exit() - this is fine for GUI based applications.</param>
+        </member>
+        <member name="T:GKIS.GkisPassThrough.GenieWaitThread">
+            <summary>
+            This class is used to run in context of new thread wand wait on exit-event to
+            be set by Genie into signaled state. When it happens we will shut-down application
+            </summary>
+        </member>
+        <member name="T:GkiXmlHelper.GkiTimeHandler">
+            <summary>
+            Helper class providing support for converting between
+            TimeSpans and GKI Kernel ticks.
+            
+            </summary>
+        </member>
+        <member name="F:GkiXmlHelper.GkiTimeHandler.gkisConnection">
+            <summary>
+            GKI Server connection
+            </summary>
+        </member>
+        <member name="M:GkiXmlHelper.GkiTimeHandler.#ctor(GKIS.GkiExeServer)">
+            <summary>
+            Constructor for the class.
+            </summary>
+            <param name="gkisConnection">
+            The GKI Server connection.
+            </param>
+        </member>
+        <member name="M:GkiXmlHelper.GkiTimeHandler.GetTimeTicksPerKernelTick(System.Int64@,System.Int64@)">
+            <summary>
+            Gets the factors used to convert a Kernal Tick 
+            into TimeSpan Time ticks
+            </summary>
+            <remarks>
+            The conversion is as follows:
+            timeTicks = (kernelTicks * numer) / denom
+            </remarks>
+            <param name="numer">The conversion factor numerator.</param>
+            <param name="denom">The conversion factor denominator.</param>
+        </member>
+        <member name="M:GkiXmlHelper.GkiTimeHandler.KernelToTimeTicks(System.Int64)">
+            <summary>
+            Converts GKI kernel ticks into time ticks
+            </summary>
+            <param name="kernalTicks">The kernel ticks.</param>
+            <returns>The time ticks.</returns>
+        </member>
+        <member name="M:GkiXmlHelper.GkiTimeHandler.TimeToKernelTicks(System.Int64)">
+            <summary>
+            Converts time ticks into GKI kernel ticks.
+            </summary>
+            <param name="timeTicks">The time ticks.</param>
+            <returns>The kernel ticks.</returns>
+        </member>
+        <member name="M:GkiXmlHelper.GkiTimeHandler.KernelTicksToTime(System.Int64)">
+            <summary>
+            Converts GKI kernel ticks into a TimeSpan
+            </summary>
+            <param name="kernalTicks">The kernel ticks.</param>
+            <returns>The TimeSpan.</returns>
+        </member>
+        <member name="M:GkiXmlHelper.GkiTimeHandler.TimeToKernelTicks(System.TimeSpan)">
+            <summary>
+            Converts a TimeSpan into GKI kernel ticks.
+            </summary>
+            <param name="time">The TimeSpan.</param>
+            <returns>The kernel ticks.</returns>
+        </member>
+        <member name="M:GkiXmlHelper.GkiTimeHandler.GetTime(GKIS.GkiExeServer,System.Int64)">
+            <summary>
+            Gets the timespan corresponding to the
+            specified number of GKI kernel ticks.
+            </summary>
+            <param name="connection">The GKI Server connection.</param>
+            <param name="kernelTicks">The number of GKI kernel ticks.</param>
+            <returns>The corresponding timespan.</returns>
+        </member>
+        <member name="M:GkiXmlHelper.GkiTimeHandler.GetTime(GkiXmlHelper.XmlSignal)">
+            <summary>
+            Gets the timestamp of a signal.
+            </summary>
+            <param name="signal">
+            The signal.
+            <remarks>
+            Note, this must define a GKIS server connection.
+            </remarks>
+            </param>
+            <returns>The timestamp associated with the signal</returns>
+        </member>
+        <member name="M:GkiXmlHelper.GkiTimeHandler.GetTime(GKIS.GkiExeServer,GkiXmlHelper.XmlSignal)">
+            <summary>
+            Gets the timestamp of a signal.
+            </summary>
+            <param name="connection">
+            The GKI Server connection defining the
+            required time converrsion factors.
+            </param>
+            <param name="signal">
+            The signal.
+            </param>
+            <returns>The timestamp associated with the signal</returns>
+        </member>
+        <member name="P:GkiXmlHelper.GkiTimeHandler.GkisConnection">
+            <summary>
+            Gets the GKIS Server connection.
+            </summary>
+        </member>
+        <member name="T:GkiXmlHelper.XmlValueException">
+            <summary>
+            This exception is thrown by XmlSignal and XmlValue classes
+            </summary>
+        </member>
+        <member name="M:GkiXmlHelper.XmlValueException.#ctor(System.String)">
+            <summary>
+            Constructor of XmlValueException
+            </summary>
+        </member>
+        <member name="M:GkiXmlHelper.XmlValueException.#ctor(System.String,System.Exception)">
+            <summary>
+            Constructor of XmlValueException
+            </summary>
+        </member>
+        <member name="T:GkiXmlHelper.XmlValue">
+            <summary>
+            This class is a wrapper around GKIS XML and provides a developer friendly interface to signals.
+            </summary>
+        </member>
+        <member name="M:GkiXmlHelper.XmlValue.#ctor(System.Xml.XmlNode,GKIS.GkiExeServer)">
+            <summary>
+            Constructor of XmlValue class
+            </summary>
+            <param name="newNode">XML parser node</param>
+            <param name="gkiSrv">GKIS connection object (can be null)</param>
+        </member>
+        <member name="M:GkiXmlHelper.XmlValue.Assing(System.Xml.XmlNode,GKIS.GkiExeServer)">
+            <summary>
+            Assigns a new data to current node
+            </summary>
+            <param name="newNode">Reference to XmlNode parser</param>
+            <param name="gkiSrv">Reference to GKIS connection (can be null)</param>
+        </member>
+        <member name="M:GkiXmlHelper.XmlValue.ToString">
+            <summary>
+            String representation of value as defined in XML.
+            </summary>
+        </member>
+        <member name="M:GkiXmlHelper.XmlValue.ForceStringValue(System.String)">
+            <summary>
+            <para>Forces a string value to be set into data field (D).</para>
+            <para>Use only in emergency (when for example you don't have a connection to GKIS, or XML is not valid)</para>
+            </summary>
+            <param name="strValue">new value to be set to "D" field of XML</param>
+            <returns>boolean if operation was succeeded</returns>
+        </member>
+        <member name="M:GkiXmlHelper.XmlValue.ForceStringOnArray(System.String)">
+            <summary>
+            <para>Forces a string on array field.</para>
+            <para>Array have to be compatible (members of array have to be assign-able with characters).</para>
+            </summary>
+            <param name="value">string to assign</param>
+        </member>
+        <member name="M:GkiXmlHelper.XmlValue.ForceStringFromAnArray">
+            <summary>
+            Attempts to get a string from an array. Will throw an exception if array can't be converted to string
+            </summary>
+            <returns>string representation of array</returns>
+        </member>
+        <member name="M:GkiXmlHelper.XmlValue.ResizeVariableLenArray(System.Int32)">
+            <summary>
+            Resizes variable len array
+            </summary>
+            <param name="newSize">new size of array</param>
+        </member>
+        <member name="M:GkiXmlHelper.XmlValue.UpdateSizeOfNodeAndAllParents(System.Xml.XmlNode,System.Int32)">
+            <summary>
+            Updates size of the node and all parent nodes of type "V" (value)
+            </summary>
+            <param name="nodeToUpdate">starting point for update</param>
+            <param name="sizeDiff">diff to add to node sizes</param>
+        </member>
+        <member name="M:GkiXmlHelper.XmlValue.SetUnionUsedMember(System.String,System.String)">
+            <summary>
+            <para>Must be used if you send a signal with union.</para>
+            <para>Sets information for GKIS in XML which member of union is currently in use.</para>
+            <para>Valid only in context of unions - and when controlling union member is an enumeration type.</para>
+            </summary>
+            <param name="enumType">Name of enumeration type</param>
+            <param name="enumValue">Name of enumeration value</param>
+        </member>
+        <member name="M:GkiXmlHelper.XmlValue.SetUnionUsedMember(System.UInt32)">
+            <summary>
+            <para>Must be used if you send a signal with union.</para>
+            <para>Sets information for GKIS in XML which member of union is currently in use.</para>
+            <para>Valid only in context of unions - and when controlling union member is an integer type.</para>
+            </summary>
+            <param name="a_uiActiveUnionIndex">Zero-based index of union that is active</param>
+        </member>
+        <member name="M:GkiXmlHelper.XmlValue.GetNodeForXPathQuery(System.String)">
+            <summary>
+            Search for a node based on xpath query. 
+            </summary>
+            <param name="strQuery">xpath query to execute</param>
+            <returns>node found or null</returns>
+        </member>
+        <member name="M:GkiXmlHelper.XmlValue.GetSiblingWithAttribute(System.String,System.String,GkiXmlHelper.XmlValue.SiblingSearchDir)">
+            <summary>
+            Searches siblings UP or DOWN for specified attribute value
+            </summary>
+            <param name="attribName">attribute name to find</param>
+            <param name="attribValue">attribute value to find</param>
+            <param name="dir">direction of search</param>
+            <returns>XmlValue object or null if not found</returns>
+        </member>
+        <member name="M:GkiXmlHelper.XmlValue.IsMemberPresent(System.String)">
+            <summary>
+            Checks if structure/union/signal has a direct sub-member with specified name.
+            </summary>
+            <param name="memberName">Name of sub-member to check</param>
+            <returns>true if sub-member exists, false otherwise</returns>
+        </member>
+        <member name="M:GkiXmlHelper.XmlValue.GetMemberByPos(System.UInt32)">
+            <summary>
+            <para>Similar function to this[string] - but instead of looking at members by name it looks at position.</para>
+            <para>Useful if you want to query structure member by member.</para>
+            <para>Used by this[uint]</para>
+            </summary>
+            <param name="subitemPos">0 based position of value in XML (structure)</param>
+            <returns>submember of current structure/union</returns>
+        </member>
+        <member name="M:GkiXmlHelper.XmlValue.GetAllMembers">
+            <summary>
+            Returns array of all child nodes.
+            </summary>
+            <returns>Array of child nodes or null if no child nodes are present</returns>
+        </member>
+        <member name="M:GkiXmlHelper.XmlValue.ReportError(System.String)">
+            <summary>
+            <para>Generic function to report errors via throwing an exception.</para>
+            <para>In debug mode will add a line information.</para>para>
+            </summary>
+            <param name="message">Message to pass to exception constuctor</param>
+        </member>
+        <member name="M:GkiXmlHelper.XmlValue.THROW_XML_EXCEPTION_ON_EMPTY_NODE">
+            <summary>
+            Throws an exception if XML parser member of current object is null
+            </summary>
+        </member>
+        <member name="M:GkiXmlHelper.XmlValue.THROW_XML_EXCEPTION_ON_NULL_GKIS_CONNECTION(System.String)">
+            <summary>
+            Thrown an exception if GKIS connection is not set
+            </summary>
+            <param name="strFunName">name of the function to report in exception</param>
+        </member>
+        <member name="M:GkiXmlHelper.XmlValue.THROW_XML_EXCEPTION(System.String)">
+            <summary>
+            Throws an exception with speciffic message
+            </summary>
+            <param name="message">message of exception</param>
+        </member>
+        <member name="M:GkiXmlHelper.XmlValue.THROW_XML_EXCEPTION_WITH_NODE_NAME(System.String,System.Object[])">
+            <summary>
+            <para>Throws an exception with a format string.</para>
+            <para>NODE: {0} in format string will be replaced with node name, user specified parameters should be </para>
+            <para>      indexed starting from {1} in format string</para>
+            </summary>
+            <param name="description">message formater string</param>
+            <param name="formatParams">parameters for formater string</param>
+        </member>
+        <member name="M:GkiXmlHelper.XmlValue.GetMemberByName(GkiXmlHelper.XmlValue,System.String)">
+            <summary>
+            <para>Finds a sub-member by name and fills XmlValue.</para>
+            <para>Used by this[string].</para>
+            </summary>
+            <remarks>Looks for attribute "N" (not XML node name) to be equal to "subitemName"</remarks>
+            <param name="xmlValue">Object that will receive details of found sub-member</param>
+            <param name="subitemName">Sub-member name to find</param>
+        </member>
+        <member name="M:GkiXmlHelper.XmlValue.RawSetDataString(System.String,System.String)">
+             <summary>
+             Sets a data directly into XML
+             Data are set as attributes of "V" nodes like:
+                <V NAME="SOME NAME"></V>
+                In this example field "NAME" has value of "SOME NAME"
+            
+             NOTE: Function do not throw exception on error - just returns false!
+             </summary>
+             <param name="fieldValue">String with data to set</param>
+             <param name="fieldName">Field name to set</param>
+             <returns>true if setting value suceeded, false otherwise</returns>
+        </member>
+        <member name="M:GkiXmlHelper.XmlValue.RawSetDataString(System.String)">
+             <summary>
+             Sets a data string directly into XML
+             Data are set as "D" attributes of "V" nodes like:
+                <V D="SOME NAME"></V>
+                In this example field "D" has value of "SOME NAME"
+            
+             NOTE: Function do not throw exception on error - just returns false!
+             </summary>
+             <param name="fieldValue">String with data to set</param>
+             <returns>true if setting value suceeded, false otherwise</returns>
+        </member>
+        <member name="M:GkiXmlHelper.XmlValue.SetUnionUsedMember(System.String)">
+             <summary>
+            valid only in context of unions - must be used if you send a signal with union
+            similar to function SetUnionUsedMember with 3 params but will pull type of enumeration from XML (uses UACT3 value of union)
+            it's protected now since is prone to missing associacion data in Genie .gni files
+             </summary>
+             <param name="enumValue">Name of enumeration value</param>
+        </member>
+        <member name="M:GkiXmlHelper.XmlValue.CheckIfFieldCanBeAssignedWithType(GKIS.GkiValueType)">
+            <summary>
+            Checks if current node can be assigned with specified value type.
+            Note: We don't allow assigning intigers to enumerations fields - so SetInt on emuneration type will throw an exception
+            </summary>
+            <param name="valueType">type of value to test</param>
+            <returns>This function will return true if you can assign to current node specific value, false otherwise</returns>
+        </member>
+        <member name="M:GkiXmlHelper.XmlValue.CheckIfFieldCanBeQueriedWithType(GKIS.GkiValueType)">
+            This function will return true if you can query (cast) current node specific value
+            Note: We don't allow assigning intigers to enumerations fields - but we do allow ToInt on enumerations
+        </member>
+        <member name="M:GkiXmlHelper.XmlValue.FindChildNode(System.String)">
+            <summary>
+            Differes from this[] that node name is a real XML node name NOT a &lt;VALUE NAME="XXX"&gt;
+            Looks for node name (NOT attribute "N") to be equal to "nodeName"
+            </summary>
+            <param name="nodeName">XNL node name to find</param>
+            <returns>XmlNode or throws an exception if node is not found</returns>
+        </member>
+        <member name="M:GkiXmlHelper.XmlValue.FindChildNodeNoExcept(System.String)">
+            <summary>
+            Differes from this[] that node name is a real XML node name NOT a &lt;VALUE NAME="XXX"&gt;
+            </summary>
+            <returns>Returns null if node not found</returns>
+        </member>
+        <member name="M:GkiXmlHelper.XmlValue.GetIntAttributeOfNode(System.Xml.XmlNode,System.String)">
+            NOTE: This function DO NOT throws an XmlValueException if attribute don't exist - just returns 0
+        </member>
+        <member name="M:GkiXmlHelper.XmlValue.GetStrAttributeOfNode(System.Xml.XmlNode,System.String)">
+            NOTE: This function DO NOT throws an XmlValueException if attribute don't exist - just returns empty string
+        </member>
+        <member name="M:GkiXmlHelper.XmlValue.GetNodeType(System.Xml.XmlNode)">
+            NOTE: This function DO NOT throws an XmlValueException if attribute don't exist - just returns GkiValueType.GvtUnknown
+        </member>
+        <member name="M:GkiXmlHelper.XmlValue.GetNodeTypeStr(System.Xml.XmlNode)">
+            NOTE: This function DO NOT throws an XmlValueException if attribute don't exist - just returns empty string
+        </member>
+        <member name="M:GkiXmlHelper.XmlValue.GetNodeSize(System.Xml.XmlNode)">
+            NOTE: This function DO NOT throws an XmlValueException if attribute don't exist - just returns empty string
+        </member>
+        <member name="M:GkiXmlHelper.XmlValue.SetNodeSize(System.Xml.XmlNode,System.Int32)">
+            NOTE: This function DO NOT throws an XmlValueException if attribute don't exist - just returns false
+        </member>
+        <member name="M:GkiXmlHelper.XmlValue.SetStrAttributeOfNode(System.Xml.XmlNode,System.String,System.String)">
+            NOTE: This function DO NOT throws an XmlValueException if attribute don't exist - just returns false
+        </member>
+        <member name="M:GkiXmlHelper.XmlValue.SetIntAttributeOfNode(System.Xml.XmlNode,System.String,System.Int32)">
+            NOTE: This function DO NOT throws an XmlValueException if attribute don't exist - just returns false
+        </member>
+        <member name="M:GkiXmlHelper.XmlValue.IsAttributePresentInNode(System.Xml.XmlNode,System.String)">
+            NOTE: This function DO NOT throws an XmlValueException if attribute don't exist - just returns false
+        </member>
+        <member name="M:GkiXmlHelper.XmlValue.AddAttributeToNode(System.Xml.XmlNode,System.String,System.String)">
+            NOTE: This function DO NOT throws an XmlValueException if attribute don't exist - just returns false
+        </member>
+        <member name="M:GkiXmlHelper.XmlValue.GetAttributeOfNode(System.Xml.XmlNode,System.String)">
+            NOTE: This function DO NOT throws an XmlValueException if attribute don't exist - just returns NULL
+        </member>
+        <member name="F:GkiXmlHelper.XmlValue.xmlNodeObject">
+            <summary>
+            Reference to a XML node parser
+            </summary>
+        </member>
+        <member name="F:GkiXmlHelper.XmlValue.gkiServerConnection">
+            <summary>
+            Connection to GKIS. It can be null but then not all functionality of class will be available.
+            </summary>
+        </member>
+        <member name="P:GkiXmlHelper.XmlValue.GkisConnection">
+            <summary>
+            Reference to GKIS connection. Useful to set if you passed null in constructor
+            </summary>
+        </member>
+        <member name="P:GkiXmlHelper.XmlValue.XmlNodeObject">
+            <summary>
+            Returns underlaying XML node object 
+            </summary>
+        </member>
+        <member name="P:GkiXmlHelper.XmlValue.Parent">
+            <summary>
+            Returns parent node (or null if on top level)
+            </summary>
+        </member>
+        <member name="P:GkiXmlHelper.XmlValue.Size">
+            <summary>
+            Size of value in bytes
+            </summary>
+        </member>
+        <member name="P:GkiXmlHelper.XmlValue.ValidArrayMembersCount">
+             <summary>
+            This function is valid only in context of arrays.
+            <para>Here is an example of array XML:</para>
+            <para>	&lt;V N="dump" S="256" R="256" T="8" VALID="20" &gt;</para>
+            <para>		&lt;V N="0" S="1" T="1" T1="Int8" D="11" /&gt;</para>
+            <para>		&lt;V N="1" S="1" T="1" T1="Int8" D="0" /&gt; ....</para>
+            <para>In this example array size is 256 but only first 20 fields are valid and should be used</para>
+            <para>When you call ValidArrayMembersCount in context of "dump" member it will return 20</para>
+            <para>NOTE: If you call this function in context of member that is not an array it will thrown an exception.</para>
+             </summary>
+        </member>
+        <member name="P:GkiXmlHelper.XmlValue.MembersCount">
+            <summary>
+            <para>A count of all direct children, for arrays it returns a full size of array.</para>
+            <para>If you want to get a used size of array use  <see cref="P:GkiXmlHelper.XmlValue.ValidArrayMembersCount"/> instead.</para>
+            <para>NOTE: you can set this field only for variable len arrays (this will resize it).</para>
+            </summary>
+        </member>
+        <member name="P:GkiXmlHelper.XmlValue.Item(System.String)">
+            <summary>
+            If this object is a structure or union this operator is an easy way to get a reference to sub-members.
+            </summary>
+            <param name="subItemName">must match NAME attribute of VALUE node f/e: &lt;VALUE NAME="XXX"</param>
+            <returns>reference to sub-member</returns>
+        </member>
+        <member name="P:GkiXmlHelper.XmlValue.Item(System.UInt32)">
+            <summary>
+            <para>Retrives sub-member by index.</para>
+            <para>Valid only in context of unions, structures and whole signals.</para>
+            </summary>
+            <param name="subItemIndex">0 based index of submember (less than MembersCount)</param>
+            <returns>reference to sub-member</returns>
+        </member>
+        <member name="P:GkiXmlHelper.XmlValue.StringValue">
+            <summary>
+            String representation of value.
+            </summary>
+        </member>
+        <member name="P:GkiXmlHelper.XmlValue.IntValue">
+            <summary>
+            Integer (up to 32 bit) representation of value.
+            </summary>
+        </member>
+        <member name="P:GkiXmlHelper.XmlValue.LongValue">
+            <summary>
+            Integer (up to 64 bit) representation of value.
+            </summary>
+        </member>
+        <member name="P:GkiXmlHelper.XmlValue.EnumValue">
+            <summary>
+            Enumeration value as an integer.
+            </summary>
+        </member>
+        <member name="P:GkiXmlHelper.XmlValue.EnumValueStr">
+            <summary>
+            Enumeration value as a string like "SOME_ENUM_VALUE".
+            </summary>
+        </member>
+        <member name="P:GkiXmlHelper.XmlValue.Xml">
+            <summary>
+            An XML representation of value.
+            </summary>
+        </member>
+        <member name="P:GkiXmlHelper.XmlValue.ValueType">
+            <summary>
+            Enumeration with type of stored value.
+            </summary>
+        </member>
+        <member name="P:GkiXmlHelper.XmlValue.ValueTypeStr">
+            <summary>
+            Type name of stored value.
+            </summary>
+        </member>
+        <member name="P:GkiXmlHelper.XmlValue.AssociationState">
+            <summary>
+            Specifies if field is controlling or controlled via association
+            </summary>
+        </member>
+        <member name="P:GkiXmlHelper.XmlValue.AssociationType">
+            <summary>
+            Specifies types of association between master and slave fields
+            </summary>
+        </member>
+        <member name="P:GkiXmlHelper.XmlValue.AssociationMasterField">
+            <summary>
+            <para>If field is controlled by association (has master)</para>
+            <para>(<see cref="P:GkiXmlHelper.XmlValue.AssociationState"/> == <see cref="F:GkiXmlHelper.XmlValue.AssocState.ThisFieldIsControlledByOtherField"/>)</para>
+            <para>this will return a reference to controlling field (master), otherwise throws and excpetion</para>
+            </summary>
+        </member>
+        <member name="P:GkiXmlHelper.XmlValue.AssociationSlaveField">
+            <summary>
+            <para>If field is controlling some other field by association (has slave)</para>
+            <para>(<see cref="P:GkiXmlHelper.XmlValue.AssociationState"/> == <see cref="F:GkiXmlHelper.XmlValue.AssocState.ThisFieldControlsOtherField"/>)</para>
+            <para>this will return a reference to controlled field (slave), otherwise throws and excpetion</para>
+            </summary>
+        </member>
+        <member name="P:GkiXmlHelper.XmlValue.Name">
+            <summary>
+            Name of value as defined in XML and .I file.
+            </summary>
+        </member>
+        <member name="T:GkiXmlHelper.XmlValue.AssocState">
+            <summary>
+            Specifies if field is involved in association
+            </summary>
+        </member>
+        <member name="F:GkiXmlHelper.XmlValue.AssocState.None">
+            <summary>field is not controlling and is not controlled by any other field via association</summary>
+        </member>
+        <member name="F:GkiXmlHelper.XmlValue.AssocState.ThisFieldControlsOtherField">
+            <summary>field is controlling some other field via association (is master)</summary>
+        </member>
+        <member name="F:GkiXmlHelper.XmlValue.AssocState.ThisFieldIsControlledByOtherField">
+            <summary>field is controlled by some other field via association (is slave)</summary>
+        </member>
+        <member name="T:GkiXmlHelper.XmlValue.AssocType">
+            <summary>
+            Specifies type of association (how controlling field controls some other field)
+            </summary>
+        </member>
+        <member name="F:GkiXmlHelper.XmlValue.AssocType.None">
+            <summary>field is NOT controlling any other field via association</summary>
+        </member>
+        <member name="F:GkiXmlHelper.XmlValue.AssocType.UnionActiveMember">
+            <summary>controlling field controls which part of union is in use</summary>
+        </member>
+        <member name="F:GkiXmlHelper.XmlValue.AssocType.ArrayValidMembers">
+            <summary>controlling field tells how many members of controled array are valid (in use)</summary>
+        </member>
+        <member name="F:GkiXmlHelper.XmlValue.AssocType.IsFieldPresent">
+            <summary>controlling field tells if controled field is present (in use)</summary>
+        </member>
+        <member name="F:GkiXmlHelper.XmlValue.AssocType.VarArrayLen">
+            <summary>controlling field tells how many members of controled var-len array has</summary>
+        </member>
+        <member name="T:GkiXmlHelper.XmlValue.SiblingSearchDir">
+            <summary>
+            Specifies direction of search for siblings
+            </summary>
+        </member>
+        <member name="T:GkiXmlHelper.IXmlSignal">
+            <summary>
+            <para>This interface should be used by all class that implement GKI signals.</para>
+            <para>Currently it's used in XmlSignal class and in all clases generated by this tool:</para>
+            <para>//t1/stack/mainline/tplgsm/tools/core/gkis/Utilities/GkisSignalWrapperGen.exe</para>
+            </summary>
+        </member>
+        <member name="P:GkiXmlHelper.IXmlSignal.Id">
+            <summary>
+            ID of signal as integer
+            </summary>
+        </member>
+        <member name="P:GkiXmlHelper.IXmlSignal.IdStr">
+            <summary>
+            An unique id of signal like SIG_KI_MEM_DUMP_REQ. If you look for some signal you should examine this field.
+            </summary>
+        </member>
+        <member name="P:GkiXmlHelper.IXmlSignal.LogRecordNo">
+            <summary>
+            Genie Log record number.
+            </summary>
+        </member>
+        <member name="P:GkiXmlHelper.IXmlSignal.FrameNumber">
+            <summary>
+            Frame number of signal.
+            </summary>
+        </member>
+        <member name="P:GkiXmlHelper.IXmlSignal.Time">
+            <summary>
+            Time stamp of signal.
+            </summary>
+        </member>
+        <member name="P:GkiXmlHelper.IXmlSignal.Size">
+            <summary>
+            Size of signal in bytes.
+            </summary>
+        </member>
+        <member name="P:GkiXmlHelper.IXmlSignal.TaskSourceId">
+            <summary>
+            ID of source task as integer.
+            </summary>
+        </member>
+        <member name="P:GkiXmlHelper.IXmlSignal.TaskSourceIdStr">
+            <summary>
+            Value of Source Task Id field as a string (like "SIG_SOME_TASK").
+            </summary>
+        </member>
+        <member name="P:GkiXmlHelper.IXmlSignal.TaskDestId">
+            <summary>
+            ID of destination task as integer.
+            </summary>
+        </member>
+        <member name="P:GkiXmlHelper.IXmlSignal.TaskDestIdStr">
+            <summary>
+            Value of Destination Task Id as a string (like "SIG_SOME_TASK").
+            </summary>
+        </member>
+        <member name="P:GkiXmlHelper.IXmlSignal.Name">
+            <summary>
+            <para>Display name of signal like KiMemDumpReq.</para>
+            <para>NOTE: For comparison with some hardcoded constant use GetIdStr function!</para>
+            <para>      for example: if( GetIdStr == "SIG_MY_SIGNAL" ) { ... }</para>
+            </summary>
+        </member>
+        <member name="P:GkiXmlHelper.IXmlSignal.Xml">
+            <summary>
+            An XML representation of signal (read/write).
+            </summary>
+        </member>
+        <member name="T:GkiXmlHelper.XmlSignal">
+            <summary>
+            Class that represent a signal - it's a <see cref="T:GkiXmlHelper.XmlValue"/> since it contains
+            data (it's a structure) and have extra data regarding a signal itself
+            </summary>
+        </member>
+        <member name="M:GkiXmlHelper.XmlSignal.#ctor(System.String,GKIS.GkiExeServer)">
+            <summary>
+            Constructor that loads signal XML and sets a connection to GKIS.
+            </summary>
+            <param name="signalXml">Body of XML signal to load</param>
+            <param name="gkiSrv">Reference to GKIS connection - can be null</param>
+        </member>
+        <member name="M:GkiXmlHelper.XmlSignal.#ctor(GKIS.GkiExeServer)">
+            <summary>
+            <para>Constructor that creates an empty XML signal and sets a connection to GKIS.</para>
+            <para>NOTE: It's required to set Xml property to load XML before class can be used.</para>
+            </summary>
+            <param name="gkiSrv">Reference to GKIS connection - can be null</param>
+        </member>
+        <member name="M:GkiXmlHelper.XmlSignal.DeSerialize(System.String,GKIS.GkiExeServer,System.String@)">
+            <summary>
+            This function allows to deserialize changes to XmlSignal class from string created by Serialize() call.
+            </summary>
+            <param name="str">string created by Serialize call</param>
+            <param name="gkis">reference to instance of GkiExeServer</param>
+            <param name="deserializeErrors">If 'str' parameter is out of sync with GKI signal in Genie - deserialization of some fields might fail.
+            For example when parameter is removed from GKI signal. In that case function will not abort by throwing exception but will write error message into this string.
+            Then deserialization will carry on. It's up to the caller to make a decistion if those erors are critical or not.</param>
+            <returns></returns>
+        </member>
+        <member name="M:GkiXmlHelper.XmlSignal.Serialize">
+            <summary>
+            This class allows to serialize changes to XmlSignal class into a string.
+            It does not store the entire XML (as this is not allowed by GKIS framework) - but only
+            names and values of changed nodes. Use static DeSerialize function to create XmlSignal back
+            </summary>
+        </member>
+        <member name="M:GkiXmlHelper.XmlSignal.GetMemberByName(GkiXmlHelper.XmlValue,System.String)">
+             <summary>
+             This is a workaround for bug in Genie version prior to 1.70.2254
+             XML generated by GKIS was not identical as whats defined in .I file
+             on top level, signal name was not a variable name from "union Signal" but was signal type name instead.
+             Example:
+            
+             Content of .I file:
+             union Signal
+             {
+               EmptySignal sysDummy;
+             }
+            
+             In old Genie/GKIS XML generated for this signal would be:
+             <V N="EmptySignal" S="1" T="1" T1="EmptySignal" D="0"/>
+            
+             In new Genie/GKIS XML generated is:
+             <V N="sysDummy" S="1" T="1" T1="EmptySignal" D="0"/>
+            
+             As some applications might still reference old style signal names (like: sig["EmptySignal"] instead of sig["sysDummy"])
+             We override GetMemberByName function for signals. If code will fail to find user suppied name, it will
+             try to check if it matches T1 part of the XML (type name) of signal.
+            
+             Notes:
+             1) This way applications should be backward compatible with old, type name based synax.
+             2) This workaraund should be removed after some time to force only new way of accessing signals.
+             3) When you remove this code you can also remove "virtual" keyword from XmlValue::GetMemberByName
+             4) This workaround code applies only to signals, not to structures embeded in signals as those were always generated correctly
+             </summary>
+        </member>
+        <member name="M:GkiXmlHelper.XmlSignal.SetSigIntHeaderData(System.String,System.Int32,System.String)">
+            Generic function to set a data ("D" field or other) value of signal header (fields like ID, frame number, source, dest)
+        </member>
+        <member name="M:GkiXmlHelper.XmlSignal.SetSigIntHeaderData(System.String,System.Int32)">
+            Generic function to set a data ("D" field or other) value of signal header (fields like ID, frame number, source, dest)
+        </member>
+        <member name="M:GkiXmlHelper.XmlSignal.SetSigStrHeaderData(System.String,System.String,System.String)">
+            Generic function to set a data ("D" field or other) value of signal header (fields like ID, frame number, source, dest)
+        </member>
+        <member name="M:GkiXmlHelper.XmlSignal.GetSigHeaderData(System.String)">
+            Generic function to get a data ("D" field) from signal header (fields like ID, frame number, source, dest)
+        </member>
+        <member name="M:GkiXmlHelper.XmlSignal.LoadXml(System.String)">
+            <summary>
+            Load XML into XML signal
+            </summary>
+            <param name="signalXml">body of signal XML</param>
+        </member>
+        <member name="F:GkiXmlHelper.XmlSignal.xmlDocument">
+            <summary>
+            Main XML document obejct holding all the content of XML
+            </summary>
+        </member>
+        <member name="F:GkiXmlHelper.XmlSignal.xmlDocumentLoaded">
+            <summary>
+            Flag that specifies if Xml Document is loaded
+            </summary>
+        </member>
+        <member name="P:GkiXmlHelper.XmlSignal.IsValidXml">
+            <summary>
+            Indicates if signal XML is valid and class is ready to work.
+            </summary>
+        </member>
+        <member name="P:GkiXmlHelper.XmlSignal.Id">
+            <summary>
+            ID of signal as integer.
+            </summary>
+        </member>
+        <member name="P:GkiXmlHelper.XmlSignal.IdStr">
+            <summary>
+            An unique id of signal like SIG_KI_MEM_DUMP_REQ. If you look for some signal you should examine this field.
+            </summary>
+        </member>
+        <member name="P:GkiXmlHelper.XmlSignal.LogRecordNo">
+            <summary>
+            Genie Log record number.
+            </summary>
+        </member>
+        <member name="P:GkiXmlHelper.XmlSignal.FrameNumber">
+            <summary>
+            Frame number of signal.
+            </summary>
+        </member>
+        <member name="P:GkiXmlHelper.XmlSignal.Time">
+            <summary>
+            Time stamp of signal.
+            </summary>
+        </member>
+        <member name="P:GkiXmlHelper.XmlSignal.Size">
+            <summary>
+            Size of signal in bytes (counts only data members, size of header is ignored).
+            </summary>
+        </member>
+        <member name="P:GkiXmlHelper.XmlSignal.TaskSourceId">
+            <summary>
+            ID of source task as integer.
+            </summary>
+        </member>
+        <member name="P:GkiXmlHelper.XmlSignal.TaskSourceIdStr">
+            <summary>
+            Value of Source Task Id field as a string (like "SIG_SOME_TASK").
+            </summary>
+        </member>
+        <member name="P:GkiXmlHelper.XmlSignal.TaskDestId">
+            <summary>
+            ID of destination task as integer.
+            </summary>
+        </member>
+        <member name="P:GkiXmlHelper.XmlSignal.TaskDestIdStr">
+            <summary>
+            Value of Destination Task Id as a string (like "SIG_SOME_TASK").
+            </summary>
+        </member>
+        <member name="P:GkiXmlHelper.XmlSignal.Name">
+            <summary>
+            <para>Display name of signal like KiMemDumpReq.</para>
+            <para>NOTE: For comparison with some hardcoded constant use IdStr property!</para>
+            <para>      for example: if( IdStr == "SIG_MY_SIGNAL" ) { ... }</para>
+            </summary>
+        </member>
+        <member name="P:GkiXmlHelper.XmlSignal.Xml">
+            <summary>
+            An XML representation of signal (read/write).
+            </summary>
+        </member>
+        <member name="P:GkiXmlHelper.XmlSignal.AssociationState">
+            <summary>
+            Signal has no association
+            </summary>
+        </member>
+        <member name="T:GkiXmlHelper.BinSignal">
+            <summary>
+            This class allows to receive GKI signals in binary format and to easily convert those into XML.
+            
+            Bin data has this format:
+            
+            typedef struct GeRcGkiRecordTag
+            {
+              GUInt32           srcTaskId;    //start: 0,  size: 4
+              GUInt32           destTaskId;   //start: 4,  size: 4
+              GUInt32           signalId;     //start: 8,  size: 4
+              GUInt32           frameNumber;  //start: 12, size: 4
+              GUInt32           gkiTime;      //start: 16, size: 4
+              GUInt32           bodySize;     //start: 20, size: 4 
+              void            * body;         //start: 24, size: 4 //UNUSED
+              GUInt32           recordNumber; //start: 28, size: 4
+              ... body ...
+            } GeRcGkiRecord;
+            </summary>
+        </member>
+        <member name="F:GkiXmlHelper.BinSignal.signalRawData">
+            <summary>
+            Raw signal data in PC (Genie) format
+            </summary>
+        </member>
+        <member name="M:GkiXmlHelper.BinSignal.#ctor(System.SByte[],GKIS.GkiExeServer)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="rawData">raw binary data in PC (Genie) format</param>
+            <param name="gkiSrv">GKIS connection</param>
+        </member>
+        <member name="M:GkiXmlHelper.BinSignal.ToXmlSignal">
+            <summary>
+            Converts underlaying binary data into XML signal (using GKIS connection)
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:GkiXmlHelper.BinSignal.Id">
+            <summary>
+            ID of signal as integer
+            </summary>
+        </member>
+        <member name="P:GkiXmlHelper.BinSignal.IdStr">
+            <summary>
+            An unique id of signal like SIG_KI_MEM_DUMP_REQ. If you look for some signal you should examine this field.
+            </summary>
+        </member>
+        <member name="P:GkiXmlHelper.BinSignal.LogRecordNo">
+            <summary>
+            Genie Log record number.
+            </summary>
+        </member>
+        <member name="P:GkiXmlHelper.BinSignal.FrameNumber">
+            <summary>
+            Frame number of signal.
+            </summary>
+        </member>
+        <member name="P:GkiXmlHelper.BinSignal.Time">
+            <summary>
+            Time stamp of signal.
+            </summary>
+        </member>
+        <member name="P:GkiXmlHelper.BinSignal.Size">
+            <summary>
+            Size of signal in bytes.
+            </summary>
+        </member>
+        <member name="P:GkiXmlHelper.BinSignal.TaskSourceId">
+            <summary>
+            ID of source task as integer.
+            </summary>
+        </member>
+        <member name="P:GkiXmlHelper.BinSignal.TaskSourceIdStr">
+            <summary>
+            Value of Source Task Id field as a string (like "SIG_SOME_TASK").
+            </summary>
+        </member>
+        <member name="P:GkiXmlHelper.BinSignal.TaskDestId">
+            <summary>
+            ID of destination task as integer.
+            </summary>
+        </member>
+        <member name="P:GkiXmlHelper.BinSignal.TaskDestIdStr">
+            <summary>
+            Value of Destination Task Id as a string (like "SIG_SOME_TASK").
+            </summary>
+        </member>
+        <member name="P:GkiXmlHelper.BinSignal.Name">
+            <summary>
+            <para>Display name of signal like KiMemDumpReq.</para>
+            <para>NOTE: For comparison with some hardcoded constant use IdStr property!</para>
+            <para>      for example: if( IdStr == "SIG_MY_SIGNAL" ) { ... }</para>
+            </summary>
+        </member>
+        <member name="P:GkiXmlHelper.BinSignal.Xml">
+            <summary>
+            An XML representation of signal.
+            Caution! Retrieving this property calls the function ConvertGeniePcSigToXml().
+            If you want to make further manipulations on the XML string, 
+            you are advised to save a copy of sig.Xml rather than repeatedly invoke this property.
+            </summary>
+        </member>
+        <member name="P:GkiXmlHelper.BinSignal.RawData">
+            <summary>
+            RAW binary data of GKI signal in PC (Genie) format.
+            </summary>
+        </member>
+        <member name="T:GkiXmlHelper.XmlSignalSerializer">
+            <summary>
+            This class allows to serialize/deserialize changes to XmlSignal class into string.
+            It does not store the entire XML (as this is not allowed by GKIS framework) - but only
+            names and values of changed nodes.
+            </summary>
+        </member>
+        <member name="M:GkiXmlHelper.XmlSignalSerializer.Serialize(GkiXmlHelper.XmlSignal)">
+            <summary>
+            Will serialize GKI signal modifications into string
+            </summary>
+            <param name="sig">Signal to serialize</param>
+            <returns>Stirng that can be used to load signal values using DeSerialize function</returns>
+        </member>
+        <member name="T:Ttpcom.Tools.Ini.IniFile">
+            <summary>
+            Component providing wrapper for access to windows INI type.
+            </summary>
+        </member>
+        <member name="F:Ttpcom.Tools.Ini.IniFile.m_sections">
+            <summary>
+            Each section of the INI file will have an entry in m_sections.
+            </summary>
+        </member>
+        <member name="M:Ttpcom.Tools.Ini.IniFile.#ctor(System.String)">
+            <summary>
+            Create an INI object from an input INI file.
+            </summary>
+            <param name="a_fileName"></param>
+        </member>
+        <member name="M:Ttpcom.Tools.Ini.IniFile.WriteValue(System.String,System.String,System.String)">
+            <summary>
+            Write Data to the INI File and update dictionary of Keys.
+            </summary>
+            <param name="Section"></param>
+            Section name
+            <param name="Key"></param>
+            Key Name
+            <param name="Value"></param>
+            Value Name
+        </member>
+        <member name="M:Ttpcom.Tools.Ini.IniFile.WriteToFile">
+            <summary>
+            Write current dictionary of Keys to INI file to update it.
+            </summary>
+        </member>
+        <member name="M:Ttpcom.Tools.Ini.IniFile.WriteToXmlFile(System.String)">
+            <summary>
+            Write current dictionary of Keys in XML format.
+            </summary>
+        </member>
+        <member name="F:Ttpcom.Tools.Ini.IniFile.Keys">
+             <summary>
+            New Dictionary of keys for easy accessing 
+             </summary>
+        </member>
+        <member name="T:Ttpcom.Tools.Ini.IniFile.IniSection">
+            <summary>
+            Class for handling one INI section
+            </summary>
+        </member>
+        <member name="F:Ttpcom.Tools.Ini.IniFile.IniSection.m_name">
+            <summary>
+            Section name
+            </summary>
+        </member>
+        <member name="M:Ttpcom.Tools.Ini.IniFile.IniSection.#ctor(System.String,System.String)">
+            <summary>
+            Extract from an INI file a particular INI section
+            </summary>
+            <param name="a_name"></param>
+            <param name="a_fileName"></param>
+        </member>
+        <member name="F:Ttpcom.Tools.Ini.IniFile.IniSection.m_entries">
+            <summary>
+            Collection of name-value pairs from this section
+            </summary>
+        </member>
+        <member name="T:GkiDecoder.ConsoleHandle">
+            <summary>
+            This class is used when SharGki is used in console application.
+            It simulates Handle of Form (that is absent in console only apps).
+            </summary>
+        </member>
+        <member name="M:GkiDecoder.ConsoleHandle.#ctor(GkiDecoder.SharpGki)">
+             <summary>
+             Default constructor with Binary mode OFF.
+             User need to call it in console applications BEFORE calling Init() on SharpGki.
+             </summary>
+             <param name="sharpGki">The SharpGki resource.</param>
+             <example>
+             using (SharpGki sharpGki = new SharpGki())
+             {
+                sharpGki.ConnectionMethod = GenieConnectionMethod.CreateInstanceOfGenieIfRequired;
+                sharpGki.CopyEnvVariablesToGenie = true;
+                sharpGki.GenieConfigFile = @"c:\myGniFile.gni";
+                sharpGki.WantedSignals = new string[] { "SIG_TEST_FILE_OUT",
+                                                        "SIG_RRC_TEST_MODE_REQ",
+                                                        "SIG_NODEBSCRIPT_UPLOAD_SIB_REQ"
+                                                     };
+            
+               ConsoleHandle console = new ConsoleHandle(sharpGki);
+            
+                //now you can call StartTest or OpenGenieLog
+                sharpGki.OpenGenieLog(@"C:\myLogFile.tlg");
+               
+               ConsoleHandle.Message msg = new ConsoleHandle.Message();
+               while (console.GetMessage(msg) == true)
+               {
+                 if (msg.signal != null)
+                 {
+                   //here you should process your signal.
+                   if (msg.signal.IdStr == "SIG_TEST_FILE_OUT")
+                   {
+                   }
+                 }
+               }
+            }
+             </example>
+        </member>
+        <member name="M:GkiDecoder.ConsoleHandle.#ctor(GkiDecoder.SharpGki,System.Boolean)">
+            <summary>
+            Constructor with Binary option.
+            </summary>
+            <param name="sharpGki">The SharpGki resource.</param>
+            <param name="binaryMode">True to implement binary mode.</param>
+        </member>
+        <member name="M:GkiDecoder.ConsoleHandle.WaitForHandleOrAbort(System.Threading.WaitHandle)">
+            <returns>true if application should abort</returns>
+        </member>
+        <member name="M:GkiDecoder.ConsoleHandle.GetMessage(GkiDecoder.ConsoleHandle.Message)">
+            <summary>
+            Gets next message (log points or infor message) for processing.
+            </summary>
+            <returns>true if streaming continues, false if streaming finished (or ctrl+c) was pressed</returns>
+        </member>
+        <member name="M:GkiDecoder.ConsoleHandle.BeginInvoke(System.Delegate,System.Object[])">
+            <summary>
+                 Asynchronously executes the delegate on the thread that created this object.
+             </summary>
+        </member>
+        <member name="M:GkiDecoder.ConsoleHandle.EndInvoke(System.IAsyncResult)">
+            <summary>
+                 Waits until the process started by calling System.ComponentModel.ISynchronizeInvoke.BeginInvoke(System.Delegate,System.Object[])
+                 completes, and then returns the value generated by the process.
+            </summary>
+        </member>
+        <member name="M:GkiDecoder.ConsoleHandle.Invoke(System.Delegate,System.Object[])">
+            <summary>
+                 Synchronously executes the delegate on the thread that created this object
+                 and marshals the call to the creating thread.
+            </summary>
+        </member>
+        <member name="P:GkiDecoder.ConsoleHandle.ExitReason">
+            <summary>
+            Valid only when GetMessage call returns false, specifies reason for exiting of application loop
+            </summary>
+        </member>
+        <member name="P:GkiDecoder.ConsoleHandle.InvokeRequired">
+            <summary>
+                Gets a value indicating whether the caller must call System.ComponentModel.ISynchronizeInvoke.Invoke(System.Delegate,System.Object[])
+                when calling an object that implements this interface.
+            </summary>
+        </member>
+        <member name="T:GkiDecoder.ConsoleHandle.Message">
+            <summary>
+            Contains data from GKIS for console application
+            </summary>
+        </member>
+        <member name="F:GkiDecoder.ConsoleHandle.Message.signal">
+            <summary>
+            GKI signal in XML
+            </summary>
+        </member>
+        <member name="F:GkiDecoder.ConsoleHandle.Message.binSignal">
+            <summary>
+            GKI signal in binary form
+            </summary>
+        </member>
+        <member name="F:GkiDecoder.ConsoleHandle.Message.infoMsg">
+            <summary>
+            Information messae from GKIS
+            </summary>
+        </member>
+        <member name="T:GkiDecoder.ConsoleHandle.GkisInfoMessage">
+            <summary>
+            This class constains information passed by GKIS to client app
+            </summary>
+        </member>
+        <member name="F:GkiDecoder.ConsoleHandle.GkisInfoMessage.message">
+            <summary>
+            Message as string
+            </summary>
+        </member>
+        <member name="F:GkiDecoder.ConsoleHandle.GkisInfoMessage.updateCode">
+            <summary>
+            Message type
+            </summary>
+        </member>
+        <member name="F:GkiDecoder.ConsoleHandle.GkisInfoMessage.rawExtraData">
+            <summary>
+            optional data (needs a cast) or null
+            </summary>
+        </member>
+        <member name="T:GkiDecoder.ConsoleHandle.GetMessageExitReason">
+            <summary>
+            Reason for application closure
+            </summary>
+        </member>
+        <member name="F:GkiDecoder.ConsoleHandle.GetMessageExitReason.NOT_EXITED_YET">
+            <summary>
+            GetMessage loop not exited yet 
+            </summary>
+        </member>
+        <member name="F:GkiDecoder.ConsoleHandle.GetMessageExitReason.USER_ACTION">
+            <summary>
+            User called SharpGki.Close or StopTest
+            </summary>
+        </member>
+        <member name="F:GkiDecoder.ConsoleHandle.GetMessageExitReason.CTRL_C_EVENT">
+            <summary>
+            User pressed Ctrl+C
+            </summary>
+        </member>
+        <member name="F:GkiDecoder.ConsoleHandle.GetMessageExitReason.GKIS_END_OF_ACTIVITY">
+            <summary>
+            GKIS finished activity (test, or log playback)
+            </summary>
+        </member>
+        <member name="T:GkiDecoder.GeniePackageHelper">
+            <summary>
+            This class provides utility methods for creating a package.
+            </summary>
+        </member>
+        <member name="F:GkiDecoder.GeniePackageHelper.GkisGenieRemoteInterface">
+            <summary>
+            The Genie Remote interface to use.
+            </summary>
+        </member>
+        <member name="M:GkiDecoder.GeniePackageHelper.#ctor(GKIS.IGkiGenieRc)">
+            <summary>
+            Constructor using the Genie Remote interface.
+            </summary>
+            <param name="a_gkisGenieRemoteInterface">Genie remote interface.</param>
+        </member>
+        <member name="M:GkiDecoder.GeniePackageHelper.UpdateGenieConfigFileAndExtractPackageInfo(System.String,System.String,System.Collections.Generic.Dictionary{System.String,System.String}@)">
+            <summary>
+            Updates the GNI file to add given TFL path.
+            Also updates package info with relevant information.
+            </summary>
+            <param name="a_genieConfigFile">Genie configuration file (will be modified).</param>
+            <param name="a_tflFullpathFilename">Full path of the TFL file to add to package.</param>
+            <param name="a_packageInfo">Package information (can be used by GeneratePackage()).</param>
+        </member>
+        <member name="M:GkiDecoder.GeniePackageHelper.GeneratePackage(System.String,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            Generates a Package from given information.
+            </summary>
+            <param name="a_glpOutputFile">GLP file to create.</param>
+            <param name="a_packageInfo">Package information dictionary.</param>
+            <remarks>Package info must contain: gni, ass, i, tsf, tlg.</remarks>
+        </member>
+        <member name="T:GkiDecoder.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:GkiDecoder.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:GkiDecoder.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="T:GkiDecoder.StateType">
+            <summary>
+            Component state
+            </summary>
+        </member>
+        <member name="F:GkiDecoder.StateType.Unreferenced">
+            <summary>
+            SharpGKI is not connected to GKIS
+            </summary>
+        </member>
+        <member name="F:GkiDecoder.StateType.Referenced">
+            <summary>
+            SharpGKI is connected to GKIS
+            </summary>
+        </member>
+        <member name="F:GkiDecoder.StateType.Connected">
+            <summary>
+            SharpGKI is not connected to GKIS and to Genie
+            </summary>
+        </member>
+        <member name="F:GkiDecoder.StateType.TestStarted">
+            <summary>
+            Genie is running a test
+            </summary>
+        </member>
+        <member name="F:GkiDecoder.StateType.Unknown">
+            <summary>
+            Unknown state
+            </summary>
+        </member>
+        <member name="T:GkiDecoder.GenieConnectionMethod">
+            <summary>
+            Specifies type of connection to GKIS and Genie
+            </summary>
+        </member>
+        <member name="F:GkiDecoder.GenieConnectionMethod.HookToGenieRunningInBackground">
+            <summary>
+            Hooks to first found Genie running in background. Should be used only for debugging and pass-thur taks
+            By default we will try to hook to any genie in background. You can specify a PID by setting it (as string) to <see cref="P:GkiDecoder.SharpGki.GenieExeToUse"/> property.
+            </summary>
+        </member>
+        <member name="F:GkiDecoder.GenieConnectionMethod.CreateInstanceOfGenieIfRequired">
+            <summary>
+            GKIS client application works in stand-alone mode, it means it controls life-time and exceution of test in Genie
+            </summary>
+        </member>
+        <member name="F:GkiDecoder.GenieConnectionMethod.GeniePassThurMode">
+            <summary>
+            GKIS client applications works in pass-thru mode, it means lifetime of application is controled by Genie
+            </summary>
+        </member>
+        <member name="T:GkiDecoder.SharpGki">
+            <summary>
+            Generic delegate used for putting worker-thread operation in the GUI thread
+            </summary>
+        </member>
+        <member name="M:GkiDecoder.SharpGki._onPassThruApplciationShutdown">
+            <summary>
+            This is used to call OnPassThruApplciationShutdown in context of main GUI thread
+            </summary>
+        </member>
+        <member name="M:GkiDecoder.SharpGki.Init">
+            <summary>
+            Start connection to GKIS. If property HookToAnyGenie is true 
+            then it will also to any Genie presently open.
+            </summary>
+        </member>
+        <member name="M:GkiDecoder.SharpGki.StartTest">
+            <summary>
+            <para>Start the Genie test. Equivalent to clicking on 'Start Test' toolbar button in Genie.</para>
+            <para>NOTE: the only other way to receive GKI signals is to play Genie log with OpenGenieLog function.</para>
+            </summary>
+        </member>
+        <member name="M:GkiDecoder.SharpGki.StopTest">
+            <summary>
+            Stop the Genie test. Equivalent to clicking on 'Stop Test' toolbar button in Genie.
+            </summary>
+        </member>
+        <member name="M:GkiDecoder.SharpGki.OpenGenieLog(System.String)">
+            <summary>
+            Opens a TLG (Genie log file) and passes all the signals to pass-thur tasks and GKIS applications.
+            </summary>
+            <param name="tlgFilePath">Full path to Genie log file (*.TLG)</param>
+        </member>
+        <member name="M:GkiDecoder.SharpGki.SaveGenieLog(System.String)">
+            <summary>
+            Saves current Genie log to file.
+            </summary>
+            <param name="logFilePath">
+            <para>Full path to Genie log file.</para>
+            <para>This can either be TLG file (specify *.TLG extension) or GLP file (specify *.GLP extension)</para>
+            </param>
+        </member>
+        <member name="M:GkiDecoder.SharpGki.GetLogSize">
+            <summary>
+            Record count of currently loaded Genie log.
+            </summary>
+        </member>
+        <member name="M:GkiDecoder.SharpGki.GetLogSignal(System.UInt32)">
+            <summary>
+            Retrives signals from currently opened log in Genie.
+            </summary>
+            <param name="recordNo">record number of Genie log</param>
+            <returns>GKI signal in XML format wrapped into XmlSignal class</returns>
+        </member>
+        <member name="M:GkiDecoder.SharpGki.GotoLogPosition_byRecordNumber(System.Int32)">
+            <summary>
+            Changes selection of Genie Log to record specified.
+            </summary>
+            <param name="recordNumber">Record ID to select</param>
+        </member>
+        <member name="M:GkiDecoder.SharpGki.GotoLogPosition_byTimeStamp(System.UInt32)">
+            <summary>
+            Changes selection of Genie Log to timestamp specified.
+            </summary>
+            <param name="timeStamp">Timestamp to select. If no record has exact timesamp specified, the closest one will be selected</param>
+        </member>
+        <member name="M:GkiDecoder.SharpGki.GetEmptySignal(System.String)">
+            <summary>
+            Returns a template of signal type specified. You can fill relevant fields and use it to send signal.
+            </summary>
+            <param name="sigName">Signal name in format "SIG_MY_SIGNAL"</param>
+            <returns>XML signal wrapped into XmlSignal class</returns>
+        </member>
+        <member name="M:GkiDecoder.SharpGki.IsSignalPresentInSigDB(System.String)">
+            <summary>
+            Returns true if specified signal is present in signal database (.I file).
+            </summary>
+            <param name="sigName">Signal name in format "SIG_MY_SIGNAL"</param>
+        </member>
+        <member name="M:GkiDecoder.SharpGki.GetGkisExePath">
+            <summary>
+            Returns a full path to GKIS.exe
+            </summary>
+        </member>
+        <member name="M:GkiDecoder.SharpGki.GetGkisVersionString">
+            <summary>
+            Returns GKIS version string in format: A.B.C.D
+            </summary>
+        </member>
+        <member name="M:GkiDecoder.SharpGki.SendSignal(GkiXmlHelper.XmlSignal)">
+            <summary>
+            Sends a signal to task specified in XmlSignal class.
+            </summary>
+            <param name="sig">XML signal wrapped into XmlSignal class</param>
+        </member>
+        <member name="M:GkiDecoder.SharpGki.SendSignal(System.SByte[])">
+            <summary>
+            <para>Sends a signal to task specified in Genie SerialSignal32 object.</para>
+            <para>The SerialSignal32 object contains data in target format.</para>
+            </summary>
+            <param name="sigSerialSignal32Format">Byte array of complete SerialSignal32 structure encoded in TARGET format</param>
+        </member>
+        <member name="M:GkiDecoder.SharpGki.GiveListOfAllSignals">
+            <summary>
+            <para>Returns list of all signal ids for currently loaded signal database file (.I).</para>
+            <para>You can convert signal IDs into signal names usig signal DB interface (GkisSignalDbInterface property).</para>
+            </summary>
+        </member>
+        <member name="M:GkiDecoder.SharpGki.Close">
+            <summary>
+            <para>Call to release the GKIS connection. This will stop any on-going test,</para>
+            <para>then close the Genie application (if property HookToAnyGenie was false) and finally disconnect from GKIS.</para>
+            <para>Need to call Init() again to re-establish GKIS/Genie.</para>
+            </summary>
+        </member>
+        <member name="M:GkiDecoder.SharpGki.ConvertTargetSigToXml(System.SByte[])">
+            <summary>
+            Call this method to convert the native target Genie record to its
+            PC equivalent. This will use the target settings as specified via
+            the Genie configuration file in use.
+            </summary>
+            <param name="a_rawTargetNativeRecord">Genie record coming off the target; This is not the same as a PC Genie record.</param>
+            <returns>Signal in XML form</returns>
+        </member>
+        <member name="M:GkiDecoder.SharpGki.ConvertGeniePcSigToXml(System.SByte[])">
+            <summary>
+            Call this method to convert the raw binary signal in PC (Genie) fortat to XML.
+            </summary>
+            <param name="a_rawGeniePcRecord">Genie record in PC format; This is not the same as a target record.</param>
+            <returns>Signal in XML form</returns>
+        </member>
+        <member name="M:GkiDecoder.SharpGki.GetInterfaceVersion">
+            <summary>
+            Returns a version of GKIS COM interface.
+            </summary>
+        </member>
+        <member name="M:GkiDecoder.SharpGki.WaitUntillGkisIsReadyForNewConnection">
+             <summary>
+            GKIS is implemented as COM component inside EXE file.
+            It's possible that at the moment some other client application requested shut down of GKIS.
+            In that case our client app should wait for this instance of GKIS to disappear and then attempt connection.
+            This is an unfortunate limitation of COM enviroment.
+             </summary>
+        </member>
+        <member name="M:GkiDecoder.SharpGki._gkisConnection_TargetStatusUpdate(System.Int32,System.Object)">
+            <summary>
+            Re-directing GKIS notifications to this component's notification event dispatcher
+            </summary>
+            <param name="a_lUpdateCode"></param>
+            <param name="a_vaExtraData"></param>
+        </member>
+        <member name="M:GkiDecoder.SharpGki.SetEnvironmentVariableInGKIS(System.String,System.String)">
+            <summary>
+            This will set env variable in GKIS - call it BEFORE InitializeInstance if you want Genie to inherit it from GKIS
+            Implementation will expand all env variables from a_pszEnvValue parameter.
+            </summary>
+            <example>
+            Example of how to put TPLGSM variable from current GKIS client to Genie:
+            SetEnvironmentVariableInGKIS( "TPLGSM", "%TPLGSM%" );
+            </example>
+            <param name="envName">Enviroment name (like TPLGSM)</param>
+            <param name="envValue">Value of env varaible (like %TPLGSM%)</param>
+        </member>
+        <member name="M:GkiDecoder.SharpGki.CopyAllEnvironmentVariablesToGKIS">
+            <summary>
+            Copyies all env variables from client application to GKIS
+            IMPORTANT: Call it BEFORE InitializeInstance if you want Genie to inherit it from GKIS
+            </summary>
+        </member>
+        <member name="M:GkiDecoder.SharpGki.ReleaseEventHooks">
+            <summary>
+            This method should always be called as part of the main GUI thread.
+            </summary>
+        </member>
+        <member name="M:GkiDecoder.SharpGki.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="F:GkiDecoder.SharpGki._gkiActState">
+            <summary>
+            This object holds count of GKI signals and messages to be processed (posted to GUI thread but not acknowedgled as processed)
+            It's used to detect IDLE state of application
+            </summary>
+        </member>
+        <member name="M:GkiDecoder.SharpGki._gkisConnection_NewSignal(System.Object,System.Object)">
+            <param name="a_vaSigData">Body of signal</param>
+            <param name="a_vaExtraData">Signal Id</param>
+        </member>
+        <member name="M:GkiDecoder.SharpGki.MarkApplicationAsIdle">
+            <summary>
+            Use only to exit BUSY state after MarkApplicationAsBusy call
+            </summary>
+        </member>
+        <member name="M:GkiDecoder.SharpGki.FinishedProcessingGkisEvent">
+            <summary>
+            User needs to call this function when exiting from OnNewGkiSignal or OnNewInfoMessage callback - if application is to be turbo mode compatible
+            </summary>
+        </member>
+        <member name="M:GkiDecoder.SharpGki.MarkApplicationAsBusy">
+            <summary>
+            Use this function to mark application as busy (prevent GKI timers to expiry)
+            You HAVE to always call MarkApplicationAsIdle when done.
+            </summary>
+        </member>
+        <member name="M:GkiDecoder.SharpGki.CreateTurboModeIdleEvent">
+            <summary>
+            This will create an idle event that SharpGKI will use to notify Genie that it's IDLE
+            </summary>
+        </member>
+        <member name="M:GkiDecoder.SharpGki.#ctor">
+            <summary>
+            This constructor is used for CsUnit testing where the 
+            Dispose() is controlled in the test application. And by console applications (those NEED to call Close or Dispose).
+            </summary>
+        </member>
+        <member name="M:GkiDecoder.SharpGki.#ctor(System.ComponentModel.IContainer)">
+            <summary>
+            This constructor ensures that the parent control will hold a reference
+            to this component so that when the parent closes, it will call the 
+            Dispose() method.
+            </summary>
+            <param name="container">Parent container</param>
+        </member>
+        <member name="F:GkiDecoder.SharpGki._sharpGkiCallingStopTest">
+            <summary>
+            this event will be signalled when StopTest is called by user
+            </summary>
+        </member>
+        <member name="F:GkiDecoder.SharpGki._sharpGkiCallingClose">
+            <summary>
+            this event will be signalled when SharpGki is calling Close()
+            </summary>
+        </member>
+        <member name="F:GkiDecoder.SharpGki._sharpGkiAttachCompleted">
+            <summary>
+            This event is only used when Genie requests the GKIS client to attach to the 
+            running process. This event is set as soon as we have detected debugger
+            has attached to this process (i.e. to this GKIS client).
+            </summary>
+        </member>
+        <member name="F:GkiDecoder.SharpGki._geniePid">
+            <summary>
+            Will hold the parent Genie pid once attached. 
+            </summary>
+        </member>
+        <member name="E:GkiDecoder.SharpGki.OnNewGkiSignal">
+            <summary>
+            New signal event. Delivers signals in XML format.
+            </summary>
+        </member>
+        <member name="E:GkiDecoder.SharpGki.OnNewBinaryGkiSignal">
+            <summary>
+            New signal event. Delivers signals in Binary format.
+            </summary>
+        </member>
+        <member name="E:GkiDecoder.SharpGki.OnNewInfoMessage">
+            <summary>
+            Fires when a message is to inform the user of errors/warning/info.
+            </summary>
+        </member>
+        <member name="E:GkiDecoder.SharpGki.OnBeforeConnectingToGenie">
+            <summary>
+            <para>Fires after successful creation of GKIS connection but before connecting to Genie.</para>
+            <para>Could be used to tweak GKIS configuration.</para>
+            </summary>
+        </member>
+        <member name="E:GkiDecoder.SharpGki.OnAfterConnectingToGenie">
+            <summary>
+            <para>Fires after successful connection to Genie.</para>
+            <para>Could be used to tweak GKIS configuration, modify filter.</para>
+            </summary>
+        </member>
+        <member name="E:GkiDecoder.SharpGki.OnPassThruApplciationShutdown">
+            <summary>
+            <para>Fired by Genie in pass-thru mode only.</para>
+            <para>It allows you to close application gracefully. If you don't provide your own function Application.Exit will be called.</para>
+            </summary>
+        </member>
+        <member name="P:GkiDecoder.SharpGki.Tplgsm">
+            <summary>
+            <para>Override of %TPLGSM%. This is used to configure GKIS once it is initialised.</para>
+            <para>NOTE: This settings has meaning only when you select: 'CreateInstanceOfGenieIfRequired' in <see cref="P:GkiDecoder.SharpGki.ConnectionMethod"/> property.</para>
+            <para>Can be empty/null.</para>
+            </summary>
+        </member>
+        <member name="P:GkiDecoder.SharpGki.TimeHandler">
+            <summary>
+            Allows you to query EVB time settings and convert EVB to PC time.
+            </summary>
+        </member>
+        <member name="P:GkiDecoder.SharpGki.ConnectedToGenie">
+            <summary>
+            Specifies if connection to Genie is currently established.
+            </summary>
+        </member>
+        <member name="P:GkiDecoder.SharpGki.FilteringMode">
+            <summary>
+            It's critical from performance point of view that your application specify a filter. This way you also ensure that all signals you want are prenent in signal database.
+            </summary>
+        </member>
+        <member name="P:GkiDecoder.SharpGki.WantedSignals">
+            <summary>
+            When filtering is enabled. Specify here all wanted messages as strings in a format: SIG_MY_SIGNAL.
+            </summary>
+        </member>
+        <member name="P:GkiDecoder.SharpGki.CopyEnvVariablesToGenie">
+            <summary>
+            When creating new instance of Genie, GKIS can copy all env variables from your client application to Genie.\r\n\r\nNOTE: This settings has meaning only when you select: 'CreateInstanceOfGenieIfRequired' in <see cref="P:GkiDecoder.SharpGki.ConnectionMethod"/> property.
+            </summary>
+        </member>
+        <member name="P:GkiDecoder.SharpGki.GenieWindowOnStart">
+            <summary>
+            When creating a new instance of Genie, GKIS can pass -ws / -wb command line parameters to start it minimised / maximised.
+            </summary>
+        </member>
+        <member name="P:GkiDecoder.SharpGki.FormHandle">
+            <summary>
+            <para>Handle of the main Form.</para>
+            <para>This is required to dispatch events into the GUI thread.</para>
+            </summary>
+        </member>
+        <member name="P:GkiDecoder.SharpGki.GenieConfigFile">
+            <summary>
+            <para>Genie *.gni configuration file to use.</para>
+            <para>NOTE: This settings has meaning only when you select: 'CreateInstanceOfGenieIfRequired' in <see cref="P:GkiDecoder.SharpGki.ConnectionMethod"/> property.</para>
+            </summary>
+        </member>
+        <member name="P:GkiDecoder.SharpGki.GenieExeToUse">
+            <summary>
+            <para>Full path to genie.exe to use.</para>
+            <para>If empty default Genie will be used (%TPLGSM%\\tool\\core\\genie\\genie.exe).\r\n\r\nNOTE: This settings has meaning only when you select: 'CreateInstanceOfGenieIfRequired' in <see cref="P:GkiDecoder.SharpGki.ConnectionMethod"/> property.</para>
+            </summary>
+        </member>
+        <member name="P:GkiDecoder.SharpGki.GkisConnection">
+            <summary>
+            Handle to the GKIS server; Can put used to directly access the GKIS COM interface.
+            </summary>
+        </member>
+        <member name="P:GkiDecoder.SharpGki.State">
+            <summary>
+            Current state of component; Reflects the state of its connection to GKIS.
+            </summary>
+        </member>
+        <member name="P:GkiDecoder.SharpGki.ConnectionMethod">
+            <summary>
+            <para>Specifies how your application should connect to Genie.</para>
+            <para>1) HookToGenieRunningInBackground: Hooks to first found Genie running in background. Should be used only for debugging. You can specify a PID by setting it (as string) to <see cref="P:GkiDecoder.SharpGki.GenieExeToUse"/> property.</para>
+            <para>2) CreateInstanceOfGenieIfRequired: GKIS client application works in stand-alone mode, it means it controls life-time and exceution of test in Genie.</para>
+            <para>3) GeniePassThurMode: GKIS client applications works in pass-thru mode, it means lifetime of application is controled by Genie.</para>
+            </summary>
+        </member>
+        <member name="P:GkiDecoder.SharpGki.TurboTimersCompatible">
+            <summary>
+            <para>Specifies if your application is compatible with Genie 'turbo timers'.</para>
+            <para>Look for 'turbo timers' in GKIS documentation for more information.</para>
+            </summary>
+        </member>
+        <member name="P:GkiDecoder.SharpGki.GkisTimersInterface">
+            <summary>
+            Returns handle to GKIS's signal database interface; See Gkis.chm for details.
+            </summary>
+        </member>
+        <member name="P:GkiDecoder.SharpGki.GkisSignalDbInterface">
+            <summary>
+            Returns handle to GKIS's signal database interface; See Gkis.chm for details.
+            </summary>
+        </member>
+        <member name="P:GkiDecoder.SharpGki.GkisFilterManagerInterface">
+            <summary>
+            Returns handle to GKIS's filter manager interface; See Gkis.chm for details.
+            </summary>
+        </member>
+        <member name="P:GkiDecoder.SharpGki.GkisGenieRemoteInterface">
+            <summary>
+            Returns handle to GKIS's (pipe) remote interface to Genie; See Gkis.chm for details.
+            </summary>
+        </member>
+        <member name="P:GkiDecoder.SharpGki.GkisSignalViewerInterface">
+            <summary>
+            Returns handle to GKIS's signal viewer interface; See Gkis.chm for details.
+            </summary>
+        </member>
+        <member name="P:GkiDecoder.SharpGki.PackageHelper">
+            <summary>
+            Returns handle to the Package Helper class.
+            </summary>
+        </member>
+        <member name="T:GkiDecoder.SharpGki.GkiSignalDispatcher">
+            <param name="a_signalId">An unique id of signal like SIG_KI_MEM_DUMP_REQ in string format. It's equivalent IdStr property of XmlSignal class.</param>
+            <param name="a_signalBody">Signal XML wrapped into XmlSignal class.</param>
+        </member>
+        <member name="T:GkiDecoder.SharpGki.GkiBinSignalDispatcher">
+            <param name="a_signalBody">Binary signal wrapped into BinSignal class.</param>
+        </member>
+        <member name="T:GkiDecoder.SharpGki.NewInfoMessageDispatcher">
+            <summary>
+            This delegate will be used to fire an event to the user for GKI messages
+            </summary>
+            <param name="message">Human readible message generated by this C# component based on updateCode and rawExtraData</param>
+            <param name="updateCode">Code that describes nature of event</param>
+            <param name="rawExtraData">Variant containing different extra data depending on updateCode. See GKIS.chm for more information</param>
+        </member>
+        <member name="T:GkiDecoder.SharpGki.InitProgressDispatcher">
+            <summary>
+            This delegate will be fired during Init() call in some critical points.
+            </summary>
+        </member>
+        <member name="T:GkiDecoder.SharpGki.GenieStartState">
+            <summary>
+            Specifies how to start Genie.
+            </summary>
+        </member>
+        <member name="F:GkiDecoder.SharpGki.GenieStartState.Normal">
+            <summary>
+            Normal window (don't force anything)
+            </summary>
+        </member>
+        <member name="F:GkiDecoder.SharpGki.GenieStartState.Minimized">
+            <summary>
+            Start minimized
+            </summary>
+        </member>
+        <member name="F:GkiDecoder.SharpGki.GenieStartState.Maximized">
+            <summary>
+            Start maximized
+            </summary>
+        </member>
+        <member name="T:GkiDecoder.SharpGki.XGkiActivityState">
+            <summary>
+            This class is used to store information about pending GKIS events (used to determinate idle state)
+            </summary>
+        </member>
+    </members>
+</doc>

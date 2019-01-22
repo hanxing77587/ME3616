@@ -1,0 +1,3 @@
+10:36:56 22/10/2018 >>C:\Windows\system32\CustomerMenieg6120Administrator
+10:36:56 22/10/2018 >>C:\Windows\system32\CustomerMenieg6120Administrator.dll
+10:36:56 22/10/2018 >>Get day count null

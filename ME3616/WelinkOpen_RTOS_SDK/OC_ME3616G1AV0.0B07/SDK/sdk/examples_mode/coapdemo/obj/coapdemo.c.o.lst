@@ -1,0 +1,2263 @@
+ARM GAS   			page 1
+
+
+   1              	 .cpu cortex-m4
+   2              	 .eabi_attribute 27,1
+   3              	 .eabi_attribute 28,1
+   4              	 .eabi_attribute 20,1
+   5              	 .eabi_attribute 21,1
+   6              	 .eabi_attribute 23,3
+   7              	 .eabi_attribute 24,1
+   8              	 .eabi_attribute 25,1
+   9              	 .eabi_attribute 26,1
+  10              	 .eabi_attribute 30,1
+  11              	 .eabi_attribute 34,1
+  12              	 .eabi_attribute 18,4
+  13              	 .file "coapdemo.c"
+  14              	 .text
+  15              	.Ltext0:
+  16              	 .cfi_sections .debug_frame
+  17              	 .section .text.oemdebuglog_open,"ax",%progbits
+  18              	 .align 1
+  19              	 .global oemdebuglog_open
+  20              	 .syntax unified
+  21              	 .thumb
+  22              	 .thumb_func
+  23              	 .fpu fpv4-sp-d16
+  25              	oemdebuglog_open:
+  26              	.LFB3:
+  27              	 .file 1 "coapdemo.c"
+   1:coapdemo.c    **** /*
+   2:coapdemo.c    **** ** File   : coapdemo.c
+   3:coapdemo.c    **** **
+   4:coapdemo.c    **** ** Copyright (C) 2013-2018 Gosuncn. All rights reserved.
+   5:coapdemo.c    **** **
+   6:coapdemo.c    **** ** Licensed under the Apache License, Version 2.0 (the "License");
+   7:coapdemo.c    **** ** you may not use this file except in compliance with the License.
+   8:coapdemo.c    **** ** You may obtain a copy of the License at
+   9:coapdemo.c    **** **
+  10:coapdemo.c    **** **      http://www.apache.org/licenses/LICENSE-2.0
+  11:coapdemo.c    **** **
+  12:coapdemo.c    **** ** Unless required by applicable law or agreed to in writing, software
+  13:coapdemo.c    **** ** distributed under the License is distributed on an "AS IS" BASIS,
+  14:coapdemo.c    **** ** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  15:coapdemo.c    **** ** See the License for the specific language governing permissions and
+  16:coapdemo.c    **** ** limitations under the License.
+  17:coapdemo.c    **** **
+  18:coapdemo.c    **** ** Author : chengkai2@gosuncn.cn
+  19:coapdemo.c    **** **
+  20:coapdemo.c    **** **  $Date: 2018/06/18 08:45:36GMT+08:00 $
+  21:coapdemo.c    **** **
+  22:coapdemo.c    **** */
+  23:coapdemo.c    **** #include <stdio.h>
+  24:coapdemo.c    **** #include <stdlib.h>
+  25:coapdemo.c    **** #include <string.h>
+  26:coapdemo.c    **** #include "gsdk_api.h"
+  27:coapdemo.c    **** #include "FreeRTOS.h"
+  28:coapdemo.c    **** #include "task.h"
+  29:coapdemo.c    **** #include "gsdk_ril.h"
+  30:coapdemo.c    **** #include "gsdk_ril_cmds.h"
+  31:coapdemo.c    ****     
+ARM GAS   			page 2
+
+
+  32:coapdemo.c    **** #define MAX_IP_BYTE                 20
+  33:coapdemo.c    **** #define MAX_HEX_SIZE                1024
+  34:coapdemo.c    **** #define MAX_REGISTER_SIZE           1024
+  35:coapdemo.c    **** #define LIFETIME                    6000   
+  36:coapdemo.c    **** #define COAP_AS_CLIENT_ONLY         0
+  37:coapdemo.c    **** #define BOTH_CLIENT_AND_SERVER      1
+  38:coapdemo.c    **** 
+  39:coapdemo.c    **** static unsolicited_handler_t g_handler;
+  40:coapdemo.c    **** static gsdk_handle_t g_huart;
+  41:coapdemo.c    **** static gsdk_status_t status;
+  42:coapdemo.c    **** 
+  43:coapdemo.c    **** #define MAX_RECEIVE_SIZE    1024
+  44:coapdemo.c    **** static char unsolicited_buf[MAX_RECEIVE_SIZE] = {0};
+  45:coapdemo.c    **** 
+  46:coapdemo.c    **** int oem_debuglog = 1;
+  47:coapdemo.c    **** int coap_client_id = -1;
+  48:coapdemo.c    **** int coap_server_id = -1;
+  49:coapdemo.c    **** char ip_buf[64] = {0};
+  50:coapdemo.c    **** int coap_type_flag = 0;
+  51:coapdemo.c    **** 
+  52:coapdemo.c    **** /* call this to open oem log */
+  53:coapdemo.c    **** int oemdebuglog_open(void)
+  54:coapdemo.c    **** {
+  28              	 .loc 1 54 0
+  29              	 .cfi_startproc
+  30              	 
+  31              	 
+  32              	 
+  55:coapdemo.c    ****     oem_debuglog = 1;
+  33              	 .loc 1 55 0
+  34 0000 0120     	 movs r0,#1
+  35 0002 014B     	 ldr r3,.L2
+  36 0004 1860     	 str r0,[r3]
+  56:coapdemo.c    ****     return oem_debuglog;
+  57:coapdemo.c    **** }
+  37              	 .loc 1 57 0
+  38 0006 7047     	 bx lr
+  39              	.L3:
+  40              	 .align 2
+  41              	.L2:
+  42 0008 00000000 	 .word .LANCHOR0
+  43              	 .cfi_endproc
+  44              	.LFE3:
+  46              	 .section .text.OEM_PRINTF,"ax",%progbits
+  47              	 .align 1
+  48              	 .global OEM_PRINTF
+  49              	 .syntax unified
+  50              	 .thumb
+  51              	 .thumb_func
+  52              	 .fpu fpv4-sp-d16
+  54              	OEM_PRINTF:
+  55              	.LFB4:
+  58:coapdemo.c    **** 
+  59:coapdemo.c    **** /* OEM use this to printf log */
+  60:coapdemo.c    **** void OEM_PRINTF(char *fmt, ...)
+  61:coapdemo.c    **** {
+  56              	 .loc 1 61 0
+ARM GAS   			page 3
+
+
+  57              	 .cfi_startproc
+  58              	 
+  59              	 
+  60              	.LVL0:
+  61 0000 0FB4     	 push {r0,r1,r2,r3}
+  62              	 .cfi_def_cfa_offset 16
+  63              	 .cfi_offset 0,-16
+  64              	 .cfi_offset 1,-12
+  65              	 .cfi_offset 2,-8
+  66              	 .cfi_offset 3,-4
+  67 0002 08B5     	 push {r3,lr}
+  68              	 .cfi_def_cfa_offset 24
+  69              	 .cfi_offset 3,-24
+  70              	 .cfi_offset 14,-20
+  62:coapdemo.c    ****     if (oem_debuglog == 1){
+  71              	 .loc 1 62 0
+  72 0004 054B     	 ldr r3,.L8
+  73 0006 1B68     	 ldr r3,[r3]
+  74 0008 012B     	 cmp r3,#1
+  75 000a 03D0     	 beq .L7
+  76              	.L4:
+  63:coapdemo.c    ****         printf(fmt);
+  64:coapdemo.c    ****     }
+  65:coapdemo.c    ****     else if (oem_debuglog == 0){
+  66:coapdemo.c    ****     }
+  67:coapdemo.c    **** }
+  77              	 .loc 1 67 0
+  78 000c BDE80840 	 pop {r3,lr}
+  79              	 .cfi_remember_state
+  80              	 .cfi_restore 14
+  81              	 .cfi_restore 3
+  82              	 .cfi_def_cfa_offset 16
+  83 0010 04B0     	 add sp,sp,#16
+  84              	 .cfi_restore 3
+  85              	 .cfi_restore 2
+  86              	 .cfi_restore 1
+  87              	 .cfi_restore 0
+  88              	 .cfi_def_cfa_offset 0
+  89 0012 7047     	 bx lr
+  90              	.L7:
+  91              	 .cfi_restore_state
+  63:coapdemo.c    ****         printf(fmt);
+  92              	 .loc 1 63 0
+  93 0014 0298     	 ldr r0,[sp,#8]
+  94 0016 FFF7FEFF 	 bl printf
+  95              	.LVL1:
+  96              	 .loc 1 67 0
+  97 001a F7E7     	 b .L4
+  98              	.L9:
+  99              	 .align 2
+ 100              	.L8:
+ 101 001c 00000000 	 .word .LANCHOR0
+ 102              	 .cfi_endproc
+ 103              	.LFE4:
+ 105              	 .section .text.coap_unsolicited_func,"ax",%progbits
+ 106              	 .align 1
+ 107              	 .syntax unified
+ARM GAS   			page 4
+
+
+ 108              	 .thumb
+ 109              	 .thumb_func
+ 110              	 .fpu fpv4-sp-d16
+ 112              	coap_unsolicited_func:
+ 113              	.LFB10:
+  68:coapdemo.c    **** 
+  69:coapdemo.c    **** int __io_puts(char *data, int len)
+  70:coapdemo.c    **** {
+  71:coapdemo.c    ****     int ret = 0;
+  72:coapdemo.c    ****     if (g_huart) {
+  73:coapdemo.c    ****         ret = gsdk_uart_write(g_huart, (uint8_t *)data, len, 1000);
+  74:coapdemo.c    ****     }
+  75:coapdemo.c    ****     return ret;
+  76:coapdemo.c    **** }
+  77:coapdemo.c    **** 
+  78:coapdemo.c    **** int log_init(void)
+  79:coapdemo.c    **** {
+  80:coapdemo.c    ****     uart_config_t uart_config;
+  81:coapdemo.c    **** 
+  82:coapdemo.c    ****     uart_config.baudrate    = UART_BAUDRATE_115200;
+  83:coapdemo.c    ****     uart_config.parity      = UART_PARITY_NONE;
+  84:coapdemo.c    ****     uart_config.stop_bit    = UART_STOP_BIT_1;
+  85:coapdemo.c    ****     uart_config.word_length = UART_WORD_LENGTH_8;
+  86:coapdemo.c    **** 
+  87:coapdemo.c    ****     status = gsdk_uart_open(UART_0, &uart_config, &g_huart);
+  88:coapdemo.c    ****     if (status != GSDK_SUCCESS) {
+  89:coapdemo.c    ****         //syslog_printf("[COAP_DEMO]: failed to open uart %d\n", status);
+  90:coapdemo.c    ****         return -1;
+  91:coapdemo.c    ****     }
+  92:coapdemo.c    **** 
+  93:coapdemo.c    ****     OEM_PRINTF("[COAP_DEMO] log init....OK\r\n");
+  94:coapdemo.c    **** 
+  95:coapdemo.c    ****     return 0;
+  96:coapdemo.c    **** }
+  97:coapdemo.c    **** 
+  98:coapdemo.c    **** int gsdk_ril_init_func(void)
+  99:coapdemo.c    **** {
+ 100:coapdemo.c    ****     status = gsdk_ril_init();
+ 101:coapdemo.c    ****     if (status != GSDK_SUCCESS) {
+ 102:coapdemo.c    ****         OEM_PRINTF("[COAP_DEMO] gsdk_ril_init error!\r\n");
+ 103:coapdemo.c    ****         return -1;
+ 104:coapdemo.c    ****     }
+ 105:coapdemo.c    ****     return 0;
+ 106:coapdemo.c    **** }
+ 107:coapdemo.c    **** 
+ 108:coapdemo.c    **** int init_func()
+ 109:coapdemo.c    **** {
+ 110:coapdemo.c    ****     if(log_init() != 0)
+ 111:coapdemo.c    ****         goto init_fail;
+ 112:coapdemo.c    ****     if(gsdk_ril_init_func() != 0)
+ 113:coapdemo.c    ****         goto init_fail;
+ 114:coapdemo.c    **** 
+ 115:coapdemo.c    ****     OEM_PRINTF("[COAP_DEMO] init_func end!\r\n");
+ 116:coapdemo.c    ****     return 0;
+ 117:coapdemo.c    **** init_fail:
+ 118:coapdemo.c    ****     OEM_PRINTF("[COAP_DEMO] init_func error!\r\n");
+ 119:coapdemo.c    ****     return -1;
+ARM GAS   			page 5
+
+
+ 120:coapdemo.c    **** }
+ 121:coapdemo.c    **** 
+ 122:coapdemo.c    **** 
+ 123:coapdemo.c    **** static int coap_handle_func(const char* s, const char* extra, int len, void* data)
+ 124:coapdemo.c    **** {
+ 125:coapdemo.c    ****     UNUSED_PARAM(extra);
+ 126:coapdemo.c    ****     UNUSED_PARAM(len);
+ 127:coapdemo.c    ****     UNUSED_PARAM(data);
+ 128:coapdemo.c    **** 
+ 129:coapdemo.c    ****     memset(unsolicited_buf, 0, sizeof(unsolicited_buf));
+ 130:coapdemo.c    ****     if (strlen(s) > (MAX_REGISTER_SIZE - 1)) {
+ 131:coapdemo.c    ****         OEM_PRINTF("[COAP_DEMO] the information is too large ,please change the size of recv_buf\r\
+ 132:coapdemo.c    ****     } else {
+ 133:coapdemo.c    ****         strncpy(unsolicited_buf, s, MAX_REGISTER_SIZE);
+ 134:coapdemo.c    ****         OEM_PRINTF("%s\r\n\r\n", unsolicited_buf);
+ 135:coapdemo.c    ****     }
+ 136:coapdemo.c    **** 
+ 137:coapdemo.c    ****     return 1;
+ 138:coapdemo.c    **** }
+ 139:coapdemo.c    **** 
+ 140:coapdemo.c    **** 
+ 141:coapdemo.c    **** static int coap_unsolicited_func(unsolicited_handler_t *handler)
+ 142:coapdemo.c    **** {
+ 114              	 .loc 1 142 0
+ 115              	 .cfi_startproc
+ 116              	 
+ 117              	 
+ 118              	.LVL2:
+ 119 0000 08B5     	 push {r3,lr}
+ 120              	 .cfi_def_cfa_offset 8
+ 121              	 .cfi_offset 3,-8
+ 122              	 .cfi_offset 14,-4
+ 143:coapdemo.c    ****     memset(handler, 0, sizeof(unsolicited_handler_t));
+ 123              	 .loc 1 143 0
+ 124 0002 0022     	 movs r2,#0
+ 125 0004 C260     	 str r2,[r0,#12]
+ 144:coapdemo.c    ****     handler->prefix = "+ECOAPNMI:";
+ 126              	 .loc 1 144 0
+ 127 0006 0949     	 ldr r1,.L15
+ 128 0008 4160     	 str r1,[r0,#4]
+ 145:coapdemo.c    ****     handler->func = coap_handle_func;
+ 129              	 .loc 1 145 0
+ 130 000a 0949     	 ldr r1,.L15+4
+ 131 000c 0160     	 str r1,[r0]
+ 146:coapdemo.c    ****     handler->user_data = NULL;
+ 132              	 .loc 1 146 0
+ 133 000e 8260     	 str r2,[r0,#8]
+ 147:coapdemo.c    ****     status = gsdk_at_register_unsolicited_handler(handler);
+ 134              	 .loc 1 147 0
+ 135 0010 FFF7FEFF 	 bl gsdk_at_register_unsolicited_handler
+ 136              	.LVL3:
+ 137 0014 074B     	 ldr r3,.L15+8
+ 138 0016 1870     	 strb r0,[r3]
+ 148:coapdemo.c    ****     if (status != GSDK_SUCCESS) {
+ 139              	 .loc 1 148 0
+ 140 0018 08B9     	 cbnz r0,.L14
+ 149:coapdemo.c    ****         OEM_PRINTF("[COAP_DEMO] some error hanppened in handle,status is %d\r\n", status);
+ARM GAS   			page 6
+
+
+ 150:coapdemo.c    ****         return -1;
+ 151:coapdemo.c    ****     }
+ 152:coapdemo.c    ****     return 0;
+ 141              	 .loc 1 152 0
+ 142 001a 0020     	 movs r0,#0
+ 143              	.L10:
+ 153:coapdemo.c    **** }
+ 144              	 .loc 1 153 0
+ 145 001c 08BD     	 pop {r3,pc}
+ 146              	.L14:
+ 149:coapdemo.c    ****         OEM_PRINTF("[COAP_DEMO] some error hanppened in handle,status is %d\r\n", status);
+ 147              	 .loc 1 149 0
+ 148 001e 0146     	 mov r1,r0
+ 149 0020 0548     	 ldr r0,.L15+12
+ 150 0022 FFF7FEFF 	 bl OEM_PRINTF
+ 151              	.LVL4:
+ 150:coapdemo.c    ****     }
+ 152              	 .loc 1 150 0
+ 153 0026 4FF0FF30 	 mov r0,#-1
+ 154 002a F7E7     	 b .L10
+ 155              	.L16:
+ 156              	 .align 2
+ 157              	.L15:
+ 158 002c 00000000 	 .word .LC0
+ 159 0030 00000000 	 .word coap_handle_func
+ 160 0034 00000000 	 .word .LANCHOR1
+ 161 0038 0C000000 	 .word .LC1
+ 162              	 .cfi_endproc
+ 163              	.LFE10:
+ 165              	 .section .text.coap_handle_func,"ax",%progbits
+ 166              	 .align 1
+ 167              	 .syntax unified
+ 168              	 .thumb
+ 169              	 .thumb_func
+ 170              	 .fpu fpv4-sp-d16
+ 172              	coap_handle_func:
+ 173              	.LFB9:
+ 124:coapdemo.c    ****     UNUSED_PARAM(extra);
+ 174              	 .loc 1 124 0
+ 175              	 .cfi_startproc
+ 176              	 
+ 177              	 
+ 178              	.LVL5:
+ 179 0000 38B5     	 push {r3,r4,r5,lr}
+ 180              	 .cfi_def_cfa_offset 16
+ 181              	 .cfi_offset 3,-16
+ 182              	 .cfi_offset 4,-12
+ 183              	 .cfi_offset 5,-8
+ 184              	 .cfi_offset 14,-4
+ 185 0002 0446     	 mov r4,r0
+ 129:coapdemo.c    ****     if (strlen(s) > (MAX_REGISTER_SIZE - 1)) {
+ 186              	 .loc 1 129 0
+ 187 0004 4FF48062 	 mov r2,#1024
+ 188              	.LVL6:
+ 189 0008 0021     	 movs r1,#0
+ 190              	.LVL7:
+ 191 000a 0D48     	 ldr r0,.L22
+ARM GAS   			page 7
+
+
+ 192              	.LVL8:
+ 193 000c FFF7FEFF 	 bl memset
+ 194              	.LVL9:
+ 130:coapdemo.c    ****         OEM_PRINTF("[COAP_DEMO] the information is too large ,please change the size of recv_buf\r\
+ 195              	 .loc 1 130 0
+ 196 0010 2046     	 mov r0,r4
+ 197 0012 FFF7FEFF 	 bl strlen
+ 198              	.LVL10:
+ 199 0016 B0F5806F 	 cmp r0,#1024
+ 200 001a 0CD2     	 bcs .L21
+ 133:coapdemo.c    ****         OEM_PRINTF("%s\r\n\r\n", unsolicited_buf);
+ 201              	 .loc 1 133 0
+ 202 001c 084D     	 ldr r5,.L22
+ 203 001e 4FF48062 	 mov r2,#1024
+ 204 0022 2146     	 mov r1,r4
+ 205 0024 2846     	 mov r0,r5
+ 206 0026 FFF7FEFF 	 bl strncpy
+ 207              	.LVL11:
+ 134:coapdemo.c    ****     }
+ 208              	 .loc 1 134 0
+ 209 002a 2946     	 mov r1,r5
+ 210 002c 0548     	 ldr r0,.L22+4
+ 211 002e FFF7FEFF 	 bl OEM_PRINTF
+ 212              	.LVL12:
+ 213              	.L19:
+ 138:coapdemo.c    **** 
+ 214              	 .loc 1 138 0
+ 215 0032 0120     	 movs r0,#1
+ 216 0034 38BD     	 pop {r3,r4,r5,pc}
+ 217              	.LVL13:
+ 218              	.L21:
+ 131:coapdemo.c    ****     } else {
+ 219              	 .loc 1 131 0
+ 220 0036 0448     	 ldr r0,.L22+8
+ 221 0038 FFF7FEFF 	 bl OEM_PRINTF
+ 222              	.LVL14:
+ 223 003c F9E7     	 b .L19
+ 224              	.L23:
+ 225 003e 00BF     	 .align 2
+ 226              	.L22:
+ 227 0040 00000000 	 .word .LANCHOR2
+ 228 0044 50000000 	 .word .LC3
+ 229 0048 00000000 	 .word .LC2
+ 230              	 .cfi_endproc
+ 231              	.LFE9:
+ 233              	 .section .text.__io_puts,"ax",%progbits
+ 234              	 .align 1
+ 235              	 .global __io_puts
+ 236              	 .syntax unified
+ 237              	 .thumb
+ 238              	 .thumb_func
+ 239              	 .fpu fpv4-sp-d16
+ 241              	__io_puts:
+ 242              	.LFB5:
+  70:coapdemo.c    ****     int ret = 0;
+ 243              	 .loc 1 70 0
+ 244              	 .cfi_startproc
+ARM GAS   			page 8
+
+
+ 245              	 
+ 246              	 
+ 247              	.LVL15:
+ 248 0000 10B5     	 push {r4,lr}
+ 249              	 .cfi_def_cfa_offset 8
+ 250              	 .cfi_offset 4,-8
+ 251              	 .cfi_offset 14,-4
+ 252              	.LVL16:
+  72:coapdemo.c    ****         ret = gsdk_uart_write(g_huart, (uint8_t *)data, len, 1000);
+ 253              	 .loc 1 72 0
+ 254 0002 064B     	 ldr r3,.L28
+ 255 0004 1C68     	 ldr r4,[r3]
+ 256 0006 3CB1     	 cbz r4,.L26
+ 257 0008 0A46     	 mov r2,r1
+ 258 000a 0146     	 mov r1,r0
+ 259              	.LVL17:
+  73:coapdemo.c    ****     }
+ 260              	 .loc 1 73 0
+ 261 000c 4FF47A73 	 mov r3,#1000
+ 262 0010 2046     	 mov r0,r4
+ 263              	.LVL18:
+ 264 0012 FFF7FEFF 	 bl gsdk_uart_write
+ 265              	.LVL19:
+ 266              	.L24:
+  76:coapdemo.c    **** 
+ 267              	 .loc 1 76 0
+ 268 0016 10BD     	 pop {r4,pc}
+ 269              	.LVL20:
+ 270              	.L26:
+  71:coapdemo.c    ****     if (g_huart) {
+ 271              	 .loc 1 71 0
+ 272 0018 0020     	 movs r0,#0
+ 273              	.LVL21:
+  75:coapdemo.c    **** }
+ 274              	 .loc 1 75 0
+ 275 001a FCE7     	 b .L24
+ 276              	.L29:
+ 277              	 .align 2
+ 278              	.L28:
+ 279 001c 00000000 	 .word .LANCHOR3
+ 280              	 .cfi_endproc
+ 281              	.LFE5:
+ 283              	 .section .text.log_init,"ax",%progbits
+ 284              	 .align 1
+ 285              	 .global log_init
+ 286              	 .syntax unified
+ 287              	 .thumb
+ 288              	 .thumb_func
+ 289              	 .fpu fpv4-sp-d16
+ 291              	log_init:
+ 292              	.LFB6:
+  79:coapdemo.c    ****     uart_config_t uart_config;
+ 293              	 .loc 1 79 0
+ 294              	 .cfi_startproc
+ 295              	 
+ 296              	 
+ 297 0000 00B5     	 push {lr}
+ARM GAS   			page 9
+
+
+ 298              	 .cfi_def_cfa_offset 4
+ 299              	 .cfi_offset 14,-4
+ 300 0002 83B0     	 sub sp,sp,#12
+ 301              	 .cfi_def_cfa_offset 16
+  82:coapdemo.c    ****     uart_config.parity      = UART_PARITY_NONE;
+ 302              	 .loc 1 82 0
+ 303 0004 0923     	 movs r3,#9
+ 304 0006 8DF80430 	 strb r3,[sp,#4]
+  83:coapdemo.c    ****     uart_config.stop_bit    = UART_STOP_BIT_1;
+ 305              	 .loc 1 83 0
+ 306 000a 0020     	 movs r0,#0
+ 307 000c 8DF80700 	 strb r0,[sp,#7]
+  84:coapdemo.c    ****     uart_config.word_length = UART_WORD_LENGTH_8;
+ 308              	 .loc 1 84 0
+ 309 0010 8DF80600 	 strb r0,[sp,#6]
+  85:coapdemo.c    **** 
+ 310              	 .loc 1 85 0
+ 311 0014 0323     	 movs r3,#3
+ 312 0016 8DF80530 	 strb r3,[sp,#5]
+  87:coapdemo.c    ****     if (status != GSDK_SUCCESS) {
+ 313              	 .loc 1 87 0
+ 314 001a 084A     	 ldr r2,.L34
+ 315 001c 01A9     	 add r1,sp,#4
+ 316 001e FFF7FEFF 	 bl gsdk_uart_open
+ 317              	.LVL22:
+ 318 0022 074B     	 ldr r3,.L34+4
+ 319 0024 1870     	 strb r0,[r3]
+  88:coapdemo.c    ****         //syslog_printf("[COAP_DEMO]: failed to open uart %d\n", status);
+ 320              	 .loc 1 88 0
+ 321 0026 30B9     	 cbnz r0,.L32
+  93:coapdemo.c    **** 
+ 322              	 .loc 1 93 0
+ 323 0028 0648     	 ldr r0,.L34+8
+ 324 002a FFF7FEFF 	 bl OEM_PRINTF
+ 325              	.LVL23:
+  95:coapdemo.c    **** }
+ 326              	 .loc 1 95 0
+ 327 002e 0020     	 movs r0,#0
+ 328              	.L30:
+  96:coapdemo.c    **** 
+ 329              	 .loc 1 96 0
+ 330 0030 03B0     	 add sp,sp,#12
+ 331              	 .cfi_remember_state
+ 332              	 .cfi_def_cfa_offset 4
+ 333              	 
+ 334 0032 5DF804FB 	 ldr pc,[sp],#4
+ 335              	.L32:
+ 336              	 .cfi_restore_state
+  90:coapdemo.c    ****     }
+ 337              	 .loc 1 90 0
+ 338 0036 4FF0FF30 	 mov r0,#-1
+ 339 003a F9E7     	 b .L30
+ 340              	.L35:
+ 341              	 .align 2
+ 342              	.L34:
+ 343 003c 00000000 	 .word .LANCHOR3
+ 344 0040 00000000 	 .word .LANCHOR1
+ARM GAS   			page 10
+
+
+ 345 0044 00000000 	 .word .LC4
+ 346              	 .cfi_endproc
+ 347              	.LFE6:
+ 349              	 .section .text.gsdk_ril_init_func,"ax",%progbits
+ 350              	 .align 1
+ 351              	 .global gsdk_ril_init_func
+ 352              	 .syntax unified
+ 353              	 .thumb
+ 354              	 .thumb_func
+ 355              	 .fpu fpv4-sp-d16
+ 357              	gsdk_ril_init_func:
+ 358              	.LFB7:
+  99:coapdemo.c    ****     status = gsdk_ril_init();
+ 359              	 .loc 1 99 0
+ 360              	 .cfi_startproc
+ 361              	 
+ 362              	 
+ 363 0000 08B5     	 push {r3,lr}
+ 364              	 .cfi_def_cfa_offset 8
+ 365              	 .cfi_offset 3,-8
+ 366              	 .cfi_offset 14,-4
+ 100:coapdemo.c    ****     if (status != GSDK_SUCCESS) {
+ 367              	 .loc 1 100 0
+ 368 0002 FFF7FEFF 	 bl gsdk_ril_init
+ 369              	.LVL24:
+ 370 0006 054B     	 ldr r3,.L41
+ 371 0008 1870     	 strb r0,[r3]
+ 101:coapdemo.c    ****         OEM_PRINTF("[COAP_DEMO] gsdk_ril_init error!\r\n");
+ 372              	 .loc 1 101 0
+ 373 000a 08B9     	 cbnz r0,.L40
+ 105:coapdemo.c    **** }
+ 374              	 .loc 1 105 0
+ 375 000c 0020     	 movs r0,#0
+ 376              	.L36:
+ 106:coapdemo.c    **** 
+ 377              	 .loc 1 106 0
+ 378 000e 08BD     	 pop {r3,pc}
+ 379              	.L40:
+ 102:coapdemo.c    ****         return -1;
+ 380              	 .loc 1 102 0
+ 381 0010 0348     	 ldr r0,.L41+4
+ 382 0012 FFF7FEFF 	 bl OEM_PRINTF
+ 383              	.LVL25:
+ 103:coapdemo.c    ****     }
+ 384              	 .loc 1 103 0
+ 385 0016 4FF0FF30 	 mov r0,#-1
+ 386 001a F8E7     	 b .L36
+ 387              	.L42:
+ 388              	 .align 2
+ 389              	.L41:
+ 390 001c 00000000 	 .word .LANCHOR1
+ 391 0020 00000000 	 .word .LC5
+ 392              	 .cfi_endproc
+ 393              	.LFE7:
+ 395              	 .section .text.init_func,"ax",%progbits
+ 396              	 .align 1
+ 397              	 .global init_func
+ARM GAS   			page 11
+
+
+ 398              	 .syntax unified
+ 399              	 .thumb
+ 400              	 .thumb_func
+ 401              	 .fpu fpv4-sp-d16
+ 403              	init_func:
+ 404              	.LFB8:
+ 109:coapdemo.c    ****     if(log_init() != 0)
+ 405              	 .loc 1 109 0
+ 406              	 .cfi_startproc
+ 407              	 
+ 408              	 
+ 409 0000 10B5     	 push {r4,lr}
+ 410              	 .cfi_def_cfa_offset 8
+ 411              	 .cfi_offset 4,-8
+ 412              	 .cfi_offset 14,-4
+ 110:coapdemo.c    ****         goto init_fail;
+ 413              	 .loc 1 110 0
+ 414 0002 FFF7FEFF 	 bl log_init
+ 415              	.LVL26:
+ 416 0006 40B9     	 cbnz r0,.L44
+ 112:coapdemo.c    ****         goto init_fail;
+ 417              	 .loc 1 112 0
+ 418 0008 FFF7FEFF 	 bl gsdk_ril_init_func
+ 419              	.LVL27:
+ 420 000c 0446     	 mov r4,r0
+ 421 000e 20B9     	 cbnz r0,.L44
+ 115:coapdemo.c    ****     return 0;
+ 422              	 .loc 1 115 0
+ 423 0010 0548     	 ldr r0,.L47
+ 424 0012 FFF7FEFF 	 bl OEM_PRINTF
+ 425              	.LVL28:
+ 426              	.L43:
+ 120:coapdemo.c    **** 
+ 427              	 .loc 1 120 0
+ 428 0016 2046     	 mov r0,r4
+ 429 0018 10BD     	 pop {r4,pc}
+ 430              	.L44:
+ 118:coapdemo.c    ****     return -1;
+ 431              	 .loc 1 118 0
+ 432 001a 0448     	 ldr r0,.L47+4
+ 433 001c FFF7FEFF 	 bl OEM_PRINTF
+ 434              	.LVL29:
+ 119:coapdemo.c    **** }
+ 435              	 .loc 1 119 0
+ 436 0020 4FF0FF34 	 mov r4,#-1
+ 437 0024 F7E7     	 b .L43
+ 438              	.L48:
+ 439 0026 00BF     	 .align 2
+ 440              	.L47:
+ 441 0028 00000000 	 .word .LC6
+ 442 002c 20000000 	 .word .LC7
+ 443              	 .cfi_endproc
+ 444              	.LFE8:
+ 446              	 .section .text.create_coap_client_func,"ax",%progbits
+ 447              	 .align 1
+ 448              	 .global create_coap_client_func
+ 449              	 .syntax unified
+ARM GAS   			page 12
+
+
+ 450              	 .thumb
+ 451              	 .thumb_func
+ 452              	 .fpu fpv4-sp-d16
+ 454              	create_coap_client_func:
+ 455              	.LFB11:
+ 154:coapdemo.c    **** 
+ 155:coapdemo.c    **** int create_coap_client_func(void)
+ 156:coapdemo.c    **** {
+ 456              	 .loc 1 156 0
+ 457              	 .cfi_startproc
+ 458              	 
+ 459              	 
+ 460 0000 10B5     	 push {r4,lr}
+ 461              	 .cfi_def_cfa_offset 8
+ 462              	 .cfi_offset 4,-8
+ 463              	 .cfi_offset 14,-4
+ 464 0002 90B0     	 sub sp,sp,#64
+ 465              	 .cfi_def_cfa_offset 72
+ 157:coapdemo.c    ****     char server_ip_addr[64] = "139.196.187.107";
+ 466              	 .loc 1 157 0
+ 467 0004 184B     	 ldr r3,.L57
+ 468 0006 6C46     	 mov r4,sp
+ 469 0008 0FCB     	 ldm r3,{r0,r1,r2,r3}
+ 470 000a 84E80F00 	 stm r4,{r0,r1,r2,r3}
+ 471 000e 3022     	 movs r2,#48
+ 472 0010 0021     	 movs r1,#0
+ 473 0012 04A8     	 add r0,sp,#16
+ 474 0014 FFF7FEFF 	 bl memset
+ 475              	.LVL30:
+ 158:coapdemo.c    ****     int server_port = 5683;
+ 159:coapdemo.c    ****     int cid = 1;
+ 160:coapdemo.c    **** 
+ 161:coapdemo.c    ****     if(coap_type_flag == BOTH_CLIENT_AND_SERVER){
+ 476              	 .loc 1 161 0
+ 477 0018 144B     	 ldr r3,.L57+4
+ 478 001a 1B68     	 ldr r3,[r3]
+ 479 001c 012B     	 cmp r3,#1
+ 480 001e 12D0     	 beq .L55
+ 162:coapdemo.c    ****         status = gsdk_ril_create_coap_client(ip_buf, server_port, cid, &coap_client_id);
+ 163:coapdemo.c    ****     }else{
+ 164:coapdemo.c    ****         status = gsdk_ril_create_coap_client(server_ip_addr, server_port, cid, &coap_client_id);
+ 481              	 .loc 1 164 0
+ 482 0020 134B     	 ldr r3,.L57+8
+ 483 0022 0122     	 movs r2,#1
+ 484 0024 41F23361 	 movw r1,#5683
+ 485 0028 6846     	 mov r0,sp
+ 486 002a FFF7FEFF 	 bl gsdk_ril_create_coap_client
+ 487              	.LVL31:
+ 488 002e 114B     	 ldr r3,.L57+12
+ 489 0030 1870     	 strb r0,[r3]
+ 490              	.L51:
+ 165:coapdemo.c    ****     }
+ 166:coapdemo.c    ****     if (status != GSDK_SUCCESS) {
+ 491              	 .loc 1 166 0
+ 492 0032 104B     	 ldr r3,.L57+12
+ 493 0034 93F90030 	 ldrsb r3,[r3]
+ 494 0038 7BB9     	 cbnz r3,.L56
+ARM GAS   			page 13
+
+
+ 167:coapdemo.c    ****         OEM_PRINTF("[COAP_DEMO] create_coap_client_func failed\r\n");
+ 168:coapdemo.c    ****         return -1;
+ 169:coapdemo.c    ****     }
+ 170:coapdemo.c    ****     OEM_PRINTF("[COAP_DEMO] create_coap_client_func end!\r\n");
+ 495              	 .loc 1 170 0
+ 496 003a 0F48     	 ldr r0,.L57+16
+ 497 003c FFF7FEFF 	 bl OEM_PRINTF
+ 498              	.LVL32:
+ 171:coapdemo.c    ****     return 0;
+ 499              	 .loc 1 171 0
+ 500 0040 0020     	 movs r0,#0
+ 501              	.L49:
+ 172:coapdemo.c    **** }
+ 502              	 .loc 1 172 0
+ 503 0042 10B0     	 add sp,sp,#64
+ 504              	 .cfi_remember_state
+ 505              	 .cfi_def_cfa_offset 8
+ 506              	 
+ 507 0044 10BD     	 pop {r4,pc}
+ 508              	.L55:
+ 509              	 .cfi_restore_state
+ 162:coapdemo.c    ****     }else{
+ 510              	 .loc 1 162 0
+ 511 0046 0A4B     	 ldr r3,.L57+8
+ 512 0048 0122     	 movs r2,#1
+ 513 004a 41F23361 	 movw r1,#5683
+ 514 004e 0B48     	 ldr r0,.L57+20
+ 515 0050 FFF7FEFF 	 bl gsdk_ril_create_coap_client
+ 516              	.LVL33:
+ 517 0054 074B     	 ldr r3,.L57+12
+ 518 0056 1870     	 strb r0,[r3]
+ 519 0058 EBE7     	 b .L51
+ 520              	.L56:
+ 167:coapdemo.c    ****         return -1;
+ 521              	 .loc 1 167 0
+ 522 005a 0948     	 ldr r0,.L57+24
+ 523 005c FFF7FEFF 	 bl OEM_PRINTF
+ 524              	.LVL34:
+ 168:coapdemo.c    ****     }
+ 525              	 .loc 1 168 0
+ 526 0060 4FF0FF30 	 mov r0,#-1
+ 527 0064 EDE7     	 b .L49
+ 528              	.L58:
+ 529 0066 00BF     	 .align 2
+ 530              	.L57:
+ 531 0068 00000000 	 .word .LANCHOR4
+ 532 006c 00000000 	 .word .LANCHOR5
+ 533 0070 00000000 	 .word .LANCHOR6
+ 534 0074 00000000 	 .word .LANCHOR1
+ 535 0078 30000000 	 .word .LC10
+ 536 007c 00000000 	 .word .LANCHOR7
+ 537 0080 00000000 	 .word .LC9
+ 538              	 .cfi_endproc
+ 539              	.LFE11:
+ 541              	 .section .text.coap_client_send_get_func,"ax",%progbits
+ 542              	 .align 1
+ 543              	 .global coap_client_send_get_func
+ARM GAS   			page 14
+
+
+ 544              	 .syntax unified
+ 545              	 .thumb
+ 546              	 .thumb_func
+ 547              	 .fpu fpv4-sp-d16
+ 549              	coap_client_send_get_func:
+ 550              	.LFB12:
+ 173:coapdemo.c    **** 
+ 174:coapdemo.c    **** int coap_client_send_get_func(void)
+ 175:coapdemo.c    **** {
+ 551              	 .loc 1 175 0
+ 552              	 .cfi_startproc
+ 553              	 
+ 554              	 
+ 555 0000 30B5     	 push {r4,r5,lr}
+ 556              	 .cfi_def_cfa_offset 12
+ 557              	 .cfi_offset 4,-12
+ 558              	 .cfi_offset 5,-8
+ 559              	 .cfi_offset 14,-4
+ 560 0002 89B0     	 sub sp,sp,#36
+ 561              	 .cfi_def_cfa_offset 48
+ 562              	.LVL35:
+ 176:coapdemo.c    ****     /************* get **************/
+ 177:coapdemo.c    ****     int data_len = 11;
+ 178:coapdemo.c    ****     char data_value1[32] = "40013b06b474657374c102";
+ 563              	 .loc 1 178 0
+ 564 0004 6C46     	 mov r4,sp
+ 565 0006 134D     	 ldr r5,.L64
+ 566 0008 0FCD     	 ldmia r5!,{r0,r1,r2,r3}
+ 567 000a 0FC4     	 stmia r4!,{r0,r1,r2,r3}
+ 568 000c 95E80300 	 ldm r5,{r0,r1}
+ 569 0010 44F8040B 	 str r0,[r4],#4
+ 570 0014 24F8021B 	 strh r1,[r4],#2
+ 571 0018 090C     	 lsrs r1,r1,#16
+ 572 001a 2170     	 strb r1,[r4]
+ 573 001c 0023     	 movs r3,#0
+ 574 001e CDF81730 	 str r3,[sp,#23]
+ 575 0022 CDF81B30 	 str r3,[sp,#27]
+ 576 0026 8DF81F30 	 strb r3,[sp,#31]
+ 179:coapdemo.c    **** 
+ 180:coapdemo.c    ****     status = gsdk_ril_coap_client_send(coap_client_id, data_len, data_value1);
+ 577              	 .loc 1 180 0
+ 578 002a 6A46     	 mov r2,sp
+ 579 002c 0B21     	 movs r1,#11
+ 580 002e 0A4B     	 ldr r3,.L64+4
+ 581 0030 1868     	 ldr r0,[r3]
+ 582 0032 FFF7FEFF 	 bl gsdk_ril_coap_client_send
+ 583              	.LVL36:
+ 584 0036 094B     	 ldr r3,.L64+8
+ 585 0038 1870     	 strb r0,[r3]
+ 181:coapdemo.c    ****     if (status != GSDK_SUCCESS) {
+ 586              	 .loc 1 181 0
+ 587 003a 28B9     	 cbnz r0,.L63
+ 182:coapdemo.c    ****         OEM_PRINTF("[COAP_DEMO] coap_client_send_get_func failed\r\n");
+ 183:coapdemo.c    ****         return -1;
+ 184:coapdemo.c    ****     }
+ 185:coapdemo.c    ****     OEM_PRINTF("[COAP_DEMO] coap_client_send_get_func end\r\n");
+ 588              	 .loc 1 185 0
+ARM GAS   			page 15
+
+
+ 589 003c 0848     	 ldr r0,.L64+12
+ 590 003e FFF7FEFF 	 bl OEM_PRINTF
+ 591              	.LVL37:
+ 186:coapdemo.c    ****     return 0;
+ 592              	 .loc 1 186 0
+ 593 0042 0020     	 movs r0,#0
+ 594              	.L59:
+ 187:coapdemo.c    **** }
+ 595              	 .loc 1 187 0
+ 596 0044 09B0     	 add sp,sp,#36
+ 597              	 .cfi_remember_state
+ 598              	 .cfi_def_cfa_offset 12
+ 599              	 
+ 600 0046 30BD     	 pop {r4,r5,pc}
+ 601              	.L63:
+ 602              	 .cfi_restore_state
+ 182:coapdemo.c    ****         OEM_PRINTF("[COAP_DEMO] coap_client_send_get_func failed\r\n");
+ 603              	 .loc 1 182 0
+ 604 0048 0648     	 ldr r0,.L64+16
+ 605 004a FFF7FEFF 	 bl OEM_PRINTF
+ 606              	.LVL38:
+ 183:coapdemo.c    ****     }
+ 607              	 .loc 1 183 0
+ 608 004e 4FF0FF30 	 mov r0,#-1
+ 609 0052 F7E7     	 b .L59
+ 610              	.L65:
+ 611              	 .align 2
+ 612              	.L64:
+ 613 0054 40000000 	 .word .LANCHOR4+64
+ 614 0058 00000000 	 .word .LANCHOR6
+ 615 005c 00000000 	 .word .LANCHOR1
+ 616 0060 30000000 	 .word .LC13
+ 617 0064 00000000 	 .word .LC12
+ 618              	 .cfi_endproc
+ 619              	.LFE12:
+ 621              	 .section .text.coap_client_send_put_func,"ax",%progbits
+ 622              	 .align 1
+ 623              	 .global coap_client_send_put_func
+ 624              	 .syntax unified
+ 625              	 .thumb
+ 626              	 .thumb_func
+ 627              	 .fpu fpv4-sp-d16
+ 629              	coap_client_send_put_func:
+ 630              	.LFB13:
+ 188:coapdemo.c    **** 
+ 189:coapdemo.c    **** int coap_client_send_put_func(void)
+ 190:coapdemo.c    **** {
+ 631              	 .loc 1 190 0
+ 632              	 .cfi_startproc
+ 633              	 
+ 634              	 
+ 635 0000 30B5     	 push {r4,r5,lr}
+ 636              	 .cfi_def_cfa_offset 12
+ 637              	 .cfi_offset 4,-12
+ 638              	 .cfi_offset 5,-8
+ 639              	 .cfi_offset 14,-4
+ 640 0002 91B0     	 sub sp,sp,#68
+ARM GAS   			page 16
+
+
+ 641              	 .cfi_def_cfa_offset 80
+ 642              	.LVL39:
+ 191:coapdemo.c    ****     /************* put ************/
+ 192:coapdemo.c    ****     int data_len = 24;
+ 193:coapdemo.c    ****     char data_value2[64] = "400325b6b876616c696461746510ff313233313233343536";
+ 643              	 .loc 1 193 0
+ 644 0004 6C46     	 mov r4,sp
+ 645 0006 134D     	 ldr r5,.L71
+ 646 0008 0FCD     	 ldmia r5!,{r0,r1,r2,r3}
+ 647 000a 0FC4     	 stmia r4!,{r0,r1,r2,r3}
+ 648 000c 0FCD     	 ldmia r5!,{r0,r1,r2,r3}
+ 649 000e 0FC4     	 stmia r4!,{r0,r1,r2,r3}
+ 650 0010 0FCD     	 ldmia r5!,{r0,r1,r2,r3}
+ 651 0012 0FC4     	 stmia r4!,{r0,r1,r2,r3}
+ 652 0014 2B68     	 ldr r3,[r5]
+ 653 0016 2370     	 strb r3,[r4]
+ 654 0018 0023     	 movs r3,#0
+ 655 001a CDF83130 	 str r3,[sp,#49]
+ 656 001e CDF83530 	 str r3,[sp,#53]
+ 657 0022 CDF83930 	 str r3,[sp,#57]
+ 658 0026 0F93     	 str r3,[sp,#60]
+ 194:coapdemo.c    **** 
+ 195:coapdemo.c    ****     status = gsdk_ril_coap_client_send(coap_client_id, data_len, data_value2);
+ 659              	 .loc 1 195 0
+ 660 0028 6A46     	 mov r2,sp
+ 661 002a 1821     	 movs r1,#24
+ 662 002c 0A4B     	 ldr r3,.L71+4
+ 663 002e 1868     	 ldr r0,[r3]
+ 664 0030 FFF7FEFF 	 bl gsdk_ril_coap_client_send
+ 665              	.LVL40:
+ 666 0034 094B     	 ldr r3,.L71+8
+ 667 0036 1870     	 strb r0,[r3]
+ 196:coapdemo.c    ****     if (status != GSDK_SUCCESS) {
+ 668              	 .loc 1 196 0
+ 669 0038 28B9     	 cbnz r0,.L70
+ 197:coapdemo.c    ****         OEM_PRINTF("[COAP_DEMO] coap_client_send_put_func failed!\r\n");
+ 198:coapdemo.c    ****         return -1;
+ 199:coapdemo.c    ****     }
+ 200:coapdemo.c    ****     OEM_PRINTF("[COAP_DEMO] coap_client_send_put_func end!\r\n");
+ 670              	 .loc 1 200 0
+ 671 003a 0948     	 ldr r0,.L71+12
+ 672 003c FFF7FEFF 	 bl OEM_PRINTF
+ 673              	.LVL41:
+ 201:coapdemo.c    ****     return 0;
+ 674              	 .loc 1 201 0
+ 675 0040 0020     	 movs r0,#0
+ 676              	.L66:
+ 202:coapdemo.c    **** }
+ 677              	 .loc 1 202 0
+ 678 0042 11B0     	 add sp,sp,#68
+ 679              	 .cfi_remember_state
+ 680              	 .cfi_def_cfa_offset 12
+ 681              	 
+ 682 0044 30BD     	 pop {r4,r5,pc}
+ 683              	.L70:
+ 684              	 .cfi_restore_state
+ 197:coapdemo.c    ****         OEM_PRINTF("[COAP_DEMO] coap_client_send_put_func failed!\r\n");
+ARM GAS   			page 17
+
+
+ 685              	 .loc 1 197 0
+ 686 0046 0748     	 ldr r0,.L71+16
+ 687 0048 FFF7FEFF 	 bl OEM_PRINTF
+ 688              	.LVL42:
+ 198:coapdemo.c    ****     }
+ 689              	 .loc 1 198 0
+ 690 004c 4FF0FF30 	 mov r0,#-1
+ 691 0050 F7E7     	 b .L66
+ 692              	.L72:
+ 693 0052 00BF     	 .align 2
+ 694              	.L71:
+ 695 0054 60000000 	 .word .LANCHOR4+96
+ 696 0058 00000000 	 .word .LANCHOR6
+ 697 005c 00000000 	 .word .LANCHOR1
+ 698 0060 30000000 	 .word .LC16
+ 699 0064 00000000 	 .word .LC15
+ 700              	 .cfi_endproc
+ 701              	.LFE13:
+ 703              	 .section .text.coap_client_send_delete_func,"ax",%progbits
+ 704              	 .align 1
+ 705              	 .global coap_client_send_delete_func
+ 706              	 .syntax unified
+ 707              	 .thumb
+ 708              	 .thumb_func
+ 709              	 .fpu fpv4-sp-d16
+ 711              	coap_client_send_delete_func:
+ 712              	.LFB14:
+ 203:coapdemo.c    **** 
+ 204:coapdemo.c    **** int coap_client_send_delete_func(void)
+ 205:coapdemo.c    **** {
+ 713              	 .loc 1 205 0
+ 714              	 .cfi_startproc
+ 715              	 
+ 716              	 
+ 717 0000 30B5     	 push {r4,r5,lr}
+ 718              	 .cfi_def_cfa_offset 12
+ 719              	 .cfi_offset 4,-12
+ 720              	 .cfi_offset 5,-8
+ 721              	 .cfi_offset 14,-4
+ 722 0002 89B0     	 sub sp,sp,#36
+ 723              	 .cfi_def_cfa_offset 48
+ 724              	.LVL43:
+ 206:coapdemo.c    ****     /************* delete ************/
+ 207:coapdemo.c    ****     int data_len = 10;
+ 208:coapdemo.c    ****     char data_value3[32] = "40040214b47465737410";
+ 725              	 .loc 1 208 0
+ 726 0004 6C46     	 mov r4,sp
+ 727 0006 114D     	 ldr r5,.L78
+ 728 0008 0FCD     	 ldmia r5!,{r0,r1,r2,r3}
+ 729 000a 0FC4     	 stmia r4!,{r0,r1,r2,r3}
+ 730 000c 95E80300 	 ldm r5,{r0,r1}
+ 731 0010 44F8040B 	 str r0,[r4],#4
+ 732 0014 2170     	 strb r1,[r4]
+ 733 0016 0023     	 movs r3,#0
+ 734 0018 CDF81530 	 str r3,[sp,#21]
+ 735 001c CDF81930 	 str r3,[sp,#25]
+ 736 0020 0793     	 str r3,[sp,#28]
+ARM GAS   			page 18
+
+
+ 209:coapdemo.c    **** 
+ 210:coapdemo.c    ****     status = gsdk_ril_coap_client_send(coap_client_id, data_len, data_value3);
+ 737              	 .loc 1 210 0
+ 738 0022 6A46     	 mov r2,sp
+ 739 0024 0A21     	 movs r1,#10
+ 740 0026 0A4B     	 ldr r3,.L78+4
+ 741 0028 1868     	 ldr r0,[r3]
+ 742 002a FFF7FEFF 	 bl gsdk_ril_coap_client_send
+ 743              	.LVL44:
+ 744 002e 094B     	 ldr r3,.L78+8
+ 745 0030 1870     	 strb r0,[r3]
+ 211:coapdemo.c    ****     if (status != GSDK_SUCCESS) {
+ 746              	 .loc 1 211 0
+ 747 0032 28B9     	 cbnz r0,.L77
+ 212:coapdemo.c    ****         OEM_PRINTF("[COAP_DEMO] coap_client_send_delete_func failed!\r\n");
+ 213:coapdemo.c    ****         return -1;
+ 214:coapdemo.c    ****     }
+ 215:coapdemo.c    ****     OEM_PRINTF("[COAP_DEMO] coap_client_send_delete_func end!\r\n");
+ 748              	 .loc 1 215 0
+ 749 0034 0848     	 ldr r0,.L78+12
+ 750 0036 FFF7FEFF 	 bl OEM_PRINTF
+ 751              	.LVL45:
+ 216:coapdemo.c    ****     return 0;
+ 752              	 .loc 1 216 0
+ 753 003a 0020     	 movs r0,#0
+ 754              	.L73:
+ 217:coapdemo.c    **** }
+ 755              	 .loc 1 217 0
+ 756 003c 09B0     	 add sp,sp,#36
+ 757              	 .cfi_remember_state
+ 758              	 .cfi_def_cfa_offset 12
+ 759              	 
+ 760 003e 30BD     	 pop {r4,r5,pc}
+ 761              	.L77:
+ 762              	 .cfi_restore_state
+ 212:coapdemo.c    ****         OEM_PRINTF("[COAP_DEMO] coap_client_send_delete_func failed!\r\n");
+ 763              	 .loc 1 212 0
+ 764 0040 0648     	 ldr r0,.L78+16
+ 765 0042 FFF7FEFF 	 bl OEM_PRINTF
+ 766              	.LVL46:
+ 213:coapdemo.c    ****     }
+ 767              	 .loc 1 213 0
+ 768 0046 4FF0FF30 	 mov r0,#-1
+ 769 004a F7E7     	 b .L73
+ 770              	.L79:
+ 771              	 .align 2
+ 772              	.L78:
+ 773 004c A0000000 	 .word .LANCHOR4+160
+ 774 0050 00000000 	 .word .LANCHOR6
+ 775 0054 00000000 	 .word .LANCHOR1
+ 776 0058 34000000 	 .word .LC19
+ 777 005c 00000000 	 .word .LC18
+ 778              	 .cfi_endproc
+ 779              	.LFE14:
+ 781              	 .section .text.coap_client_send_post_func,"ax",%progbits
+ 782              	 .align 1
+ 783              	 .global coap_client_send_post_func
+ARM GAS   			page 19
+
+
+ 784              	 .syntax unified
+ 785              	 .thumb
+ 786              	 .thumb_func
+ 787              	 .fpu fpv4-sp-d16
+ 789              	coap_client_send_post_func:
+ 790              	.LFB15:
+ 218:coapdemo.c    **** 
+ 219:coapdemo.c    **** int coap_client_send_post_func(void)
+ 220:coapdemo.c    **** {
+ 791              	 .loc 1 220 0
+ 792              	 .cfi_startproc
+ 793              	 
+ 794              	 
+ 795 0000 30B5     	 push {r4,r5,lr}
+ 796              	 .cfi_def_cfa_offset 12
+ 797              	 .cfi_offset 4,-12
+ 798              	 .cfi_offset 5,-8
+ 799              	 .cfi_offset 14,-4
+ 800 0002 91B0     	 sub sp,sp,#68
+ 801              	 .cfi_def_cfa_offset 80
+ 802              	.LVL47:
+ 221:coapdemo.c    ****     /************* post ************/
+ 222:coapdemo.c    ****     int data_len = 20;
+ 223:coapdemo.c    ****     char data_value4[64] = "40020216b47465737410ff313233313233343536";
+ 803              	 .loc 1 223 0
+ 804 0004 6C46     	 mov r4,sp
+ 805 0006 154D     	 ldr r5,.L85
+ 806 0008 0FCD     	 ldmia r5!,{r0,r1,r2,r3}
+ 807 000a 0FC4     	 stmia r4!,{r0,r1,r2,r3}
+ 808 000c 0FCD     	 ldmia r5!,{r0,r1,r2,r3}
+ 809 000e 0FC4     	 stmia r4!,{r0,r1,r2,r3}
+ 810 0010 95E80700 	 ldm r5,{r0,r1,r2}
+ 811 0014 03C4     	 stmia r4!,{r0,r1}
+ 812 0016 2270     	 strb r2,[r4]
+ 813 0018 0023     	 movs r3,#0
+ 814 001a CDF82930 	 str r3,[sp,#41]
+ 815 001e CDF82D30 	 str r3,[sp,#45]
+ 816 0022 CDF83130 	 str r3,[sp,#49]
+ 817 0026 CDF83530 	 str r3,[sp,#53]
+ 818 002a CDF83930 	 str r3,[sp,#57]
+ 819 002e 0F93     	 str r3,[sp,#60]
+ 224:coapdemo.c    **** 
+ 225:coapdemo.c    ****     status = gsdk_ril_coap_client_send(coap_client_id, data_len, data_value4);
+ 820              	 .loc 1 225 0
+ 821 0030 6A46     	 mov r2,sp
+ 822 0032 1421     	 movs r1,#20
+ 823 0034 0A4B     	 ldr r3,.L85+4
+ 824 0036 1868     	 ldr r0,[r3]
+ 825 0038 FFF7FEFF 	 bl gsdk_ril_coap_client_send
+ 826              	.LVL48:
+ 827 003c 094B     	 ldr r3,.L85+8
+ 828 003e 1870     	 strb r0,[r3]
+ 226:coapdemo.c    ****     if (status != GSDK_SUCCESS) {
+ 829              	 .loc 1 226 0
+ 830 0040 28B9     	 cbnz r0,.L84
+ 227:coapdemo.c    ****         OEM_PRINTF("[COAP_DEMO] coap_client_send_post_func failed!\r\n");
+ 228:coapdemo.c    ****         return -1;
+ARM GAS   			page 20
+
+
+ 229:coapdemo.c    ****     }
+ 230:coapdemo.c    ****     OEM_PRINTF("[COAP_DEMO] coap_client_send_post_func end!\r\n");
+ 831              	 .loc 1 230 0
+ 832 0042 0948     	 ldr r0,.L85+12
+ 833 0044 FFF7FEFF 	 bl OEM_PRINTF
+ 834              	.LVL49:
+ 231:coapdemo.c    ****     return 0;
+ 835              	 .loc 1 231 0
+ 836 0048 0020     	 movs r0,#0
+ 837              	.L80:
+ 232:coapdemo.c    **** }
+ 838              	 .loc 1 232 0
+ 839 004a 11B0     	 add sp,sp,#68
+ 840              	 .cfi_remember_state
+ 841              	 .cfi_def_cfa_offset 12
+ 842              	 
+ 843 004c 30BD     	 pop {r4,r5,pc}
+ 844              	.L84:
+ 845              	 .cfi_restore_state
+ 227:coapdemo.c    ****         OEM_PRINTF("[COAP_DEMO] coap_client_send_post_func failed!\r\n");
+ 846              	 .loc 1 227 0
+ 847 004e 0748     	 ldr r0,.L85+16
+ 848 0050 FFF7FEFF 	 bl OEM_PRINTF
+ 849              	.LVL50:
+ 228:coapdemo.c    ****     }
+ 850              	 .loc 1 228 0
+ 851 0054 4FF0FF30 	 mov r0,#-1
+ 852 0058 F7E7     	 b .L80
+ 853              	.L86:
+ 854 005a 00BF     	 .align 2
+ 855              	.L85:
+ 856 005c C0000000 	 .word .LANCHOR4+192
+ 857 0060 00000000 	 .word .LANCHOR6
+ 858 0064 00000000 	 .word .LANCHOR1
+ 859 0068 34000000 	 .word .LC22
+ 860 006c 00000000 	 .word .LC21
+ 861              	 .cfi_endproc
+ 862              	.LFE15:
+ 864              	 .section .text.coap_client_send_func,"ax",%progbits
+ 865              	 .align 1
+ 866              	 .global coap_client_send_func
+ 867              	 .syntax unified
+ 868              	 .thumb
+ 869              	 .thumb_func
+ 870              	 .fpu fpv4-sp-d16
+ 872              	coap_client_send_func:
+ 873              	.LFB16:
+ 233:coapdemo.c    **** 
+ 234:coapdemo.c    **** int coap_client_send_func(void)
+ 235:coapdemo.c    **** {
+ 874              	 .loc 1 235 0
+ 875              	 .cfi_startproc
+ 876              	 
+ 877              	 
+ 878 0000 08B5     	 push {r3,lr}
+ 879              	 .cfi_def_cfa_offset 8
+ 880              	 .cfi_offset 3,-8
+ARM GAS   			page 21
+
+
+ 881              	 .cfi_offset 14,-4
+ 236:coapdemo.c    ****     if(coap_client_send_get_func() != 0) goto fail;
+ 882              	 .loc 1 236 0
+ 883 0002 FFF7FEFF 	 bl coap_client_send_get_func
+ 884              	.LVL51:
+ 885 0006 B8B9     	 cbnz r0,.L88
+ 237:coapdemo.c    ****     vTaskDelay(3 * 1000 / portTICK_RATE_MS);
+ 886              	 .loc 1 237 0
+ 887 0008 4FF49670 	 mov r0,#300
+ 888 000c FFF7FEFF 	 bl vTaskDelay
+ 889              	.LVL52:
+ 238:coapdemo.c    **** 
+ 239:coapdemo.c    ****     if(coap_client_send_put_func() != 0) goto fail;
+ 890              	 .loc 1 239 0
+ 891 0010 FFF7FEFF 	 bl coap_client_send_put_func
+ 892              	.LVL53:
+ 893 0014 80B9     	 cbnz r0,.L88
+ 240:coapdemo.c    ****     vTaskDelay(3 * 1000 / portTICK_RATE_MS);
+ 894              	 .loc 1 240 0
+ 895 0016 4FF49670 	 mov r0,#300
+ 896 001a FFF7FEFF 	 bl vTaskDelay
+ 897              	.LVL54:
+ 241:coapdemo.c    **** 
+ 242:coapdemo.c    ****     if(coap_client_send_delete_func() != 0) goto fail;
+ 898              	 .loc 1 242 0
+ 899 001e FFF7FEFF 	 bl coap_client_send_delete_func
+ 900              	.LVL55:
+ 901 0022 48B9     	 cbnz r0,.L88
+ 243:coapdemo.c    ****     vTaskDelay(3 * 1000 / portTICK_RATE_MS);
+ 902              	 .loc 1 243 0
+ 903 0024 4FF49670 	 mov r0,#300
+ 904 0028 FFF7FEFF 	 bl vTaskDelay
+ 905              	.LVL56:
+ 244:coapdemo.c    ****     
+ 245:coapdemo.c    ****     if(coap_client_send_post_func() != 0) goto fail;
+ 906              	 .loc 1 245 0
+ 907 002c FFF7FEFF 	 bl coap_client_send_post_func
+ 908              	.LVL57:
+ 909 0030 0346     	 mov r3,r0
+ 910 0032 08B9     	 cbnz r0,.L88
+ 911              	.L87:
+ 246:coapdemo.c    **** 
+ 247:coapdemo.c    ****     return 0;
+ 248:coapdemo.c    ****     OEM_PRINTF("[COAP_DEMO] coap_client_send_func end!\r\n");
+ 249:coapdemo.c    **** fail:
+ 250:coapdemo.c    ****     OEM_PRINTF("[COAP_DEMO] coap_client_send_func error!\r\n");
+ 251:coapdemo.c    ****     return -1;
+ 252:coapdemo.c    **** }
+ 912              	 .loc 1 252 0
+ 913 0034 1846     	 mov r0,r3
+ 914 0036 08BD     	 pop {r3,pc}
+ 915              	.L88:
+ 250:coapdemo.c    ****     return -1;
+ 916              	 .loc 1 250 0
+ 917 0038 0248     	 ldr r0,.L91
+ 918 003a FFF7FEFF 	 bl OEM_PRINTF
+ 919              	.LVL58:
+ARM GAS   			page 22
+
+
+ 251:coapdemo.c    **** }
+ 920              	 .loc 1 251 0
+ 921 003e 4FF0FF33 	 mov r3,#-1
+ 922 0042 F7E7     	 b .L87
+ 923              	.L92:
+ 924              	 .align 2
+ 925              	.L91:
+ 926 0044 00000000 	 .word .LC23
+ 927              	 .cfi_endproc
+ 928              	.LFE16:
+ 930              	 .section .text.delete_coap_client_func,"ax",%progbits
+ 931              	 .align 1
+ 932              	 .global delete_coap_client_func
+ 933              	 .syntax unified
+ 934              	 .thumb
+ 935              	 .thumb_func
+ 936              	 .fpu fpv4-sp-d16
+ 938              	delete_coap_client_func:
+ 939              	.LFB17:
+ 253:coapdemo.c    **** 
+ 254:coapdemo.c    **** int delete_coap_client_func(void)
+ 255:coapdemo.c    **** {
+ 940              	 .loc 1 255 0
+ 941              	 .cfi_startproc
+ 942              	 
+ 943              	 
+ 944 0000 08B5     	 push {r3,lr}
+ 945              	 .cfi_def_cfa_offset 8
+ 946              	 .cfi_offset 3,-8
+ 947              	 .cfi_offset 14,-4
+ 256:coapdemo.c    ****     status = gsdk_ril_coap_delete(coap_client_id);
+ 948              	 .loc 1 256 0
+ 949 0002 094B     	 ldr r3,.L98
+ 950 0004 1868     	 ldr r0,[r3]
+ 951 0006 FFF7FEFF 	 bl gsdk_ril_coap_delete
+ 952              	.LVL59:
+ 953 000a 084B     	 ldr r3,.L98+4
+ 954 000c 1870     	 strb r0,[r3]
+ 257:coapdemo.c    ****     if (status != GSDK_SUCCESS) {
+ 955              	 .loc 1 257 0
+ 956 000e 20B9     	 cbnz r0,.L97
+ 258:coapdemo.c    ****         OEM_PRINTF("[COAP_DEMO] delete_coap_client_func error!\r\n");
+ 259:coapdemo.c    ****         return -1;
+ 260:coapdemo.c    ****     }
+ 261:coapdemo.c    ****     OEM_PRINTF("[COAP_DEMO] delete_coap_client_func end!\r\n");
+ 957              	 .loc 1 261 0
+ 958 0010 0748     	 ldr r0,.L98+8
+ 959 0012 FFF7FEFF 	 bl OEM_PRINTF
+ 960              	.LVL60:
+ 262:coapdemo.c    ****     return 0;
+ 961              	 .loc 1 262 0
+ 962 0016 0020     	 movs r0,#0
+ 963              	.L93:
+ 263:coapdemo.c    **** }
+ 964              	 .loc 1 263 0
+ 965 0018 08BD     	 pop {r3,pc}
+ 966              	.L97:
+ARM GAS   			page 23
+
+
+ 258:coapdemo.c    ****         OEM_PRINTF("[COAP_DEMO] delete_coap_client_func error!\r\n");
+ 967              	 .loc 1 258 0
+ 968 001a 0648     	 ldr r0,.L98+12
+ 969 001c FFF7FEFF 	 bl OEM_PRINTF
+ 970              	.LVL61:
+ 259:coapdemo.c    ****     }
+ 971              	 .loc 1 259 0
+ 972 0020 4FF0FF30 	 mov r0,#-1
+ 973 0024 F8E7     	 b .L93
+ 974              	.L99:
+ 975 0026 00BF     	 .align 2
+ 976              	.L98:
+ 977 0028 00000000 	 .word .LANCHOR6
+ 978 002c 00000000 	 .word .LANCHOR1
+ 979 0030 30000000 	 .word .LC25
+ 980 0034 00000000 	 .word .LC24
+ 981              	 .cfi_endproc
+ 982              	.LFE17:
+ 984              	 .section .text.create_coap_server_func,"ax",%progbits
+ 985              	 .align 1
+ 986              	 .global create_coap_server_func
+ 987              	 .syntax unified
+ 988              	 .thumb
+ 989              	 .thumb_func
+ 990              	 .fpu fpv4-sp-d16
+ 992              	create_coap_server_func:
+ 993              	.LFB18:
+ 264:coapdemo.c    **** 
+ 265:coapdemo.c    **** int create_coap_server_func(void)
+ 266:coapdemo.c    **** {
+ 994              	 .loc 1 266 0
+ 995              	 .cfi_startproc
+ 996              	 
+ 997              	 
+ 998 0000 08B5     	 push {r3,lr}
+ 999              	 .cfi_def_cfa_offset 8
+ 1000              	 .cfi_offset 3,-8
+ 1001              	 .cfi_offset 14,-4
+ 1002              	.LVL62:
+ 267:coapdemo.c    ****     int server_port = 5683;
+ 268:coapdemo.c    ****     int cid = 1;
+ 269:coapdemo.c    **** 
+ 270:coapdemo.c    ****     status = gsdk_ril_create_coap_server(ip_buf, server_port, cid, &coap_server_id);
+ 1003              	 .loc 1 270 0
+ 1004 0002 0A4B     	 ldr r3,.L105
+ 1005 0004 0122     	 movs r2,#1
+ 1006 0006 41F23361 	 movw r1,#5683
+ 1007 000a 0948     	 ldr r0,.L105+4
+ 1008 000c FFF7FEFF 	 bl gsdk_ril_create_coap_server
+ 1009              	.LVL63:
+ 1010 0010 084B     	 ldr r3,.L105+8
+ 1011 0012 1870     	 strb r0,[r3]
+ 271:coapdemo.c    ****     if (status != GSDK_SUCCESS) {
+ 1012              	 .loc 1 271 0
+ 1013 0014 20B9     	 cbnz r0,.L104
+ 272:coapdemo.c    ****         OEM_PRINTF("[COAP_DEMO] create_coap_server_func error!\r\n");
+ 273:coapdemo.c    ****         return -1;
+ARM GAS   			page 24
+
+
+ 274:coapdemo.c    ****     }
+ 275:coapdemo.c    ****     OEM_PRINTF("[COAP_DEMO] create_coap_server_func end!\r\n");
+ 1014              	 .loc 1 275 0
+ 1015 0016 0848     	 ldr r0,.L105+12
+ 1016 0018 FFF7FEFF 	 bl OEM_PRINTF
+ 1017              	.LVL64:
+ 276:coapdemo.c    ****     return 0;
+ 1018              	 .loc 1 276 0
+ 1019 001c 0020     	 movs r0,#0
+ 1020              	.L100:
+ 277:coapdemo.c    **** }
+ 1021              	 .loc 1 277 0
+ 1022 001e 08BD     	 pop {r3,pc}
+ 1023              	.L104:
+ 272:coapdemo.c    ****         OEM_PRINTF("[COAP_DEMO] create_coap_server_func error!\r\n");
+ 1024              	 .loc 1 272 0
+ 1025 0020 0648     	 ldr r0,.L105+16
+ 1026 0022 FFF7FEFF 	 bl OEM_PRINTF
+ 1027              	.LVL65:
+ 273:coapdemo.c    ****     }
+ 1028              	 .loc 1 273 0
+ 1029 0026 4FF0FF30 	 mov r0,#-1
+ 1030 002a F8E7     	 b .L100
+ 1031              	.L106:
+ 1032              	 .align 2
+ 1033              	.L105:
+ 1034 002c 00000000 	 .word .LANCHOR8
+ 1035 0030 00000000 	 .word .LANCHOR7
+ 1036 0034 00000000 	 .word .LANCHOR1
+ 1037 0038 30000000 	 .word .LC27
+ 1038 003c 00000000 	 .word .LC26
+ 1039              	 .cfi_endproc
+ 1040              	.LFE18:
+ 1042              	 .section .text.ip_wait_func,"ax",%progbits
+ 1043              	 .align 1
+ 1044              	 .global ip_wait_func
+ 1045              	 .syntax unified
+ 1046              	 .thumb
+ 1047              	 .thumb_func
+ 1048              	 .fpu fpv4-sp-d16
+ 1050              	ip_wait_func:
+ 1051              	.LFB19:
+ 278:coapdemo.c    **** 
+ 279:coapdemo.c    **** int ip_wait_func()
+ 280:coapdemo.c    **** {
+ 1052              	 .loc 1 280 0
+ 1053              	 .cfi_startproc
+ 1054              	 
+ 1055              	 
+ 1056 0000 70B5     	 push {r4,r5,r6,lr}
+ 1057              	 .cfi_def_cfa_offset 16
+ 1058              	 .cfi_offset 4,-16
+ 1059              	 .cfi_offset 5,-12
+ 1060              	 .cfi_offset 6,-8
+ 1061              	 .cfi_offset 14,-4
+ 1062              	.LVL66:
+ 281:coapdemo.c    ****     int count = 0;
+ARM GAS   			page 25
+
+
+ 1063              	 .loc 1 281 0
+ 1064 0002 0026     	 movs r6,#0
+ 1065              	.LVL67:
+ 1066              	.L111:
+ 282:coapdemo.c    **** 
+ 283:coapdemo.c    ****     while(1){
+ 284:coapdemo.c    ****         if(count > 100){
+ 1067              	 .loc 1 284 0
+ 1068 0004 642E     	 cmp r6,#100
+ 1069 0006 17DC     	 bgt .L113
+ 285:coapdemo.c    ****             OEM_PRINTF("wait for IP timeout\r\n");
+ 286:coapdemo.c    ****             return -1;
+ 287:coapdemo.c    ****         }
+ 288:coapdemo.c    ****         memset(ip_buf, 0, 64);
+ 1070              	 .loc 1 288 0
+ 1071 0008 124C     	 ldr r4,.L115
+ 1072 000a 4025     	 movs r5,#64
+ 1073 000c 2A46     	 mov r2,r5
+ 1074 000e 0021     	 movs r1,#0
+ 1075 0010 2046     	 mov r0,r4
+ 1076 0012 FFF7FEFF 	 bl memset
+ 1077              	.LVL68:
+ 289:coapdemo.c    ****         status = gsdk_ril_get_local_ipaddr(ip_buf, 64);
+ 1078              	 .loc 1 289 0
+ 1079 0016 2946     	 mov r1,r5
+ 1080 0018 2046     	 mov r0,r4
+ 1081 001a FFF7FEFF 	 bl gsdk_ril_get_local_ipaddr
+ 1082              	.LVL69:
+ 1083 001e 40B2     	 sxtb r0,r0
+ 1084 0020 0D4B     	 ldr r3,.L115+4
+ 1085 0022 1870     	 strb r0,[r3]
+ 290:coapdemo.c    ****         if(status == 1){
+ 1086              	 .loc 1 290 0
+ 1087 0024 0128     	 cmp r0,#1
+ 1088 0026 0DD0     	 beq .L114
+ 291:coapdemo.c    ****             OEM_PRINTF("get ip success!\r\n");
+ 292:coapdemo.c    ****             break;
+ 293:coapdemo.c    ****         }
+ 294:coapdemo.c    ****         OEM_PRINTF("get ip failed!\r\n");
+ 1089              	 .loc 1 294 0
+ 1090 0028 0C48     	 ldr r0,.L115+8
+ 1091 002a FFF7FEFF 	 bl OEM_PRINTF
+ 1092              	.LVL70:
+ 295:coapdemo.c    ****         vTaskDelay(100);
+ 1093              	 .loc 1 295 0
+ 1094 002e 6420     	 movs r0,#100
+ 1095 0030 FFF7FEFF 	 bl vTaskDelay
+ 1096              	.LVL71:
+ 296:coapdemo.c    ****         count++;
+ 1097              	 .loc 1 296 0
+ 1098 0034 0136     	 adds r6,r6,#1
+ 1099              	.LVL72:
+ 284:coapdemo.c    ****             OEM_PRINTF("wait for IP timeout\r\n");
+ 1100              	 .loc 1 284 0
+ 1101 0036 E5E7     	 b .L111
+ 1102              	.L113:
+ 285:coapdemo.c    ****             return -1;
+ARM GAS   			page 26
+
+
+ 1103              	 .loc 1 285 0
+ 1104 0038 0948     	 ldr r0,.L115+12
+ 1105 003a FFF7FEFF 	 bl OEM_PRINTF
+ 1106              	.LVL73:
+ 286:coapdemo.c    ****         }
+ 1107              	 .loc 1 286 0
+ 1108 003e 4FF0FF30 	 mov r0,#-1
+ 1109 0042 06E0     	 b .L107
+ 1110              	.L114:
+ 291:coapdemo.c    ****             break;
+ 1111              	 .loc 1 291 0
+ 1112 0044 0748     	 ldr r0,.L115+16
+ 1113 0046 FFF7FEFF 	 bl OEM_PRINTF
+ 1114              	.LVL74:
+ 297:coapdemo.c    ****     }
+ 298:coapdemo.c    ****     OEM_PRINTF("ip registered\r\n");
+ 1115              	 .loc 1 298 0
+ 1116 004a 0748     	 ldr r0,.L115+20
+ 1117 004c FFF7FEFF 	 bl OEM_PRINTF
+ 1118              	.LVL75:
+ 299:coapdemo.c    ****     return 0;
+ 1119              	 .loc 1 299 0
+ 1120 0050 0020     	 movs r0,#0
+ 1121              	.L107:
+ 300:coapdemo.c    **** }
+ 1122              	 .loc 1 300 0
+ 1123 0052 70BD     	 pop {r4,r5,r6,pc}
+ 1124              	.LVL76:
+ 1125              	.L116:
+ 1126              	 .align 2
+ 1127              	.L115:
+ 1128 0054 00000000 	 .word .LANCHOR7
+ 1129 0058 00000000 	 .word .LANCHOR1
+ 1130 005c 3C000000 	 .word .LC31
+ 1131 0060 00000000 	 .word .LC28
+ 1132 0064 18000000 	 .word .LC29
+ 1133 0068 2C000000 	 .word .LC30
+ 1134              	 .cfi_endproc
+ 1135              	.LFE19:
+ 1137              	 .section .text.main,"ax",%progbits
+ 1138              	 .align 1
+ 1139              	 .global main
+ 1140              	 .syntax unified
+ 1141              	 .thumb
+ 1142              	 .thumb_func
+ 1143              	 .fpu fpv4-sp-d16
+ 1145              	main:
+ 1146              	.LFB20:
+ 301:coapdemo.c    **** 
+ 302:coapdemo.c    **** int main(void)
+ 303:coapdemo.c    **** {
+ 1147              	 .loc 1 303 0
+ 1148              	 .cfi_startproc
+ 1149              	 
+ 1150              	 
+ 1151 0000 08B5     	 push {r3,lr}
+ 1152              	 .cfi_def_cfa_offset 8
+ARM GAS   			page 27
+
+
+ 1153              	 .cfi_offset 3,-8
+ 1154              	 .cfi_offset 14,-4
+ 304:coapdemo.c    ****     oemdebuglog_open();
+ 1155              	 .loc 1 304 0
+ 1156 0002 FFF7FEFF 	 bl oemdebuglog_open
+ 1157              	.LVL77:
+ 305:coapdemo.c    ****     if(init_func() != 0) goto _fail;
+ 1158              	 .loc 1 305 0
+ 1159 0006 FFF7FEFF 	 bl init_func
+ 1160              	.LVL78:
+ 1161 000a 10B9     	 cbnz r0,.L118
+ 306:coapdemo.c    ****     if(ip_wait_func() != 0) goto _fail;
+ 1162              	 .loc 1 306 0
+ 1163 000c FFF7FEFF 	 bl ip_wait_func
+ 1164              	.LVL79:
+ 1165 0010 20B1     	 cbz r0,.L121
+ 1166              	.L118:
+ 307:coapdemo.c    ****     coap_unsolicited_func(&g_handler);
+ 308:coapdemo.c    **** 
+ 309:coapdemo.c    ****     OEM_PRINTF("[COAP_DEMO] as a client, to communicate with outside server.\r\n");
+ 310:coapdemo.c    ****     if(create_coap_client_func() != 0) goto _fail;
+ 311:coapdemo.c    ****     if(coap_client_send_func() != 0) goto _fail;
+ 312:coapdemo.c    ****     vTaskDelay(3 * 1000 / portTICK_RATE_MS);
+ 313:coapdemo.c    ****     if(delete_coap_client_func() != 0) goto _fail;
+ 314:coapdemo.c    ****     
+ 315:coapdemo.c    ****     vTaskDelay(3 * 1000 / portTICK_RATE_MS);
+ 316:coapdemo.c    ****     OEM_PRINTF("[COAP_DEMO] both a server and a client, to communicate.\r\n");
+ 317:coapdemo.c    ****     coap_type_flag = BOTH_CLIENT_AND_SERVER;
+ 318:coapdemo.c    ****     if(create_coap_server_func() != 0) goto _fail;
+ 319:coapdemo.c    ****     if(create_coap_client_func() != 0) goto _fail;
+ 320:coapdemo.c    ****     if(coap_client_send_get_func() != 0) goto _fail;
+ 321:coapdemo.c    ****     OEM_PRINTF("[COAP_DEMO] coap demo over!!!\r\n");
+ 322:coapdemo.c    ****     while(1){
+ 323:coapdemo.c    ****         vTaskDelay(100);
+ 324:coapdemo.c    ****     }
+ 325:coapdemo.c    **** 
+ 326:coapdemo.c    **** _fail:
+ 327:coapdemo.c    **** 
+ 328:coapdemo.c    ****     OEM_PRINTF("[COAP_DEMO] main function abnormal exit!\r\n");
+ 1167              	 .loc 1 328 0
+ 1168 0012 1C48     	 ldr r0,.L122
+ 1169 0014 FFF7FEFF 	 bl OEM_PRINTF
+ 1170              	.LVL80:
+ 329:coapdemo.c    ****     return 0;
+ 330:coapdemo.c    **** }
+ 1171              	 .loc 1 330 0
+ 1172 0018 0020     	 movs r0,#0
+ 1173 001a 08BD     	 pop {r3,pc}
+ 1174              	.L121:
+ 307:coapdemo.c    ****     coap_unsolicited_func(&g_handler);
+ 1175              	 .loc 1 307 0
+ 1176 001c 1A48     	 ldr r0,.L122+4
+ 1177 001e FFF7FEFF 	 bl coap_unsolicited_func
+ 1178              	.LVL81:
+ 309:coapdemo.c    ****     if(create_coap_client_func() != 0) goto _fail;
+ 1179              	 .loc 1 309 0
+ 1180 0022 1A48     	 ldr r0,.L122+8
+ARM GAS   			page 28
+
+
+ 1181 0024 FFF7FEFF 	 bl OEM_PRINTF
+ 1182              	.LVL82:
+ 310:coapdemo.c    ****     if(coap_client_send_func() != 0) goto _fail;
+ 1183              	 .loc 1 310 0
+ 1184 0028 FFF7FEFF 	 bl create_coap_client_func
+ 1185              	.LVL83:
+ 1186 002c 0028     	 cmp r0,#0
+ 1187 002e F0D1     	 bne .L118
+ 311:coapdemo.c    ****     vTaskDelay(3 * 1000 / portTICK_RATE_MS);
+ 1188              	 .loc 1 311 0
+ 1189 0030 FFF7FEFF 	 bl coap_client_send_func
+ 1190              	.LVL84:
+ 1191 0034 0028     	 cmp r0,#0
+ 1192 0036 ECD1     	 bne .L118
+ 312:coapdemo.c    ****     if(delete_coap_client_func() != 0) goto _fail;
+ 1193              	 .loc 1 312 0
+ 1194 0038 4FF49670 	 mov r0,#300
+ 1195 003c FFF7FEFF 	 bl vTaskDelay
+ 1196              	.LVL85:
+ 313:coapdemo.c    ****     
+ 1197              	 .loc 1 313 0
+ 1198 0040 FFF7FEFF 	 bl delete_coap_client_func
+ 1199              	.LVL86:
+ 1200 0044 0028     	 cmp r0,#0
+ 1201 0046 E4D1     	 bne .L118
+ 315:coapdemo.c    ****     OEM_PRINTF("[COAP_DEMO] both a server and a client, to communicate.\r\n");
+ 1202              	 .loc 1 315 0
+ 1203 0048 4FF49670 	 mov r0,#300
+ 1204 004c FFF7FEFF 	 bl vTaskDelay
+ 1205              	.LVL87:
+ 316:coapdemo.c    ****     coap_type_flag = BOTH_CLIENT_AND_SERVER;
+ 1206              	 .loc 1 316 0
+ 1207 0050 0F48     	 ldr r0,.L122+12
+ 1208 0052 FFF7FEFF 	 bl OEM_PRINTF
+ 1209              	.LVL88:
+ 317:coapdemo.c    ****     if(create_coap_server_func() != 0) goto _fail;
+ 1210              	 .loc 1 317 0
+ 1211 0056 0F4B     	 ldr r3,.L122+16
+ 1212 0058 0122     	 movs r2,#1
+ 1213 005a 1A60     	 str r2,[r3]
+ 318:coapdemo.c    ****     if(create_coap_client_func() != 0) goto _fail;
+ 1214              	 .loc 1 318 0
+ 1215 005c FFF7FEFF 	 bl create_coap_server_func
+ 1216              	.LVL89:
+ 1217 0060 0028     	 cmp r0,#0
+ 1218 0062 D6D1     	 bne .L118
+ 319:coapdemo.c    ****     if(coap_client_send_get_func() != 0) goto _fail;
+ 1219              	 .loc 1 319 0
+ 1220 0064 FFF7FEFF 	 bl create_coap_client_func
+ 1221              	.LVL90:
+ 1222 0068 0028     	 cmp r0,#0
+ 1223 006a D2D1     	 bne .L118
+ 320:coapdemo.c    ****     OEM_PRINTF("[COAP_DEMO] coap demo over!!!\r\n");
+ 1224              	 .loc 1 320 0
+ 1225 006c FFF7FEFF 	 bl coap_client_send_get_func
+ 1226              	.LVL91:
+ 1227 0070 0028     	 cmp r0,#0
+ARM GAS   			page 29
+
+
+ 1228 0072 CED1     	 bne .L118
+ 321:coapdemo.c    ****     while(1){
+ 1229              	 .loc 1 321 0
+ 1230 0074 0848     	 ldr r0,.L122+20
+ 1231 0076 FFF7FEFF 	 bl OEM_PRINTF
+ 1232              	.LVL92:
+ 1233              	.L119:
+ 323:coapdemo.c    ****     }
+ 1234              	 .loc 1 323 0 discriminator 1
+ 1235 007a 6420     	 movs r0,#100
+ 1236 007c FFF7FEFF 	 bl vTaskDelay
+ 1237              	.LVL93:
+ 1238 0080 FBE7     	 b .L119
+ 1239              	.L123:
+ 1240 0082 00BF     	 .align 2
+ 1241              	.L122:
+ 1242 0084 9C000000 	 .word .LC35
+ 1243 0088 00000000 	 .word .LANCHOR9
+ 1244 008c 00000000 	 .word .LC32
+ 1245 0090 40000000 	 .word .LC33
+ 1246 0094 00000000 	 .word .LANCHOR5
+ 1247 0098 7C000000 	 .word .LC34
+ 1248              	 .cfi_endproc
+ 1249              	.LFE20:
+ 1251              	 .global coap_type_flag
+ 1252              	 .global ip_buf
+ 1253              	 .global coap_server_id
+ 1254              	 .global coap_client_id
+ 1255              	 .global oem_debuglog
+ 1256              	 .section .rodata
+ 1257              	 .align 2
+ 1258              	 .set .LANCHOR4,.+0
+ 1259              	.LC8:
+ 1260 0000 3133392E 	 .ascii "139.196.187.107\000"
+ 1260      3139362E 
+ 1260      3138372E 
+ 1260      31303700 
+ 1261 0010 00000000 	 .space 48
+ 1261      00000000 
+ 1261      00000000 
+ 1261      00000000 
+ 1261      00000000 
+ 1262              	.LC11:
+ 1263 0040 34303031 	 .ascii "40013b06b474657374c102\000"
+ 1263      33623036 
+ 1263      62343734 
+ 1263      36353733 
+ 1263      37346331 
+ 1264 0057 00000000 	 .space 9
+ 1264      00000000 
+ 1264      00
+ 1265              	.LC14:
+ 1266 0060 34303033 	 .ascii "400325b6b876616c696461746510ff313233313233343536\000"
+ 1266      32356236 
+ 1266      62383736 
+ 1266      36313663 
+ 1266      36393634 
+ARM GAS   			page 30
+
+
+ 1267 0091 00000000 	 .space 15
+ 1267      00000000 
+ 1267      00000000 
+ 1267      000000
+ 1268              	.LC17:
+ 1269 00a0 34303034 	 .ascii "40040214b47465737410\000"
+ 1269      30323134 
+ 1269      62343734 
+ 1269      36353733 
+ 1269      37343130 
+ 1270 00b5 00000000 	 .space 11
+ 1270      00000000 
+ 1270      000000
+ 1271              	.LC20:
+ 1272 00c0 34303032 	 .ascii "40020216b47465737410ff313233313233343536\000"
+ 1272      30323136 
+ 1272      62343734 
+ 1272      36353733 
+ 1272      37343130 
+ 1273 00e9 00000000 	 .space 23
+ 1273      00000000 
+ 1273      00000000 
+ 1273      00000000 
+ 1273      00000000 
+ 1274              	 .section .bss.coap_type_flag,"aw",%nobits
+ 1275              	 .align 2
+ 1276              	 .set .LANCHOR5,.+0
+ 1279              	coap_type_flag:
+ 1280 0000 00000000 	 .space 4
+ 1281              	 .section .bss.g_handler,"aw",%nobits
+ 1282              	 .align 2
+ 1283              	 .set .LANCHOR9,.+0
+ 1286              	g_handler:
+ 1287 0000 00000000 	 .space 16
+ 1287      00000000 
+ 1287      00000000 
+ 1287      00000000 
+ 1288              	 .section .bss.g_huart,"aw",%nobits
+ 1289              	 .align 2
+ 1290              	 .set .LANCHOR3,.+0
+ 1293              	g_huart:
+ 1294 0000 00000000 	 .space 4
+ 1295              	 .section .bss.ip_buf,"aw",%nobits
+ 1296              	 .align 2
+ 1297              	 .set .LANCHOR7,.+0
+ 1300              	ip_buf:
+ 1301 0000 00000000 	 .space 64
+ 1301      00000000 
+ 1301      00000000 
+ 1301      00000000 
+ 1301      00000000 
+ 1302              	 .section .bss.status,"aw",%nobits
+ 1303              	 .set .LANCHOR1,.+0
+ 1306              	status:
+ 1307 0000 00       	 .space 1
+ 1308              	 .section .bss.unsolicited_buf,"aw",%nobits
+ 1309              	 .align 2
+ARM GAS   			page 31
+
+
+ 1310              	 .set .LANCHOR2,.+0
+ 1313              	unsolicited_buf:
+ 1314 0000 00000000 	 .space 1024
+ 1314      00000000 
+ 1314      00000000 
+ 1314      00000000 
+ 1314      00000000 
+ 1315              	 .section .data.coap_client_id,"aw",%progbits
+ 1316              	 .align 2
+ 1317              	 .set .LANCHOR6,.+0
+ 1320              	coap_client_id:
+ 1321 0000 FFFFFFFF 	 .word -1
+ 1322              	 .section .data.coap_server_id,"aw",%progbits
+ 1323              	 .align 2
+ 1324              	 .set .LANCHOR8,.+0
+ 1327              	coap_server_id:
+ 1328 0000 FFFFFFFF 	 .word -1
+ 1329              	 .section .data.oem_debuglog,"aw",%progbits
+ 1330              	 .align 2
+ 1331              	 .set .LANCHOR0,.+0
+ 1334              	oem_debuglog:
+ 1335 0000 01000000 	 .word 1
+ 1336              	 .section .rodata.coap_client_send_delete_func.str1.4,"aMS",%progbits,1
+ 1337              	 .align 2
+ 1338              	.LC18:
+ 1339 0000 5B434F41 	 .ascii "[COAP_DEMO] coap_client_send_delete_func failed!\015"
+ 1339      505F4445 
+ 1339      4D4F5D20 
+ 1339      636F6170 
+ 1339      5F636C69 
+ 1340 0031 0A00     	 .ascii "\012\000"
+ 1341 0033 00       	 .space 1
+ 1342              	.LC19:
+ 1343 0034 5B434F41 	 .ascii "[COAP_DEMO] coap_client_send_delete_func end!\015\012"
+ 1343      505F4445 
+ 1343      4D4F5D20 
+ 1343      636F6170 
+ 1343      5F636C69 
+ 1344 0063 00       	 .ascii "\000"
+ 1345              	 .section .rodata.coap_client_send_func.str1.4,"aMS",%progbits,1
+ 1346              	 .align 2
+ 1347              	.LC23:
+ 1348 0000 5B434F41 	 .ascii "[COAP_DEMO] coap_client_send_func error!\015\012\000"
+ 1348      505F4445 
+ 1348      4D4F5D20 
+ 1348      636F6170 
+ 1348      5F636C69 
+ 1349              	 .section .rodata.coap_client_send_get_func.str1.4,"aMS",%progbits,1
+ 1350              	 .align 2
+ 1351              	.LC12:
+ 1352 0000 5B434F41 	 .ascii "[COAP_DEMO] coap_client_send_get_func failed\015\012"
+ 1352      505F4445 
+ 1352      4D4F5D20 
+ 1352      636F6170 
+ 1352      5F636C69 
+ 1353 002e 00       	 .ascii "\000"
+ 1354 002f 00       	 .space 1
+ARM GAS   			page 32
+
+
+ 1355              	.LC13:
+ 1356 0030 5B434F41 	 .ascii "[COAP_DEMO] coap_client_send_get_func end\015\012\000"
+ 1356      505F4445 
+ 1356      4D4F5D20 
+ 1356      636F6170 
+ 1356      5F636C69 
+ 1357              	 .section .rodata.coap_client_send_post_func.str1.4,"aMS",%progbits,1
+ 1358              	 .align 2
+ 1359              	.LC21:
+ 1360 0000 5B434F41 	 .ascii "[COAP_DEMO] coap_client_send_post_func failed!\015\012"
+ 1360      505F4445 
+ 1360      4D4F5D20 
+ 1360      636F6170 
+ 1360      5F636C69 
+ 1361 0030 00       	 .ascii "\000"
+ 1362 0031 000000   	 .space 3
+ 1363              	.LC22:
+ 1364 0034 5B434F41 	 .ascii "[COAP_DEMO] coap_client_send_post_func end!\015\012"
+ 1364      505F4445 
+ 1364      4D4F5D20 
+ 1364      636F6170 
+ 1364      5F636C69 
+ 1365 0061 00       	 .ascii "\000"
+ 1366              	 .section .rodata.coap_client_send_put_func.str1.4,"aMS",%progbits,1
+ 1367              	 .align 2
+ 1368              	.LC15:
+ 1369 0000 5B434F41 	 .ascii "[COAP_DEMO] coap_client_send_put_func failed!\015\012"
+ 1369      505F4445 
+ 1369      4D4F5D20 
+ 1369      636F6170 
+ 1369      5F636C69 
+ 1370 002f 00       	 .ascii "\000"
+ 1371              	.LC16:
+ 1372 0030 5B434F41 	 .ascii "[COAP_DEMO] coap_client_send_put_func end!\015\012\000"
+ 1372      505F4445 
+ 1372      4D4F5D20 
+ 1372      636F6170 
+ 1372      5F636C69 
+ 1373              	 .section .rodata.coap_handle_func.str1.4,"aMS",%progbits,1
+ 1374              	 .align 2
+ 1375              	.LC2:
+ 1376 0000 5B434F41 	 .ascii "[COAP_DEMO] the information is too large ,please ch"
+ 1376      505F4445 
+ 1376      4D4F5D20 
+ 1376      74686520 
+ 1376      696E666F 
+ 1377 0033 616E6765 	 .ascii "ange the size of recv_buf\015\012\000"
+ 1377      20746865 
+ 1377      2073697A 
+ 1377      65206F66 
+ 1377      20726563 
+ 1378 004f 00       	 .space 1
+ 1379              	.LC3:
+ 1380 0050 25730D0A 	 .ascii "%s\015\012\015\012\000"
+ 1380      0D0A00
+ 1381              	 .section .rodata.coap_unsolicited_func.str1.4,"aMS",%progbits,1
+ 1382              	 .align 2
+ARM GAS   			page 33
+
+
+ 1383              	.LC0:
+ 1384 0000 2B45434F 	 .ascii "+ECOAPNMI:\000"
+ 1384      41504E4D 
+ 1384      493A00
+ 1385 000b 00       	 .space 1
+ 1386              	.LC1:
+ 1387 000c 5B434F41 	 .ascii "[COAP_DEMO] some error hanppened in handle,status i"
+ 1387      505F4445 
+ 1387      4D4F5D20 
+ 1387      736F6D65 
+ 1387      20657272 
+ 1388 003f 73202564 	 .ascii "s %d\015\012\000"
+ 1388      0D0A00
+ 1389              	 .section .rodata.create_coap_client_func.str1.4,"aMS",%progbits,1
+ 1390              	 .align 2
+ 1391              	.LC9:
+ 1392 0000 5B434F41 	 .ascii "[COAP_DEMO] create_coap_client_func failed\015\012\000"
+ 1392      505F4445 
+ 1392      4D4F5D20 
+ 1392      63726561 
+ 1392      74655F63 
+ 1393 002d 000000   	 .space 3
+ 1394              	.LC10:
+ 1395 0030 5B434F41 	 .ascii "[COAP_DEMO] create_coap_client_func end!\015\012\000"
+ 1395      505F4445 
+ 1395      4D4F5D20 
+ 1395      63726561 
+ 1395      74655F63 
+ 1396              	 .section .rodata.create_coap_server_func.str1.4,"aMS",%progbits,1
+ 1397              	 .align 2
+ 1398              	.LC26:
+ 1399 0000 5B434F41 	 .ascii "[COAP_DEMO] create_coap_server_func error!\015\012\000"
+ 1399      505F4445 
+ 1399      4D4F5D20 
+ 1399      63726561 
+ 1399      74655F63 
+ 1400 002d 000000   	 .space 3
+ 1401              	.LC27:
+ 1402 0030 5B434F41 	 .ascii "[COAP_DEMO] create_coap_server_func end!\015\012\000"
+ 1402      505F4445 
+ 1402      4D4F5D20 
+ 1402      63726561 
+ 1402      74655F63 
+ 1403              	 .section .rodata.delete_coap_client_func.str1.4,"aMS",%progbits,1
+ 1404              	 .align 2
+ 1405              	.LC24:
+ 1406 0000 5B434F41 	 .ascii "[COAP_DEMO] delete_coap_client_func error!\015\012\000"
+ 1406      505F4445 
+ 1406      4D4F5D20 
+ 1406      64656C65 
+ 1406      74655F63 
+ 1407 002d 000000   	 .space 3
+ 1408              	.LC25:
+ 1409 0030 5B434F41 	 .ascii "[COAP_DEMO] delete_coap_client_func end!\015\012\000"
+ 1409      505F4445 
+ 1409      4D4F5D20 
+ 1409      64656C65 
+ARM GAS   			page 34
+
+
+ 1409      74655F63 
+ 1410              	 .section .rodata.gsdk_ril_init_func.str1.4,"aMS",%progbits,1
+ 1411              	 .align 2
+ 1412              	.LC5:
+ 1413 0000 5B434F41 	 .ascii "[COAP_DEMO] gsdk_ril_init error!\015\012\000"
+ 1413      505F4445 
+ 1413      4D4F5D20 
+ 1413      6773646B 
+ 1413      5F72696C 
+ 1414              	 .section .rodata.init_func.str1.4,"aMS",%progbits,1
+ 1415              	 .align 2
+ 1416              	.LC6:
+ 1417 0000 5B434F41 	 .ascii "[COAP_DEMO] init_func end!\015\012\000"
+ 1417      505F4445 
+ 1417      4D4F5D20 
+ 1417      696E6974 
+ 1417      5F66756E 
+ 1418 001d 000000   	 .space 3
+ 1419              	.LC7:
+ 1420 0020 5B434F41 	 .ascii "[COAP_DEMO] init_func error!\015\012\000"
+ 1420      505F4445 
+ 1420      4D4F5D20 
+ 1420      696E6974 
+ 1420      5F66756E 
+ 1421              	 .section .rodata.ip_wait_func.str1.4,"aMS",%progbits,1
+ 1422              	 .align 2
+ 1423              	.LC28:
+ 1424 0000 77616974 	 .ascii "wait for IP timeout\015\012\000"
+ 1424      20666F72 
+ 1424      20495020 
+ 1424      74696D65 
+ 1424      6F75740D 
+ 1425 0016 0000     	 .space 2
+ 1426              	.LC29:
+ 1427 0018 67657420 	 .ascii "get ip success!\015\012\000"
+ 1427      69702073 
+ 1427      75636365 
+ 1427      7373210D 
+ 1427      0A00
+ 1428 002a 0000     	 .space 2
+ 1429              	.LC30:
+ 1430 002c 69702072 	 .ascii "ip registered\015\012\000"
+ 1430      65676973 
+ 1430      74657265 
+ 1430      640D0A00 
+ 1431              	.LC31:
+ 1432 003c 67657420 	 .ascii "get ip failed!\015\012\000"
+ 1432      69702066 
+ 1432      61696C65 
+ 1432      64210D0A 
+ 1432      00
+ 1433              	 .section .rodata.log_init.str1.4,"aMS",%progbits,1
+ 1434              	 .align 2
+ 1435              	.LC4:
+ 1436 0000 5B434F41 	 .ascii "[COAP_DEMO] log init....OK\015\012\000"
+ 1436      505F4445 
+ 1436      4D4F5D20 
+ARM GAS   			page 35
+
+
+ 1436      6C6F6720 
+ 1436      696E6974 
+ 1437              	 .section .rodata.main.str1.4,"aMS",%progbits,1
+ 1438              	 .align 2
+ 1439              	.LC32:
+ 1440 0000 5B434F41 	 .ascii "[COAP_DEMO] as a client, to communicate with outsid"
+ 1440      505F4445 
+ 1440      4D4F5D20 
+ 1440      61732061 
+ 1440      20636C69 
+ 1441 0033 65207365 	 .ascii "e server.\015\012\000"
+ 1441      72766572 
+ 1441      2E0D0A00 
+ 1442 003f 00       	 .space 1
+ 1443              	.LC33:
+ 1444 0040 5B434F41 	 .ascii "[COAP_DEMO] both a server and a client, to communic"
+ 1444      505F4445 
+ 1444      4D4F5D20 
+ 1444      626F7468 
+ 1444      20612073 
+ 1445 0073 6174652E 	 .ascii "ate.\015\012\000"
+ 1445      0D0A00
+ 1446 007a 0000     	 .space 2
+ 1447              	.LC34:
+ 1448 007c 5B434F41 	 .ascii "[COAP_DEMO] coap demo over!!!\015\012\000"
+ 1448      505F4445 
+ 1448      4D4F5D20 
+ 1448      636F6170 
+ 1448      2064656D 
+ 1449              	.LC35:
+ 1450 009c 5B434F41 	 .ascii "[COAP_DEMO] main function abnormal exit!\015\012\000"
+ 1450      505F4445 
+ 1450      4D4F5D20 
+ 1450      6D61696E 
+ 1450      2066756E 
+ 1451              	 .text
+ 1452              	.Letext0:
+ 1453              	 .file 2 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 1454              	 .file 3 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\lock.h"
+ 1455              	 .file 4 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\_types.h"
+ 1456              	 .file 5 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\lib\\gcc\\arm-none-eabi\\7.3.1\\include\\stddef.h"
+ 1457              	 .file 6 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\reent.h"
+ 1458              	 .file 7 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\_stdint.h"
+ 1459              	 .file 8 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\stdlib.h"
+ 1460              	 .file 9 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_common.h"
+ 1461              	 .file 10 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_uart.h"
+ 1462              	 .file 11 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_flash.h"
+ 1463              	 .file 12 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/include/FreeRTOSConfig.h"
+ 1464              	 .file 13 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/portable/GCC/mt2625/ARM_CM4F/portmacro.h"
+ 1465              	 .file 14 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_ril.h"
+ 1466              	 .file 15 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/include/task.h"
+ 1467              	 .file 16 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_ril_cmds.h"
+ 1468              	 .file 17 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\string.h"
+ 1469              	 .file 18 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\stdio.h"
+ 1470              	 .file 19 "<built-in>"
+ARM GAS   			page 36
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 coapdemo.c
+    {standard input}:18     .text.oemdebuglog_open:00000000 $t
+    {standard input}:25     .text.oemdebuglog_open:00000000 oemdebuglog_open
+    {standard input}:42     .text.oemdebuglog_open:00000008 $d
+    {standard input}:47     .text.OEM_PRINTF:00000000 $t
+    {standard input}:54     .text.OEM_PRINTF:00000000 OEM_PRINTF
+    {standard input}:101    .text.OEM_PRINTF:0000001c $d
+    {standard input}:106    .text.coap_unsolicited_func:00000000 $t
+    {standard input}:112    .text.coap_unsolicited_func:00000000 coap_unsolicited_func
+    {standard input}:158    .text.coap_unsolicited_func:0000002c $d
+    {standard input}:172    .text.coap_handle_func:00000000 coap_handle_func
+    {standard input}:166    .text.coap_handle_func:00000000 $t
+    {standard input}:227    .text.coap_handle_func:00000040 $d
+    {standard input}:234    .text.__io_puts:00000000 $t
+    {standard input}:241    .text.__io_puts:00000000 __io_puts
+    {standard input}:279    .text.__io_puts:0000001c $d
+    {standard input}:284    .text.log_init:00000000 $t
+    {standard input}:291    .text.log_init:00000000 log_init
+    {standard input}:343    .text.log_init:0000003c $d
+    {standard input}:350    .text.gsdk_ril_init_func:00000000 $t
+    {standard input}:357    .text.gsdk_ril_init_func:00000000 gsdk_ril_init_func
+    {standard input}:390    .text.gsdk_ril_init_func:0000001c $d
+    {standard input}:396    .text.init_func:00000000 $t
+    {standard input}:403    .text.init_func:00000000 init_func
+    {standard input}:441    .text.init_func:00000028 $d
+    {standard input}:447    .text.create_coap_client_func:00000000 $t
+    {standard input}:454    .text.create_coap_client_func:00000000 create_coap_client_func
+    {standard input}:531    .text.create_coap_client_func:00000068 $d
+    {standard input}:542    .text.coap_client_send_get_func:00000000 $t
+    {standard input}:549    .text.coap_client_send_get_func:00000000 coap_client_send_get_func
+    {standard input}:613    .text.coap_client_send_get_func:00000054 $d
+    {standard input}:622    .text.coap_client_send_put_func:00000000 $t
+    {standard input}:629    .text.coap_client_send_put_func:00000000 coap_client_send_put_func
+    {standard input}:695    .text.coap_client_send_put_func:00000054 $d
+    {standard input}:704    .text.coap_client_send_delete_func:00000000 $t
+    {standard input}:711    .text.coap_client_send_delete_func:00000000 coap_client_send_delete_func
+    {standard input}:773    .text.coap_client_send_delete_func:0000004c $d
+    {standard input}:782    .text.coap_client_send_post_func:00000000 $t
+    {standard input}:789    .text.coap_client_send_post_func:00000000 coap_client_send_post_func
+    {standard input}:856    .text.coap_client_send_post_func:0000005c $d
+    {standard input}:865    .text.coap_client_send_func:00000000 $t
+    {standard input}:872    .text.coap_client_send_func:00000000 coap_client_send_func
+    {standard input}:926    .text.coap_client_send_func:00000044 $d
+    {standard input}:931    .text.delete_coap_client_func:00000000 $t
+    {standard input}:938    .text.delete_coap_client_func:00000000 delete_coap_client_func
+    {standard input}:977    .text.delete_coap_client_func:00000028 $d
+    {standard input}:985    .text.create_coap_server_func:00000000 $t
+    {standard input}:992    .text.create_coap_server_func:00000000 create_coap_server_func
+    {standard input}:1034   .text.create_coap_server_func:0000002c $d
+    {standard input}:1043   .text.ip_wait_func:00000000 $t
+    {standard input}:1050   .text.ip_wait_func:00000000 ip_wait_func
+    {standard input}:1128   .text.ip_wait_func:00000054 $d
+    {standard input}:1138   .text.main:00000000 $t
+    {standard input}:1145   .text.main:00000000 main
+    {standard input}:1242   .text.main:00000084 $d
+    {standard input}:1279   .bss.coap_type_flag:00000000 coap_type_flag
+ARM GAS   			page 37
+
+
+    {standard input}:1300   .bss.ip_buf:00000000 ip_buf
+    {standard input}:1327   .data.coap_server_id:00000000 coap_server_id
+    {standard input}:1320   .data.coap_client_id:00000000 coap_client_id
+    {standard input}:1334   .data.oem_debuglog:00000000 oem_debuglog
+    {standard input}:1257   .rodata:00000000 $d
+    {standard input}:1275   .bss.coap_type_flag:00000000 $d
+    {standard input}:1282   .bss.g_handler:00000000 $d
+    {standard input}:1286   .bss.g_handler:00000000 g_handler
+    {standard input}:1289   .bss.g_huart:00000000 $d
+    {standard input}:1293   .bss.g_huart:00000000 g_huart
+    {standard input}:1296   .bss.ip_buf:00000000 $d
+    {standard input}:1306   .bss.status:00000000 status
+    {standard input}:1307   .bss.status:00000000 $d
+    {standard input}:1309   .bss.unsolicited_buf:00000000 $d
+    {standard input}:1313   .bss.unsolicited_buf:00000000 unsolicited_buf
+    {standard input}:1316   .data.coap_client_id:00000000 $d
+    {standard input}:1323   .data.coap_server_id:00000000 $d
+    {standard input}:1330   .data.oem_debuglog:00000000 $d
+    {standard input}:1337   .rodata.coap_client_send_delete_func.str1.4:00000000 $d
+    {standard input}:1346   .rodata.coap_client_send_func.str1.4:00000000 $d
+    {standard input}:1350   .rodata.coap_client_send_get_func.str1.4:00000000 $d
+    {standard input}:1358   .rodata.coap_client_send_post_func.str1.4:00000000 $d
+    {standard input}:1367   .rodata.coap_client_send_put_func.str1.4:00000000 $d
+    {standard input}:1374   .rodata.coap_handle_func.str1.4:00000000 $d
+    {standard input}:1382   .rodata.coap_unsolicited_func.str1.4:00000000 $d
+    {standard input}:1390   .rodata.create_coap_client_func.str1.4:00000000 $d
+    {standard input}:1397   .rodata.create_coap_server_func.str1.4:00000000 $d
+    {standard input}:1404   .rodata.delete_coap_client_func.str1.4:00000000 $d
+    {standard input}:1411   .rodata.gsdk_ril_init_func.str1.4:00000000 $d
+    {standard input}:1415   .rodata.init_func.str1.4:00000000 $d
+    {standard input}:1422   .rodata.ip_wait_func.str1.4:00000000 $d
+    {standard input}:1434   .rodata.log_init.str1.4:00000000 $d
+    {standard input}:1438   .rodata.main.str1.4:00000000 $d
+                           .group:00000000 wm4.0.8fab1e1450c2b74bdd5e2aed4c325bf1
+                           .group:00000000 wm4._newlib_version.h.4.875b979a44719054cd750d0952ad3fd6
+                           .group:00000000 wm4.newlib.h.18.5e5ca3429233af402d406a202f1fc1ac
+                           .group:00000000 wm4.ieeefp.h.77.220d9cccac42cd58761758bee2df4ce6
+                           .group:00000000 wm4.features.h.22.fad1cec3bc7ff06488171438dbdcfd02
+                           .group:00000000 wm4.config.h.220.6cac6a9685cfce5e83c17784171638d9
+                           .group:00000000 wm4._ansi.h.31.de524f58584151836e90d8620a16f8e8
+                           .group:00000000 wm4.stdio.h.31.7c0e28c411445f3f9c5b11accf882760
+                           .group:00000000 wm4._default_types.h.6.959254cf5f09734ea7516c89e8bb21bd
+                           .group:00000000 wm4.stddef.h.187.2ff233552538c6ff9b8575ca8ea52cb3
+                           .group:00000000 wm4.cdefs.h.47.0bcdf94cb40e176393dd1404056825b4
+                           .group:00000000 wm4.stddef.h.39.ec95e8feac892e292b69dc7ae75b0d64
+                           .group:00000000 wm4.stdarg.h.34.3a23a216c0c293b3d2ea2e89281481e6
+                           .group:00000000 wm4.lock.h.2.1461d1fff82dffe8bfddc23307f6484f
+                           .group:00000000 wm4._types.h.125.5cf8a495f1f7ef36777ad868a1e32068
+                           .group:00000000 wm4.stddef.h.161.5349cb105733e8777bfb0cf53c4e3f34
+                           .group:00000000 wm4._types.h.184.03611d4f6b5bec9997bcf4279eceba07
+                           .group:00000000 wm4.reent.h.17.90c2574d4acdcfce933db5cb09ff35fe
+                           .group:00000000 wm4.types.h.40.e8c16e7ec36ba55f133d0616070e25fc
+                           .group:00000000 wm4._stdint.h.10.c24fa3af3bc1706662bb5593a907e841
+                           .group:00000000 wm4._endian.h.31.65a10590763c3dde1ac4a7f66d7d4891
+                           .group:00000000 wm4.endian.h.9.49f3a4695c1b61e8a0808de3c4a106cb
+                           .group:00000000 wm4._timeval.h.30.0e8bfd94e85db17dda3286ee81496fe6
+                           .group:00000000 wm4.timespec.h.41.d855182eb0e690443ab8651bcedca6e1
+ARM GAS   			page 38
+
+
+                           .group:00000000 wm4.select.h.19.97ca6fd0c752a0f3b6719fd314d361e6
+                           .group:00000000 wm4.types.h.69.ed3eae3cf73030a737515151ebcab7a1
+                           .group:00000000 wm4.sched.h.22.c60982713a5c428609783c78f9c78d95
+                           .group:00000000 wm4._pthreadtypes.h.36.fcee9961c35163dde6267ef772ad1972
+                           .group:00000000 wm4.stdio.h.2.4aa87247282eca6c8f36f9de33d8df1a
+                           .group:00000000 wm4.stdio.h.81.932d0c162786b883f622b8d05c120c78
+                           .group:00000000 wm4.stdlib.h.13.4ed386f5c1a80d71e72172885d946ef2
+                           .group:00000000 wm4.stddef.h.161.19e15733342b50ead2919490b095303e
+                           .group:00000000 wm4.alloca.h.8.dfc0c703c47ec3e69746825b17d9e66d
+                           .group:00000000 wm4.stdlib.h.56.d4493cd3736e51e9d56335045f26df45
+                           .group:00000000 wm4.string.h.8.c4b8571ce60dff2817f43fec8b86aecd
+                           .group:00000000 wm4._intsup.h.10.cce27fed8484c08a33f522034c30d2b5
+                           .group:00000000 wm4.stdint.h.23.d53047a68f4a85177f80b422d52785ed
+                           .group:00000000 wm4.gsdk_common.h.47.22de8ea3659fbd5af0e08ced1ae1b062
+                           .group:00000000 wm4.gsdk_flash.h.25.4d08791083e4af07d64570151ac0803c
+                           .group:00000000 wm4.app_loader.h.25.aa64c8d4536aca920728cda79a275eeb
+                           .group:00000000 wm4.FreeRTOSConfig.h.68.1d0dd6b8cda279d0020827f5584733bd
+                           .group:00000000 wm4.projdefs.h.71.1734cd3501e070360596dd847bb9d813
+                           .group:00000000 wm4.portmacro.h.72.3d5d774f718d157a637f7eb960850f27
+                           .group:00000000 wm4.portable.h.98.f435842f50d7864fba6a318a13e72513
+                           .group:00000000 wm4.mpu_wrappers.h.71.dd245fe44d82bd40288b5a47f895c82c
+                           .group:00000000 wm4.FreeRTOS.h.175.3abf49eaca38658a192da8d7c86d5374
+                           .group:00000000 wm4.list.h.103.6a12b7b9a7a136c3cca0ee53675c5498
+                           .group:00000000 wm4.task.h.88.da474b04c368050657453c137d8efe45
+                           .group:00000000 wm4.gsdk_ril.h.43.ec5a175e110d1c70143139b168262c34
+                           .group:00000000 wm4.gsdk_ril_cmds.h.25.9576f30a39fa8fd69cc4f6c2fc4c8bd9
+
+UNDEFINED SYMBOLS
+printf
+gsdk_at_register_unsolicited_handler
+memset
+strlen
+strncpy
+gsdk_uart_write
+gsdk_uart_open
+gsdk_ril_init
+gsdk_ril_create_coap_client
+gsdk_ril_coap_client_send
+vTaskDelay
+gsdk_ril_coap_delete
+gsdk_ril_create_coap_server
+gsdk_ril_get_local_ipaddr

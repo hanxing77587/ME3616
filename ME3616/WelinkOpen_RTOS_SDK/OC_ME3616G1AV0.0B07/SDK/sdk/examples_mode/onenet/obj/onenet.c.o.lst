@@ -1,0 +1,3003 @@
+ARM GAS   			page 1
+
+
+   1              	 .cpu cortex-m4
+   2              	 .eabi_attribute 27,1
+   3              	 .eabi_attribute 28,1
+   4              	 .eabi_attribute 20,1
+   5              	 .eabi_attribute 21,1
+   6              	 .eabi_attribute 23,3
+   7              	 .eabi_attribute 24,1
+   8              	 .eabi_attribute 25,1
+   9              	 .eabi_attribute 26,1
+  10              	 .eabi_attribute 30,1
+  11              	 .eabi_attribute 34,1
+  12              	 .eabi_attribute 18,4
+  13              	 .file "onenet.c"
+  14              	 .text
+  15              	.Ltext0:
+  16              	 .cfi_sections .debug_frame
+  17              	 .section .text.oemdebuglog_open,"ax",%progbits
+  18              	 .align 1
+  19              	 .global oemdebuglog_open
+  20              	 .syntax unified
+  21              	 .thumb
+  22              	 .thumb_func
+  23              	 .fpu fpv4-sp-d16
+  25              	oemdebuglog_open:
+  26              	.LFB3:
+  27              	 .file 1 "onenet.c"
+   1:onenet.c      **** /*
+   2:onenet.c      **** ** File   : onenet.c
+   3:onenet.c      **** **
+   4:onenet.c      **** ** Copyright (C) 2013-2018 Gosuncn. All rights reserved.
+   5:onenet.c      **** **
+   6:onenet.c      **** ** Licensed under the Apache License, Version 2.0 (the "License");
+   7:onenet.c      **** ** you may not use this file except in compliance with the License.
+   8:onenet.c      **** ** You may obtain a copy of the License at
+   9:onenet.c      **** **
+  10:onenet.c      **** **      http://www.apache.org/licenses/LICENSE-2.0
+  11:onenet.c      **** **
+  12:onenet.c      **** ** Unless required by applicable law or agreed to in writing, software
+  13:onenet.c      **** ** distributed under the License is distributed on an "AS IS" BASIS,
+  14:onenet.c      **** ** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  15:onenet.c      **** ** See the License for the specific language governing permissions and
+  16:onenet.c      **** ** limitations under the License.
+  17:onenet.c      **** **
+  18:onenet.c      **** ** Author : liyong2@gosuncn.cn
+  19:onenet.c      **** **
+  20:onenet.c      **** **  $Date: 2018/06/1 08:45:36GMT+08:00 $
+  21:onenet.c      **** **
+  22:onenet.c      **** */
+  23:onenet.c      **** #include <stdio.h>
+  24:onenet.c      **** #include <stdlib.h>
+  25:onenet.c      **** #include <string.h>
+  26:onenet.c      **** #include "gsdk_api.h"
+  27:onenet.c      **** #include "FreeRTOS.h"
+  28:onenet.c      **** #include "task.h"
+  29:onenet.c      **** #include "gsdk_ril.h"
+  30:onenet.c      **** #include "gsdk_ril_cmds.h"
+  31:onenet.c      **** 
+ARM GAS   			page 2
+
+
+  32:onenet.c      **** #define MAX_IP_BYTE 20
+  33:onenet.c      **** #define MAX_HEX_SIZE 1024
+  34:onenet.c      **** #define MAX_REGISTER_SIZE 1024
+  35:onenet.c      **** #define LIFETIME 6000
+  36:onenet.c      **** 
+  37:onenet.c      **** static gsdk_handle_t g_huart;
+  38:onenet.c      **** static unsolicited_handler_t g_handler;
+  39:onenet.c      **** 
+  40:onenet.c      **** #define MAX_RECEIVE_SIZE    1024
+  41:onenet.c      **** static char unsolicited_buf[MAX_RECEIVE_SIZE] = {0};
+  42:onenet.c      **** 
+  43:onenet.c      **** int flag = 0;
+  44:onenet.c      **** 
+  45:onenet.c      **** /** onenet err number type */
+  46:onenet.c      **** enum ONEERR {
+  47:onenet.c      ****     INVALID_ID,
+  48:onenet.c      ****     BOOTSTRAP_START,
+  49:onenet.c      ****     BOOTSTRAP_SUCCESS,
+  50:onenet.c      ****     BOOTSTRAP_FAILED,
+  51:onenet.c      ****     CONNECT_SUCCESS,
+  52:onenet.c      ****     CONNECT_FAILED,
+  53:onenet.c      ****     REG_SUCCESS,
+  54:onenet.c      ****     REG_FAILED,
+  55:onenet.c      ****     REG_TIMEOUT,
+  56:onenet.c      ****     LIFETIME_TIMEOUT,
+  57:onenet.c      ****     STATUS_HALT,
+  58:onenet.c      ****     UPDATE_SUCCESS,
+  59:onenet.c      ****     UPDATE_FAILED,
+  60:onenet.c      ****     UPDATE_TIMEOUT,
+  61:onenet.c      ****     UPDATE_NEED,
+  62:onenet.c      ****     UNREG_DONE,
+  63:onenet.c      ****     RESPONSE_FAILED,
+  64:onenet.c      ****     RESPONSE_SUCCESS,
+  65:onenet.c      ****     NOTIFY_FAILED,
+  66:onenet.c      ****     NOTIFY_SUCCESS
+  67:onenet.c      **** };
+  68:onenet.c      **** 
+  69:onenet.c      **** int oem_debuglog = 1;
+  70:onenet.c      **** gsdk_status_t status;
+  71:onenet.c      **** int ret = -1;
+  72:onenet.c      **** char ip[MAX_IP_BYTE] = {0};
+  73:onenet.c      **** int count = 0;
+  74:onenet.c      **** int instance, lifetime;
+  75:onenet.c      **** char *index1;
+  76:onenet.c      **** int i;
+  77:onenet.c      **** char ip_buf[64];
+  78:onenet.c      **** 
+  79:onenet.c      **** /* call this to open oem log */
+  80:onenet.c      **** int oemdebuglog_open(void)
+  81:onenet.c      **** {
+  28              	 .loc 1 81 0
+  29              	 .cfi_startproc
+  30              	 
+  31              	 
+  32              	 
+  82:onenet.c      ****     oem_debuglog = 1;
+  33              	 .loc 1 82 0
+ARM GAS   			page 3
+
+
+  34 0000 0120     	 movs r0,#1
+  35 0002 014B     	 ldr r3,.L2
+  36 0004 1860     	 str r0,[r3]
+  83:onenet.c      ****     return oem_debuglog;
+  84:onenet.c      **** }
+  37              	 .loc 1 84 0
+  38 0006 7047     	 bx lr
+  39              	.L3:
+  40              	 .align 2
+  41              	.L2:
+  42 0008 00000000 	 .word .LANCHOR0
+  43              	 .cfi_endproc
+  44              	.LFE3:
+  46              	 .section .text.OEM_PRINTF,"ax",%progbits
+  47              	 .align 1
+  48              	 .global OEM_PRINTF
+  49              	 .syntax unified
+  50              	 .thumb
+  51              	 .thumb_func
+  52              	 .fpu fpv4-sp-d16
+  54              	OEM_PRINTF:
+  55              	.LFB4:
+  85:onenet.c      **** 
+  86:onenet.c      **** /* OEM use this to printf log */
+  87:onenet.c      **** void OEM_PRINTF(char *fmt, ...)
+  88:onenet.c      **** {
+  56              	 .loc 1 88 0
+  57              	 .cfi_startproc
+  58              	 
+  59              	 
+  60              	.LVL0:
+  61 0000 0FB4     	 push {r0,r1,r2,r3}
+  62              	 .cfi_def_cfa_offset 16
+  63              	 .cfi_offset 0,-16
+  64              	 .cfi_offset 1,-12
+  65              	 .cfi_offset 2,-8
+  66              	 .cfi_offset 3,-4
+  67 0002 08B5     	 push {r3,lr}
+  68              	 .cfi_def_cfa_offset 24
+  69              	 .cfi_offset 3,-24
+  70              	 .cfi_offset 14,-20
+  89:onenet.c      ****     if (oem_debuglog == 1){
+  71              	 .loc 1 89 0
+  72 0004 054B     	 ldr r3,.L8
+  73 0006 1B68     	 ldr r3,[r3]
+  74 0008 012B     	 cmp r3,#1
+  75 000a 03D0     	 beq .L7
+  76              	.L4:
+  90:onenet.c      ****         printf(fmt);
+  91:onenet.c      ****     }
+  92:onenet.c      ****     else if (oem_debuglog == 0){
+  93:onenet.c      ****     }
+  94:onenet.c      **** }
+  77              	 .loc 1 94 0
+  78 000c BDE80840 	 pop {r3,lr}
+  79              	 .cfi_remember_state
+  80              	 .cfi_restore 14
+ARM GAS   			page 4
+
+
+  81              	 .cfi_restore 3
+  82              	 .cfi_def_cfa_offset 16
+  83 0010 04B0     	 add sp,sp,#16
+  84              	 .cfi_restore 3
+  85              	 .cfi_restore 2
+  86              	 .cfi_restore 1
+  87              	 .cfi_restore 0
+  88              	 .cfi_def_cfa_offset 0
+  89 0012 7047     	 bx lr
+  90              	.L7:
+  91              	 .cfi_restore_state
+  90:onenet.c      ****         printf(fmt);
+  92              	 .loc 1 90 0
+  93 0014 0298     	 ldr r0,[sp,#8]
+  94 0016 FFF7FEFF 	 bl printf
+  95              	.LVL1:
+  96              	 .loc 1 94 0
+  97 001a F7E7     	 b .L4
+  98              	.L9:
+  99              	 .align 2
+ 100              	.L8:
+ 101 001c 00000000 	 .word .LANCHOR0
+ 102              	 .cfi_endproc
+ 103              	.LFE4:
+ 105              	 .section .text.onenet_unsolicited_func,"ax",%progbits
+ 106              	 .align 1
+ 107              	 .syntax unified
+ 108              	 .thumb
+ 109              	 .thumb_func
+ 110              	 .fpu fpv4-sp-d16
+ 112              	onenet_unsolicited_func:
+ 113              	.LFB10:
+  95:onenet.c      **** 
+  96:onenet.c      **** int __io_puts(char *data, int len)
+  97:onenet.c      **** {
+  98:onenet.c      ****     if (g_huart) {
+  99:onenet.c      ****         ret = gsdk_uart_write(g_huart, (uint8_t *)data, len, 1000);
+ 100:onenet.c      ****     }
+ 101:onenet.c      ****     return ret;
+ 102:onenet.c      **** }
+ 103:onenet.c      **** 
+ 104:onenet.c      **** int log_init(void)
+ 105:onenet.c      **** {
+ 106:onenet.c      ****     uart_config_t uart_config;
+ 107:onenet.c      **** 
+ 108:onenet.c      ****     uart_config.baudrate    = UART_BAUDRATE_115200;
+ 109:onenet.c      ****     uart_config.parity      = UART_PARITY_NONE;
+ 110:onenet.c      ****     uart_config.stop_bit    = UART_STOP_BIT_1;
+ 111:onenet.c      ****     uart_config.word_length = UART_WORD_LENGTH_8;
+ 112:onenet.c      **** 
+ 113:onenet.c      ****     status = gsdk_uart_open(UART_0, &uart_config, &g_huart);
+ 114:onenet.c      ****     if (status != GSDK_SUCCESS) {
+ 115:onenet.c      ****         return -1;
+ 116:onenet.c      ****     }
+ 117:onenet.c      ****     OEM_PRINTF("[OneNET_DEMO] log init....OK\r\n");
+ 118:onenet.c      **** 
+ 119:onenet.c      ****     return 0;
+ARM GAS   			page 5
+
+
+ 120:onenet.c      **** }
+ 121:onenet.c      **** 
+ 122:onenet.c      **** int gsdk_ril_init_func(void)
+ 123:onenet.c      **** {
+ 124:onenet.c      ****     status = gsdk_ril_init();
+ 125:onenet.c      ****     if (status != GSDK_SUCCESS) {
+ 126:onenet.c      ****         OEM_PRINTF("[OneNET_DEMO] gsdk_ril_init error!\r\n");
+ 127:onenet.c      ****         return -1;
+ 128:onenet.c      ****     }
+ 129:onenet.c      ****     return 0;
+ 130:onenet.c      **** }
+ 131:onenet.c      **** 
+ 132:onenet.c      **** int init_func()
+ 133:onenet.c      **** {
+ 134:onenet.c      ****     if(log_init() != 0)
+ 135:onenet.c      ****         goto init_fail;
+ 136:onenet.c      ****     if(gsdk_ril_init_func() != 0)
+ 137:onenet.c      ****         goto init_fail;
+ 138:onenet.c      ****     
+ 139:onenet.c      ****     OEM_PRINTF("[OneNET_DEMO] init_func end!\r\n");
+ 140:onenet.c      ****     return 0;
+ 141:onenet.c      **** init_fail:
+ 142:onenet.c      ****     OEM_PRINTF("[OneNET_DEMO] init_func error!\r\n");
+ 143:onenet.c      ****     return -1;
+ 144:onenet.c      **** }
+ 145:onenet.c      **** 
+ 146:onenet.c      **** static int onenet_handle_func(const char* s, const char* extra, int len, void* data)
+ 147:onenet.c      **** {
+ 148:onenet.c      ****     flag = 1;
+ 149:onenet.c      ****     memset(unsolicited_buf, 0, sizeof(unsolicited_buf));
+ 150:onenet.c      ****     if (strlen(s) > (MAX_REGISTER_SIZE - 1)) {
+ 151:onenet.c      ****         OEM_PRINTF("the information is too large ,please change the size of recv_buf\r\n");
+ 152:onenet.c      ****     } else {
+ 153:onenet.c      ****         strncpy(unsolicited_buf, s, MAX_REGISTER_SIZE);
+ 154:onenet.c      ****         OEM_PRINTF("%s\r\n\r\n", unsolicited_buf);
+ 155:onenet.c      ****     }
+ 156:onenet.c      ****     flag = 0;
+ 157:onenet.c      ****     return 1;
+ 158:onenet.c      **** }
+ 159:onenet.c      **** 
+ 160:onenet.c      **** static int onenet_unsolicited_func(unsolicited_handler_t *handler)
+ 161:onenet.c      **** {
+ 114              	 .loc 1 161 0
+ 115              	 .cfi_startproc
+ 116              	 
+ 117              	 
+ 118              	.LVL2:
+ 119 0000 08B5     	 push {r3,lr}
+ 120              	 .cfi_def_cfa_offset 8
+ 121              	 .cfi_offset 3,-8
+ 122              	 .cfi_offset 14,-4
+ 162:onenet.c      ****     memset(handler, 0, sizeof(unsolicited_handler_t));
+ 123              	 .loc 1 162 0
+ 124 0002 0022     	 movs r2,#0
+ 125 0004 C260     	 str r2,[r0,#12]
+ 163:onenet.c      ****     handler->prefix = "+MIPL";
+ 126              	 .loc 1 163 0
+ARM GAS   			page 6
+
+
+ 127 0006 0949     	 ldr r1,.L15
+ 128 0008 4160     	 str r1,[r0,#4]
+ 164:onenet.c      ****     handler->func = onenet_handle_func;
+ 129              	 .loc 1 164 0
+ 130 000a 0949     	 ldr r1,.L15+4
+ 131 000c 0160     	 str r1,[r0]
+ 165:onenet.c      ****     handler->user_data = NULL;
+ 132              	 .loc 1 165 0
+ 133 000e 8260     	 str r2,[r0,#8]
+ 166:onenet.c      ****     status = gsdk_at_register_unsolicited_handler(handler);
+ 134              	 .loc 1 166 0
+ 135 0010 FFF7FEFF 	 bl gsdk_at_register_unsolicited_handler
+ 136              	.LVL3:
+ 137 0014 074B     	 ldr r3,.L15+8
+ 138 0016 1870     	 strb r0,[r3]
+ 167:onenet.c      ****     if (status != GSDK_SUCCESS) {
+ 139              	 .loc 1 167 0
+ 140 0018 08B9     	 cbnz r0,.L14
+ 168:onenet.c      ****         OEM_PRINTF("some error hanppened in handle,status is %d\r\n", status);
+ 169:onenet.c      ****         return -1;
+ 170:onenet.c      ****     }
+ 171:onenet.c      ****     return 0;
+ 141              	 .loc 1 171 0
+ 142 001a 0020     	 movs r0,#0
+ 143              	.L10:
+ 172:onenet.c      **** }
+ 144              	 .loc 1 172 0
+ 145 001c 08BD     	 pop {r3,pc}
+ 146              	.L14:
+ 168:onenet.c      ****         OEM_PRINTF("some error hanppened in handle,status is %d\r\n", status);
+ 147              	 .loc 1 168 0
+ 148 001e 0146     	 mov r1,r0
+ 149 0020 0548     	 ldr r0,.L15+12
+ 150 0022 FFF7FEFF 	 bl OEM_PRINTF
+ 151              	.LVL4:
+ 169:onenet.c      ****     }
+ 152              	 .loc 1 169 0
+ 153 0026 4FF0FF30 	 mov r0,#-1
+ 154 002a F7E7     	 b .L10
+ 155              	.L16:
+ 156              	 .align 2
+ 157              	.L15:
+ 158 002c 00000000 	 .word .LC0
+ 159 0030 00000000 	 .word onenet_handle_func
+ 160 0034 00000000 	 .word .LANCHOR1
+ 161 0038 08000000 	 .word .LC1
+ 162              	 .cfi_endproc
+ 163              	.LFE10:
+ 165              	 .section .text.onenet_handle_func,"ax",%progbits
+ 166              	 .align 1
+ 167              	 .syntax unified
+ 168              	 .thumb
+ 169              	 .thumb_func
+ 170              	 .fpu fpv4-sp-d16
+ 172              	onenet_handle_func:
+ 173              	.LFB9:
+ 147:onenet.c      ****     flag = 1;
+ARM GAS   			page 7
+
+
+ 174              	 .loc 1 147 0
+ 175              	 .cfi_startproc
+ 176              	 
+ 177              	 
+ 178              	.LVL5:
+ 179 0000 38B5     	 push {r3,r4,r5,lr}
+ 180              	 .cfi_def_cfa_offset 16
+ 181              	 .cfi_offset 3,-16
+ 182              	 .cfi_offset 4,-12
+ 183              	 .cfi_offset 5,-8
+ 184              	 .cfi_offset 14,-4
+ 185 0002 0446     	 mov r4,r0
+ 148:onenet.c      ****     memset(unsolicited_buf, 0, sizeof(unsolicited_buf));
+ 186              	 .loc 1 148 0
+ 187 0004 114B     	 ldr r3,.L22
+ 188              	.LVL6:
+ 189 0006 0122     	 movs r2,#1
+ 190              	.LVL7:
+ 191 0008 1A60     	 str r2,[r3]
+ 149:onenet.c      ****     if (strlen(s) > (MAX_REGISTER_SIZE - 1)) {
+ 192              	 .loc 1 149 0
+ 193 000a 4FF48062 	 mov r2,#1024
+ 194 000e 0021     	 movs r1,#0
+ 195              	.LVL8:
+ 196 0010 0F48     	 ldr r0,.L22+4
+ 197              	.LVL9:
+ 198 0012 FFF7FEFF 	 bl memset
+ 199              	.LVL10:
+ 150:onenet.c      ****         OEM_PRINTF("the information is too large ,please change the size of recv_buf\r\n");
+ 200              	 .loc 1 150 0
+ 201 0016 2046     	 mov r0,r4
+ 202 0018 FFF7FEFF 	 bl strlen
+ 203              	.LVL11:
+ 204 001c B0F5806F 	 cmp r0,#1024
+ 205 0020 0FD2     	 bcs .L21
+ 153:onenet.c      ****         OEM_PRINTF("%s\r\n\r\n", unsolicited_buf);
+ 206              	 .loc 1 153 0
+ 207 0022 0B4D     	 ldr r5,.L22+4
+ 208 0024 4FF48062 	 mov r2,#1024
+ 209 0028 2146     	 mov r1,r4
+ 210 002a 2846     	 mov r0,r5
+ 211 002c FFF7FEFF 	 bl strncpy
+ 212              	.LVL12:
+ 154:onenet.c      ****     }
+ 213              	 .loc 1 154 0
+ 214 0030 2946     	 mov r1,r5
+ 215 0032 0848     	 ldr r0,.L22+8
+ 216 0034 FFF7FEFF 	 bl OEM_PRINTF
+ 217              	.LVL13:
+ 218              	.L19:
+ 156:onenet.c      ****     return 1;
+ 219              	 .loc 1 156 0
+ 220 0038 044B     	 ldr r3,.L22
+ 221 003a 0022     	 movs r2,#0
+ 222 003c 1A60     	 str r2,[r3]
+ 158:onenet.c      **** 
+ 223              	 .loc 1 158 0
+ARM GAS   			page 8
+
+
+ 224 003e 0120     	 movs r0,#1
+ 225 0040 38BD     	 pop {r3,r4,r5,pc}
+ 226              	.LVL14:
+ 227              	.L21:
+ 151:onenet.c      ****     } else {
+ 228              	 .loc 1 151 0
+ 229 0042 0548     	 ldr r0,.L22+12
+ 230 0044 FFF7FEFF 	 bl OEM_PRINTF
+ 231              	.LVL15:
+ 232 0048 F6E7     	 b .L19
+ 233              	.L23:
+ 234 004a 00BF     	 .align 2
+ 235              	.L22:
+ 236 004c 00000000 	 .word .LANCHOR2
+ 237 0050 00000000 	 .word .LANCHOR3
+ 238 0054 44000000 	 .word .LC3
+ 239 0058 00000000 	 .word .LC2
+ 240              	 .cfi_endproc
+ 241              	.LFE9:
+ 243              	 .section .text.__io_puts,"ax",%progbits
+ 244              	 .align 1
+ 245              	 .global __io_puts
+ 246              	 .syntax unified
+ 247              	 .thumb
+ 248              	 .thumb_func
+ 249              	 .fpu fpv4-sp-d16
+ 251              	__io_puts:
+ 252              	.LFB5:
+  97:onenet.c      ****     if (g_huart) {
+ 253              	 .loc 1 97 0
+ 254              	 .cfi_startproc
+ 255              	 
+ 256              	 
+ 257              	.LVL16:
+ 258 0000 10B5     	 push {r4,lr}
+ 259              	 .cfi_def_cfa_offset 8
+ 260              	 .cfi_offset 4,-8
+ 261              	 .cfi_offset 14,-4
+  98:onenet.c      ****         ret = gsdk_uart_write(g_huart, (uint8_t *)data, len, 1000);
+ 262              	 .loc 1 98 0
+ 263 0002 074B     	 ldr r3,.L27
+ 264 0004 1C68     	 ldr r4,[r3]
+ 265 0006 44B1     	 cbz r4,.L25
+ 266 0008 0A46     	 mov r2,r1
+ 267 000a 0146     	 mov r1,r0
+ 268              	.LVL17:
+  99:onenet.c      ****     }
+ 269              	 .loc 1 99 0
+ 270 000c 4FF47A73 	 mov r3,#1000
+ 271 0010 2046     	 mov r0,r4
+ 272              	.LVL18:
+ 273 0012 FFF7FEFF 	 bl gsdk_uart_write
+ 274              	.LVL19:
+ 275 0016 034B     	 ldr r3,.L27+4
+ 276 0018 1860     	 str r0,[r3]
+ 277              	.L25:
+ 102:onenet.c      **** 
+ARM GAS   			page 9
+
+
+ 278              	 .loc 1 102 0
+ 279 001a 024B     	 ldr r3,.L27+4
+ 280 001c 1868     	 ldr r0,[r3]
+ 281 001e 10BD     	 pop {r4,pc}
+ 282              	.L28:
+ 283              	 .align 2
+ 284              	.L27:
+ 285 0020 00000000 	 .word .LANCHOR4
+ 286 0024 00000000 	 .word .LANCHOR5
+ 287              	 .cfi_endproc
+ 288              	.LFE5:
+ 290              	 .section .text.log_init,"ax",%progbits
+ 291              	 .align 1
+ 292              	 .global log_init
+ 293              	 .syntax unified
+ 294              	 .thumb
+ 295              	 .thumb_func
+ 296              	 .fpu fpv4-sp-d16
+ 298              	log_init:
+ 299              	.LFB6:
+ 105:onenet.c      ****     uart_config_t uart_config;
+ 300              	 .loc 1 105 0
+ 301              	 .cfi_startproc
+ 302              	 
+ 303              	 
+ 304 0000 00B5     	 push {lr}
+ 305              	 .cfi_def_cfa_offset 4
+ 306              	 .cfi_offset 14,-4
+ 307 0002 83B0     	 sub sp,sp,#12
+ 308              	 .cfi_def_cfa_offset 16
+ 108:onenet.c      ****     uart_config.parity      = UART_PARITY_NONE;
+ 309              	 .loc 1 108 0
+ 310 0004 0923     	 movs r3,#9
+ 311 0006 8DF80430 	 strb r3,[sp,#4]
+ 109:onenet.c      ****     uart_config.stop_bit    = UART_STOP_BIT_1;
+ 312              	 .loc 1 109 0
+ 313 000a 0020     	 movs r0,#0
+ 314 000c 8DF80700 	 strb r0,[sp,#7]
+ 110:onenet.c      ****     uart_config.word_length = UART_WORD_LENGTH_8;
+ 315              	 .loc 1 110 0
+ 316 0010 8DF80600 	 strb r0,[sp,#6]
+ 111:onenet.c      **** 
+ 317              	 .loc 1 111 0
+ 318 0014 0323     	 movs r3,#3
+ 319 0016 8DF80530 	 strb r3,[sp,#5]
+ 113:onenet.c      ****     if (status != GSDK_SUCCESS) {
+ 320              	 .loc 1 113 0
+ 321 001a 084A     	 ldr r2,.L33
+ 322 001c 01A9     	 add r1,sp,#4
+ 323 001e FFF7FEFF 	 bl gsdk_uart_open
+ 324              	.LVL20:
+ 325 0022 074B     	 ldr r3,.L33+4
+ 326 0024 1870     	 strb r0,[r3]
+ 114:onenet.c      ****         return -1;
+ 327              	 .loc 1 114 0
+ 328 0026 30B9     	 cbnz r0,.L31
+ 117:onenet.c      **** 
+ARM GAS   			page 10
+
+
+ 329              	 .loc 1 117 0
+ 330 0028 0648     	 ldr r0,.L33+8
+ 331 002a FFF7FEFF 	 bl OEM_PRINTF
+ 332              	.LVL21:
+ 119:onenet.c      **** }
+ 333              	 .loc 1 119 0
+ 334 002e 0020     	 movs r0,#0
+ 335              	.L29:
+ 120:onenet.c      **** 
+ 336              	 .loc 1 120 0
+ 337 0030 03B0     	 add sp,sp,#12
+ 338              	 .cfi_remember_state
+ 339              	 .cfi_def_cfa_offset 4
+ 340              	 
+ 341 0032 5DF804FB 	 ldr pc,[sp],#4
+ 342              	.L31:
+ 343              	 .cfi_restore_state
+ 115:onenet.c      ****     }
+ 344              	 .loc 1 115 0
+ 345 0036 4FF0FF30 	 mov r0,#-1
+ 346 003a F9E7     	 b .L29
+ 347              	.L34:
+ 348              	 .align 2
+ 349              	.L33:
+ 350 003c 00000000 	 .word .LANCHOR4
+ 351 0040 00000000 	 .word .LANCHOR1
+ 352 0044 00000000 	 .word .LC4
+ 353              	 .cfi_endproc
+ 354              	.LFE6:
+ 356              	 .section .text.gsdk_ril_init_func,"ax",%progbits
+ 357              	 .align 1
+ 358              	 .global gsdk_ril_init_func
+ 359              	 .syntax unified
+ 360              	 .thumb
+ 361              	 .thumb_func
+ 362              	 .fpu fpv4-sp-d16
+ 364              	gsdk_ril_init_func:
+ 365              	.LFB7:
+ 123:onenet.c      ****     status = gsdk_ril_init();
+ 366              	 .loc 1 123 0
+ 367              	 .cfi_startproc
+ 368              	 
+ 369              	 
+ 370 0000 08B5     	 push {r3,lr}
+ 371              	 .cfi_def_cfa_offset 8
+ 372              	 .cfi_offset 3,-8
+ 373              	 .cfi_offset 14,-4
+ 124:onenet.c      ****     if (status != GSDK_SUCCESS) {
+ 374              	 .loc 1 124 0
+ 375 0002 FFF7FEFF 	 bl gsdk_ril_init
+ 376              	.LVL22:
+ 377 0006 054B     	 ldr r3,.L40
+ 378 0008 1870     	 strb r0,[r3]
+ 125:onenet.c      ****         OEM_PRINTF("[OneNET_DEMO] gsdk_ril_init error!\r\n");
+ 379              	 .loc 1 125 0
+ 380 000a 08B9     	 cbnz r0,.L39
+ 129:onenet.c      **** }
+ARM GAS   			page 11
+
+
+ 381              	 .loc 1 129 0
+ 382 000c 0020     	 movs r0,#0
+ 383              	.L35:
+ 130:onenet.c      **** 
+ 384              	 .loc 1 130 0
+ 385 000e 08BD     	 pop {r3,pc}
+ 386              	.L39:
+ 126:onenet.c      ****         return -1;
+ 387              	 .loc 1 126 0
+ 388 0010 0348     	 ldr r0,.L40+4
+ 389 0012 FFF7FEFF 	 bl OEM_PRINTF
+ 390              	.LVL23:
+ 127:onenet.c      ****     }
+ 391              	 .loc 1 127 0
+ 392 0016 4FF0FF30 	 mov r0,#-1
+ 393 001a F8E7     	 b .L35
+ 394              	.L41:
+ 395              	 .align 2
+ 396              	.L40:
+ 397 001c 00000000 	 .word .LANCHOR1
+ 398 0020 00000000 	 .word .LC5
+ 399              	 .cfi_endproc
+ 400              	.LFE7:
+ 402              	 .section .text.init_func,"ax",%progbits
+ 403              	 .align 1
+ 404              	 .global init_func
+ 405              	 .syntax unified
+ 406              	 .thumb
+ 407              	 .thumb_func
+ 408              	 .fpu fpv4-sp-d16
+ 410              	init_func:
+ 411              	.LFB8:
+ 133:onenet.c      ****     if(log_init() != 0)
+ 412              	 .loc 1 133 0
+ 413              	 .cfi_startproc
+ 414              	 
+ 415              	 
+ 416 0000 10B5     	 push {r4,lr}
+ 417              	 .cfi_def_cfa_offset 8
+ 418              	 .cfi_offset 4,-8
+ 419              	 .cfi_offset 14,-4
+ 134:onenet.c      ****         goto init_fail;
+ 420              	 .loc 1 134 0
+ 421 0002 FFF7FEFF 	 bl log_init
+ 422              	.LVL24:
+ 423 0006 40B9     	 cbnz r0,.L43
+ 136:onenet.c      ****         goto init_fail;
+ 424              	 .loc 1 136 0
+ 425 0008 FFF7FEFF 	 bl gsdk_ril_init_func
+ 426              	.LVL25:
+ 427 000c 0446     	 mov r4,r0
+ 428 000e 20B9     	 cbnz r0,.L43
+ 139:onenet.c      ****     return 0;
+ 429              	 .loc 1 139 0
+ 430 0010 0548     	 ldr r0,.L46
+ 431 0012 FFF7FEFF 	 bl OEM_PRINTF
+ 432              	.LVL26:
+ARM GAS   			page 12
+
+
+ 433              	.L42:
+ 144:onenet.c      **** 
+ 434              	 .loc 1 144 0
+ 435 0016 2046     	 mov r0,r4
+ 436 0018 10BD     	 pop {r4,pc}
+ 437              	.L43:
+ 142:onenet.c      ****     return -1;
+ 438              	 .loc 1 142 0
+ 439 001a 0448     	 ldr r0,.L46+4
+ 440 001c FFF7FEFF 	 bl OEM_PRINTF
+ 441              	.LVL27:
+ 143:onenet.c      **** }
+ 442              	 .loc 1 143 0
+ 443 0020 4FF0FF34 	 mov r4,#-1
+ 444 0024 F7E7     	 b .L42
+ 445              	.L47:
+ 446 0026 00BF     	 .align 2
+ 447              	.L46:
+ 448 0028 00000000 	 .word .LC6
+ 449 002c 20000000 	 .word .LC7
+ 450              	 .cfi_endproc
+ 451              	.LFE8:
+ 453              	 .section .text.create_instance_func,"ax",%progbits
+ 454              	 .align 1
+ 455              	 .global create_instance_func
+ 456              	 .syntax unified
+ 457              	 .thumb
+ 458              	 .thumb_func
+ 459              	 .fpu fpv4-sp-d16
+ 461              	create_instance_func:
+ 462              	.LFB11:
+ 173:onenet.c      **** 
+ 174:onenet.c      **** int create_instance_func(void)
+ 175:onenet.c      **** {
+ 463              	 .loc 1 175 0
+ 464              	 .cfi_startproc
+ 465              	 
+ 466              	 
+ 467 0000 00B5     	 push {lr}
+ 468              	 .cfi_def_cfa_offset 4
+ 469              	 .cfi_offset 14,-4
+ 470 0002 ADF20C4D 	 subw sp,sp,#1036
+ 471              	 .cfi_def_cfa_offset 1040
+ 472              	.LVL28:
+ 176:onenet.c      ****     int totalsize_t = 51;
+ 177:onenet.c      ****     char config_t[1024] = "130033f10003f20021050011000000000000000d3138332e3233302e34302e333900044e
+ 473              	 .loc 1 177 0
+ 474 0006 6722     	 movs r2,#103
+ 475 0008 1249     	 ldr r1,.L53
+ 476 000a 02A8     	 add r0,sp,#8
+ 477 000c FFF7FEFF 	 bl memcpy
+ 478              	.LVL29:
+ 479 0010 40F29932 	 movw r2,#921
+ 480 0014 0021     	 movs r1,#0
+ 481 0016 0DF16F00 	 add r0,sp,#111
+ 482 001a FFF7FEFF 	 bl memset
+ 483              	.LVL30:
+ARM GAS   			page 13
+
+
+ 178:onenet.c      ****     int index_t = 0;
+ 179:onenet.c      ****     int currentsize_t = 51;
+ 180:onenet.c      ****     int flag_t = 0;
+ 181:onenet.c      **** 
+ 182:onenet.c      ****     status = gsdk_ril_create_onenet_instance(totalsize_t, config_t, index_t, currentsize_t, flag_t,
+ 484              	 .loc 1 182 0
+ 485 001e 0E4B     	 ldr r3,.L53+4
+ 486 0020 0193     	 str r3,[sp,#4]
+ 487 0022 0022     	 movs r2,#0
+ 488 0024 0092     	 str r2,[sp]
+ 489 0026 3323     	 movs r3,#51
+ 490 0028 02A9     	 add r1,sp,#8
+ 491 002a 1846     	 mov r0,r3
+ 492 002c FFF7FEFF 	 bl gsdk_ril_create_onenet_instance
+ 493              	.LVL31:
+ 494 0030 0A4B     	 ldr r3,.L53+8
+ 495 0032 1870     	 strb r0,[r3]
+ 183:onenet.c      ****     if (status != GSDK_SUCCESS) {
+ 496              	 .loc 1 183 0
+ 497 0034 38B9     	 cbnz r0,.L52
+ 184:onenet.c      ****         OEM_PRINTF("create_instance_func error!");
+ 185:onenet.c      ****         return -1;
+ 186:onenet.c      ****     }
+ 187:onenet.c      ****     OEM_PRINTF("[OneNET_DEMO] create_instance_func end!\r\n");
+ 498              	 .loc 1 187 0
+ 499 0036 0A48     	 ldr r0,.L53+12
+ 500 0038 FFF7FEFF 	 bl OEM_PRINTF
+ 501              	.LVL32:
+ 188:onenet.c      ****     return 0;
+ 502              	 .loc 1 188 0
+ 503 003c 0020     	 movs r0,#0
+ 504              	.L48:
+ 189:onenet.c      **** }
+ 505              	 .loc 1 189 0
+ 506 003e 0DF20C4D 	 addw sp,sp,#1036
+ 507              	 .cfi_remember_state
+ 508              	 .cfi_def_cfa_offset 4
+ 509              	 
+ 510 0042 5DF804FB 	 ldr pc,[sp],#4
+ 511              	.L52:
+ 512              	 .cfi_restore_state
+ 184:onenet.c      ****         OEM_PRINTF("create_instance_func error!");
+ 513              	 .loc 1 184 0
+ 514 0046 0748     	 ldr r0,.L53+16
+ 515 0048 FFF7FEFF 	 bl OEM_PRINTF
+ 516              	.LVL33:
+ 185:onenet.c      ****     }
+ 517              	 .loc 1 185 0
+ 518 004c 4FF0FF30 	 mov r0,#-1
+ 519 0050 F5E7     	 b .L48
+ 520              	.L54:
+ 521 0052 00BF     	 .align 2
+ 522              	.L53:
+ 523 0054 00000000 	 .word .LANCHOR6
+ 524 0058 00000000 	 .word .LANCHOR7
+ 525 005c 00000000 	 .word .LANCHOR1
+ 526 0060 1C000000 	 .word .LC10
+ARM GAS   			page 14
+
+
+ 527 0064 00000000 	 .word .LC9
+ 528              	 .cfi_endproc
+ 529              	.LFE11:
+ 531              	 .section .text.create_object_func,"ax",%progbits
+ 532              	 .align 1
+ 533              	 .global create_object_func
+ 534              	 .syntax unified
+ 535              	 .thumb
+ 536              	 .thumb_func
+ 537              	 .fpu fpv4-sp-d16
+ 539              	create_object_func:
+ 540              	.LFB12:
+ 190:onenet.c      **** 
+ 191:onenet.c      **** int create_object_func(void)
+ 192:onenet.c      **** {
+ 541              	 .loc 1 192 0
+ 542              	 .cfi_startproc
+ 543              	 
+ 544              	 
+ 545 0000 00B5     	 push {lr}
+ 546              	 .cfi_def_cfa_offset 4
+ 547              	 .cfi_offset 14,-4
+ 548 0002 8BB0     	 sub sp,sp,#44
+ 549              	 .cfi_def_cfa_offset 48
+ 550              	.LVL34:
+ 193:onenet.c      ****     int object_id = 3308;
+ 194:onenet.c      ****     int instance_count = 3;
+ 195:onenet.c      ****     char instance_bit_map[32] = "100";
+ 551              	 .loc 1 195 0
+ 552 0004 124B     	 ldr r3,.L60
+ 553 0006 0293     	 str r3,[sp,#8]
+ 554 0008 0023     	 movs r3,#0
+ 555 000a 0393     	 str r3,[sp,#12]
+ 556 000c 0493     	 str r3,[sp,#16]
+ 557 000e 0593     	 str r3,[sp,#20]
+ 558 0010 0693     	 str r3,[sp,#24]
+ 559 0012 0793     	 str r3,[sp,#28]
+ 560 0014 0893     	 str r3,[sp,#32]
+ 561 0016 0993     	 str r3,[sp,#36]
+ 562              	.LVL35:
+ 196:onenet.c      ****     int attribute_count = 2;
+ 197:onenet.c      ****     int acction_count = 0;
+ 198:onenet.c      **** 
+ 199:onenet.c      ****     status = gsdk_ril_create_onenet_object(instance, object_id, instance_count, instance_bit_map, a
+ 563              	 .loc 1 199 0
+ 564 0018 0E4A     	 ldr r2,.L60+4
+ 565 001a 1068     	 ldr r0,[r2]
+ 566 001c 0193     	 str r3,[sp,#4]
+ 567 001e 0223     	 movs r3,#2
+ 568 0020 0093     	 str r3,[sp]
+ 569 0022 02AB     	 add r3,sp,#8
+ 570 0024 0322     	 movs r2,#3
+ 571 0026 40F6EC41 	 movw r1,#3308
+ 572 002a FFF7FEFF 	 bl gsdk_ril_create_onenet_object
+ 573              	.LVL36:
+ 574 002e 0A4B     	 ldr r3,.L60+8
+ 575 0030 1870     	 strb r0,[r3]
+ARM GAS   			page 15
+
+
+ 200:onenet.c      ****     if (status != GSDK_SUCCESS) {
+ 576              	 .loc 1 200 0
+ 577 0032 30B9     	 cbnz r0,.L59
+ 201:onenet.c      ****         OEM_PRINTF("[OneNET_DEMO] create_object_func error!\r\n");
+ 202:onenet.c      ****         return -1;
+ 203:onenet.c      ****     }
+ 204:onenet.c      ****     OEM_PRINTF("[OneNET_DEMO] create_object_func end!\r\n");
+ 578              	 .loc 1 204 0
+ 579 0034 0948     	 ldr r0,.L60+12
+ 580 0036 FFF7FEFF 	 bl OEM_PRINTF
+ 581              	.LVL37:
+ 205:onenet.c      ****     return 0;
+ 582              	 .loc 1 205 0
+ 583 003a 0020     	 movs r0,#0
+ 584              	.L55:
+ 206:onenet.c      **** }
+ 585              	 .loc 1 206 0
+ 586 003c 0BB0     	 add sp,sp,#44
+ 587              	 .cfi_remember_state
+ 588              	 .cfi_def_cfa_offset 4
+ 589              	 
+ 590 003e 5DF804FB 	 ldr pc,[sp],#4
+ 591              	.L59:
+ 592              	 .cfi_restore_state
+ 201:onenet.c      ****         OEM_PRINTF("[OneNET_DEMO] create_object_func error!\r\n");
+ 593              	 .loc 1 201 0
+ 594 0042 0748     	 ldr r0,.L60+16
+ 595 0044 FFF7FEFF 	 bl OEM_PRINTF
+ 596              	.LVL38:
+ 202:onenet.c      ****     }
+ 597              	 .loc 1 202 0
+ 598 0048 4FF0FF30 	 mov r0,#-1
+ 599 004c F6E7     	 b .L55
+ 600              	.L61:
+ 601 004e 00BF     	 .align 2
+ 602              	.L60:
+ 603 0050 31303000 	 .word 3158065
+ 604 0054 00000000 	 .word .LANCHOR7
+ 605 0058 00000000 	 .word .LANCHOR1
+ 606 005c 2C000000 	 .word .LC12
+ 607 0060 00000000 	 .word .LC11
+ 608              	 .cfi_endproc
+ 609              	.LFE12:
+ 611              	 .section .text.register_onenet_func,"ax",%progbits
+ 612              	 .align 1
+ 613              	 .global register_onenet_func
+ 614              	 .syntax unified
+ 615              	 .thumb
+ 616              	 .thumb_func
+ 617              	 .fpu fpv4-sp-d16
+ 619              	register_onenet_func:
+ 620              	.LFB13:
+ 207:onenet.c      **** 
+ 208:onenet.c      **** int register_onenet_func(void)
+ 209:onenet.c      **** {
+ 621              	 .loc 1 209 0
+ 622              	 .cfi_startproc
+ARM GAS   			page 16
+
+
+ 623              	 
+ 624              	 
+ 625 0000 08B5     	 push {r3,lr}
+ 626              	 .cfi_def_cfa_offset 8
+ 627              	 .cfi_offset 3,-8
+ 628              	 .cfi_offset 14,-4
+ 210:onenet.c      ****     /************* register onenet ************/
+ 211:onenet.c      ****     lifetime = 90;
+ 629              	 .loc 1 211 0
+ 630 0002 5A21     	 movs r1,#90
+ 631 0004 094B     	 ldr r3,.L67
+ 632 0006 1960     	 str r1,[r3]
+ 212:onenet.c      ****     status = gsdk_ril_onenet_open(instance, lifetime);
+ 633              	 .loc 1 212 0
+ 634 0008 094B     	 ldr r3,.L67+4
+ 635 000a 1868     	 ldr r0,[r3]
+ 636 000c FFF7FEFF 	 bl gsdk_ril_onenet_open
+ 637              	.LVL39:
+ 638 0010 084B     	 ldr r3,.L67+8
+ 639 0012 1870     	 strb r0,[r3]
+ 213:onenet.c      ****     if (GSDK_SUCCESS != status) {
+ 640              	 .loc 1 213 0
+ 641 0014 20B9     	 cbnz r0,.L66
+ 214:onenet.c      ****             OEM_PRINTF("[OneNET_DEMO] register_onenet_func error!\r\n");
+ 215:onenet.c      ****         return -1;
+ 216:onenet.c      ****     }
+ 217:onenet.c      ****     OEM_PRINTF("[OneNET_DEMO] register_onenet_func end!\r\n");
+ 642              	 .loc 1 217 0
+ 643 0016 0848     	 ldr r0,.L67+12
+ 644 0018 FFF7FEFF 	 bl OEM_PRINTF
+ 645              	.LVL40:
+ 218:onenet.c      ****     return 0;
+ 646              	 .loc 1 218 0
+ 647 001c 0020     	 movs r0,#0
+ 648              	.L62:
+ 219:onenet.c      **** }
+ 649              	 .loc 1 219 0
+ 650 001e 08BD     	 pop {r3,pc}
+ 651              	.L66:
+ 214:onenet.c      ****             OEM_PRINTF("[OneNET_DEMO] register_onenet_func error!\r\n");
+ 652              	 .loc 1 214 0
+ 653 0020 0648     	 ldr r0,.L67+16
+ 654 0022 FFF7FEFF 	 bl OEM_PRINTF
+ 655              	.LVL41:
+ 215:onenet.c      ****     }
+ 656              	 .loc 1 215 0
+ 657 0026 4FF0FF30 	 mov r0,#-1
+ 658 002a F8E7     	 b .L62
+ 659              	.L68:
+ 660              	 .align 2
+ 661              	.L67:
+ 662 002c 00000000 	 .word .LANCHOR8
+ 663 0030 00000000 	 .word .LANCHOR7
+ 664 0034 00000000 	 .word .LANCHOR1
+ 665 0038 2C000000 	 .word .LC14
+ 666 003c 00000000 	 .word .LC13
+ 667              	 .cfi_endproc
+ARM GAS   			page 17
+
+
+ 668              	.LFE13:
+ 670              	 .section .text.ip_wait_func,"ax",%progbits
+ 671              	 .align 1
+ 672              	 .global ip_wait_func
+ 673              	 .syntax unified
+ 674              	 .thumb
+ 675              	 .thumb_func
+ 676              	 .fpu fpv4-sp-d16
+ 678              	ip_wait_func:
+ 679              	.LFB14:
+ 220:onenet.c      **** 
+ 221:onenet.c      **** int ip_wait_func()
+ 222:onenet.c      **** {
+ 680              	 .loc 1 222 0
+ 681              	 .cfi_startproc
+ 682              	 
+ 683              	 
+ 684 0000 38B5     	 push {r3,r4,r5,lr}
+ 685              	 .cfi_def_cfa_offset 16
+ 686              	 .cfi_offset 3,-16
+ 687              	 .cfi_offset 4,-12
+ 688              	 .cfi_offset 5,-8
+ 689              	 .cfi_offset 14,-4
+ 690              	.L73:
+ 223:onenet.c      ****     while(1){
+ 224:onenet.c      ****         if(count > 100){
+ 691              	 .loc 1 224 0
+ 692 0002 164B     	 ldr r3,.L77
+ 693 0004 1B68     	 ldr r3,[r3]
+ 694 0006 642B     	 cmp r3,#100
+ 695 0008 1ADC     	 bgt .L75
+ 225:onenet.c      ****             OEM_PRINTF("wait for IP timeout\r\n");
+ 226:onenet.c      ****             return -1;
+ 227:onenet.c      ****         }
+ 228:onenet.c      ****         memset(ip_buf, 0, 64);
+ 696              	 .loc 1 228 0
+ 697 000a 154C     	 ldr r4,.L77+4
+ 698 000c 4025     	 movs r5,#64
+ 699 000e 2A46     	 mov r2,r5
+ 700 0010 0021     	 movs r1,#0
+ 701 0012 2046     	 mov r0,r4
+ 702 0014 FFF7FEFF 	 bl memset
+ 703              	.LVL42:
+ 229:onenet.c      ****         status = gsdk_ril_get_local_ipaddr(ip_buf, 64);
+ 704              	 .loc 1 229 0
+ 705 0018 2946     	 mov r1,r5
+ 706 001a 2046     	 mov r0,r4
+ 707 001c FFF7FEFF 	 bl gsdk_ril_get_local_ipaddr
+ 708              	.LVL43:
+ 709 0020 40B2     	 sxtb r0,r0
+ 710 0022 104B     	 ldr r3,.L77+8
+ 711 0024 1870     	 strb r0,[r3]
+ 230:onenet.c      ****         if(status == 1){
+ 712              	 .loc 1 230 0
+ 713 0026 0128     	 cmp r0,#1
+ 714 0028 10D0     	 beq .L76
+ 231:onenet.c      ****             OEM_PRINTF("get ip success!\r\n");
+ARM GAS   			page 18
+
+
+ 232:onenet.c      ****             break;
+ 233:onenet.c      ****         }
+ 234:onenet.c      ****         OEM_PRINTF("get ip failed!\r\n");
+ 715              	 .loc 1 234 0
+ 716 002a 0F48     	 ldr r0,.L77+12
+ 717 002c FFF7FEFF 	 bl OEM_PRINTF
+ 718              	.LVL44:
+ 235:onenet.c      ****         vTaskDelay(100);
+ 719              	 .loc 1 235 0
+ 720 0030 6420     	 movs r0,#100
+ 721 0032 FFF7FEFF 	 bl vTaskDelay
+ 722              	.LVL45:
+ 236:onenet.c      ****         count++;
+ 723              	 .loc 1 236 0
+ 724 0036 094A     	 ldr r2,.L77
+ 725 0038 1368     	 ldr r3,[r2]
+ 726 003a 0133     	 adds r3,r3,#1
+ 727 003c 1360     	 str r3,[r2]
+ 224:onenet.c      ****             OEM_PRINTF("wait for IP timeout\r\n");
+ 728              	 .loc 1 224 0
+ 729 003e E0E7     	 b .L73
+ 730              	.L75:
+ 225:onenet.c      ****             return -1;
+ 731              	 .loc 1 225 0
+ 732 0040 0A48     	 ldr r0,.L77+16
+ 733 0042 FFF7FEFF 	 bl OEM_PRINTF
+ 734              	.LVL46:
+ 226:onenet.c      ****         }
+ 735              	 .loc 1 226 0
+ 736 0046 4FF0FF30 	 mov r0,#-1
+ 737              	.L69:
+ 237:onenet.c      ****     }
+ 238:onenet.c      ****     OEM_PRINTF("ip_wait_func end! ip registered\r\n");
+ 239:onenet.c      ****     return 0;
+ 240:onenet.c      **** }
+ 738              	 .loc 1 240 0
+ 739 004a 38BD     	 pop {r3,r4,r5,pc}
+ 740              	.L76:
+ 231:onenet.c      ****             break;
+ 741              	 .loc 1 231 0
+ 742 004c 0848     	 ldr r0,.L77+20
+ 743 004e FFF7FEFF 	 bl OEM_PRINTF
+ 744              	.LVL47:
+ 238:onenet.c      ****     return 0;
+ 745              	 .loc 1 238 0
+ 746 0052 0848     	 ldr r0,.L77+24
+ 747 0054 FFF7FEFF 	 bl OEM_PRINTF
+ 748              	.LVL48:
+ 239:onenet.c      **** }
+ 749              	 .loc 1 239 0
+ 750 0058 0020     	 movs r0,#0
+ 751 005a F6E7     	 b .L69
+ 752              	.L78:
+ 753              	 .align 2
+ 754              	.L77:
+ 755 005c 00000000 	 .word .LANCHOR9
+ 756 0060 00000000 	 .word .LANCHOR10
+ARM GAS   			page 19
+
+
+ 757 0064 00000000 	 .word .LANCHOR1
+ 758 0068 50000000 	 .word .LC18
+ 759 006c 00000000 	 .word .LC15
+ 760 0070 18000000 	 .word .LC16
+ 761 0074 2C000000 	 .word .LC17
+ 762              	 .cfi_endproc
+ 763              	.LFE14:
+ 765              	 .section .text.capture_register_info_func,"ax",%progbits
+ 766              	 .align 1
+ 767              	 .global capture_register_info_func
+ 768              	 .syntax unified
+ 769              	 .thumb
+ 770              	 .thumb_func
+ 771              	 .fpu fpv4-sp-d16
+ 773              	capture_register_info_func:
+ 774              	.LFB15:
+ 241:onenet.c      **** 
+ 242:onenet.c      **** int capture_register_info_func(void)
+ 243:onenet.c      **** {
+ 775              	 .loc 1 243 0
+ 776              	 .cfi_startproc
+ 777              	 
+ 778              	 
+ 779 0000 10B5     	 push {r4,lr}
+ 780              	 .cfi_def_cfa_offset 8
+ 781              	 .cfi_offset 4,-8
+ 782              	 .cfi_offset 14,-4
+ 244:onenet.c      ****     /* capture register info */
+ 245:onenet.c      ****     if (0 == strncmp(unsolicited_buf, "+MIPLEVENT:", 11)) {
+ 783              	 .loc 1 245 0
+ 784 0002 0B22     	 movs r2,#11
+ 785 0004 1E49     	 ldr r1,.L90
+ 786 0006 1F48     	 ldr r0,.L90+4
+ 787 0008 FFF7FEFF 	 bl strncmp
+ 788              	.LVL49:
+ 789 000c 10B1     	 cbz r0,.L87
+ 246:onenet.c      ****         index1 = strtok(unsolicited_buf, ":");
+ 247:onenet.c      ****         for(i=0; i<2; i++){
+ 248:onenet.c      ****             index1 = strtok(NULL, ",");
+ 249:onenet.c      ****         }
+ 250:onenet.c      ****         if (atoi(index1) == REG_SUCCESS) {
+ 251:onenet.c      ****             OEM_PRINTF("register OK\r\n");
+ 252:onenet.c      ****         }
+ 253:onenet.c      ****         if (atoi(index1) == BOOTSTRAP_FAILED) {
+ 254:onenet.c      ****             OEM_PRINTF("register failed\r\n");
+ 255:onenet.c      ****             return -1;
+ 256:onenet.c      ****         }
+ 257:onenet.c      ****         memset(unsolicited_buf, 0x0, MAX_RECEIVE_SIZE);
+ 258:onenet.c      ****     }
+ 259:onenet.c      ****     return 0;
+ 790              	 .loc 1 259 0
+ 791 000e 0024     	 movs r4,#0
+ 792              	.L79:
+ 260:onenet.c      **** }
+ 793              	 .loc 1 260 0
+ 794 0010 2046     	 mov r0,r4
+ 795 0012 10BD     	 pop {r4,pc}
+ARM GAS   			page 20
+
+
+ 796              	.L87:
+ 797 0014 0446     	 mov r4,r0
+ 246:onenet.c      ****         index1 = strtok(unsolicited_buf, ":");
+ 798              	 .loc 1 246 0
+ 799 0016 1C49     	 ldr r1,.L90+8
+ 800 0018 1A48     	 ldr r0,.L90+4
+ 801 001a FFF7FEFF 	 bl strtok
+ 802              	.LVL50:
+ 803 001e 1B4B     	 ldr r3,.L90+12
+ 804 0020 1860     	 str r0,[r3]
+ 247:onenet.c      ****             index1 = strtok(NULL, ",");
+ 805              	 .loc 1 247 0
+ 806 0022 1B4B     	 ldr r3,.L90+16
+ 807 0024 0022     	 movs r2,#0
+ 808 0026 1A60     	 str r2,[r3]
+ 809 0028 09E0     	 b .L81
+ 810              	.L82:
+ 248:onenet.c      ****         }
+ 811              	 .loc 1 248 0 discriminator 3
+ 812 002a 1A49     	 ldr r1,.L90+20
+ 813 002c 0020     	 movs r0,#0
+ 814 002e FFF7FEFF 	 bl strtok
+ 815              	.LVL51:
+ 816 0032 164B     	 ldr r3,.L90+12
+ 817 0034 1860     	 str r0,[r3]
+ 247:onenet.c      ****             index1 = strtok(NULL, ",");
+ 818              	 .loc 1 247 0 discriminator 3
+ 819 0036 164A     	 ldr r2,.L90+16
+ 820 0038 1368     	 ldr r3,[r2]
+ 821 003a 0133     	 adds r3,r3,#1
+ 822 003c 1360     	 str r3,[r2]
+ 823              	.L81:
+ 247:onenet.c      ****             index1 = strtok(NULL, ",");
+ 824              	 .loc 1 247 0 is_stmt 0 discriminator 1
+ 825 003e 144B     	 ldr r3,.L90+16
+ 826 0040 1B68     	 ldr r3,[r3]
+ 827 0042 012B     	 cmp r3,#1
+ 828 0044 F1DD     	 ble .L82
+ 250:onenet.c      ****             OEM_PRINTF("register OK\r\n");
+ 829              	 .loc 1 250 0 is_stmt 1
+ 830 0046 114B     	 ldr r3,.L90+12
+ 831 0048 1868     	 ldr r0,[r3]
+ 832 004a FFF7FEFF 	 bl atoi
+ 833              	.LVL52:
+ 834 004e 0628     	 cmp r0,#6
+ 835 0050 0CD0     	 beq .L88
+ 836              	.L83:
+ 253:onenet.c      ****             OEM_PRINTF("register failed\r\n");
+ 837              	 .loc 1 253 0
+ 838 0052 0E4B     	 ldr r3,.L90+12
+ 839 0054 1868     	 ldr r0,[r3]
+ 840 0056 FFF7FEFF 	 bl atoi
+ 841              	.LVL53:
+ 842 005a 0328     	 cmp r0,#3
+ 843 005c 0AD0     	 beq .L89
+ 257:onenet.c      ****     }
+ 844              	 .loc 1 257 0
+ARM GAS   			page 21
+
+
+ 845 005e 4FF48062 	 mov r2,#1024
+ 846 0062 0021     	 movs r1,#0
+ 847 0064 0748     	 ldr r0,.L90+4
+ 848 0066 FFF7FEFF 	 bl memset
+ 849              	.LVL54:
+ 850 006a D1E7     	 b .L79
+ 851              	.L88:
+ 251:onenet.c      ****         }
+ 852              	 .loc 1 251 0
+ 853 006c 0A48     	 ldr r0,.L90+24
+ 854 006e FFF7FEFF 	 bl OEM_PRINTF
+ 855              	.LVL55:
+ 856 0072 EEE7     	 b .L83
+ 857              	.L89:
+ 254:onenet.c      ****             return -1;
+ 858              	 .loc 1 254 0
+ 859 0074 0948     	 ldr r0,.L90+28
+ 860 0076 FFF7FEFF 	 bl OEM_PRINTF
+ 861              	.LVL56:
+ 255:onenet.c      ****         }
+ 862              	 .loc 1 255 0
+ 863 007a 4FF0FF34 	 mov r4,#-1
+ 864 007e C7E7     	 b .L79
+ 865              	.L91:
+ 866              	 .align 2
+ 867              	.L90:
+ 868 0080 00000000 	 .word .LC19
+ 869 0084 00000000 	 .word .LANCHOR3
+ 870 0088 0C000000 	 .word .LC20
+ 871 008c 00000000 	 .word .LANCHOR11
+ 872 0090 00000000 	 .word .LANCHOR12
+ 873 0094 10000000 	 .word .LC21
+ 874 0098 14000000 	 .word .LC22
+ 875 009c 24000000 	 .word .LC23
+ 876              	 .cfi_endproc
+ 877              	.LFE15:
+ 879              	 .section .text.observe_notify_func,"ax",%progbits
+ 880              	 .align 1
+ 881              	 .global observe_notify_func
+ 882              	 .syntax unified
+ 883              	 .thumb
+ 884              	 .thumb_func
+ 885              	 .fpu fpv4-sp-d16
+ 887              	observe_notify_func:
+ 888              	.LFB16:
+ 261:onenet.c      **** 
+ 262:onenet.c      **** int observe_notify_func(void)
+ 263:onenet.c      **** {
+ 889              	 .loc 1 263 0
+ 890              	 .cfi_startproc
+ 891              	 
+ 892              	 
+ 893 0000 2DE9F041 	 push {r4,r5,r6,r7,r8,lr}
+ 894              	 .cfi_def_cfa_offset 24
+ 895              	 .cfi_offset 4,-24
+ 896              	 .cfi_offset 5,-20
+ 897              	 .cfi_offset 6,-16
+ARM GAS   			page 22
+
+
+ 898              	 .cfi_offset 7,-12
+ 899              	 .cfi_offset 8,-8
+ 900              	 .cfi_offset 14,-4
+ 901 0004 86B0     	 sub sp,sp,#24
+ 902              	 .cfi_def_cfa_offset 48
+ 264:onenet.c      ****     /***************************** onenet observe ********************************/
+ 265:onenet.c      ****     if (0 == strncmp(unsolicited_buf, "+MIPLOBSERVE:", 13)) {
+ 903              	 .loc 1 265 0
+ 904 0006 0D22     	 movs r2,#13
+ 905 0008 3B49     	 ldr r1,.L103
+ 906 000a 3C48     	 ldr r0,.L103+4
+ 907 000c FFF7FEFF 	 bl strncmp
+ 908              	.LVL57:
+ 909 0010 20B1     	 cbz r0,.L100
+ 266:onenet.c      ****         index1 = strtok(unsolicited_buf, ":");
+ 267:onenet.c      ****         for(i=0; i<2; i++){
+ 268:onenet.c      ****             index1 = strtok(NULL, ",");
+ 269:onenet.c      ****         }
+ 270:onenet.c      ****         int observe_msgid = atoi(index1);
+ 271:onenet.c      ****         int observe_result = 1;
+ 272:onenet.c      ****         memset(unsolicited_buf, 0x0, MAX_RECEIVE_SIZE);
+ 273:onenet.c      ****         status = gsdk_ril_rsp_onenet_observe(instance, observe_msgid, observe_result);
+ 274:onenet.c      ****         if (GSDK_SUCCESS != status) {
+ 275:onenet.c      ****             OEM_PRINTF("onenet observe failed:%d\r\n", status);
+ 276:onenet.c      ****             return -1;
+ 277:onenet.c      ****         }
+ 278:onenet.c      ****     
+ 279:onenet.c      ****         /***************** notify ******************/
+ 280:onenet.c      ****         int notify_object_id = 3308;
+ 281:onenet.c      ****         int notify_instance_id = 2;
+ 282:onenet.c      ****     
+ 283:onenet.c      ****         status = gsdk_ril_notify_onenet(instance, observe_msgid, notify_object_id, notify_instance_
+ 284:onenet.c      ****                                         4, 4, 1.8, 1, 1);
+ 285:onenet.c      ****         status = gsdk_ril_notify_onenet(instance, observe_msgid, notify_object_id, notify_instance_
+ 286:onenet.c      ****                                         1, 5, 3, 0, 0);
+ 287:onenet.c      ****         if (GSDK_SUCCESS != status) {
+ 288:onenet.c      ****             OEM_PRINTF("onenet notify failed:%d\r\n", status);
+ 289:onenet.c      ****             return -1;
+ 290:onenet.c      ****         }
+ 291:onenet.c      ****         memset(unsolicited_buf, 0x0, MAX_RECEIVE_SIZE);
+ 292:onenet.c      ****     }
+ 293:onenet.c      ****     return 0;
+ 910              	 .loc 1 293 0
+ 911 0012 0024     	 movs r4,#0
+ 912              	.L92:
+ 294:onenet.c      **** }
+ 913              	 .loc 1 294 0
+ 914 0014 2046     	 mov r0,r4
+ 915 0016 06B0     	 add sp,sp,#24
+ 916              	 .cfi_remember_state
+ 917              	 .cfi_def_cfa_offset 24
+ 918              	 
+ 919 0018 BDE8F081 	 pop {r4,r5,r6,r7,r8,pc}
+ 920              	.L100:
+ 921              	 .cfi_restore_state
+ 922 001c 0446     	 mov r4,r0
+ 923              	.LBB2:
+ARM GAS   			page 23
+
+
+ 266:onenet.c      ****         index1 = strtok(unsolicited_buf, ":");
+ 924              	 .loc 1 266 0
+ 925 001e 3849     	 ldr r1,.L103+8
+ 926 0020 3648     	 ldr r0,.L103+4
+ 927 0022 FFF7FEFF 	 bl strtok
+ 928              	.LVL58:
+ 929 0026 374B     	 ldr r3,.L103+12
+ 930 0028 1860     	 str r0,[r3]
+ 267:onenet.c      ****             index1 = strtok(NULL, ",");
+ 931              	 .loc 1 267 0
+ 932 002a 374B     	 ldr r3,.L103+16
+ 933 002c 0022     	 movs r2,#0
+ 934 002e 1A60     	 str r2,[r3]
+ 935 0030 09E0     	 b .L94
+ 936              	.L95:
+ 268:onenet.c      ****         }
+ 937              	 .loc 1 268 0 discriminator 3
+ 938 0032 3649     	 ldr r1,.L103+20
+ 939 0034 0020     	 movs r0,#0
+ 940 0036 FFF7FEFF 	 bl strtok
+ 941              	.LVL59:
+ 942 003a 324B     	 ldr r3,.L103+12
+ 943 003c 1860     	 str r0,[r3]
+ 267:onenet.c      ****             index1 = strtok(NULL, ",");
+ 944              	 .loc 1 267 0 discriminator 3
+ 945 003e 324A     	 ldr r2,.L103+16
+ 946 0040 1368     	 ldr r3,[r2]
+ 947 0042 0133     	 adds r3,r3,#1
+ 948 0044 1360     	 str r3,[r2]
+ 949              	.L94:
+ 267:onenet.c      ****             index1 = strtok(NULL, ",");
+ 950              	 .loc 1 267 0 is_stmt 0 discriminator 1
+ 951 0046 304B     	 ldr r3,.L103+16
+ 952 0048 1B68     	 ldr r3,[r3]
+ 953 004a 012B     	 cmp r3,#1
+ 954 004c F1DD     	 ble .L95
+ 270:onenet.c      ****         int observe_result = 1;
+ 955              	 .loc 1 270 0 is_stmt 1
+ 956 004e 2D4B     	 ldr r3,.L103+12
+ 957 0050 1868     	 ldr r0,[r3]
+ 958 0052 FFF7FEFF 	 bl atoi
+ 959              	.LVL60:
+ 960 0056 0646     	 mov r6,r0
+ 961              	.LVL61:
+ 272:onenet.c      ****         status = gsdk_ril_rsp_onenet_observe(instance, observe_msgid, observe_result);
+ 962              	 .loc 1 272 0
+ 963 0058 4FF48062 	 mov r2,#1024
+ 964 005c 0021     	 movs r1,#0
+ 965 005e 2748     	 ldr r0,.L103+4
+ 966              	.LVL62:
+ 967 0060 FFF7FEFF 	 bl memset
+ 968              	.LVL63:
+ 273:onenet.c      ****         if (GSDK_SUCCESS != status) {
+ 969              	 .loc 1 273 0
+ 970 0064 0122     	 movs r2,#1
+ 971 0066 3146     	 mov r1,r6
+ 972 0068 294B     	 ldr r3,.L103+24
+ARM GAS   			page 24
+
+
+ 973 006a 1868     	 ldr r0,[r3]
+ 974 006c FFF7FEFF 	 bl gsdk_ril_rsp_onenet_observe
+ 975              	.LVL64:
+ 976 0070 284B     	 ldr r3,.L103+28
+ 977 0072 1870     	 strb r0,[r3]
+ 274:onenet.c      ****             OEM_PRINTF("onenet observe failed:%d\r\n", status);
+ 978              	 .loc 1 274 0
+ 979 0074 88BB     	 cbnz r0,.L101
+ 980              	.LVL65:
+ 283:onenet.c      ****                                         4, 4, 1.8, 1, 1);
+ 981              	 .loc 1 283 0
+ 982 0076 DFF89880 	 ldr r8,.L103+24
+ 983 007a 0125     	 movs r5,#1
+ 984 007c 0595     	 str r5,[sp,#20]
+ 985 007e 0495     	 str r5,[sp,#16]
+ 986 0080 0395     	 str r5,[sp,#12]
+ 987 0082 0423     	 movs r3,#4
+ 988 0084 0293     	 str r3,[sp,#8]
+ 989 0086 0193     	 str r3,[sp,#4]
+ 990 0088 41F20C73 	 movw r3,#5900
+ 991 008c 0093     	 str r3,[sp]
+ 992 008e 0223     	 movs r3,#2
+ 993 0090 40F6EC42 	 movw r2,#3308
+ 994 0094 3146     	 mov r1,r6
+ 995 0096 D8F80000 	 ldr r0,[r8]
+ 996 009a FFF7FEFF 	 bl gsdk_ril_notify_onenet
+ 997              	.LVL66:
+ 998 009e 1D4F     	 ldr r7,.L103+28
+ 999 00a0 3870     	 strb r0,[r7]
+ 285:onenet.c      ****                                         1, 5, 3, 0, 0);
+ 1000              	 .loc 1 285 0
+ 1001 00a2 D8F80000 	 ldr r0,[r8]
+ 1002 00a6 0023     	 movs r3,#0
+ 1003 00a8 0593     	 str r3,[sp,#20]
+ 1004 00aa 0493     	 str r3,[sp,#16]
+ 1005 00ac 0323     	 movs r3,#3
+ 1006 00ae 0393     	 str r3,[sp,#12]
+ 1007 00b0 0523     	 movs r3,#5
+ 1008 00b2 0293     	 str r3,[sp,#8]
+ 1009 00b4 0195     	 str r5,[sp,#4]
+ 1010 00b6 41F27663 	 movw r3,#5750
+ 1011 00ba 0093     	 str r3,[sp]
+ 1012 00bc 0223     	 movs r3,#2
+ 1013 00be 40F6EC42 	 movw r2,#3308
+ 1014 00c2 3146     	 mov r1,r6
+ 1015 00c4 FFF7FEFF 	 bl gsdk_ril_notify_onenet
+ 1016              	.LVL67:
+ 1017 00c8 3870     	 strb r0,[r7]
+ 287:onenet.c      ****             OEM_PRINTF("onenet notify failed:%d\r\n", status);
+ 1018              	 .loc 1 287 0
+ 1019 00ca 68B9     	 cbnz r0,.L102
+ 291:onenet.c      ****     }
+ 1020              	 .loc 1 291 0
+ 1021 00cc 4FF48062 	 mov r2,#1024
+ 1022 00d0 0021     	 movs r1,#0
+ 1023 00d2 0A48     	 ldr r0,.L103+4
+ 1024 00d4 FFF7FEFF 	 bl memset
+ARM GAS   			page 25
+
+
+ 1025              	.LVL68:
+ 1026 00d8 9CE7     	 b .L92
+ 1027              	.LVL69:
+ 1028              	.L101:
+ 275:onenet.c      ****             return -1;
+ 1029              	 .loc 1 275 0
+ 1030 00da 0146     	 mov r1,r0
+ 1031 00dc 0E48     	 ldr r0,.L103+32
+ 1032 00de FFF7FEFF 	 bl OEM_PRINTF
+ 1033              	.LVL70:
+ 276:onenet.c      ****         }
+ 1034              	 .loc 1 276 0
+ 1035 00e2 4FF0FF34 	 mov r4,#-1
+ 1036 00e6 95E7     	 b .L92
+ 1037              	.LVL71:
+ 1038              	.L102:
+ 288:onenet.c      ****             return -1;
+ 1039              	 .loc 1 288 0
+ 1040 00e8 0146     	 mov r1,r0
+ 1041 00ea 0C48     	 ldr r0,.L103+36
+ 1042 00ec FFF7FEFF 	 bl OEM_PRINTF
+ 1043              	.LVL72:
+ 289:onenet.c      ****         }
+ 1044              	 .loc 1 289 0
+ 1045 00f0 4FF0FF34 	 mov r4,#-1
+ 1046 00f4 8EE7     	 b .L92
+ 1047              	.L104:
+ 1048 00f6 00BF     	 .align 2
+ 1049              	.L103:
+ 1050 00f8 00000000 	 .word .LC24
+ 1051 00fc 00000000 	 .word .LANCHOR3
+ 1052 0100 0C000000 	 .word .LC20
+ 1053 0104 00000000 	 .word .LANCHOR11
+ 1054 0108 00000000 	 .word .LANCHOR12
+ 1055 010c 10000000 	 .word .LC21
+ 1056 0110 00000000 	 .word .LANCHOR7
+ 1057 0114 00000000 	 .word .LANCHOR1
+ 1058 0118 10000000 	 .word .LC25
+ 1059 011c 2C000000 	 .word .LC26
+ 1060              	.LBE2:
+ 1061              	 .cfi_endproc
+ 1062              	.LFE16:
+ 1064              	 .section .text.discover_func,"ax",%progbits
+ 1065              	 .align 1
+ 1066              	 .global discover_func
+ 1067              	 .syntax unified
+ 1068              	 .thumb
+ 1069              	 .thumb_func
+ 1070              	 .fpu fpv4-sp-d16
+ 1072              	discover_func:
+ 1073              	.LFB17:
+ 295:onenet.c      **** 
+ 296:onenet.c      **** int discover_func(void)
+ 297:onenet.c      **** {
+ 1074              	 .loc 1 297 0
+ 1075              	 .cfi_startproc
+ 1076              	 
+ARM GAS   			page 26
+
+
+ 1077              	 
+ 1078 0000 30B5     	 push {r4,r5,lr}
+ 1079              	 .cfi_def_cfa_offset 12
+ 1080              	 .cfi_offset 4,-12
+ 1081              	 .cfi_offset 5,-8
+ 1082              	 .cfi_offset 14,-4
+ 1083 0002 A3B0     	 sub sp,sp,#140
+ 1084              	 .cfi_def_cfa_offset 152
+ 298:onenet.c      ****     /***************************** onenet discover ********************************/
+ 299:onenet.c      ****     if (0 == strncmp(unsolicited_buf, "+MIPLDISCOVER:", 14)) {
+ 1085              	 .loc 1 299 0
+ 1086 0004 0E22     	 movs r2,#14
+ 1087 0006 2649     	 ldr r1,.L114
+ 1088 0008 2648     	 ldr r0,.L114+4
+ 1089 000a FFF7FEFF 	 bl strncmp
+ 1090              	.LVL73:
+ 1091 000e 18B1     	 cbz r0,.L112
+ 300:onenet.c      ****         index1 = strtok(unsolicited_buf, ":");
+ 301:onenet.c      ****         for(i=0; i<2; i++){
+ 302:onenet.c      ****             index1 = strtok(NULL, ",");
+ 303:onenet.c      ****         }
+ 304:onenet.c      ****         int discover_msgid = atoi(index1);
+ 305:onenet.c      ****         int discover_result = 1;
+ 306:onenet.c      ****         int discover_len = 9;
+ 307:onenet.c      ****         char discover_value_string[128] = "5900;5750";
+ 308:onenet.c      ****         status = gsdk_ril_rsp_onenet_discover(instance, discover_msgid, discover_result, discover_l
+ 309:onenet.c      ****         if (GSDK_SUCCESS != status) {
+ 310:onenet.c      ****             OEM_PRINTF("onenet discover failed:%d\r\n", status);
+ 311:onenet.c      ****             return -1;
+ 312:onenet.c      ****         }
+ 313:onenet.c      ****         memset(unsolicited_buf, 0x0, MAX_RECEIVE_SIZE);
+ 314:onenet.c      ****     }
+ 315:onenet.c      ****     return 0;
+ 1092              	 .loc 1 315 0
+ 1093 0010 0024     	 movs r4,#0
+ 1094              	.L105:
+ 316:onenet.c      **** }
+ 1095              	 .loc 1 316 0
+ 1096 0012 2046     	 mov r0,r4
+ 1097 0014 23B0     	 add sp,sp,#140
+ 1098              	 .cfi_remember_state
+ 1099              	 .cfi_def_cfa_offset 12
+ 1100              	 
+ 1101 0016 30BD     	 pop {r4,r5,pc}
+ 1102              	.L112:
+ 1103              	 .cfi_restore_state
+ 1104 0018 0446     	 mov r4,r0
+ 1105              	.LBB3:
+ 300:onenet.c      ****         index1 = strtok(unsolicited_buf, ":");
+ 1106              	 .loc 1 300 0
+ 1107 001a 2349     	 ldr r1,.L114+8
+ 1108 001c 2148     	 ldr r0,.L114+4
+ 1109 001e FFF7FEFF 	 bl strtok
+ 1110              	.LVL74:
+ 1111 0022 224B     	 ldr r3,.L114+12
+ 1112 0024 1860     	 str r0,[r3]
+ 301:onenet.c      ****             index1 = strtok(NULL, ",");
+ARM GAS   			page 27
+
+
+ 1113              	 .loc 1 301 0
+ 1114 0026 224B     	 ldr r3,.L114+16
+ 1115 0028 0022     	 movs r2,#0
+ 1116 002a 1A60     	 str r2,[r3]
+ 1117 002c 09E0     	 b .L107
+ 1118              	.L108:
+ 302:onenet.c      ****         }
+ 1119              	 .loc 1 302 0 discriminator 3
+ 1120 002e 2149     	 ldr r1,.L114+20
+ 1121 0030 0020     	 movs r0,#0
+ 1122 0032 FFF7FEFF 	 bl strtok
+ 1123              	.LVL75:
+ 1124 0036 1D4B     	 ldr r3,.L114+12
+ 1125 0038 1860     	 str r0,[r3]
+ 301:onenet.c      ****             index1 = strtok(NULL, ",");
+ 1126              	 .loc 1 301 0 discriminator 3
+ 1127 003a 1D4A     	 ldr r2,.L114+16
+ 1128 003c 1368     	 ldr r3,[r2]
+ 1129 003e 0133     	 adds r3,r3,#1
+ 1130 0040 1360     	 str r3,[r2]
+ 1131              	.L107:
+ 301:onenet.c      ****             index1 = strtok(NULL, ",");
+ 1132              	 .loc 1 301 0 is_stmt 0 discriminator 1
+ 1133 0042 1B4B     	 ldr r3,.L114+16
+ 1134 0044 1B68     	 ldr r3,[r3]
+ 1135 0046 012B     	 cmp r3,#1
+ 1136 0048 F1DD     	 ble .L108
+ 304:onenet.c      ****         int discover_result = 1;
+ 1137              	 .loc 1 304 0 is_stmt 1
+ 1138 004a 184B     	 ldr r3,.L114+12
+ 1139 004c 1868     	 ldr r0,[r3]
+ 1140 004e FFF7FEFF 	 bl atoi
+ 1141              	.LVL76:
+ 1142 0052 0546     	 mov r5,r0
+ 1143              	.LVL77:
+ 307:onenet.c      ****         status = gsdk_ril_rsp_onenet_discover(instance, discover_msgid, discover_result, discover_l
+ 1144              	 .loc 1 307 0
+ 1145 0054 02AB     	 add r3,sp,#8
+ 1146 0056 184A     	 ldr r2,.L114+24
+ 1147 0058 07CA     	 ldm r2,{r0,r1,r2}
+ 1148              	.LVL78:
+ 1149 005a 03C3     	 stmia r3!,{r0,r1}
+ 1150 005c 1A80     	 strh r2,[r3]
+ 1151 005e 7622     	 movs r2,#118
+ 1152 0060 0021     	 movs r1,#0
+ 1153 0062 0DF11200 	 add r0,sp,#18
+ 1154 0066 FFF7FEFF 	 bl memset
+ 1155              	.LVL79:
+ 308:onenet.c      ****         if (GSDK_SUCCESS != status) {
+ 1156              	 .loc 1 308 0
+ 1157 006a 144B     	 ldr r3,.L114+28
+ 1158 006c 1868     	 ldr r0,[r3]
+ 1159 006e 02AB     	 add r3,sp,#8
+ 1160 0070 0093     	 str r3,[sp]
+ 1161 0072 0923     	 movs r3,#9
+ 1162 0074 0122     	 movs r2,#1
+ 1163 0076 2946     	 mov r1,r5
+ARM GAS   			page 28
+
+
+ 1164 0078 FFF7FEFF 	 bl gsdk_ril_rsp_onenet_discover
+ 1165              	.LVL80:
+ 1166 007c 104B     	 ldr r3,.L114+32
+ 1167 007e 1870     	 strb r0,[r3]
+ 309:onenet.c      ****             OEM_PRINTF("onenet discover failed:%d\r\n", status);
+ 1168              	 .loc 1 309 0
+ 1169 0080 30B9     	 cbnz r0,.L113
+ 313:onenet.c      ****     }
+ 1170              	 .loc 1 313 0
+ 1171 0082 4FF48062 	 mov r2,#1024
+ 1172 0086 0021     	 movs r1,#0
+ 1173 0088 0648     	 ldr r0,.L114+4
+ 1174 008a FFF7FEFF 	 bl memset
+ 1175              	.LVL81:
+ 1176 008e C0E7     	 b .L105
+ 1177              	.L113:
+ 310:onenet.c      ****             return -1;
+ 1178              	 .loc 1 310 0
+ 1179 0090 0146     	 mov r1,r0
+ 1180 0092 0C48     	 ldr r0,.L114+36
+ 1181 0094 FFF7FEFF 	 bl OEM_PRINTF
+ 1182              	.LVL82:
+ 311:onenet.c      ****         }
+ 1183              	 .loc 1 311 0
+ 1184 0098 4FF0FF34 	 mov r4,#-1
+ 1185 009c B9E7     	 b .L105
+ 1186              	.L115:
+ 1187 009e 00BF     	 .align 2
+ 1188              	.L114:
+ 1189 00a0 00000000 	 .word .LC27
+ 1190 00a4 00000000 	 .word .LANCHOR3
+ 1191 00a8 0C000000 	 .word .LC20
+ 1192 00ac 00000000 	 .word .LANCHOR11
+ 1193 00b0 00000000 	 .word .LANCHOR12
+ 1194 00b4 10000000 	 .word .LC21
+ 1195 00b8 00040000 	 .word .LANCHOR6+1024
+ 1196 00bc 00000000 	 .word .LANCHOR7
+ 1197 00c0 00000000 	 .word .LANCHOR1
+ 1198 00c4 10000000 	 .word .LC29
+ 1199              	.LBE3:
+ 1200              	 .cfi_endproc
+ 1201              	.LFE17:
+ 1203              	 .section .text.read_func,"ax",%progbits
+ 1204              	 .align 1
+ 1205              	 .global read_func
+ 1206              	 .syntax unified
+ 1207              	 .thumb
+ 1208              	 .thumb_func
+ 1209              	 .fpu fpv4-sp-d16
+ 1211              	read_func:
+ 1212              	.LFB18:
+ 317:onenet.c      **** 
+ 318:onenet.c      **** int read_func(void)
+ 319:onenet.c      **** {
+ 1213              	 .loc 1 319 0
+ 1214              	 .cfi_startproc
+ 1215              	 
+ARM GAS   			page 29
+
+
+ 1216              	 
+ 1217 0000 30B5     	 push {r4,r5,lr}
+ 1218              	 .cfi_def_cfa_offset 12
+ 1219              	 .cfi_offset 4,-12
+ 1220              	 .cfi_offset 5,-8
+ 1221              	 .cfi_offset 14,-4
+ 1222 0002 89B0     	 sub sp,sp,#36
+ 1223              	 .cfi_def_cfa_offset 48
+ 320:onenet.c      ****     /***************************** onenet read ********************************/
+ 321:onenet.c      ****     if (0 == strncmp(unsolicited_buf, "+MIPLREAD:", 10)) {
+ 1224              	 .loc 1 321 0
+ 1225 0004 0A22     	 movs r2,#10
+ 1226 0006 2649     	 ldr r1,.L125
+ 1227 0008 2648     	 ldr r0,.L125+4
+ 1228 000a FFF7FEFF 	 bl strncmp
+ 1229              	.LVL83:
+ 1230 000e 18B1     	 cbz r0,.L123
+ 322:onenet.c      ****         index1 = strtok(unsolicited_buf, ":");
+ 323:onenet.c      ****         for(i=0; i<2; i++){
+ 324:onenet.c      ****             index1 = strtok(NULL, ",");
+ 325:onenet.c      ****         }
+ 326:onenet.c      ****         int read_msgid = atoi(index1);
+ 327:onenet.c      ****         int read_result = 1;
+ 328:onenet.c      ****         int read_objected = 3308;
+ 329:onenet.c      ****         int read_instance_id = 2;
+ 330:onenet.c      ****         int read_resource_id = 5900;
+ 331:onenet.c      ****         int read_value_type = 4;
+ 332:onenet.c      ****         int read_len = 4;
+ 333:onenet.c      ****         int read_value = 1;
+ 334:onenet.c      ****         int read_index = 0;
+ 335:onenet.c      ****         int read_flag = 0;
+ 336:onenet.c      ****         status = gsdk_ril_rsp_onenet_read(instance, read_msgid, read_result, read_objected, read_in
+ 337:onenet.c      ****                                           read_resource_id, read_value_type, read_len, read_value, 
+ 338:onenet.c      ****         if (GSDK_SUCCESS != status) {
+ 339:onenet.c      ****             OEM_PRINTF("onenet read failed:%d\r\n", status);
+ 340:onenet.c      ****             return -1;
+ 341:onenet.c      ****         }
+ 342:onenet.c      ****         memset(unsolicited_buf, 0x0, MAX_RECEIVE_SIZE);
+ 343:onenet.c      ****     }
+ 344:onenet.c      ****     return 0;
+ 1231              	 .loc 1 344 0
+ 1232 0010 0024     	 movs r4,#0
+ 1233              	.L116:
+ 345:onenet.c      **** }
+ 1234              	 .loc 1 345 0
+ 1235 0012 2046     	 mov r0,r4
+ 1236 0014 09B0     	 add sp,sp,#36
+ 1237              	 .cfi_remember_state
+ 1238              	 .cfi_def_cfa_offset 12
+ 1239              	 
+ 1240 0016 30BD     	 pop {r4,r5,pc}
+ 1241              	.L123:
+ 1242              	 .cfi_restore_state
+ 1243 0018 0446     	 mov r4,r0
+ 1244              	.LBB4:
+ 322:onenet.c      ****         index1 = strtok(unsolicited_buf, ":");
+ 1245              	 .loc 1 322 0
+ARM GAS   			page 30
+
+
+ 1246 001a 2349     	 ldr r1,.L125+8
+ 1247 001c 2148     	 ldr r0,.L125+4
+ 1248 001e FFF7FEFF 	 bl strtok
+ 1249              	.LVL84:
+ 1250 0022 224B     	 ldr r3,.L125+12
+ 1251 0024 1860     	 str r0,[r3]
+ 323:onenet.c      ****             index1 = strtok(NULL, ",");
+ 1252              	 .loc 1 323 0
+ 1253 0026 224B     	 ldr r3,.L125+16
+ 1254 0028 0022     	 movs r2,#0
+ 1255 002a 1A60     	 str r2,[r3]
+ 1256 002c 09E0     	 b .L118
+ 1257              	.L119:
+ 324:onenet.c      ****         }
+ 1258              	 .loc 1 324 0 discriminator 3
+ 1259 002e 2149     	 ldr r1,.L125+20
+ 1260 0030 0020     	 movs r0,#0
+ 1261 0032 FFF7FEFF 	 bl strtok
+ 1262              	.LVL85:
+ 1263 0036 1D4B     	 ldr r3,.L125+12
+ 1264 0038 1860     	 str r0,[r3]
+ 323:onenet.c      ****             index1 = strtok(NULL, ",");
+ 1265              	 .loc 1 323 0 discriminator 3
+ 1266 003a 1D4A     	 ldr r2,.L125+16
+ 1267 003c 1368     	 ldr r3,[r2]
+ 1268 003e 0133     	 adds r3,r3,#1
+ 1269 0040 1360     	 str r3,[r2]
+ 1270              	.L118:
+ 323:onenet.c      ****             index1 = strtok(NULL, ",");
+ 1271              	 .loc 1 323 0 is_stmt 0 discriminator 1
+ 1272 0042 1B4B     	 ldr r3,.L125+16
+ 1273 0044 1B68     	 ldr r3,[r3]
+ 1274 0046 012B     	 cmp r3,#1
+ 1275 0048 F1DD     	 ble .L119
+ 326:onenet.c      ****         int read_result = 1;
+ 1276              	 .loc 1 326 0 is_stmt 1
+ 1277 004a 184B     	 ldr r3,.L125+12
+ 1278 004c 1868     	 ldr r0,[r3]
+ 1279 004e FFF7FEFF 	 bl atoi
+ 1280              	.LVL86:
+ 336:onenet.c      ****                                           read_resource_id, read_value_type, read_len, read_value, 
+ 1281              	 .loc 1 336 0
+ 1282 0052 194B     	 ldr r3,.L125+24
+ 1283 0054 1D68     	 ldr r5,[r3]
+ 1284 0056 0023     	 movs r3,#0
+ 1285 0058 0693     	 str r3,[sp,#24]
+ 1286 005a 0593     	 str r3,[sp,#20]
+ 1287 005c 0122     	 movs r2,#1
+ 1288 005e 0492     	 str r2,[sp,#16]
+ 1289 0060 0423     	 movs r3,#4
+ 1290 0062 0393     	 str r3,[sp,#12]
+ 1291 0064 0293     	 str r3,[sp,#8]
+ 1292 0066 41F20C73 	 movw r3,#5900
+ 1293 006a 0193     	 str r3,[sp,#4]
+ 1294 006c 0223     	 movs r3,#2
+ 1295 006e 0093     	 str r3,[sp]
+ 1296 0070 40F6EC43 	 movw r3,#3308
+ARM GAS   			page 31
+
+
+ 1297 0074 0146     	 mov r1,r0
+ 1298 0076 2846     	 mov r0,r5
+ 1299              	.LVL87:
+ 1300 0078 FFF7FEFF 	 bl gsdk_ril_rsp_onenet_read
+ 1301              	.LVL88:
+ 1302 007c 0F4B     	 ldr r3,.L125+28
+ 1303 007e 1870     	 strb r0,[r3]
+ 338:onenet.c      ****             OEM_PRINTF("onenet read failed:%d\r\n", status);
+ 1304              	 .loc 1 338 0
+ 1305 0080 30B9     	 cbnz r0,.L124
+ 342:onenet.c      ****     }
+ 1306              	 .loc 1 342 0
+ 1307 0082 4FF48062 	 mov r2,#1024
+ 1308 0086 0021     	 movs r1,#0
+ 1309 0088 0648     	 ldr r0,.L125+4
+ 1310 008a FFF7FEFF 	 bl memset
+ 1311              	.LVL89:
+ 1312 008e C0E7     	 b .L116
+ 1313              	.L124:
+ 339:onenet.c      ****             return -1;
+ 1314              	 .loc 1 339 0
+ 1315 0090 0146     	 mov r1,r0
+ 1316 0092 0B48     	 ldr r0,.L125+32
+ 1317 0094 FFF7FEFF 	 bl OEM_PRINTF
+ 1318              	.LVL90:
+ 340:onenet.c      ****         }
+ 1319              	 .loc 1 340 0
+ 1320 0098 4FF0FF34 	 mov r4,#-1
+ 1321 009c B9E7     	 b .L116
+ 1322              	.L126:
+ 1323 009e 00BF     	 .align 2
+ 1324              	.L125:
+ 1325 00a0 00000000 	 .word .LC30
+ 1326 00a4 00000000 	 .word .LANCHOR3
+ 1327 00a8 0C000000 	 .word .LC20
+ 1328 00ac 00000000 	 .word .LANCHOR11
+ 1329 00b0 00000000 	 .word .LANCHOR12
+ 1330 00b4 10000000 	 .word .LC21
+ 1331 00b8 00000000 	 .word .LANCHOR7
+ 1332 00bc 00000000 	 .word .LANCHOR1
+ 1333 00c0 0C000000 	 .word .LC31
+ 1334              	.LBE4:
+ 1335              	 .cfi_endproc
+ 1336              	.LFE18:
+ 1338              	 .section .text.write_func,"ax",%progbits
+ 1339              	 .align 1
+ 1340              	 .global write_func
+ 1341              	 .syntax unified
+ 1342              	 .thumb
+ 1343              	 .thumb_func
+ 1344              	 .fpu fpv4-sp-d16
+ 1346              	write_func:
+ 1347              	.LFB19:
+ 346:onenet.c      **** 
+ 347:onenet.c      **** int write_func(void)
+ 348:onenet.c      **** {
+ 1348              	 .loc 1 348 0
+ARM GAS   			page 32
+
+
+ 1349              	 .cfi_startproc
+ 1350              	 
+ 1351              	 
+ 1352 0000 10B5     	 push {r4,lr}
+ 1353              	 .cfi_def_cfa_offset 8
+ 1354              	 .cfi_offset 4,-8
+ 1355              	 .cfi_offset 14,-4
+ 349:onenet.c      ****     /***************************** onenet write ********************************/
+ 350:onenet.c      ****     if (0 == strncmp(unsolicited_buf, "+MIPLWRITE:", 11)) {
+ 1356              	 .loc 1 350 0
+ 1357 0002 0B22     	 movs r2,#11
+ 1358 0004 1D49     	 ldr r1,.L136
+ 1359 0006 1E48     	 ldr r0,.L136+4
+ 1360 0008 FFF7FEFF 	 bl strncmp
+ 1361              	.LVL91:
+ 1362 000c 10B1     	 cbz r0,.L134
+ 351:onenet.c      ****         index1 = strtok(unsolicited_buf, ":");
+ 352:onenet.c      ****         for(i=0; i<2; i++){
+ 353:onenet.c      ****             index1 = strtok(NULL, ",");
+ 354:onenet.c      ****         }
+ 355:onenet.c      ****         int write_msgid = atoi(index1);
+ 356:onenet.c      ****         int write_result = 2;
+ 357:onenet.c      ****     
+ 358:onenet.c      ****         status = gsdk_ril_rsp_onenet_write(instance, write_msgid, write_result);
+ 359:onenet.c      ****         if (GSDK_SUCCESS != status) {
+ 360:onenet.c      ****             OEM_PRINTF("onenet write failed:%d\r\n", status);
+ 361:onenet.c      ****             return -1;
+ 362:onenet.c      ****         }
+ 363:onenet.c      ****         memset(unsolicited_buf, 0x0, MAX_RECEIVE_SIZE);
+ 364:onenet.c      ****     }
+ 365:onenet.c      ****     return 0;
+ 1363              	 .loc 1 365 0
+ 1364 000e 0024     	 movs r4,#0
+ 1365              	.L127:
+ 366:onenet.c      **** }
+ 1366              	 .loc 1 366 0
+ 1367 0010 2046     	 mov r0,r4
+ 1368 0012 10BD     	 pop {r4,pc}
+ 1369              	.L134:
+ 1370 0014 0446     	 mov r4,r0
+ 1371              	.LBB5:
+ 351:onenet.c      ****         index1 = strtok(unsolicited_buf, ":");
+ 1372              	 .loc 1 351 0
+ 1373 0016 1B49     	 ldr r1,.L136+8
+ 1374 0018 1948     	 ldr r0,.L136+4
+ 1375 001a FFF7FEFF 	 bl strtok
+ 1376              	.LVL92:
+ 1377 001e 1A4B     	 ldr r3,.L136+12
+ 1378 0020 1860     	 str r0,[r3]
+ 352:onenet.c      ****             index1 = strtok(NULL, ",");
+ 1379              	 .loc 1 352 0
+ 1380 0022 1A4B     	 ldr r3,.L136+16
+ 1381 0024 0022     	 movs r2,#0
+ 1382 0026 1A60     	 str r2,[r3]
+ 1383 0028 09E0     	 b .L129
+ 1384              	.L130:
+ 353:onenet.c      ****         }
+ARM GAS   			page 33
+
+
+ 1385              	 .loc 1 353 0 discriminator 3
+ 1386 002a 1949     	 ldr r1,.L136+20
+ 1387 002c 0020     	 movs r0,#0
+ 1388 002e FFF7FEFF 	 bl strtok
+ 1389              	.LVL93:
+ 1390 0032 154B     	 ldr r3,.L136+12
+ 1391 0034 1860     	 str r0,[r3]
+ 352:onenet.c      ****             index1 = strtok(NULL, ",");
+ 1392              	 .loc 1 352 0 discriminator 3
+ 1393 0036 154A     	 ldr r2,.L136+16
+ 1394 0038 1368     	 ldr r3,[r2]
+ 1395 003a 0133     	 adds r3,r3,#1
+ 1396 003c 1360     	 str r3,[r2]
+ 1397              	.L129:
+ 352:onenet.c      ****             index1 = strtok(NULL, ",");
+ 1398              	 .loc 1 352 0 is_stmt 0 discriminator 1
+ 1399 003e 134B     	 ldr r3,.L136+16
+ 1400 0040 1B68     	 ldr r3,[r3]
+ 1401 0042 012B     	 cmp r3,#1
+ 1402 0044 F1DD     	 ble .L130
+ 355:onenet.c      ****         int write_result = 2;
+ 1403              	 .loc 1 355 0 is_stmt 1
+ 1404 0046 104B     	 ldr r3,.L136+12
+ 1405 0048 1868     	 ldr r0,[r3]
+ 1406 004a FFF7FEFF 	 bl atoi
+ 1407              	.LVL94:
+ 358:onenet.c      ****         if (GSDK_SUCCESS != status) {
+ 1408              	 .loc 1 358 0
+ 1409 004e 0222     	 movs r2,#2
+ 1410 0050 0146     	 mov r1,r0
+ 1411 0052 104B     	 ldr r3,.L136+24
+ 1412 0054 1868     	 ldr r0,[r3]
+ 1413              	.LVL95:
+ 1414 0056 FFF7FEFF 	 bl gsdk_ril_rsp_onenet_write
+ 1415              	.LVL96:
+ 1416 005a 0F4B     	 ldr r3,.L136+28
+ 1417 005c 1870     	 strb r0,[r3]
+ 359:onenet.c      ****             OEM_PRINTF("onenet write failed:%d\r\n", status);
+ 1418              	 .loc 1 359 0
+ 1419 005e 30B9     	 cbnz r0,.L135
+ 363:onenet.c      ****     }
+ 1420              	 .loc 1 363 0
+ 1421 0060 4FF48062 	 mov r2,#1024
+ 1422 0064 0021     	 movs r1,#0
+ 1423 0066 0648     	 ldr r0,.L136+4
+ 1424 0068 FFF7FEFF 	 bl memset
+ 1425              	.LVL97:
+ 1426 006c D0E7     	 b .L127
+ 1427              	.L135:
+ 360:onenet.c      ****             return -1;
+ 1428              	 .loc 1 360 0
+ 1429 006e 0146     	 mov r1,r0
+ 1430 0070 0A48     	 ldr r0,.L136+32
+ 1431 0072 FFF7FEFF 	 bl OEM_PRINTF
+ 1432              	.LVL98:
+ 361:onenet.c      ****         }
+ 1433              	 .loc 1 361 0
+ARM GAS   			page 34
+
+
+ 1434 0076 4FF0FF34 	 mov r4,#-1
+ 1435 007a C9E7     	 b .L127
+ 1436              	.L137:
+ 1437              	 .align 2
+ 1438              	.L136:
+ 1439 007c 00000000 	 .word .LC32
+ 1440 0080 00000000 	 .word .LANCHOR3
+ 1441 0084 0C000000 	 .word .LC20
+ 1442 0088 00000000 	 .word .LANCHOR11
+ 1443 008c 00000000 	 .word .LANCHOR12
+ 1444 0090 10000000 	 .word .LC21
+ 1445 0094 00000000 	 .word .LANCHOR7
+ 1446 0098 00000000 	 .word .LANCHOR1
+ 1447 009c 0C000000 	 .word .LC33
+ 1448              	.LBE5:
+ 1449              	 .cfi_endproc
+ 1450              	.LFE19:
+ 1452              	 .section .text.execute_func,"ax",%progbits
+ 1453              	 .align 1
+ 1454              	 .global execute_func
+ 1455              	 .syntax unified
+ 1456              	 .thumb
+ 1457              	 .thumb_func
+ 1458              	 .fpu fpv4-sp-d16
+ 1460              	execute_func:
+ 1461              	.LFB20:
+ 367:onenet.c      **** 
+ 368:onenet.c      **** int execute_func(void)
+ 369:onenet.c      **** {
+ 1462              	 .loc 1 369 0
+ 1463              	 .cfi_startproc
+ 1464              	 
+ 1465              	 
+ 1466 0000 10B5     	 push {r4,lr}
+ 1467              	 .cfi_def_cfa_offset 8
+ 1468              	 .cfi_offset 4,-8
+ 1469              	 .cfi_offset 14,-4
+ 370:onenet.c      ****     /***************************** onenet execute ********************************/
+ 371:onenet.c      ****     if (0 == strncmp(unsolicited_buf, "+MIPLEXECUTE:", 13)) {
+ 1470              	 .loc 1 371 0
+ 1471 0002 0D22     	 movs r2,#13
+ 1472 0004 1D49     	 ldr r1,.L147
+ 1473 0006 1E48     	 ldr r0,.L147+4
+ 1474 0008 FFF7FEFF 	 bl strncmp
+ 1475              	.LVL99:
+ 1476 000c 10B1     	 cbz r0,.L145
+ 372:onenet.c      ****         index1 = strtok(unsolicited_buf, ":");
+ 373:onenet.c      ****         for(i=0; i<2; i++){
+ 374:onenet.c      ****             index1 = strtok(NULL, ",");
+ 375:onenet.c      ****         }
+ 376:onenet.c      ****         int execute_msgid = atoi(index1);
+ 377:onenet.c      ****         int execute_result = 2;
+ 378:onenet.c      ****     
+ 379:onenet.c      ****         status = gsdk_ril_rsp_onenet_execute(instance, execute_msgid, execute_result);
+ 380:onenet.c      ****         if (GSDK_SUCCESS != status) {
+ 381:onenet.c      ****             OEM_PRINTF("onenet execute failed:%d\r\n", status);
+ 382:onenet.c      ****             return -1;
+ARM GAS   			page 35
+
+
+ 383:onenet.c      ****         }
+ 384:onenet.c      ****         memset(unsolicited_buf, 0x0, MAX_RECEIVE_SIZE);
+ 385:onenet.c      ****     }
+ 386:onenet.c      ****     return 0;
+ 1477              	 .loc 1 386 0
+ 1478 000e 0024     	 movs r4,#0
+ 1479              	.L138:
+ 387:onenet.c      **** }
+ 1480              	 .loc 1 387 0
+ 1481 0010 2046     	 mov r0,r4
+ 1482 0012 10BD     	 pop {r4,pc}
+ 1483              	.L145:
+ 1484 0014 0446     	 mov r4,r0
+ 1485              	.LBB6:
+ 372:onenet.c      ****         index1 = strtok(unsolicited_buf, ":");
+ 1486              	 .loc 1 372 0
+ 1487 0016 1B49     	 ldr r1,.L147+8
+ 1488 0018 1948     	 ldr r0,.L147+4
+ 1489 001a FFF7FEFF 	 bl strtok
+ 1490              	.LVL100:
+ 1491 001e 1A4B     	 ldr r3,.L147+12
+ 1492 0020 1860     	 str r0,[r3]
+ 373:onenet.c      ****             index1 = strtok(NULL, ",");
+ 1493              	 .loc 1 373 0
+ 1494 0022 1A4B     	 ldr r3,.L147+16
+ 1495 0024 0022     	 movs r2,#0
+ 1496 0026 1A60     	 str r2,[r3]
+ 1497 0028 09E0     	 b .L140
+ 1498              	.L141:
+ 374:onenet.c      ****         }
+ 1499              	 .loc 1 374 0 discriminator 3
+ 1500 002a 1949     	 ldr r1,.L147+20
+ 1501 002c 0020     	 movs r0,#0
+ 1502 002e FFF7FEFF 	 bl strtok
+ 1503              	.LVL101:
+ 1504 0032 154B     	 ldr r3,.L147+12
+ 1505 0034 1860     	 str r0,[r3]
+ 373:onenet.c      ****             index1 = strtok(NULL, ",");
+ 1506              	 .loc 1 373 0 discriminator 3
+ 1507 0036 154A     	 ldr r2,.L147+16
+ 1508 0038 1368     	 ldr r3,[r2]
+ 1509 003a 0133     	 adds r3,r3,#1
+ 1510 003c 1360     	 str r3,[r2]
+ 1511              	.L140:
+ 373:onenet.c      ****             index1 = strtok(NULL, ",");
+ 1512              	 .loc 1 373 0 is_stmt 0 discriminator 1
+ 1513 003e 134B     	 ldr r3,.L147+16
+ 1514 0040 1B68     	 ldr r3,[r3]
+ 1515 0042 012B     	 cmp r3,#1
+ 1516 0044 F1DD     	 ble .L141
+ 376:onenet.c      ****         int execute_result = 2;
+ 1517              	 .loc 1 376 0 is_stmt 1
+ 1518 0046 104B     	 ldr r3,.L147+12
+ 1519 0048 1868     	 ldr r0,[r3]
+ 1520 004a FFF7FEFF 	 bl atoi
+ 1521              	.LVL102:
+ 379:onenet.c      ****         if (GSDK_SUCCESS != status) {
+ARM GAS   			page 36
+
+
+ 1522              	 .loc 1 379 0
+ 1523 004e 0222     	 movs r2,#2
+ 1524 0050 0146     	 mov r1,r0
+ 1525 0052 104B     	 ldr r3,.L147+24
+ 1526 0054 1868     	 ldr r0,[r3]
+ 1527              	.LVL103:
+ 1528 0056 FFF7FEFF 	 bl gsdk_ril_rsp_onenet_execute
+ 1529              	.LVL104:
+ 1530 005a 0F4B     	 ldr r3,.L147+28
+ 1531 005c 1870     	 strb r0,[r3]
+ 380:onenet.c      ****             OEM_PRINTF("onenet execute failed:%d\r\n", status);
+ 1532              	 .loc 1 380 0
+ 1533 005e 30B9     	 cbnz r0,.L146
+ 384:onenet.c      ****     }
+ 1534              	 .loc 1 384 0
+ 1535 0060 4FF48062 	 mov r2,#1024
+ 1536 0064 0021     	 movs r1,#0
+ 1537 0066 0648     	 ldr r0,.L147+4
+ 1538 0068 FFF7FEFF 	 bl memset
+ 1539              	.LVL105:
+ 1540 006c D0E7     	 b .L138
+ 1541              	.L146:
+ 381:onenet.c      ****             return -1;
+ 1542              	 .loc 1 381 0
+ 1543 006e 0146     	 mov r1,r0
+ 1544 0070 0A48     	 ldr r0,.L147+32
+ 1545 0072 FFF7FEFF 	 bl OEM_PRINTF
+ 1546              	.LVL106:
+ 382:onenet.c      ****         }
+ 1547              	 .loc 1 382 0
+ 1548 0076 4FF0FF34 	 mov r4,#-1
+ 1549 007a C9E7     	 b .L138
+ 1550              	.L148:
+ 1551              	 .align 2
+ 1552              	.L147:
+ 1553 007c 00000000 	 .word .LC34
+ 1554 0080 00000000 	 .word .LANCHOR3
+ 1555 0084 0C000000 	 .word .LC20
+ 1556 0088 00000000 	 .word .LANCHOR11
+ 1557 008c 00000000 	 .word .LANCHOR12
+ 1558 0090 10000000 	 .word .LC21
+ 1559 0094 00000000 	 .word .LANCHOR7
+ 1560 0098 00000000 	 .word .LANCHOR1
+ 1561 009c 10000000 	 .word .LC35
+ 1562              	.LBE6:
+ 1563              	 .cfi_endproc
+ 1564              	.LFE20:
+ 1566              	 .section .text.onenet_close_func,"ax",%progbits
+ 1567              	 .align 1
+ 1568              	 .global onenet_close_func
+ 1569              	 .syntax unified
+ 1570              	 .thumb
+ 1571              	 .thumb_func
+ 1572              	 .fpu fpv4-sp-d16
+ 1574              	onenet_close_func:
+ 1575              	.LFB21:
+ 388:onenet.c      **** 
+ARM GAS   			page 37
+
+
+ 389:onenet.c      **** void onenet_close_func(void)
+ 390:onenet.c      **** {
+ 1576              	 .loc 1 390 0
+ 1577              	 .cfi_startproc
+ 1578              	 
+ 1579              	 
+ 1580 0000 08B5     	 push {r3,lr}
+ 1581              	 .cfi_def_cfa_offset 8
+ 1582              	 .cfi_offset 3,-8
+ 1583              	 .cfi_offset 14,-4
+ 391:onenet.c      ****     // close instance
+ 392:onenet.c      ****     status = gsdk_ril_onenet_close(instance);
+ 1584              	 .loc 1 392 0
+ 1585 0002 074B     	 ldr r3,.L153
+ 1586 0004 1868     	 ldr r0,[r3]
+ 1587 0006 FFF7FEFF 	 bl gsdk_ril_onenet_close
+ 1588              	.LVL107:
+ 1589 000a 064B     	 ldr r3,.L153+4
+ 1590 000c 1870     	 strb r0,[r3]
+ 393:onenet.c      ****     if (status != GSDK_SUCCESS) {
+ 1591              	 .loc 1 393 0
+ 1592 000e 18B9     	 cbnz r0,.L152
+ 1593              	.L150:
+ 394:onenet.c      ****         OEM_PRINTF("[OneNET_DEMO] onenet_close_func error!\r\n");
+ 395:onenet.c      ****     }
+ 396:onenet.c      ****     OEM_PRINTF("[OneNET_DEMO] onenet_close_func end!\r\n");
+ 1594              	 .loc 1 396 0
+ 1595 0010 0548     	 ldr r0,.L153+8
+ 1596 0012 FFF7FEFF 	 bl OEM_PRINTF
+ 1597              	.LVL108:
+ 397:onenet.c      ****     return;
+ 398:onenet.c      **** }
+ 1598              	 .loc 1 398 0
+ 1599 0016 08BD     	 pop {r3,pc}
+ 1600              	.L152:
+ 394:onenet.c      ****         OEM_PRINTF("[OneNET_DEMO] onenet_close_func error!\r\n");
+ 1601              	 .loc 1 394 0
+ 1602 0018 0448     	 ldr r0,.L153+12
+ 1603 001a FFF7FEFF 	 bl OEM_PRINTF
+ 1604              	.LVL109:
+ 1605 001e F7E7     	 b .L150
+ 1606              	.L154:
+ 1607              	 .align 2
+ 1608              	.L153:
+ 1609 0020 00000000 	 .word .LANCHOR7
+ 1610 0024 00000000 	 .word .LANCHOR1
+ 1611 0028 2C000000 	 .word .LC37
+ 1612 002c 00000000 	 .word .LC36
+ 1613              	 .cfi_endproc
+ 1614              	.LFE21:
+ 1616              	 .section .text.main,"ax",%progbits
+ 1617              	 .align 1
+ 1618              	 .global main
+ 1619              	 .syntax unified
+ 1620              	 .thumb
+ 1621              	 .thumb_func
+ 1622              	 .fpu fpv4-sp-d16
+ARM GAS   			page 38
+
+
+ 1624              	main:
+ 1625              	.LFB22:
+ 399:onenet.c      **** 
+ 400:onenet.c      **** int main(void)
+ 401:onenet.c      **** {
+ 1626              	 .loc 1 401 0
+ 1627              	 .cfi_startproc
+ 1628              	 
+ 1629              	 
+ 1630 0000 08B5     	 push {r3,lr}
+ 1631              	 .cfi_def_cfa_offset 8
+ 1632              	 .cfi_offset 3,-8
+ 1633              	 .cfi_offset 14,-4
+ 402:onenet.c      ****     oemdebuglog_open();
+ 1634              	 .loc 1 402 0
+ 1635 0002 FFF7FEFF 	 bl oemdebuglog_open
+ 1636              	.LVL110:
+ 403:onenet.c      ****     if(init_func() != 0) goto _fail;
+ 1637              	 .loc 1 403 0
+ 1638 0006 FFF7FEFF 	 bl init_func
+ 1639              	.LVL111:
+ 1640 000a 30B1     	 cbz r0,.L161
+ 1641              	.L156:
+ 404:onenet.c      ****     if(ip_wait_func() != 0) goto _fail;
+ 405:onenet.c      ****     
+ 406:onenet.c      ****     onenet_unsolicited_func(&g_handler);
+ 407:onenet.c      ****     if(create_instance_func() != 0) goto _fail;
+ 408:onenet.c      ****     if(create_object_func() != 0) goto _fail;
+ 409:onenet.c      ****     if(register_onenet_func() != 0) goto _fail;
+ 410:onenet.c      **** 
+ 411:onenet.c      ****     memset(unsolicited_buf, 0x0, MAX_RECEIVE_SIZE);
+ 412:onenet.c      ****     while (1) {
+ 413:onenet.c      ****         vTaskDelay(50);
+ 414:onenet.c      ****         if (1 == flag) continue;
+ 415:onenet.c      ****         if(capture_register_info_func() != 0) break;
+ 416:onenet.c      ****         if(observe_notify_func() != 0) break;
+ 417:onenet.c      ****         if(discover_func() != 0) break;
+ 418:onenet.c      ****         if(read_func() != 0) break;
+ 419:onenet.c      ****         if(write_func() != 0) break;
+ 420:onenet.c      ****         if(execute_func() != 0) break;
+ 421:onenet.c      ****     }
+ 422:onenet.c      ****     OEM_PRINTF("[OneNET_DEMO] while function error!!!\r\n");
+ 423:onenet.c      **** 
+ 424:onenet.c      **** _fail:
+ 425:onenet.c      **** 
+ 426:onenet.c      ****     OEM_PRINTF("[OneNET_DEMO] main function abnormal exit!\r\n");
+ 1642              	 .loc 1 426 0
+ 1643 000c 1E48     	 ldr r0,.L162
+ 1644 000e FFF7FEFF 	 bl OEM_PRINTF
+ 1645              	.LVL112:
+ 427:onenet.c      ****     onenet_close_func();
+ 1646              	 .loc 1 427 0
+ 1647 0012 FFF7FEFF 	 bl onenet_close_func
+ 1648              	.LVL113:
+ 428:onenet.c      ****     return 0;
+ 429:onenet.c      **** }
+ 1649              	 .loc 1 429 0
+ARM GAS   			page 39
+
+
+ 1650 0016 0020     	 movs r0,#0
+ 1651 0018 08BD     	 pop {r3,pc}
+ 1652              	.L161:
+ 404:onenet.c      ****     
+ 1653              	 .loc 1 404 0
+ 1654 001a FFF7FEFF 	 bl ip_wait_func
+ 1655              	.LVL114:
+ 1656 001e 0028     	 cmp r0,#0
+ 1657 0020 F4D1     	 bne .L156
+ 406:onenet.c      ****     if(create_instance_func() != 0) goto _fail;
+ 1658              	 .loc 1 406 0
+ 1659 0022 1A48     	 ldr r0,.L162+4
+ 1660 0024 FFF7FEFF 	 bl onenet_unsolicited_func
+ 1661              	.LVL115:
+ 407:onenet.c      ****     if(create_object_func() != 0) goto _fail;
+ 1662              	 .loc 1 407 0
+ 1663 0028 FFF7FEFF 	 bl create_instance_func
+ 1664              	.LVL116:
+ 1665 002c 0028     	 cmp r0,#0
+ 1666 002e EDD1     	 bne .L156
+ 408:onenet.c      ****     if(register_onenet_func() != 0) goto _fail;
+ 1667              	 .loc 1 408 0
+ 1668 0030 FFF7FEFF 	 bl create_object_func
+ 1669              	.LVL117:
+ 1670 0034 0028     	 cmp r0,#0
+ 1671 0036 E9D1     	 bne .L156
+ 409:onenet.c      **** 
+ 1672              	 .loc 1 409 0
+ 1673 0038 FFF7FEFF 	 bl register_onenet_func
+ 1674              	.LVL118:
+ 1675 003c 0028     	 cmp r0,#0
+ 1676 003e E5D1     	 bne .L156
+ 411:onenet.c      ****     while (1) {
+ 1677              	 .loc 1 411 0
+ 1678 0040 4FF48062 	 mov r2,#1024
+ 1679 0044 0021     	 movs r1,#0
+ 1680 0046 1248     	 ldr r0,.L162+8
+ 1681 0048 FFF7FEFF 	 bl memset
+ 1682              	.LVL119:
+ 1683              	.L157:
+ 413:onenet.c      ****         if (1 == flag) continue;
+ 1684              	 .loc 1 413 0
+ 1685 004c 3220     	 movs r0,#50
+ 1686 004e FFF7FEFF 	 bl vTaskDelay
+ 1687              	.LVL120:
+ 414:onenet.c      ****         if(capture_register_info_func() != 0) break;
+ 1688              	 .loc 1 414 0
+ 1689 0052 104B     	 ldr r3,.L162+12
+ 1690 0054 1B68     	 ldr r3,[r3]
+ 1691 0056 012B     	 cmp r3,#1
+ 1692 0058 F8D0     	 beq .L157
+ 415:onenet.c      ****         if(observe_notify_func() != 0) break;
+ 1693              	 .loc 1 415 0
+ 1694 005a FFF7FEFF 	 bl capture_register_info_func
+ 1695              	.LVL121:
+ 1696 005e 78B9     	 cbnz r0,.L159
+ 416:onenet.c      ****         if(discover_func() != 0) break;
+ARM GAS   			page 40
+
+
+ 1697              	 .loc 1 416 0
+ 1698 0060 FFF7FEFF 	 bl observe_notify_func
+ 1699              	.LVL122:
+ 1700 0064 60B9     	 cbnz r0,.L159
+ 417:onenet.c      ****         if(read_func() != 0) break;
+ 1701              	 .loc 1 417 0
+ 1702 0066 FFF7FEFF 	 bl discover_func
+ 1703              	.LVL123:
+ 1704 006a 48B9     	 cbnz r0,.L159
+ 418:onenet.c      ****         if(write_func() != 0) break;
+ 1705              	 .loc 1 418 0
+ 1706 006c FFF7FEFF 	 bl read_func
+ 1707              	.LVL124:
+ 1708 0070 30B9     	 cbnz r0,.L159
+ 419:onenet.c      ****         if(execute_func() != 0) break;
+ 1709              	 .loc 1 419 0
+ 1710 0072 FFF7FEFF 	 bl write_func
+ 1711              	.LVL125:
+ 1712 0076 18B9     	 cbnz r0,.L159
+ 420:onenet.c      ****     }
+ 1713              	 .loc 1 420 0
+ 1714 0078 FFF7FEFF 	 bl execute_func
+ 1715              	.LVL126:
+ 1716 007c 0028     	 cmp r0,#0
+ 1717 007e E5D0     	 beq .L157
+ 1718              	.L159:
+ 422:onenet.c      **** 
+ 1719              	 .loc 1 422 0
+ 1720 0080 0548     	 ldr r0,.L162+16
+ 1721 0082 FFF7FEFF 	 bl OEM_PRINTF
+ 1722              	.LVL127:
+ 1723 0086 C1E7     	 b .L156
+ 1724              	.L163:
+ 1725              	 .align 2
+ 1726              	.L162:
+ 1727 0088 28000000 	 .word .LC39
+ 1728 008c 00000000 	 .word .LANCHOR13
+ 1729 0090 00000000 	 .word .LANCHOR3
+ 1730 0094 00000000 	 .word .LANCHOR2
+ 1731 0098 00000000 	 .word .LC38
+ 1732              	 .cfi_endproc
+ 1733              	.LFE22:
+ 1735              	 .global ip_buf
+ 1736              	 .global i
+ 1737              	 .global index1
+ 1738              	 .global lifetime
+ 1739              	 .global instance
+ 1740              	 .global count
+ 1741              	 .global ip
+ 1742              	 .global ret
+ 1743              	 .global status
+ 1744              	 .global oem_debuglog
+ 1745              	 .global flag
+ 1746              	 .section .rodata
+ 1747              	 .align 2
+ 1748              	 .set .LANCHOR6,.+0
+ 1749              	.LC8:
+ARM GAS   			page 41
+
+
+ 1750 0000 31333030 	 .ascii "130033f10003f20021050011000000000000000d3138332e323"
+ 1750      33336631 
+ 1750      30303033 
+ 1750      66323030 
+ 1750      32313035 
+ 1751 0033 33333032 	 .ascii "3302e34302e333900044e554c4cf3000cea040000044e554c4c"
+ 1751      65333433 
+ 1751      30326533 
+ 1751      33333930 
+ 1751      30303434 
+ 1752 0066 00       	 .ascii "\000"
+ 1753 0067 00000000 	 .space 921
+ 1753      00000000 
+ 1753      00000000 
+ 1753      00000000 
+ 1753      00000000 
+ 1754              	.LC28:
+ 1755 0400 35393030 	 .ascii "5900;5750\000"
+ 1755      3B353735 
+ 1755      3000
+ 1756 040a 00000000 	 .space 118
+ 1756      00000000 
+ 1756      00000000 
+ 1756      00000000 
+ 1756      00000000 
+ 1757              	 .section .bss.count,"aw",%nobits
+ 1758              	 .align 2
+ 1759              	 .set .LANCHOR9,.+0
+ 1762              	count:
+ 1763 0000 00000000 	 .space 4
+ 1764              	 .section .bss.flag,"aw",%nobits
+ 1765              	 .align 2
+ 1766              	 .set .LANCHOR2,.+0
+ 1769              	flag:
+ 1770 0000 00000000 	 .space 4
+ 1771              	 .section .bss.g_handler,"aw",%nobits
+ 1772              	 .align 2
+ 1773              	 .set .LANCHOR13,.+0
+ 1776              	g_handler:
+ 1777 0000 00000000 	 .space 16
+ 1777      00000000 
+ 1777      00000000 
+ 1777      00000000 
+ 1778              	 .section .bss.g_huart,"aw",%nobits
+ 1779              	 .align 2
+ 1780              	 .set .LANCHOR4,.+0
+ 1783              	g_huart:
+ 1784 0000 00000000 	 .space 4
+ 1785              	 .section .bss.i,"aw",%nobits
+ 1786              	 .align 2
+ 1787              	 .set .LANCHOR12,.+0
+ 1790              	i:
+ 1791 0000 00000000 	 .space 4
+ 1792              	 .section .bss.index1,"aw",%nobits
+ 1793              	 .align 2
+ 1794              	 .set .LANCHOR11,.+0
+ 1797              	index1:
+ARM GAS   			page 42
+
+
+ 1798 0000 00000000 	 .space 4
+ 1799              	 .section .bss.instance,"aw",%nobits
+ 1800              	 .align 2
+ 1801              	 .set .LANCHOR7,.+0
+ 1804              	instance:
+ 1805 0000 00000000 	 .space 4
+ 1806              	 .section .bss.ip,"aw",%nobits
+ 1807              	 .align 2
+ 1810              	ip:
+ 1811 0000 00000000 	 .space 20
+ 1811      00000000 
+ 1811      00000000 
+ 1811      00000000 
+ 1811      00000000 
+ 1812              	 .section .bss.ip_buf,"aw",%nobits
+ 1813              	 .align 2
+ 1814              	 .set .LANCHOR10,.+0
+ 1817              	ip_buf:
+ 1818 0000 00000000 	 .space 64
+ 1818      00000000 
+ 1818      00000000 
+ 1818      00000000 
+ 1818      00000000 
+ 1819              	 .section .bss.lifetime,"aw",%nobits
+ 1820              	 .align 2
+ 1821              	 .set .LANCHOR8,.+0
+ 1824              	lifetime:
+ 1825 0000 00000000 	 .space 4
+ 1826              	 .section .bss.status,"aw",%nobits
+ 1827              	 .set .LANCHOR1,.+0
+ 1830              	status:
+ 1831 0000 00       	 .space 1
+ 1832              	 .section .bss.unsolicited_buf,"aw",%nobits
+ 1833              	 .align 2
+ 1834              	 .set .LANCHOR3,.+0
+ 1837              	unsolicited_buf:
+ 1838 0000 00000000 	 .space 1024
+ 1838      00000000 
+ 1838      00000000 
+ 1838      00000000 
+ 1838      00000000 
+ 1839              	 .section .data.oem_debuglog,"aw",%progbits
+ 1840              	 .align 2
+ 1841              	 .set .LANCHOR0,.+0
+ 1844              	oem_debuglog:
+ 1845 0000 01000000 	 .word 1
+ 1846              	 .section .data.ret,"aw",%progbits
+ 1847              	 .align 2
+ 1848              	 .set .LANCHOR5,.+0
+ 1851              	ret:
+ 1852 0000 FFFFFFFF 	 .word -1
+ 1853              	 .section .rodata.capture_register_info_func.str1.4,"aMS",%progbits,1
+ 1854              	 .align 2
+ 1855              	.LC19:
+ 1856 0000 2B4D4950 	 .ascii "+MIPLEVENT:\000"
+ 1856      4C455645 
+ 1856      4E543A00 
+ARM GAS   			page 43
+
+
+ 1857              	.LC20:
+ 1858 000c 3A00     	 .ascii ":\000"
+ 1859 000e 0000     	 .space 2
+ 1860              	.LC21:
+ 1861 0010 2C00     	 .ascii ",\000"
+ 1862 0012 0000     	 .space 2
+ 1863              	.LC22:
+ 1864 0014 72656769 	 .ascii "register OK\015\012\000"
+ 1864      73746572 
+ 1864      204F4B0D 
+ 1864      0A00
+ 1865 0022 0000     	 .space 2
+ 1866              	.LC23:
+ 1867 0024 72656769 	 .ascii "register failed\015\012\000"
+ 1867      73746572 
+ 1867      20666169 
+ 1867      6C65640D 
+ 1867      0A00
+ 1868              	 .section .rodata.create_instance_func.str1.4,"aMS",%progbits,1
+ 1869              	 .align 2
+ 1870              	.LC9:
+ 1871 0000 63726561 	 .ascii "create_instance_func error!\000"
+ 1871      74655F69 
+ 1871      6E737461 
+ 1871      6E63655F 
+ 1871      66756E63 
+ 1872              	.LC10:
+ 1873 001c 5B4F6E65 	 .ascii "[OneNET_DEMO] create_instance_func end!\015\012\000"
+ 1873      4E45545F 
+ 1873      44454D4F 
+ 1873      5D206372 
+ 1873      65617465 
+ 1874              	 .section .rodata.create_object_func.str1.4,"aMS",%progbits,1
+ 1875              	 .align 2
+ 1876              	.LC11:
+ 1877 0000 5B4F6E65 	 .ascii "[OneNET_DEMO] create_object_func error!\015\012\000"
+ 1877      4E45545F 
+ 1877      44454D4F 
+ 1877      5D206372 
+ 1877      65617465 
+ 1878 002a 0000     	 .space 2
+ 1879              	.LC12:
+ 1880 002c 5B4F6E65 	 .ascii "[OneNET_DEMO] create_object_func end!\015\012\000"
+ 1880      4E45545F 
+ 1880      44454D4F 
+ 1880      5D206372 
+ 1880      65617465 
+ 1881              	 .section .rodata.discover_func.str1.4,"aMS",%progbits,1
+ 1882              	 .align 2
+ 1883              	.LC27:
+ 1884 0000 2B4D4950 	 .ascii "+MIPLDISCOVER:\000"
+ 1884      4C444953 
+ 1884      434F5645 
+ 1884      523A00
+ 1885 000f 00       	 .space 1
+ 1886              	.LC29:
+ 1887 0010 6F6E656E 	 .ascii "onenet discover failed:%d\015\012\000"
+ARM GAS   			page 44
+
+
+ 1887      65742064 
+ 1887      6973636F 
+ 1887      76657220 
+ 1887      6661696C 
+ 1888              	 .section .rodata.execute_func.str1.4,"aMS",%progbits,1
+ 1889              	 .align 2
+ 1890              	.LC34:
+ 1891 0000 2B4D4950 	 .ascii "+MIPLEXECUTE:\000"
+ 1891      4C455845 
+ 1891      43555445 
+ 1891      3A00
+ 1892 000e 0000     	 .space 2
+ 1893              	.LC35:
+ 1894 0010 6F6E656E 	 .ascii "onenet execute failed:%d\015\012\000"
+ 1894      65742065 
+ 1894      78656375 
+ 1894      74652066 
+ 1894      61696C65 
+ 1895              	 .section .rodata.gsdk_ril_init_func.str1.4,"aMS",%progbits,1
+ 1896              	 .align 2
+ 1897              	.LC5:
+ 1898 0000 5B4F6E65 	 .ascii "[OneNET_DEMO] gsdk_ril_init error!\015\012\000"
+ 1898      4E45545F 
+ 1898      44454D4F 
+ 1898      5D206773 
+ 1898      646B5F72 
+ 1899              	 .section .rodata.init_func.str1.4,"aMS",%progbits,1
+ 1900              	 .align 2
+ 1901              	.LC6:
+ 1902 0000 5B4F6E65 	 .ascii "[OneNET_DEMO] init_func end!\015\012\000"
+ 1902      4E45545F 
+ 1902      44454D4F 
+ 1902      5D20696E 
+ 1902      69745F66 
+ 1903 001f 00       	 .space 1
+ 1904              	.LC7:
+ 1905 0020 5B4F6E65 	 .ascii "[OneNET_DEMO] init_func error!\015\012\000"
+ 1905      4E45545F 
+ 1905      44454D4F 
+ 1905      5D20696E 
+ 1905      69745F66 
+ 1906              	 .section .rodata.ip_wait_func.str1.4,"aMS",%progbits,1
+ 1907              	 .align 2
+ 1908              	.LC15:
+ 1909 0000 77616974 	 .ascii "wait for IP timeout\015\012\000"
+ 1909      20666F72 
+ 1909      20495020 
+ 1909      74696D65 
+ 1909      6F75740D 
+ 1910 0016 0000     	 .space 2
+ 1911              	.LC16:
+ 1912 0018 67657420 	 .ascii "get ip success!\015\012\000"
+ 1912      69702073 
+ 1912      75636365 
+ 1912      7373210D 
+ 1912      0A00
+ 1913 002a 0000     	 .space 2
+ARM GAS   			page 45
+
+
+ 1914              	.LC17:
+ 1915 002c 69705F77 	 .ascii "ip_wait_func end! ip registered\015\012\000"
+ 1915      6169745F 
+ 1915      66756E63 
+ 1915      20656E64 
+ 1915      21206970 
+ 1916 004e 0000     	 .space 2
+ 1917              	.LC18:
+ 1918 0050 67657420 	 .ascii "get ip failed!\015\012\000"
+ 1918      69702066 
+ 1918      61696C65 
+ 1918      64210D0A 
+ 1918      00
+ 1919              	 .section .rodata.log_init.str1.4,"aMS",%progbits,1
+ 1920              	 .align 2
+ 1921              	.LC4:
+ 1922 0000 5B4F6E65 	 .ascii "[OneNET_DEMO] log init....OK\015\012\000"
+ 1922      4E45545F 
+ 1922      44454D4F 
+ 1922      5D206C6F 
+ 1922      6720696E 
+ 1923              	 .section .rodata.main.str1.4,"aMS",%progbits,1
+ 1924              	 .align 2
+ 1925              	.LC38:
+ 1926 0000 5B4F6E65 	 .ascii "[OneNET_DEMO] while function error!!!\015\012\000"
+ 1926      4E45545F 
+ 1926      44454D4F 
+ 1926      5D207768 
+ 1926      696C6520 
+ 1927              	.LC39:
+ 1928 0028 5B4F6E65 	 .ascii "[OneNET_DEMO] main function abnormal exit!\015\012\000"
+ 1928      4E45545F 
+ 1928      44454D4F 
+ 1928      5D206D61 
+ 1928      696E2066 
+ 1929              	 .section .rodata.observe_notify_func.str1.4,"aMS",%progbits,1
+ 1930              	 .align 2
+ 1931              	.LC24:
+ 1932 0000 2B4D4950 	 .ascii "+MIPLOBSERVE:\000"
+ 1932      4C4F4253 
+ 1932      45525645 
+ 1932      3A00
+ 1933 000e 0000     	 .space 2
+ 1934              	.LC25:
+ 1935 0010 6F6E656E 	 .ascii "onenet observe failed:%d\015\012\000"
+ 1935      6574206F 
+ 1935      62736572 
+ 1935      76652066 
+ 1935      61696C65 
+ 1936 002b 00       	 .space 1
+ 1937              	.LC26:
+ 1938 002c 6F6E656E 	 .ascii "onenet notify failed:%d\015\012\000"
+ 1938      6574206E 
+ 1938      6F746966 
+ 1938      79206661 
+ 1938      696C6564 
+ 1939              	 .section .rodata.onenet_close_func.str1.4,"aMS",%progbits,1
+ARM GAS   			page 46
+
+
+ 1940              	 .align 2
+ 1941              	.LC36:
+ 1942 0000 5B4F6E65 	 .ascii "[OneNET_DEMO] onenet_close_func error!\015\012\000"
+ 1942      4E45545F 
+ 1942      44454D4F 
+ 1942      5D206F6E 
+ 1942      656E6574 
+ 1943 0029 000000   	 .space 3
+ 1944              	.LC37:
+ 1945 002c 5B4F6E65 	 .ascii "[OneNET_DEMO] onenet_close_func end!\015\012\000"
+ 1945      4E45545F 
+ 1945      44454D4F 
+ 1945      5D206F6E 
+ 1945      656E6574 
+ 1946              	 .section .rodata.onenet_handle_func.str1.4,"aMS",%progbits,1
+ 1947              	 .align 2
+ 1948              	.LC2:
+ 1949 0000 74686520 	 .ascii "the information is too large ,please change the siz"
+ 1949      696E666F 
+ 1949      726D6174 
+ 1949      696F6E20 
+ 1949      69732074 
+ 1950 0033 65206F66 	 .ascii "e of recv_buf\015\012\000"
+ 1950      20726563 
+ 1950      765F6275 
+ 1950      660D0A00 
+ 1951 0043 00       	 .space 1
+ 1952              	.LC3:
+ 1953 0044 25730D0A 	 .ascii "%s\015\012\015\012\000"
+ 1953      0D0A00
+ 1954              	 .section .rodata.onenet_unsolicited_func.str1.4,"aMS",%progbits,1
+ 1955              	 .align 2
+ 1956              	.LC0:
+ 1957 0000 2B4D4950 	 .ascii "+MIPL\000"
+ 1957      4C00
+ 1958 0006 0000     	 .space 2
+ 1959              	.LC1:
+ 1960 0008 736F6D65 	 .ascii "some error hanppened in handle,status is %d\015\012"
+ 1960      20657272 
+ 1960      6F722068 
+ 1960      616E7070 
+ 1960      656E6564 
+ 1961 0035 00       	 .ascii "\000"
+ 1962              	 .section .rodata.read_func.str1.4,"aMS",%progbits,1
+ 1963              	 .align 2
+ 1964              	.LC30:
+ 1965 0000 2B4D4950 	 .ascii "+MIPLREAD:\000"
+ 1965      4C524541 
+ 1965      443A00
+ 1966 000b 00       	 .space 1
+ 1967              	.LC31:
+ 1968 000c 6F6E656E 	 .ascii "onenet read failed:%d\015\012\000"
+ 1968      65742072 
+ 1968      65616420 
+ 1968      6661696C 
+ 1968      65643A25 
+ 1969              	 .section .rodata.register_onenet_func.str1.4,"aMS",%progbits,1
+ARM GAS   			page 47
+
+
+ 1970              	 .align 2
+ 1971              	.LC13:
+ 1972 0000 5B4F6E65 	 .ascii "[OneNET_DEMO] register_onenet_func error!\015\012\000"
+ 1972      4E45545F 
+ 1972      44454D4F 
+ 1972      5D207265 
+ 1972      67697374 
+ 1973              	.LC14:
+ 1974 002c 5B4F6E65 	 .ascii "[OneNET_DEMO] register_onenet_func end!\015\012\000"
+ 1974      4E45545F 
+ 1974      44454D4F 
+ 1974      5D207265 
+ 1974      67697374 
+ 1975              	 .section .rodata.write_func.str1.4,"aMS",%progbits,1
+ 1976              	 .align 2
+ 1977              	.LC32:
+ 1978 0000 2B4D4950 	 .ascii "+MIPLWRITE:\000"
+ 1978      4C575249 
+ 1978      54453A00 
+ 1979              	.LC33:
+ 1980 000c 6F6E656E 	 .ascii "onenet write failed:%d\015\012\000"
+ 1980      65742077 
+ 1980      72697465 
+ 1980      20666169 
+ 1980      6C65643A 
+ 1981              	 .text
+ 1982              	.Letext0:
+ 1983              	 .file 2 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 1984              	 .file 3 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\lock.h"
+ 1985              	 .file 4 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\_types.h"
+ 1986              	 .file 5 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\lib\\gcc\\arm-none-eabi\\7.3.1\\include\\stddef.h"
+ 1987              	 .file 6 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\reent.h"
+ 1988              	 .file 7 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\_stdint.h"
+ 1989              	 .file 8 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\stdlib.h"
+ 1990              	 .file 9 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_common.h"
+ 1991              	 .file 10 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_uart.h"
+ 1992              	 .file 11 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_flash.h"
+ 1993              	 .file 12 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/include/FreeRTOSConfig.h"
+ 1994              	 .file 13 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_ril.h"
+ 1995              	 .file 14 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/include/task.h"
+ 1996              	 .file 15 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_ril_cmds.h"
+ 1997              	 .file 16 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\string.h"
+ 1998              	 .file 17 "<built-in>"
+ 1999              	 .file 18 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\stdio.h"
+ARM GAS   			page 48
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 onenet.c
+    {standard input}:18     .text.oemdebuglog_open:00000000 $t
+    {standard input}:25     .text.oemdebuglog_open:00000000 oemdebuglog_open
+    {standard input}:42     .text.oemdebuglog_open:00000008 $d
+    {standard input}:47     .text.OEM_PRINTF:00000000 $t
+    {standard input}:54     .text.OEM_PRINTF:00000000 OEM_PRINTF
+    {standard input}:101    .text.OEM_PRINTF:0000001c $d
+    {standard input}:106    .text.onenet_unsolicited_func:00000000 $t
+    {standard input}:112    .text.onenet_unsolicited_func:00000000 onenet_unsolicited_func
+    {standard input}:158    .text.onenet_unsolicited_func:0000002c $d
+    {standard input}:172    .text.onenet_handle_func:00000000 onenet_handle_func
+    {standard input}:166    .text.onenet_handle_func:00000000 $t
+    {standard input}:236    .text.onenet_handle_func:0000004c $d
+    {standard input}:244    .text.__io_puts:00000000 $t
+    {standard input}:251    .text.__io_puts:00000000 __io_puts
+    {standard input}:285    .text.__io_puts:00000020 $d
+    {standard input}:291    .text.log_init:00000000 $t
+    {standard input}:298    .text.log_init:00000000 log_init
+    {standard input}:350    .text.log_init:0000003c $d
+    {standard input}:357    .text.gsdk_ril_init_func:00000000 $t
+    {standard input}:364    .text.gsdk_ril_init_func:00000000 gsdk_ril_init_func
+    {standard input}:397    .text.gsdk_ril_init_func:0000001c $d
+    {standard input}:403    .text.init_func:00000000 $t
+    {standard input}:410    .text.init_func:00000000 init_func
+    {standard input}:448    .text.init_func:00000028 $d
+    {standard input}:454    .text.create_instance_func:00000000 $t
+    {standard input}:461    .text.create_instance_func:00000000 create_instance_func
+    {standard input}:523    .text.create_instance_func:00000054 $d
+    {standard input}:532    .text.create_object_func:00000000 $t
+    {standard input}:539    .text.create_object_func:00000000 create_object_func
+    {standard input}:603    .text.create_object_func:00000050 $d
+    {standard input}:612    .text.register_onenet_func:00000000 $t
+    {standard input}:619    .text.register_onenet_func:00000000 register_onenet_func
+    {standard input}:662    .text.register_onenet_func:0000002c $d
+    {standard input}:671    .text.ip_wait_func:00000000 $t
+    {standard input}:678    .text.ip_wait_func:00000000 ip_wait_func
+    {standard input}:755    .text.ip_wait_func:0000005c $d
+    {standard input}:766    .text.capture_register_info_func:00000000 $t
+    {standard input}:773    .text.capture_register_info_func:00000000 capture_register_info_func
+    {standard input}:868    .text.capture_register_info_func:00000080 $d
+    {standard input}:880    .text.observe_notify_func:00000000 $t
+    {standard input}:887    .text.observe_notify_func:00000000 observe_notify_func
+    {standard input}:1050   .text.observe_notify_func:000000f8 $d
+    {standard input}:1065   .text.discover_func:00000000 $t
+    {standard input}:1072   .text.discover_func:00000000 discover_func
+    {standard input}:1189   .text.discover_func:000000a0 $d
+    {standard input}:1204   .text.read_func:00000000 $t
+    {standard input}:1211   .text.read_func:00000000 read_func
+    {standard input}:1325   .text.read_func:000000a0 $d
+    {standard input}:1339   .text.write_func:00000000 $t
+    {standard input}:1346   .text.write_func:00000000 write_func
+    {standard input}:1439   .text.write_func:0000007c $d
+    {standard input}:1453   .text.execute_func:00000000 $t
+    {standard input}:1460   .text.execute_func:00000000 execute_func
+    {standard input}:1553   .text.execute_func:0000007c $d
+    {standard input}:1567   .text.onenet_close_func:00000000 $t
+ARM GAS   			page 49
+
+
+    {standard input}:1574   .text.onenet_close_func:00000000 onenet_close_func
+    {standard input}:1609   .text.onenet_close_func:00000020 $d
+    {standard input}:1617   .text.main:00000000 $t
+    {standard input}:1624   .text.main:00000000 main
+    {standard input}:1727   .text.main:00000088 $d
+    {standard input}:1817   .bss.ip_buf:00000000 ip_buf
+    {standard input}:1790   .bss.i:00000000 i
+    {standard input}:1797   .bss.index1:00000000 index1
+    {standard input}:1824   .bss.lifetime:00000000 lifetime
+    {standard input}:1804   .bss.instance:00000000 instance
+    {standard input}:1762   .bss.count:00000000 count
+    {standard input}:1810   .bss.ip:00000000 ip
+    {standard input}:1851   .data.ret:00000000 ret
+    {standard input}:1830   .bss.status:00000000 status
+    {standard input}:1844   .data.oem_debuglog:00000000 oem_debuglog
+    {standard input}:1769   .bss.flag:00000000 flag
+    {standard input}:1747   .rodata:00000000 $d
+    {standard input}:1758   .bss.count:00000000 $d
+    {standard input}:1765   .bss.flag:00000000 $d
+    {standard input}:1772   .bss.g_handler:00000000 $d
+    {standard input}:1776   .bss.g_handler:00000000 g_handler
+    {standard input}:1779   .bss.g_huart:00000000 $d
+    {standard input}:1783   .bss.g_huart:00000000 g_huart
+    {standard input}:1786   .bss.i:00000000 $d
+    {standard input}:1793   .bss.index1:00000000 $d
+    {standard input}:1800   .bss.instance:00000000 $d
+    {standard input}:1807   .bss.ip:00000000 $d
+    {standard input}:1813   .bss.ip_buf:00000000 $d
+    {standard input}:1820   .bss.lifetime:00000000 $d
+    {standard input}:1831   .bss.status:00000000 $d
+    {standard input}:1833   .bss.unsolicited_buf:00000000 $d
+    {standard input}:1837   .bss.unsolicited_buf:00000000 unsolicited_buf
+    {standard input}:1840   .data.oem_debuglog:00000000 $d
+    {standard input}:1847   .data.ret:00000000 $d
+    {standard input}:1854   .rodata.capture_register_info_func.str1.4:00000000 $d
+    {standard input}:1869   .rodata.create_instance_func.str1.4:00000000 $d
+    {standard input}:1875   .rodata.create_object_func.str1.4:00000000 $d
+    {standard input}:1882   .rodata.discover_func.str1.4:00000000 $d
+    {standard input}:1889   .rodata.execute_func.str1.4:00000000 $d
+    {standard input}:1896   .rodata.gsdk_ril_init_func.str1.4:00000000 $d
+    {standard input}:1900   .rodata.init_func.str1.4:00000000 $d
+    {standard input}:1907   .rodata.ip_wait_func.str1.4:00000000 $d
+    {standard input}:1920   .rodata.log_init.str1.4:00000000 $d
+    {standard input}:1924   .rodata.main.str1.4:00000000 $d
+    {standard input}:1930   .rodata.observe_notify_func.str1.4:00000000 $d
+    {standard input}:1940   .rodata.onenet_close_func.str1.4:00000000 $d
+    {standard input}:1947   .rodata.onenet_handle_func.str1.4:00000000 $d
+    {standard input}:1955   .rodata.onenet_unsolicited_func.str1.4:00000000 $d
+    {standard input}:1963   .rodata.read_func.str1.4:00000000 $d
+    {standard input}:1970   .rodata.register_onenet_func.str1.4:00000000 $d
+    {standard input}:1976   .rodata.write_func.str1.4:00000000 $d
+                           .group:00000000 wm4.0.8fab1e1450c2b74bdd5e2aed4c325bf1
+                           .group:00000000 wm4._newlib_version.h.4.875b979a44719054cd750d0952ad3fd6
+                           .group:00000000 wm4.newlib.h.18.5e5ca3429233af402d406a202f1fc1ac
+                           .group:00000000 wm4.ieeefp.h.77.220d9cccac42cd58761758bee2df4ce6
+                           .group:00000000 wm4.features.h.22.fad1cec3bc7ff06488171438dbdcfd02
+                           .group:00000000 wm4.config.h.220.6cac6a9685cfce5e83c17784171638d9
+ARM GAS   			page 50
+
+
+                           .group:00000000 wm4._ansi.h.31.de524f58584151836e90d8620a16f8e8
+                           .group:00000000 wm4.stdio.h.31.7c0e28c411445f3f9c5b11accf882760
+                           .group:00000000 wm4._default_types.h.6.959254cf5f09734ea7516c89e8bb21bd
+                           .group:00000000 wm4.stddef.h.187.2ff233552538c6ff9b8575ca8ea52cb3
+                           .group:00000000 wm4.cdefs.h.47.0bcdf94cb40e176393dd1404056825b4
+                           .group:00000000 wm4.stddef.h.39.ec95e8feac892e292b69dc7ae75b0d64
+                           .group:00000000 wm4.stdarg.h.34.3a23a216c0c293b3d2ea2e89281481e6
+                           .group:00000000 wm4.lock.h.2.1461d1fff82dffe8bfddc23307f6484f
+                           .group:00000000 wm4._types.h.125.5cf8a495f1f7ef36777ad868a1e32068
+                           .group:00000000 wm4.stddef.h.161.5349cb105733e8777bfb0cf53c4e3f34
+                           .group:00000000 wm4._types.h.184.03611d4f6b5bec9997bcf4279eceba07
+                           .group:00000000 wm4.reent.h.17.90c2574d4acdcfce933db5cb09ff35fe
+                           .group:00000000 wm4.types.h.40.e8c16e7ec36ba55f133d0616070e25fc
+                           .group:00000000 wm4._stdint.h.10.c24fa3af3bc1706662bb5593a907e841
+                           .group:00000000 wm4._endian.h.31.65a10590763c3dde1ac4a7f66d7d4891
+                           .group:00000000 wm4.endian.h.9.49f3a4695c1b61e8a0808de3c4a106cb
+                           .group:00000000 wm4._timeval.h.30.0e8bfd94e85db17dda3286ee81496fe6
+                           .group:00000000 wm4.timespec.h.41.d855182eb0e690443ab8651bcedca6e1
+                           .group:00000000 wm4.select.h.19.97ca6fd0c752a0f3b6719fd314d361e6
+                           .group:00000000 wm4.types.h.69.ed3eae3cf73030a737515151ebcab7a1
+                           .group:00000000 wm4.sched.h.22.c60982713a5c428609783c78f9c78d95
+                           .group:00000000 wm4._pthreadtypes.h.36.fcee9961c35163dde6267ef772ad1972
+                           .group:00000000 wm4.stdio.h.2.4aa87247282eca6c8f36f9de33d8df1a
+                           .group:00000000 wm4.stdio.h.81.932d0c162786b883f622b8d05c120c78
+                           .group:00000000 wm4.stdlib.h.13.4ed386f5c1a80d71e72172885d946ef2
+                           .group:00000000 wm4.stddef.h.161.19e15733342b50ead2919490b095303e
+                           .group:00000000 wm4.alloca.h.8.dfc0c703c47ec3e69746825b17d9e66d
+                           .group:00000000 wm4.stdlib.h.56.d4493cd3736e51e9d56335045f26df45
+                           .group:00000000 wm4.string.h.8.c4b8571ce60dff2817f43fec8b86aecd
+                           .group:00000000 wm4._intsup.h.10.cce27fed8484c08a33f522034c30d2b5
+                           .group:00000000 wm4.stdint.h.23.d53047a68f4a85177f80b422d52785ed
+                           .group:00000000 wm4.gsdk_common.h.47.22de8ea3659fbd5af0e08ced1ae1b062
+                           .group:00000000 wm4.gsdk_flash.h.25.4d08791083e4af07d64570151ac0803c
+                           .group:00000000 wm4.app_loader.h.25.aa64c8d4536aca920728cda79a275eeb
+                           .group:00000000 wm4.FreeRTOSConfig.h.68.1d0dd6b8cda279d0020827f5584733bd
+                           .group:00000000 wm4.projdefs.h.71.1734cd3501e070360596dd847bb9d813
+                           .group:00000000 wm4.portmacro.h.72.3d5d774f718d157a637f7eb960850f27
+                           .group:00000000 wm4.portable.h.98.f435842f50d7864fba6a318a13e72513
+                           .group:00000000 wm4.mpu_wrappers.h.71.dd245fe44d82bd40288b5a47f895c82c
+                           .group:00000000 wm4.FreeRTOS.h.175.3abf49eaca38658a192da8d7c86d5374
+                           .group:00000000 wm4.list.h.103.6a12b7b9a7a136c3cca0ee53675c5498
+                           .group:00000000 wm4.task.h.88.da474b04c368050657453c137d8efe45
+                           .group:00000000 wm4.gsdk_ril.h.43.ec5a175e110d1c70143139b168262c34
+                           .group:00000000 wm4.gsdk_ril_cmds.h.25.9576f30a39fa8fd69cc4f6c2fc4c8bd9
+
+UNDEFINED SYMBOLS
+printf
+gsdk_at_register_unsolicited_handler
+memset
+strlen
+strncpy
+gsdk_uart_write
+gsdk_uart_open
+gsdk_ril_init
+memcpy
+gsdk_ril_create_onenet_instance
+gsdk_ril_create_onenet_object
+ARM GAS   			page 51
+
+
+gsdk_ril_onenet_open
+gsdk_ril_get_local_ipaddr
+vTaskDelay
+strncmp
+strtok
+atoi
+gsdk_ril_rsp_onenet_observe
+gsdk_ril_notify_onenet
+gsdk_ril_rsp_onenet_discover
+gsdk_ril_rsp_onenet_read
+gsdk_ril_rsp_onenet_write
+gsdk_ril_rsp_onenet_execute
+gsdk_ril_onenet_close

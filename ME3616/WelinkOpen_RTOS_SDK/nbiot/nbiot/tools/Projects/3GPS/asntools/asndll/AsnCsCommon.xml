@@ -1,0 +1,1203 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>AsnCsCommon</name>
+    </assembly>
+    <members>
+        <member name="T:Asn.IAsnObject">
+            <summary>
+            base interface for all ASN classes
+            </summary>
+        </member>
+        <member name="T:Asn.AsnSequenceOfBase`1">
+            <summary>
+            Base class for SEQUENCE_OF
+            </summary>
+        </member>
+        <member name="M:Asn.AsnSequenceOfBase`1.Resize(System.Int32)">
+            <summary>
+            Resize an array.
+            WARNING: this function DOES NOT checks for limits!
+            </summary>
+            <param name="newSize">new array size</param>
+        </member>
+        <member name="M:Asn.AsnSequenceOfBase`1.Resize(System.Int32,System.Reflection.ConstructorInfo,System.Object[])">
+            <summary>
+            Resize an array.
+            WARNING: this function DOES NOT checks for limits!
+            </summary>
+            <param name="newSize">new array size</param>
+            <param name="constructor">constructor to use</param>
+            <param name="constructorParams">constructor parameters</param>
+        </member>
+        <member name="P:Asn.AsnSequenceOfBase`1.p_value">
+            <summary>
+            Content of array
+            </summary>
+        </member>
+        <member name="T:Asn.AsnKind">
+            <summary>
+            Specifies type of ASN entity
+            </summary>
+        </member>
+        <member name="F:Asn.AsnKind.NAME">
+            <summary>
+            Similar to typedef.
+            Example: AC-To-ASC-Mapping ::= INTEGER (0..7)
+            </summary>
+        </member>
+        <member name="F:Asn.AsnKind.UNKNOWN">
+            <summary>
+            Should never be used - indicates internal errors!
+            </summary>
+        </member>
+        <member name="T:Asn.AsnBitStringContained">
+            <summary>
+            Specifies that ASN member (or whole class) is wrapped into BIT STRING.
+            Example:
+            bitStringContainer1 BIT STRING (CONTAINING CHOCIE-WITH-SEQ) OPTIONAL,    -- member
+            BIT-STRING-CONTAINER-CHOICE ::= BIT STRING (CONTAINING CHOCIE-WITH-SEQ)  -- whole class
+            </summary>
+        </member>
+        <member name="T:Asn.AsnOctetStringContained">
+            <summary>
+            Specifies that ASN member (or whole class) is wrapped into OCTET STRING.
+            Example:
+            octetStringContainer1 OCTET STRING (CONTAINING CHOCIE-WITH-SEQ) OPTIONAL,    -- member
+            OCTET-STRING-CONTAINER-CHOICE ::= OCTET STRING (CONTAINING CHOCIE-WITH-SEQ)  -- whole class
+            </summary>
+        </member>
+        <member name="T:Asn.AsnTypeAttribute">
+            <summary>
+            Used for CHOICE enumeration.
+            Specifies what type is related to each enumeration field
+            </summary>
+        </member>
+        <member name="T:Asn.AsnOrderAttribute">
+            <summary>
+            Reflection often returns list of members of reflected class in order than
+            differs from declaration - this attribute helps to know what is the order as defined in ASN file
+            </summary>
+        </member>
+        <member name="T:Asn.AsnCommentAttribute">
+            <summary>
+            Stores comments in attribute. VS intelisense relies on external xml file - that we might not have access to.
+            So ASN comments are stored also in attribute. Each comment line will have a separate entry.
+            </summary>
+        </member>
+        <member name="T:Asn.AsnKindAttribute">
+            <summary>
+            Specifies kind of ASN genertated class
+            </summary>
+        </member>
+        <member name="T:Asn.AsnRealNameAttribute">
+            <summary>
+            If generated C# name of element differs from ASN definition this attribute will contain ASN name.
+            </summary>
+        </member>
+        <member name="T:Asn.AsnOptionalAttribute">
+            <summary>
+            Specifies that field is optional (and has or not a default value)
+            </summary>
+        </member>
+        <member name="M:Asn.AsnOptionalAttribute.#ctor">
+            <summary>
+            No default value
+            </summary>
+        </member>
+        <member name="M:Asn.AsnOptionalAttribute.#ctor(System.Object)">
+            <summary>
+            Optional filed with default value
+            </summary>
+        </member>
+        <member name="T:Asn.AsnLimitAttribute">
+            <summary>
+            Specifies that there is a limit of values (or size) for field or whole class
+            max can be null - and this means that min is a fixed value/size of object
+            </summary>
+        </member>
+        <member name="T:Asn.AsnElementLimitAttribute">
+            <summary>
+            Only used by SEQUENCE OF. Specifies limits for individual values.
+            For example: MySeq ::= SEQUENCE (SIZE (1..20)) OF INTEGER (0..31)
+            Will have AsnElementLimitAttribute(0,31) to describe limits of members of array
+            max can be null - and this means that min is a fixed value/size of object
+            </summary>
+        </member>
+        <member name="T:Asn.AsnHasExtensionsAttribute">
+            <summary>
+            When specified - mean that ASN type has optional "..." ASN.1 extensions
+            </summary>
+        </member>
+        <member name="T:Asn.AsnNullException">
+            <summary>
+            Thrown when user attempts to set none-optional field to null
+            </summary>
+        </member>
+        <member name="F:Asn.Asn1BitString.MAX_UNCONSTRAINED_BIT_STRING">
+            <summary>
+            Maximum length of unconstrained octet stirng
+            </summary>
+        </member>
+        <member name="F:Asn.Asn1BitString.m_val">
+            <summary>
+            the value of this element
+            </summary>
+        </member>
+        <member name="M:Asn.Asn1BitString.#ctor(System.Boolean[])">
+            <summary>
+            The constructor for this element to be used when creating a new instance of this element
+            </summary>
+            <param name="val">An array representing the bit string</param>
+        </member>
+        <member name="M:Asn.Asn1BitString.#ctor(Asn.Asn1PerBuffer)">
+            <summary>
+            The constructor for this element to be used when decoding.
+            </summary>
+            <param name="perBuffer">The encoded data.</param>
+        </member>
+        <member name="M:Asn.Asn1BitString.#ctor(Asn.Asn1PerBuffer,System.Int64)">
+            <summary>
+            The constructor for this element to be used when decoding.
+            </summary>
+            <param name="perBuffer">The encoded data.</param>
+            <param name="from">The smallest size.</param>
+        </member>
+        <member name="M:Asn.Asn1BitString.#ctor(Asn.Asn1PerBuffer,System.Int64,System.Int64)">
+            <summary>
+            The constructor for this element to be used when decoding.
+            </summary>
+            <param name="perBuffer">The encoded data.</param>
+            <param name="from">The smallest size.</param>
+            <param name="to">The largest size.</param>
+        </member>
+        <member name="M:Asn.Asn1BitString.Equals(System.Object)">
+            <summary>
+            Determines whether the specified object is equal to the current Asn1Integer.
+            </summary>
+        </member>
+        <member name="M:Asn.Asn1BitString.Equals(System.Boolean[])">
+            <summary>
+            Determines whether the specified array is equal to the current Asn1Integer.
+            </summary>
+        </member>
+        <member name="M:Asn.Asn1BitString.GetHashCode">
+            <summary>
+            Serves as a hash function for a particular type.
+            </summary>
+        </member>
+        <member name="M:Asn.Asn1BitString.Encode(Asn.Asn1PerBuffer)">
+            <summary>
+            Encodes an unconstrained BIT STRING in PER form.
+            Lengths above 16,383 are not supported!
+            </summary>
+            <param name="perBuffer">The encoded data.</param>
+        </member>
+        <member name="M:Asn.Asn1BitString.Encode(Asn.Asn1PerBuffer,System.Int64)">
+            <summary>
+            Base class method to encode this element
+            </summary>
+            <param name="perBuffer">The encoded data.</param>
+            <param name="from">The smallest size.</param>
+        </member>
+        <member name="M:Asn.Asn1BitString.Encode(Asn.Asn1PerBuffer,System.Int64,System.Int64)">
+            <summary>
+            Base class method to encode this element
+            </summary>
+            <param name="perBuffer">The encoded data.</param>
+            <param name="from">The smallest size.</param>
+            <param name="to">The longest size.</param>
+        </member>
+        <member name="M:Asn.Asn1BitString.Decode(Asn.Asn1PerBuffer)">
+            <summary>
+            Decodes an unconstrained BIT STRING from PER form.
+            Lengths above 16,383 are not supported!
+            </summary>
+            <param name="perBuffer">The encoded data.</param>
+        </member>
+        <member name="M:Asn.Asn1BitString.Decode(Asn.Asn1PerBuffer,System.Int64)">
+            <summary>
+            Base class method to decode this element
+            </summary>
+            <param name="perBuffer">The encoded data.</param>
+            <param name="from">The smallest size.</param>
+        </member>
+        <member name="M:Asn.Asn1BitString.Decode(Asn.Asn1PerBuffer,System.Int64,System.Int64)">
+            <summary>
+            Base class method to decode this element
+            </summary>
+            <param name="perBuffer">The encoded data.</param>
+            <param name="from">The smallest size.</param>
+            <param name="to">The longest size.</param>
+        </member>
+        <member name="P:Asn.Asn1BitString.p_value">
+            <summary>
+            The property representing the value of this element
+            </summary>
+        </member>
+        <member name="F:Asn.Asn1Boolean.m_val">
+            <summary>
+            The element value.
+            </summary>
+        </member>
+        <member name="M:Asn.Asn1Boolean.#ctor">
+            <summary>
+            Default constructor
+            </summary>
+        </member>
+        <member name="M:Asn.Asn1Boolean.#ctor(System.Boolean)">
+            <summary>
+            Base class constructor to be used when creating a new instance of this element.
+            </summary>
+        </member>
+        <member name="M:Asn.Asn1Boolean.#ctor(Asn.Asn1PerBuffer)">
+            <summary>
+            Base class constructor to be used when decoding this element.
+            </summary>
+            <param name="perBuffer">The per buffer</param>
+        </member>
+        <member name="M:Asn.Asn1Boolean.Equals(System.Object)">
+            <summary>
+            Determines whether the specified object is equal to the current Asn1Integer.
+            </summary>
+        </member>
+        <member name="M:Asn.Asn1Boolean.GetHashCode">
+            <summary>
+            Serves as a hash function for a particular type.
+            </summary>
+        </member>
+        <member name="M:Asn.Asn1Boolean.Encode(Asn.Asn1PerBuffer)">
+            <summary>
+            Base class method to encode this element.
+            </summary>
+            <param name="perBuffer">The per buffer</param>
+        </member>
+        <member name="M:Asn.Asn1Boolean.Decode(Asn.Asn1PerBuffer)">
+            <summary>
+            Base class method to decode this element.
+            </summary>
+            <param name="perBuffer">The per buffer</param>
+        </member>
+        <member name="P:Asn.Asn1Boolean.p_value">
+            <summary>
+            the element property used to get and set the value.
+            </summary>
+        </member>
+        <member name="T:AsnUtils.Asn1DllReflection">
+            <summary>
+            This is a helper class to load C# ASN dll and enumerate all types
+            </summary>
+        </member>
+        <member name="M:AsnUtils.Asn1DllReflection.GetTypeAsnForName(System.String)">
+            <summary>
+            Returns type from DLL for ASN name (expects - intstead of _)
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:AsnUtils.Asn1DllReflection.GetAsnTypeNames(AsnUtils.Asn1DllTypes)">
+            <summary>
+            Gets ASN type names from DLL
+            </summary>
+        </member>
+        <member name="M:AsnUtils.Asn1DllReflection.GetAsnTypes(AsnUtils.Asn1DllTypes)">
+            <summary>
+            Gets ASN types from DLL
+            </summary>
+        </member>
+        <member name="M:AsnUtils.Asn1DllReflection.CompareTypesByName(System.Type,System.Type)">
+            <summary>
+            Used to sort DLL types by name
+            </summary>
+        </member>
+        <member name="T:AsnUtils.Asn1StringSerializer">
+            <summary>
+            Converts an ASN.1 object to string representation that looks like:
+            myMessage  DL-DCCH-Message ::=
+            {
+              bitStringContainer2 event :
+              {
+                 ms0
+              },
+              someOct1 '00000000000000000000'H,
+              someBool1 FALSE,
+            }
+            </summary>
+        </member>
+        <member name="T:AsnUtils.Asn1TestSerializer">
+            <summary>
+            Serializes Asn1 object to ASN.1 test (using reflection).
+            Uses Asn1StringSerializer to generate bulk of the ouput.
+            </summary>
+            <seealso cref="T:AsnUtils.Asn1StringSerializer"/>
+        </member>
+        <member name="M:AsnUtils.Asn1TestSerializer.Serialize(AsnUtils.Asn1ReflectedType,System.String)">
+            <summary>
+            Converst ASN.1 .NET object (derived from IAsnObject) to test string like:
+            myMessage  DL-DCCH-Message ::=
+            {
+              bitStringContainer2 event :
+              {
+                 ms0
+              },
+              someOct1 '00000000000000000000'H,
+              someBool1 FALSE,
+            }
+            </summary>
+            <param name="asn1Object">object to analyze</param>
+            <param name="fileName"><para>used to generate name for DEFINITIONS tag.</para>
+                                   <para>Example: c:\myFoo.file will generate: MYFOO DEFINITIONS AUTOMATIC TAGS ::=</para></param>
+            <returns></returns>
+        </member>
+        <member name="M:AsnUtils.Asn1TestSerializer.Deserialize(System.Type,System.String)">
+            <summary>
+            Converts an ASN.1 test string that looks like:
+            myMessage  DL-DCCH-Message ::=
+            {
+              bitStringContainer2 event :
+              {
+                 ms0
+              },
+              someOct1 '00000000000000000000'H,
+              someBool1 FALSE,
+            }
+            
+            to ASN.1 .NET object (derived from IAsnObject)
+            </summary>
+            <param name="objectType">specify type of the object. Example: typeof(DL_DCCH_Message), needs to be derived from IAsnObject and needs to match asnTestString</param>
+            <param name="asnTestString">specify string containing details of values of ASN.1 fields</param>
+            <returns>generated ASN.1 object of type specified by objectType</returns>
+        </member>
+        <member name="M:AsnUtils.Asn1TestSerializer.Deserialize(System.String,System.String)">
+            <summary>
+            Converts an ASN.1 test string that looks like:
+            myMessage  DL-DCCH-Message ::=
+            {
+              bitStringContainer2 event :
+              {
+                 ms0
+              },
+              someOct1 '00000000000000000000'H,
+              someBool1 FALSE,
+            }
+            
+            to ASN.1 .NET object (derived from IAsnObject)
+            </summary>
+            <param name="asnDllPath">Full path to ASN DLL to use.</param>
+            <param name="asnTestString">specify string containing details of values of ASN.1 fields</param>
+            <returns>generated ASN.1 object of type specified by objectType</returns>
+        </member>
+        <member name="M:AsnUtils.Asn1TestSerializer.Deserialize(AsnUtils.Asn1DllReflection,System.String)">
+            <summary>
+            Converts an ASN.1 test string that looks like:
+            myMessage  DL-DCCH-Message ::=
+            {
+              bitStringContainer2 event :
+              {
+                 ms0
+              },
+              someOct1 '00000000000000000000'H,
+              someBool1 FALSE,
+            }
+            
+            to ASN.1 .NET object (derived from IAsnObject)
+            </summary>
+            <param name="asnDll">ASN DLL to use.</param>
+            <param name="asnTestString">specify string containing details of values of ASN.1 fields</param>
+            <returns>generated ASN.1 object of type specified by objectType</returns>
+        </member>
+        <member name="T:AsnUtils.Asn1PerTestSerializer">
+            <summary>
+            Serializes Asn1 object to ASN.1 CSA test file (using reflection).
+            Uses Asn1StringSerializer to generate part of the ouput.
+            </summary>
+        </member>
+        <member name="M:AsnUtils.Asn1PerTestSerializer.BITS_TO_INT8S(System.Int32)">
+            <summary>
+            Get the number of Int8's needed to store some number of bits.
+            This will return the minimum number of Int8's needed to store some number of individual bits.
+            </summary>
+            <param name="bits"></param>
+            <returns></returns>
+        </member>
+        <member name="F:Asn.Asn1Enum.m_value">
+            <summary>
+            the value of this element
+            </summary>
+        </member>
+        <member name="M:Asn.Asn1Enum.#ctor(System.Int32)">
+            <summary>
+            Constructor used when creating a new instance of this element.
+            </summary>
+        </member>
+        <member name="M:Asn.Asn1Enum.#ctor(Asn.Asn1PerBuffer,System.Int32)">
+            <summary>
+            Constructor used to encode this element.
+            </summary>
+            <param name="perBuffer">The per buffer</param>
+            <param name="max">The maximum value of this enum</param>
+        </member>
+        <member name="M:Asn.Asn1Enum.Equals(System.Object)">
+            <summary>
+            Determines whether the specified object is equal to the current Asn1Integer.
+            </summary>
+        </member>
+        <member name="M:Asn.Asn1Enum.GetHashCode">
+            <summary>
+            Serves as a hash function for a particular type.
+            </summary>
+        </member>
+        <member name="M:Asn.Asn1Enum.Encode(Asn.Asn1PerBuffer,System.Int32)">
+            <summary>
+            Base class method used to encode this element.
+            </summary>
+            <param name="perBuffer">The per buffer</param>
+            <param name="max">The maximum value of this enum</param>
+        </member>
+        <member name="M:Asn.Asn1Enum.Decode(Asn.Asn1PerBuffer,System.Int32)">
+            <summary>
+            Base class method used to decode this element.
+            </summary>
+            <param name="perBuffer">The per buffer</param>
+            <param name="max">The maximum value of this enum</param>
+        </member>
+        <member name="M:Asn.Asn1Enum.GetRealAsnEnumValueName(System.Object)">
+            <summary>
+            When ASN enumeration contains C# reserved keyword (like: event)
+            it will be defined with leading underscore like: _event
+            This function allows to get real ASN 1 definition for enumeration value:
+            </summary>
+        </member>
+        <member name="P:Asn.Asn1Enum.p_value">
+            <summary>
+            Property to get\set the value of this element.
+            </summary>
+        </member>
+        <member name="F:Asn.Asn1Integer.m_val">
+            <summary>
+            The integer value.
+            </summary>
+        </member>
+        <member name="M:Asn.Asn1Integer.#ctor">
+            <summary>
+            Default constructor - sets value to 0
+            </summary>
+        </member>
+        <member name="M:Asn.Asn1Integer.#ctor(System.Int64)">
+            <summary>
+            Base class constructor to create a new instance of this element.
+            </summary>
+            <param name="val">The value</param>
+        </member>
+        <member name="M:Asn.Asn1Integer.#ctor(Asn.Asn1PerBuffer)">
+            <summary>
+            Base class Constructor to decode this element.
+            </summary>
+            <param name="perBuffer">The per buffer.</param>
+        </member>
+        <member name="M:Asn.Asn1Integer.#ctor(Asn.Asn1PerBuffer,System.Int64)">
+            <summary>
+            Base class Constructor to decode this element.
+            </summary>
+            <param name="perBuffer">The per buffer.</param>
+            <param name="from">The smallest value.</param>
+        </member>
+        <member name="M:Asn.Asn1Integer.#ctor(Asn.Asn1PerBuffer,System.Int64,System.Int64)">
+            <summary>
+            Base class Constructor to decode this element.
+            </summary>
+            <param name="perBuffer">The per buffer.</param>
+            <param name="from">The smallest value.</param>
+            <param name="to">The largest value.</param>
+        </member>
+        <member name="M:Asn.Asn1Integer.Equals(System.Object)">
+            <summary>
+            Determines whether the specified object is equal to the current Asn1Integer.
+            </summary>
+        </member>
+        <member name="M:Asn.Asn1Integer.GetHashCode">
+            <summary>
+            Serves as a hash function for a particular type.
+            </summary>
+        </member>
+        <member name="M:Asn.Asn1Integer.Encode(Asn.Asn1PerBuffer)">
+            <summary>
+            Base class method to encode this element.
+            </summary>
+            <param name="perBuffer">The per buffer.</param>
+        </member>
+        <member name="M:Asn.Asn1Integer.Encode(Asn.Asn1PerBuffer,System.Int64)">
+            <summary>
+            Base class method to encode this element.
+            </summary>
+            <param name="perBuffer">The per buffer.</param>
+            <param name="from">The smallest value.</param>
+        </member>
+        <member name="M:Asn.Asn1Integer.Encode(Asn.Asn1PerBuffer,System.Int64,System.Int64)">
+            <summary>
+            Base class method to encode this element.
+            </summary>
+            <param name="perBuffer">The per buffer.</param>
+            <param name="from">The smallest value.</param>
+            <param name="to">The largest value.</param>
+        </member>
+        <member name="M:Asn.Asn1Integer.Decode(Asn.Asn1PerBuffer)">
+            <summary>
+            Base class method to decode this element.
+            </summary>
+            <param name="perBuffer">The per buffer.</param>
+        </member>
+        <member name="M:Asn.Asn1Integer.Decode(Asn.Asn1PerBuffer,System.Int64)">
+            <summary>
+            Base class method to decode this element.
+            </summary>
+            <param name="perBuffer">The per buffer.</param>
+            <param name="from">The smallest value.</param>
+        </member>
+        <member name="M:Asn.Asn1Integer.Decode(Asn.Asn1PerBuffer,System.Int64,System.Int64)">
+            <summary>
+            Base class method to decode this element.
+            </summary>
+            <param name="perBuffer">The per buffer.</param>
+            <param name="from">The smallest value.</param>
+            <param name="to">The largets value.</param>
+        </member>
+        <member name="P:Asn.Asn1Integer.p_value">
+            <summary>
+            Property to get and set the integer value.
+            </summary>
+        </member>
+        <member name="F:Asn.Asn1OctetString.MAX_UNCONSTRAINED_OCTET_STRING">
+            <summary>
+            Maximum length of unconstrained octet stirng
+            </summary>
+        </member>
+        <member name="F:Asn.Asn1OctetString.m_val">
+            <summary>
+            The element array.
+            </summary>
+        </member>
+        <member name="M:Asn.Asn1OctetString.#ctor(System.Byte[])">
+            <summary>
+            Base class constructor to create a new instance of this element.
+            </summary>
+            <param name="val">The value</param>
+        </member>
+        <member name="M:Asn.Asn1OctetString.#ctor(Asn.Asn1PerBuffer)">
+            <summary>
+            Base class Constructor to decode this element.
+            </summary>
+            <param name="asn1PerBuffer">The per buffer.</param>
+        </member>
+        <member name="M:Asn.Asn1OctetString.#ctor(Asn.Asn1PerBuffer,System.Int64)">
+            <summary>
+            Base class Constructor to decode this element.
+            </summary>
+            <param name="asn1PerBuffer">The per buffer.</param>
+            <param name="from">The smallest size.</param>
+        </member>
+        <member name="M:Asn.Asn1OctetString.#ctor(Asn.Asn1PerBuffer,System.Int64,System.Int64)">
+            <summary>
+            Base class Constructor to decode this element.
+            </summary>
+            <param name="asn1PerBuffer">The per buffer.</param>
+            <param name="from">The smallest size.</param>
+            <param name="to">The largest size.</param>
+        </member>
+        <member name="M:Asn.Asn1OctetString.Equals(System.Object)">
+            <summary>
+            Determines whether the specified object is equal to the current Asn1Integer.
+            </summary>
+        </member>
+        <member name="M:Asn.Asn1OctetString.Equals(System.Byte[])">
+            <summary>
+            Determines whether the specified array is equal to the current Asn1Integer.
+            </summary>
+        </member>
+        <member name="M:Asn.Asn1OctetString.GetHashCode">
+            <summary>
+            Serves as a hash function for a particular type.
+            </summary>
+        </member>
+        <member name="M:Asn.Asn1OctetString.Encode(Asn.Asn1PerBuffer)">
+            <summary>
+            Encodes an unconstrained OCTET STRING in PER form.
+            Lengths above MAX_UNCONSTRAINED_OCTET_STRING are not supported!
+            </summary>
+            <param name="perBuffer">The encoded data.</param>
+        </member>
+        <member name="M:Asn.Asn1OctetString.Encode(Asn.Asn1PerBuffer,System.Int64)">
+            <summary>
+            Base class method to encode this element.
+            </summary>
+            <param name="perBuffer">The per buffer.</param>
+            <param name="from">The smallest size.</param>
+        </member>
+        <member name="M:Asn.Asn1OctetString.Encode(Asn.Asn1PerBuffer,System.Int64,System.Int64)">
+            <summary>
+            Base class method to encode this element.
+            </summary>
+            <param name="perBuffer">The per buffer.</param>
+            <param name="from">The smallest size.</param>
+            <param name="to">The largest szie.</param>
+        </member>
+        <member name="M:Asn.Asn1OctetString.Decode(Asn.Asn1PerBuffer)">
+            <summary>
+            Base class method to decode this element.
+            </summary>
+            <param name="perBuffer">The per buffer.</param>
+        </member>
+        <member name="M:Asn.Asn1OctetString.Decode(Asn.Asn1PerBuffer,System.Int64)">
+            <summary>
+            Base class method to decode this element.
+            </summary>
+            <param name="perBuffer">The per buffer.</param>
+            <param name="from">The smallest size.</param>
+        </member>
+        <member name="M:Asn.Asn1OctetString.Decode(Asn.Asn1PerBuffer,System.Int64,System.Int64)">
+            <summary>
+            Base class method to decode this element.
+            </summary>
+            <param name="perBuffer">The per buffer.</param>
+            <param name="from">The smallest size.</param>
+            <param name="to">The largest size.</param>
+        </member>
+        <member name="P:Asn.Asn1OctetString.p_value">
+            <summary>
+            Property to get and set the arary.
+            </summary>
+        </member>
+        <member name="F:Asn.Asn1PerBuffer.INITIAL_BUFFER_SIZE_IN_BYTES">
+            <summary>
+            The initial size of the ASN buffer - will be resized if needed
+            </summary>
+        </member>
+        <member name="M:Asn.Asn1PerBuffer.#ctor">
+            <summary>
+            Constructor to be used when encoding a message
+            </summary>
+        </member>
+        <member name="M:Asn.Asn1PerBuffer.#ctor(System.String)">
+            <summary>
+            The constructor to be used when decoding a message. Accepts PER string in hex format
+            </summary>
+        </member>
+        <member name="M:Asn.Asn1PerBuffer.#ctor(System.Byte[])">
+            <summary>
+            The constructor to be used when decoding a message
+            </summary>
+        </member>
+        <member name="M:Asn.Asn1PerBuffer.EncodeBit(System.Boolean)">
+            <summary>
+            Used to encode an ASN1 bit
+            </summary>
+            <param name="boolean">The value to encode</param>
+        </member>
+        <member name="M:Asn.Asn1PerBuffer.GetNumberOfBits(System.Int64,System.Int64)">
+            <summary>
+            Used to determine how many bits to encode or decode
+            </summary>
+            <param name="min">The lowest value</param>
+            <param name="max">The largest value</param>
+        </member>
+        <member name="M:Asn.Asn1PerBuffer.EncodeInt(System.Int64,System.Int64,System.Int64)">
+            <summary>
+            Used to encode an ASN1 int
+            </summary>
+            <param name="value">The value to encode</param>
+            <param name="min">The lowest value</param>
+            <param name="max">The largest value</param>
+        </member>
+        <member name="M:Asn.Asn1PerBuffer.EncodeEnum(System.Int64,System.Int64)">
+            <summary>
+            Used to encode an enum
+            </summary>
+            <param name="value">The enum value</param>
+            <param name="size">The maximum value - total number of enum elements -1 </param>
+        </member>
+        <member name="M:Asn.Asn1PerBuffer.EncodeEnumWithExtension(System.Int64,System.Int64)">
+            <summary>
+            Used to encode an enum with extension. If value exceeds the size then the
+            value is an extension.
+            </summary>
+            <param name="value">The enum value</param>
+            <param name="size">The maximum value - total number of enum elements -1 </param>
+        </member>
+        <member name="M:Asn.Asn1PerBuffer.EncodeConstrainedLength(System.Int64,System.Int64,System.Int64)">
+            <summary>
+            Used to encode an ASN1 constrained length
+            </summary>
+            <param name="size">The length</param>
+            <param name="from">The smallest length</param>
+            <param name="to">The largest length</param>
+        </member>
+        <member name="M:Asn.Asn1PerBuffer.EncodeUnconstrainedLength(System.Int64)">
+             <summary>
+             Used to encode a unconstrained length
+             If the length is less than or = 127 the length is encoded in 8 bits:
+                      0LLLLLLL
+            
+             If the length is less than or = 16,383 the length is encoded in 16 bits:
+                      10LLLLLL LLLLLLLL
+             </summary>
+        </member>
+        <member name="M:Asn.Asn1PerBuffer.PerEncStartOfBitAlignedDataWithLength">
+            <summary>
+            Used to indicate the start of bit aligned data
+            </summary>
+        </member>
+        <member name="M:Asn.Asn1PerBuffer.PerEncEndOfBitAlignedDataWithLength">
+            <summary>
+            Used to indicate the end of bit aligned data
+            </summary>
+        </member>
+        <member name="M:Asn.Asn1PerBuffer.PerEncStartOfOctetAlignedDataWithLength">
+            <summary>
+            Used to indicate the start of octet aligned data
+            </summary>
+        </member>
+        <member name="M:Asn.Asn1PerBuffer.PerEncEndOfOctetAlignedDataWithLength">
+            <summary>
+            Used to indicate the end of octet aligned data
+            </summary>
+        </member>
+        <member name="M:Asn.Asn1PerBuffer.DecodeBit">
+            <summary>
+            Used to Decode an ASN1 bit
+            </summary>
+            <returns>The decoded value</returns>
+        </member>
+        <member name="M:Asn.Asn1PerBuffer.DecodeInt(System.Int64,System.Int64)">
+            <summary>
+            Used to decode an ASN1 integer
+            </summary>
+            <param name="min">The lowest possible value</param>
+            <param name="max">The largest possible value</param>
+            <returns>The decoded value</returns>
+        </member>
+        <member name="M:Asn.Asn1PerBuffer.DecodeEnum(System.Int64)">
+            <summary>
+            Used to decode an enum
+            </summary>
+            <returns>The enum value</returns>
+        </member>
+        <member name="M:Asn.Asn1PerBuffer.DecodeEnumWithExtension(System.Int64)">
+            <summary>
+            Used to decode an enum with extension
+            </summary>
+            <returns>The enum value</returns>
+        </member>
+        <member name="M:Asn.Asn1PerBuffer.DecodeConstrainedLength(System.Int64,System.Int64)">
+            <summary>
+            Used to decode a constrained length
+            </summary>
+            <param name="from">the smallest possible length</param>
+            <param name="to">the largest possible length</param>
+            <returns></returns>
+        </member>
+        <member name="M:Asn.Asn1PerBuffer.DecodeUnconstrainedLength">
+             <summary>
+             Used to decode a unconstrained length
+             If the length is less than or = 127 the length is encoded in 8 bits:
+                      0LLLLLLL
+            
+             If the length is less than or = 16,383 the length is encoded in 16 bits:
+                      10LLLLLL LLLLLLLL
+             </summary>
+             <returns></returns>
+        </member>
+        <member name="M:Asn.Asn1PerBuffer.PerDecStartOfBitAlignedDataWithLength">
+            <summary>
+            Used to indicated the start bit aligned data
+            </summary>
+        </member>
+        <member name="M:Asn.Asn1PerBuffer.PerDecEndOfBitAlignedDataWithLength">
+            <summary>
+            Used to indicated the end bit aligned data
+            </summary>
+        </member>
+        <member name="M:Asn.Asn1PerBuffer.PerDecStartOfOctetAlignedDataWithLength">
+            <summary>
+            Used to indicated the start bit aligned data
+            </summary>
+        </member>
+        <member name="M:Asn.Asn1PerBuffer.PerDecEndOfOctetAlignedDataWithLength">
+            <summary>
+            Used to indicated the end bit aligned data
+            </summary>
+        </member>
+        <member name="M:Asn.Asn1PerBuffer.GetDecodeErrors">
+            <summary>
+            Used to indicated the end bit aligned data
+            </summary>
+            <returns>The decode error string</returns>
+        </member>
+        <member name="M:Asn.Asn1PerBuffer.GetEncodedMessage">
+            <summary>
+            Used to Get the encoded data
+            </summary>
+            <returns>The Byte array</returns>
+        </member>
+        <member name="M:Asn.Asn1PerBuffer.GetEncodedDataLengthInBits">
+            <summary>
+            Gets the number of encoded bits in the encode buffer
+            </summary>
+            <returns>The per buffer length in bits</returns>
+        </member>
+        <member name="M:Asn.Asn1PerBuffer.GetDecodedDataLengthInBits">
+            <summary>
+            Gets the number of decoded bits in the decode buffer
+            </summary>
+            <returns>The per buffer length in bits</returns>
+        </member>
+        <member name="M:Asn.Asn1PerBuffer.PerDecExtensionPresent(System.Int32,System.Int32)">
+            <summary>
+            Gets the presence flag for extension additions
+            </summary>
+            <returns>Value of the presence flag</returns>
+        </member>
+        <member name="M:Asn.Asn1PerBuffer.PerDecSkipAllUnsupportedExtensions">
+            <summary>
+            Skips over all unsupported extensions by reading the length of the extension and
+            moving the m_numberOfBitsEncoded on by this length.
+            </summary>
+            <returns>Value of the presence flag</returns>
+        </member>
+        <member name="T:AsnUtils.Asn1ValueChange">
+            <summary>
+            Notifies that currently edited value has been modified
+            </summary>
+        </member>
+        <member name="T:AsnUtils.Asn1GridAdaptor">
+            <summary>
+            This is a helper class to wrap around Asn1ReflectedType to present display friendly interface to PropertyGrid control
+            </summary>
+        </member>
+        <member name="T:AsnUtils.Asn1GridAdaptor.GenericEnumConverter">
+            <summary>
+            Allows to display values of Choice or Enum nested enumerations in PropertyGrid combo box
+            </summary>
+        </member>
+        <member name="M:AsnUtils.Asn1GridAdaptor.GenericEnumConverter.AsnEnumValueToCSharpValue(System.String,AsnUtils.Asn1GridAdaptor)">
+            <summary>
+            converts enum value strings like event -> _event
+            </summary>
+        </member>
+        <member name="M:AsnUtils.Asn1GridAdaptor.GenericEnumConverter.CSharpEnumValueToAsn(System.String,AsnUtils.Asn1GridAdaptor)">
+            <summary>
+            converts enum value strings like _event -> event
+            </summary>
+        </member>
+        <member name="T:AsnUtils.Asn1GridAdaptor.Asn1OptionalHelper">
+            <summary>
+            This class is a work around limitation that C# classes can't have more than one base class.
+            We will use containment instead
+            </summary>
+        </member>
+        <member name="T:AsnUtils.BitOctetStringPropertyDescriptor">
+            <summary>
+            Specifies details of each value in BIT/OCTET array (individual element)
+            </summary>
+        </member>
+        <member name="T:AsnUtils.BitOctetStringListConverter">
+            <summary>
+            Allows BIT and OCTET string Values to be expanded in PropertyGrid - so user can edit individual elements.
+            </summary>
+        </member>
+        <member name="M:AsnUtils.BitOctetStringListConverter.ConvertTo(System.ComponentModel.ITypeDescriptorContext,System.Globalization.CultureInfo,System.Object,System.Type)">
+            <summary>
+            This allows texttual form to be displayed next to + button
+            </summary>
+        </member>
+        <member name="M:AsnUtils.BitOctetStringListConverter.CanConvertFrom(System.ComponentModel.ITypeDescriptorContext,System.Type)">
+            <summary>
+            This will allow user to edit list as string (next to + button)
+            </summary>
+        </member>
+        <member name="T:AsnUtils.Asn1ReflectedTypeFactory">
+            <summary>
+            Factory class that creates wrappers for Property Grid
+            </summary>
+        </member>
+        <member name="T:AsnUtils.Asn1ReflectedClass">
+            <summary>
+            Describes a class of objects.
+            </summary>
+            <seealso cref="T:AsnUtils.Asn1ReflectedInstance"/>
+        </member>
+        <member name="F:AsnUtils.Asn1ReflectedClass.classAttributes">
+            <summary>
+            attributes applicable for whole class
+            </summary>
+        </member>
+        <member name="M:AsnUtils.Asn1ReflectedClass.GetSortedProperties">
+            <summary>
+            Returns properties of ASN object in sorted order (the same as defined in ASN file)
+            </summary>
+        </member>
+        <member name="P:AsnUtils.Asn1ReflectedClass.Name">
+            <summary>
+            Class name
+            </summary>
+        </member>
+        <member name="P:AsnUtils.Asn1ReflectedClass.Kind">
+            <summary>
+            Specified type (kind) of ASN entity
+            </summary>
+            <seealso cref="P:AsnUtils.Asn1ReflectedClass.RealKind"/>
+        </member>
+        <member name="P:AsnUtils.Asn1ReflectedClass.RealKind">
+            <summary>
+            Specified REAL type (kind) of ASN entity.
+            If entity is an alias - this will retrive ASN kind of base class.
+            </summary>
+            <seealso cref="P:AsnUtils.Asn1ReflectedClass.Kind"/>
+        </member>
+        <member name="P:AsnUtils.Asn1ReflectedClass.BitStringContained">
+             <summary>
+             Specifies if class is defined like this example:
+             ueCapabilityContainer ::=  BIT STRING (CONTAINING UE-CapabilityContainer-IEs)
+             </summary>
+            <seealso cref="P:AsnUtils.Asn1ReflectedInstance.BitStringContained"/>
+        </member>
+        <member name="P:AsnUtils.Asn1ReflectedClass.OctetStringContained">
+             <summary>
+             Specifies if class is defined like this example:
+             ueCapabilityContainer ::=  OCTET STRING (CONTAINING UE-CapabilityContainer-IEs)
+             </summary>
+            <seealso cref="P:AsnUtils.Asn1ReflectedInstance.OctetStringContained"/>
+        </member>
+        <member name="P:AsnUtils.Asn1ReflectedClass.TopLevelPdu">
+            <summary>
+            Specifies if class is a top level PDU (not contained in other PDUs)
+            </summary>
+        </member>
+        <member name="P:AsnUtils.Asn1ReflectedClass.HasClassLimit">
+            <seealso cref="P:AsnUtils.Asn1ReflectedInstance.HasInstanceLimit"/>
+        </member>
+        <member name="P:AsnUtils.Asn1ReflectedClass.ClassLimitAsString">
+            <seealso cref="P:AsnUtils.Asn1ReflectedInstance.InstanceLimitAsString"/>
+        </member>
+        <member name="P:AsnUtils.Asn1ReflectedClass.ElementLimit">
+            <summary>
+            Valid only for SEQUENCE OF when defined like:
+            MySeq ::= SEQUENCE (SIZE (1..20)) OF INTEGER (15..31)
+            </summary>
+        </member>
+        <member name="P:AsnUtils.Asn1ReflectedClass.NamedItems">
+            <summary>
+            Only valid for BIT STRING and INTEGER that have named items.
+            Returns a int -> string dictionary
+            int     is a integer value of named element
+            string  is ASN name of named element
+            </summary>
+        </member>
+        <member name="P:AsnUtils.Asn1ReflectedClass.IsCompositeType">
+            <summary>
+            Specifies if type is composite (contains other members)
+            </summary>
+        </member>
+        <member name="T:AsnUtils.Asn1ReflectedInstance">
+            <summary>
+            Describes roperties of individual instance of a given class
+            </summary>
+            <seealso cref="T:AsnUtils.Asn1ReflectedClass"/>
+        </member>
+        <member name="F:AsnUtils.Asn1ReflectedInstance.asn1ObjectValue">
+            <summary>
+            Underlaying ASN.1 object
+            </summary>
+        </member>
+        <member name="F:AsnUtils.Asn1ReflectedInstance.elementName">
+            <summary>
+            Name of the element (as defined in ASN)
+            </summary>
+        </member>
+        <member name="F:AsnUtils.Asn1ReflectedInstance.asn1Children">
+            <summary>
+            List of all children of this ASN type
+            </summary>
+        </member>
+        <member name="F:AsnUtils.Asn1ReflectedInstance.instanceAttribs">
+            <summary>
+            attributes defined where instance of class is defined
+            </summary>
+        </member>
+        <member name="M:AsnUtils.Asn1ReflectedInstance.ToPerBuffer">
+            <summary>
+            Encodes PDU into Asn1PerBuffer
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:AsnUtils.Asn1ReflectedInstance.ResizeSeqOf(System.Int32)">
+            <summary>
+            Valid ONLY for SEQUENCE_OK
+            </summary>
+        </member>
+        <member name="M:AsnUtils.Asn1ReflectedInstance.SelectNewChoice(System.String)">
+            <summary>
+            Valid only for CHOICE
+            </summary>
+        </member>
+        <member name="M:AsnUtils.Asn1ReflectedInstance.GetNestedTypeIncludingBaseClass(System.Type,System.String)">
+            <summary>
+            Type.GetNestedType does not return types declared in base class.
+            This function solves this issue by walking the inheritace tree up and looking for defined nested type
+            </summary>
+        </member>
+        <member name="M:AsnUtils.Asn1ReflectedInstance.GetNestedEnumerationFields">
+            <summary>
+            Valid only for CHOICE and ENUMERATION
+            </summary>
+            <returns>Fields of nested enumeration</returns>
+        </member>
+        <member name="P:AsnUtils.Asn1ReflectedInstance.Asn1Object">
+            <summary>
+            Underlaying ASN.1 object
+            </summary>
+        </member>
+        <member name="P:AsnUtils.Asn1ReflectedInstance.Name">
+            <summary>
+            Name of element as defined in parent structure C# class.
+            NOTE: it might differ from ASN definition when element name is reserved C# keyword (for example "event")
+            To get REAL ASN name use NameAsn property.
+            For elements of arrays it will be an index.
+            </summary>
+            <seealso cref="P:AsnUtils.Asn1ReflectedInstance.NameAsn"/>
+        </member>
+        <member name="P:AsnUtils.Asn1ReflectedInstance.NameAsn">
+            <summary>
+            Name of element as defined in ASN.1 file.
+            NOTE: it might differ from C# member definition when element name is reserved C# keyword (for example "event")
+            To get a C# element name use Name property.
+            For elements of arrays it will be an index.
+            </summary>
+            <seealso cref="P:AsnUtils.Asn1ReflectedInstance.Name"/>
+        </member>
+        <member name="P:AsnUtils.Asn1ReflectedInstance.Comment">
+            <summary>
+            Comment as defined in ASN file
+            </summary>
+        </member>
+        <member name="P:AsnUtils.Asn1ReflectedInstance.BitStringContained">
+             <summary>
+             Specifies if instance is defined like this example:
+             ueCapabilityContainer  BIT STRING (CONTAINING UE-CapabilityContainer-IEs)
+             </summary>
+            <seealso cref="P:AsnUtils.Asn1ReflectedClass.BitStringContained"/>
+        </member>
+        <member name="P:AsnUtils.Asn1ReflectedInstance.OctetStringContained">
+             <summary>
+             Specifies if instance is defined like this example:
+             ueCapabilityContainer  OCTET STRING (CONTAINING UE-CapabilityContainer-IEs)
+             </summary>
+            <seealso cref="P:AsnUtils.Asn1ReflectedClass.OctetStringContained"/>
+        </member>
+        <member name="P:AsnUtils.Asn1ReflectedInstance.Members">
+            <summary>
+            List of all children of this ASN type
+            </summary>
+        </member>
+        <member name="P:AsnUtils.Asn1ReflectedInstance.CurrentValueIsDefault">
+            <summary>
+            Returns "true" if member is optional
+            </summary>
+        </member>
+        <member name="P:AsnUtils.Asn1ReflectedInstance.IsPresent">
+            <summary>
+            true if object is not optional, or optional and present, false otherwise
+            </summary>
+        </member>
+        <member name="P:AsnUtils.Asn1ReflectedInstance.InstanceLimitAsString">
+            <seealso cref="P:AsnUtils.Asn1ReflectedClass.ClassLimitAsString"/>
+        </member>
+        <member name="P:AsnUtils.Asn1ReflectedInstance.HasInstanceLimit">
+            <seealso cref="P:AsnUtils.Asn1ReflectedClass.HasClassLimit"/>
+        </member>
+        <member name="T:AsnUtils.Asn1ReflectedType">
+            <summary>
+            Describes all details of ASN.1 object (both class and instance)
+            </summary>
+        </member>
+        <member name="M:AsnUtils.Asn1ReflectedType.#ctor(Asn.IAsnObject)">
+            <summary>
+            Default constructor
+            </summary>
+            <param name="asn1ObjectValue">ASN.1 object to be analyzed.</param>
+        </member>
+        <member name="M:AsnUtils.Asn1ReflectedType.ReInitialize(Asn.IAsnObject)">
+            <summary>
+            This is simmilar to constructor - it re-inializes class with a new value of asn1ObjectValue (type will not be changed)
+            </summary>
+        </member>
+        <member name="M:AsnUtils.Asn1ReflectedType.CreateNewInstance">
+            <summary>
+            Creates new instance of class using a default constructor.
+            If not found - looks for limits and tries to create instance with one param constructor.
+            </summary>
+        </member>
+        <member name="M:AsnUtils.Asn1ReflectedType.RawAsnValueObjectToString(AsnUtils.Asn1ReflectedType,System.Boolean)">
+            <summary>
+            Converts an object returned by Instance.Value function into human readible form
+            </summary>
+            <param name="objToOutput">ASN1 value object</param>
+            <param name="useDefaultValue">when true DefaultValue is analyzed, Value otherwise</param>
+            <returns>string representation of ASN1 value</returns>
+        </member>
+        <member name="M:AsnUtils.Asn1ReflectedType.Analyze">
+            <summary>
+            This function looks at asn1Object and using reflection fills all the fileds of the object
+            Then does it for all members of this object
+            </summary>
+        </member>
+        <member name="P:AsnUtils.Asn1ReflectedType.LimitFrom">
+             <summary>
+             Gets a instance limit and if this does not exist a class limit (or null of no limit exists).
+             NOTE:
+             For some ASN definitions we can have limits in instance or class. For example integer can be defined as:
+            
+                instanceLimit INTEGER(1..50),  -- limit defined in instance
+             or as:
+                classLimit    RX_LEVEL,        -- RX_LEVEL is a integer class and limit is defined over there
+            
+             This property returns lower bound looking at both
+             </summary>
+        </member>
+        <member name="P:AsnUtils.Asn1ReflectedType.LimitTo">
+             <summary>
+             Gets a instance limit and if this does not exist a class limit (or null of no limit exists).
+             NOTE:
+             For some ASN definitions we can have limits in instance or class. For example integer can be defined as:
+            
+                instanceLimit INTEGER(1..50),  -- limit defined in instance
+             or as:
+                classLimit    RX_LEVEL,        -- RX_LEVEL is a integer class and limit is defined over there
+            
+             This property returns upper bound looking at both
+             </summary>
+        </member>
+        <member name="P:AsnUtils.Asn1ReflectedType.AllPresent">
+            <summary>
+            Specifies if this and all child nodes are present.
+            When setting: If optional field is not present - a new instance will be created.
+            </summary>
+        </member>
+        <member name="M:AsnUtils.Asn1Util.GetIndent(System.String,System.Int32)">
+            <summary>
+            Used to generate the indentation string for printing
+            </summary>
+            <param name="indent">The indentation string</param>
+            <param name="depth">The indentaiton depth</param>
+            <returns></returns>
+        </member>
+        <member name="M:AsnUtils.Asn1Util.BitArrayFromString(System.String)">
+            <summary>
+            Converts a string in bit format to bool array.
+            </summary>
+        </member>
+        <member name="M:AsnUtils.Asn1Util.ByteArrayFromString(System.String)">
+            <summary>
+            Converts a string in hex format to byte array.
+            </summary>
+        </member>
+    </members>
+</doc>

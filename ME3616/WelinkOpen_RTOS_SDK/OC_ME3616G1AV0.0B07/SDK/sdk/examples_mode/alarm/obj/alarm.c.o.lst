@@ -1,0 +1,945 @@
+ARM GAS   			page 1
+
+
+   1              	 .cpu cortex-m4
+   2              	 .eabi_attribute 27,1
+   3              	 .eabi_attribute 28,1
+   4              	 .eabi_attribute 20,1
+   5              	 .eabi_attribute 21,1
+   6              	 .eabi_attribute 23,3
+   7              	 .eabi_attribute 24,1
+   8              	 .eabi_attribute 25,1
+   9              	 .eabi_attribute 26,1
+  10              	 .eabi_attribute 30,1
+  11              	 .eabi_attribute 34,1
+  12              	 .eabi_attribute 18,4
+  13              	 .file "alarm.c"
+  14              	 .text
+  15              	.Ltext0:
+  16              	 .cfi_sections .debug_frame
+  17              	 .section .text.rtc_alarm_cb,"ax",%progbits
+  18              	 .align 1
+  19              	 .global rtc_alarm_cb
+  20              	 .syntax unified
+  21              	 .thumb
+  22              	 .thumb_func
+  23              	 .fpu fpv4-sp-d16
+  25              	rtc_alarm_cb:
+  26              	.LFB20:
+  27              	 .file 1 "alarm.c"
+   1:alarm.c       **** /*
+   2:alarm.c       **** ** File   : alarm.c
+   3:alarm.c       **** **
+   4:alarm.c       **** ** Copyright (C) 2013-2018 Gosuncn. All rights reserved.
+   5:alarm.c       **** **
+   6:alarm.c       **** ** Licensed under the Apache License, Version 2.0 (the "License");
+   7:alarm.c       **** ** you may not use this file except in compliance with the License.
+   8:alarm.c       **** ** You may obtain a copy of the License at
+   9:alarm.c       **** **
+  10:alarm.c       **** **      http://www.apache.org/licenses/LICENSE-2.0
+  11:alarm.c       **** **
+  12:alarm.c       **** ** Unless required by applicable law or agreed to in writing, software
+  13:alarm.c       **** ** distributed under the License is distributed on an "AS IS" BASIS,
+  14:alarm.c       **** ** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  15:alarm.c       **** ** See the License for the specific language governing permissions and
+  16:alarm.c       **** ** limitations under the License.
+  17:alarm.c       **** 
+  18:alarm.c       **** ** brief:This alarm demo be  aimed at introduce alarm timer use.Include configure,open,
+  19:alarm.c       **** ** start,stop and close.In addition,For explain the alarm timer is valid at PSM.This demo 
+  20:alarm.c       **** ** set PSM function.
+  21:alarm.c       **** ** Author : liyong2@gosuncn.cn
+  22:alarm.c       **** **
+  23:alarm.c       **** **  $Date: 2018/05/25 15:00:36GMT+08:00 $
+  24:alarm.c       **** **
+  25:alarm.c       **** */
+  26:alarm.c       **** 
+  27:alarm.c       **** #include "gsdk_sdk.h"
+  28:alarm.c       **** 
+  29:alarm.c       **** #define DEBUG_LOG(fmt,...) printf("[LOGD]:F:%s,L:%d,"fmt,__func__,__LINE__,##__VA_ARGS__);
+  30:alarm.c       **** #define WARN_LOG(fmt,...) printf("[LOGW]:"fmt,##__VA_ARGS__);
+  31:alarm.c       **** 
+ARM GAS   			page 2
+
+
+  32:alarm.c       **** 
+  33:alarm.c       **** static gsdk_handle_t g_huart;
+  34:alarm.c       **** gsdk_handle_t g_alarm_handle;
+  35:alarm.c       **** 
+  36:alarm.c       **** int __io_puts(char *data, int len)
+  37:alarm.c       **** {
+  38:alarm.c       ****     int ret = 0;
+  39:alarm.c       ****     if (g_huart) {
+  40:alarm.c       ****         ret = gsdk_uart_write(g_huart, (uint8_t *)data, len, 1000);
+  41:alarm.c       ****     }
+  42:alarm.c       ****     return ret;
+  43:alarm.c       **** }
+  44:alarm.c       **** 
+  45:alarm.c       **** /*This is alarm callback function ,if alarm timer expiration thhis function will be called in no-PS
+  46:alarm.c       **** void rtc_alarm_cb(void *user_data)
+  47:alarm.c       **** {
+  28              	 .loc 1 47 0
+  29              	 .cfi_startproc
+  30              	 
+  31              	 
+  32              	.LVL0:
+  33 0000 10B5     	 push {r4,lr}
+  34              	 .cfi_def_cfa_offset 8
+  35              	 .cfi_offset 4,-8
+  36              	 .cfi_offset 14,-4
+  48:alarm.c       **** 	(void)user_data;
+  49:alarm.c       ****     WARN_LOG("rtc alarm handle cb!\r\n");
+  37              	 .loc 1 49 0
+  38 0002 0748     	 ldr r0,.L3
+  39              	.LVL1:
+  40 0004 FFF7FEFF 	 bl puts
+  41              	.LVL2:
+  50:alarm.c       **** 	gsdk_alarm_stop(g_alarm_handle);
+  42              	 .loc 1 50 0
+  43 0008 064C     	 ldr r4,.L3+4
+  44 000a 2068     	 ldr r0,[r4]
+  45 000c FFF7FEFF 	 bl gsdk_alarm_stop
+  46              	.LVL3:
+  51:alarm.c       **** 	gsdk_alarm_close(g_alarm_handle);
+  47              	 .loc 1 51 0
+  48 0010 2068     	 ldr r0,[r4]
+  49 0012 FFF7FEFF 	 bl gsdk_alarm_close
+  50              	.LVL4:
+  52:alarm.c       **** 	WARN_LOG("Timer will be invalid!\r\n");
+  51              	 .loc 1 52 0
+  52 0016 0448     	 ldr r0,.L3+8
+  53 0018 FFF7FEFF 	 bl puts
+  54              	.LVL5:
+  53:alarm.c       **** }
+  55              	 .loc 1 53 0
+  56 001c 10BD     	 pop {r4,pc}
+  57              	.L4:
+  58 001e 00BF     	 .align 2
+  59              	.L3:
+  60 0020 00000000 	 .word .LC0
+  61 0024 00000000 	 .word .LANCHOR0
+  62 0028 20000000 	 .word .LC1
+ARM GAS   			page 3
+
+
+  63              	 .cfi_endproc
+  64              	.LFE20:
+  66              	 .section .text.__io_puts,"ax",%progbits
+  67              	 .align 1
+  68              	 .global __io_puts
+  69              	 .syntax unified
+  70              	 .thumb
+  71              	 .thumb_func
+  72              	 .fpu fpv4-sp-d16
+  74              	__io_puts:
+  75              	.LFB19:
+  37:alarm.c       ****     int ret = 0;
+  76              	 .loc 1 37 0
+  77              	 .cfi_startproc
+  78              	 
+  79              	 
+  80              	.LVL6:
+  81 0000 10B5     	 push {r4,lr}
+  82              	 .cfi_def_cfa_offset 8
+  83              	 .cfi_offset 4,-8
+  84              	 .cfi_offset 14,-4
+  85              	.LVL7:
+  39:alarm.c       ****         ret = gsdk_uart_write(g_huart, (uint8_t *)data, len, 1000);
+  86              	 .loc 1 39 0
+  87 0002 064B     	 ldr r3,.L9
+  88 0004 1C68     	 ldr r4,[r3]
+  89 0006 3CB1     	 cbz r4,.L7
+  90 0008 0A46     	 mov r2,r1
+  91 000a 0146     	 mov r1,r0
+  92              	.LVL8:
+  40:alarm.c       ****     }
+  93              	 .loc 1 40 0
+  94 000c 4FF47A73 	 mov r3,#1000
+  95 0010 2046     	 mov r0,r4
+  96              	.LVL9:
+  97 0012 FFF7FEFF 	 bl gsdk_uart_write
+  98              	.LVL10:
+  99              	.L5:
+  43:alarm.c       **** 
+ 100              	 .loc 1 43 0
+ 101 0016 10BD     	 pop {r4,pc}
+ 102              	.LVL11:
+ 103              	.L7:
+  38:alarm.c       ****     if (g_huart) {
+ 104              	 .loc 1 38 0
+ 105 0018 0020     	 movs r0,#0
+ 106              	.LVL12:
+  42:alarm.c       **** }
+ 107              	 .loc 1 42 0
+ 108 001a FCE7     	 b .L5
+ 109              	.L10:
+ 110              	 .align 2
+ 111              	.L9:
+ 112 001c 00000000 	 .word .LANCHOR1
+ 113              	 .cfi_endproc
+ 114              	.LFE19:
+ 116              	 .section .text.main,"ax",%progbits
+ARM GAS   			page 4
+
+
+ 117              	 .align 1
+ 118              	 .global main
+ 119              	 .syntax unified
+ 120              	 .thumb
+ 121              	 .thumb_func
+ 122              	 .fpu fpv4-sp-d16
+ 124              	main:
+ 125              	.LFB21:
+  54:alarm.c       **** 
+  55:alarm.c       **** int main(void)
+  56:alarm.c       **** {
+ 126              	 .loc 1 56 0
+ 127              	 .cfi_startproc
+ 128              	 
+ 129              	 
+ 130 0000 10B5     	 push {r4,lr}
+ 131              	 .cfi_def_cfa_offset 8
+ 132              	 .cfi_offset 4,-8
+ 133              	 .cfi_offset 14,-4
+ 134 0002 86B0     	 sub sp,sp,#24
+ 135              	 .cfi_def_cfa_offset 32
+  57:alarm.c       ****     uart_config_t uart_config;
+  58:alarm.c       ****     gsdk_status_t status;
+  59:alarm.c       ****     
+  60:alarm.c       ****     gsdk_boot_mode_t boot_mode;
+  61:alarm.c       ****     gsdk_rtc_wakeup_mode_t wakeup_mode;
+  62:alarm.c       **** 
+  63:alarm.c       ****     uart_config.baudrate    = UART_BAUDRATE_115200;
+ 136              	 .loc 1 63 0
+ 137 0004 0923     	 movs r3,#9
+ 138 0006 8DF81430 	 strb r3,[sp,#20]
+  64:alarm.c       ****     uart_config.parity      = UART_PARITY_NONE;
+ 139              	 .loc 1 64 0
+ 140 000a 0020     	 movs r0,#0
+ 141 000c 8DF81700 	 strb r0,[sp,#23]
+  65:alarm.c       ****     uart_config.stop_bit    = UART_STOP_BIT_1;
+ 142              	 .loc 1 65 0
+ 143 0010 8DF81600 	 strb r0,[sp,#22]
+  66:alarm.c       ****     uart_config.word_length = UART_WORD_LENGTH_8;
+ 144              	 .loc 1 66 0
+ 145 0014 0323     	 movs r3,#3
+ 146 0016 8DF81530 	 strb r3,[sp,#21]
+  67:alarm.c       **** 
+  68:alarm.c       ****     status = gsdk_uart_open(UART_0, &uart_config, &g_huart);
+ 147              	 .loc 1 68 0
+ 148 001a 494A     	 ldr r2,.L34
+ 149 001c 05A9     	 add r1,sp,#20
+ 150 001e FFF7FEFF 	 bl gsdk_uart_open
+ 151              	.LVL13:
+  69:alarm.c       ****     if (status != GSDK_SUCCESS) {
+ 152              	 .loc 1 69 0
+ 153 0022 58BB     	 cbnz r0,.L29
+  70:alarm.c       ****         gsdk_syslog_printf("[PRINTF_DEMO]: failed to open uart %d\n", status);
+  71:alarm.c       ****         DEBUG_LOG("failed to open uart %d\r\n", status);
+  72:alarm.c       ****         goto _fail;
+  73:alarm.c       ****     }
+  74:alarm.c       **** 	
+ARM GAS   			page 5
+
+
+  75:alarm.c       **** 	/*Before call gsdk_ril_XXX function,this function must be called*/
+  76:alarm.c       ****     status = gsdk_ril_init();
+ 154              	 .loc 1 76 0
+ 155 0024 FFF7FEFF 	 bl gsdk_ril_init
+ 156              	.LVL14:
+  77:alarm.c       ****     if (status != GSDK_SUCCESS) {
+ 157              	 .loc 1 77 0
+ 158 0028 0028     	 cmp r0,#0
+ 159 002a 35D1     	 bne .L30
+  78:alarm.c       ****         DEBUG_LOG("AT init failed \r\n");
+  79:alarm.c       ****         goto _fail;
+  80:alarm.c       ****     }
+  81:alarm.c       **** 
+  82:alarm.c       **** 	/*get boot mode function ,because this demo maybe enter PSM */
+  83:alarm.c       ****     boot_mode = gsdk_sys_get_boot_mode(&wakeup_mode);
+ 160              	 .loc 1 83 0
+ 161 002c 0DF11300 	 add r0,sp,#19
+ 162              	.LVL15:
+ 163 0030 FFF7FEFF 	 bl gsdk_sys_get_boot_mode
+ 164              	.LVL16:
+  84:alarm.c       ****     if (1 == boot_mode || 2 == boot_mode) {
+ 165              	 .loc 1 84 0
+ 166 0034 431E     	 subs r3,r0,#1
+ 167 0036 DBB2     	 uxtb r3,r3
+ 168 0038 012B     	 cmp r3,#1
+ 169 003a 33D9     	 bls .L31
+  85:alarm.c       ****         printf("wakeup from deep sleep\r\n");
+  86:alarm.c       ****         switch (wakeup_mode) {
+  87:alarm.c       ****         case GSDK_BOOT_RTC_TC_WAKEUP:
+  88:alarm.c       ****             WARN_LOG("it's awakened by RTC_TC\r\n");
+  89:alarm.c       ****             break;
+  90:alarm.c       ****         case GSDK_BOOT_RTC_EINT_WAKEUP:
+  91:alarm.c       ****             WARN_LOG("it's awakened by RTC_EINT\r\n");
+  92:alarm.c       ****             break;
+  93:alarm.c       ****         case GSDK_BOOT_RTC_ALARM_WAKEUP:
+  94:alarm.c       ****             WARN_LOG("it's awakened by ALARM_WAKEUP\r\n");
+  95:alarm.c       ****             break;
+  96:alarm.c       ****         case GSDK_BOOT_POWERKEY_WAKEUP:
+  97:alarm.c       ****             WARN_LOG("it's awakened by POWERKEY\r\n");
+  98:alarm.c       ****             break;
+  99:alarm.c       ****         default:
+ 100:alarm.c       ****             WARN_LOG("unknown mode\r\n");
+ 101:alarm.c       ****             break;
+ 102:alarm.c       ****         }
+ 103:alarm.c       ****     }
+ 104:alarm.c       **** 	else
+ 105:alarm.c       **** 	{
+ 106:alarm.c       **** 		WARN_LOG("not enter deep sleep\r\n");
+ 170              	 .loc 1 106 0
+ 171 003c 4148     	 ldr r0,.L34+4
+ 172              	.LVL17:
+ 173 003e FFF7FEFF 	 bl puts
+ 174              	.LVL18:
+ 175              	.L22:
+ 107:alarm.c       **** 	}
+ 108:alarm.c       **** 
+ 109:alarm.c       **** 	/*configure alarm timer property*/
+ARM GAS   			page 6
+
+
+ 110:alarm.c       ****     gsdk_alarm_config_t alarm_config;
+ 111:alarm.c       ****     alarm_config.callback = rtc_alarm_cb;//timer callback
+ 176              	 .loc 1 111 0
+ 177 0042 414B     	 ldr r3,.L34+8
+ 178 0044 0393     	 str r3,[sp,#12]
+ 112:alarm.c       ****     alarm_config.interval = 180;//180s
+ 179              	 .loc 1 112 0
+ 180 0046 B423     	 movs r3,#180
+ 181 0048 0093     	 str r3,[sp]
+ 113:alarm.c       ****     alarm_config.periodic = 1;//timer perform periodically
+ 182              	 .loc 1 113 0
+ 183 004a 0123     	 movs r3,#1
+ 184 004c 0193     	 str r3,[sp,#4]
+ 114:alarm.c       ****     status = gsdk_alarm_open(&g_alarm_handle, &alarm_config);//open alarm timer
+ 185              	 .loc 1 114 0
+ 186 004e 6946     	 mov r1,sp
+ 187 0050 3E48     	 ldr r0,.L34+12
+ 188 0052 FFF7FEFF 	 bl gsdk_alarm_open
+ 189              	.LVL19:
+ 115:alarm.c       ****     if (status != GSDK_SUCCESS) {
+ 190              	 .loc 1 115 0
+ 191 0056 0346     	 mov r3,r0
+ 192 0058 0028     	 cmp r0,#0
+ 193 005a 43D1     	 bne .L32
+ 116:alarm.c       ****         DEBUG_LOG("open alarm  failed :%d\r\n", status);
+ 117:alarm.c       ****         goto _fail;
+ 118:alarm.c       ****     }
+ 119:alarm.c       **** 	WARN_LOG("open alarm success\r\n");
+ 194              	 .loc 1 119 0
+ 195 005c 3C48     	 ldr r0,.L34+16
+ 196              	.LVL20:
+ 197 005e FFF7FEFF 	 bl puts
+ 198              	.LVL21:
+ 120:alarm.c       ****     status = gsdk_alarm_start(g_alarm_handle);//start up alarm timer
+ 199              	 .loc 1 120 0
+ 200 0062 3A4B     	 ldr r3,.L34+12
+ 201 0064 1868     	 ldr r0,[r3]
+ 202 0066 FFF7FEFF 	 bl gsdk_alarm_start
+ 203              	.LVL22:
+ 121:alarm.c       ****     if (status != GSDK_SUCCESS) {
+ 204              	 .loc 1 121 0
+ 205 006a 0346     	 mov r3,r0
+ 206 006c 0028     	 cmp r0,#0
+ 207 006e 3FD0     	 beq .L24
+ 122:alarm.c       ****         DEBUG_LOG("gsdk_alarm_start failed :%d\r\n", status);
+ 208              	 .loc 1 122 0
+ 209 0070 7A22     	 movs r2,#122
+ 210 0072 3849     	 ldr r1,.L34+20
+ 211 0074 3848     	 ldr r0,.L34+24
+ 212              	.LVL23:
+ 213 0076 FFF7FEFF 	 bl printf
+ 214              	.LVL24:
+ 123:alarm.c       ****         goto _fail;
+ 215              	 .loc 1 123 0
+ 216 007a 0AE0     	 b .L13
+ 217              	.LVL25:
+ 218              	.L29:
+ARM GAS   			page 7
+
+
+ 219 007c 0446     	 mov r4,r0
+  70:alarm.c       ****         DEBUG_LOG("failed to open uart %d\r\n", status);
+ 220              	 .loc 1 70 0
+ 221 007e 0146     	 mov r1,r0
+ 222 0080 3648     	 ldr r0,.L34+28
+ 223              	.LVL26:
+ 224 0082 FFF7FEFF 	 bl gsdk_syslog_printf
+ 225              	.LVL27:
+  71:alarm.c       ****         goto _fail;
+ 226              	 .loc 1 71 0
+ 227 0086 2346     	 mov r3,r4
+ 228 0088 4722     	 movs r2,#71
+ 229 008a 3249     	 ldr r1,.L34+20
+ 230 008c 3448     	 ldr r0,.L34+32
+ 231 008e FFF7FEFF 	 bl printf
+ 232              	.LVL28:
+ 233              	.L13:
+ 124:alarm.c       ****     }
+ 125:alarm.c       **** 	WARN_LOG("start alarm success\r\n");
+ 126:alarm.c       ****     status = gsdk_ril_psm_set(CPSMS, "AT+CPSMS=1");//set "CPSMS=1" is power saving mode(PSM)
+ 127:alarm.c       **** 	if(GSDK_ERROR == status)
+ 128:alarm.c       **** 	{
+ 129:alarm.c       **** 		DEBUG_LOG("set CPSMS=1 cmd error\r\n");
+ 130:alarm.c       **** 		goto _fail;
+ 131:alarm.c       **** 	}
+ 132:alarm.c       **** 	WARN_LOG("set CPSM=1 cmd success\r\n");
+ 133:alarm.c       ****     status = gsdk_ril_psm_set(ZSLR, "AT+ZSLR");//sleep command
+ 134:alarm.c       **** 	if(GSDK_ERROR == status)
+ 135:alarm.c       **** 	{
+ 136:alarm.c       **** 		DEBUG_LOG("set ZSLR cmd error\r\n");
+ 137:alarm.c       **** 		goto _fail;
+ 138:alarm.c       **** 	}
+ 139:alarm.c       **** 	
+ 140:alarm.c       ****     WARN_LOG("wait for sleep....\r\n");
+ 141:alarm.c       ****     while (1) {
+ 142:alarm.c       ****         vTaskDelay(1000);
+ 143:alarm.c       ****     }
+ 144:alarm.c       **** 	
+ 145:alarm.c       **** _fail:
+ 146:alarm.c       ****     return 0;
+ 147:alarm.c       **** }
+ 234              	 .loc 1 147 0
+ 235 0092 0020     	 movs r0,#0
+ 236 0094 06B0     	 add sp,sp,#24
+ 237              	 .cfi_remember_state
+ 238              	 .cfi_def_cfa_offset 8
+ 239              	 
+ 240 0096 10BD     	 pop {r4,pc}
+ 241              	.LVL29:
+ 242              	.L30:
+ 243              	 .cfi_restore_state
+  78:alarm.c       ****         goto _fail;
+ 244              	 .loc 1 78 0
+ 245 0098 4E22     	 movs r2,#78
+ 246 009a 2E49     	 ldr r1,.L34+20
+ 247 009c 3148     	 ldr r0,.L34+36
+ 248              	.LVL30:
+ARM GAS   			page 8
+
+
+ 249 009e FFF7FEFF 	 bl printf
+ 250              	.LVL31:
+  79:alarm.c       ****     }
+ 251              	 .loc 1 79 0
+ 252 00a2 F6E7     	 b .L13
+ 253              	.LVL32:
+ 254              	.L31:
+  85:alarm.c       ****         switch (wakeup_mode) {
+ 255              	 .loc 1 85 0
+ 256 00a4 3048     	 ldr r0,.L34+40
+ 257              	.LVL33:
+ 258 00a6 FFF7FEFF 	 bl puts
+ 259              	.LVL34:
+  86:alarm.c       ****         case GSDK_BOOT_RTC_TC_WAKEUP:
+ 260              	 .loc 1 86 0
+ 261 00aa 9DF81330 	 ldrb r3,[sp,#19]
+ 262 00ae 0A3B     	 subs r3,r3,#10
+ 263 00b0 032B     	 cmp r3,#3
+ 264 00b2 13D8     	 bhi .L16
+ 265 00b4 DFE803F0 	 tbb [pc,r3]
+ 266              	.L18:
+ 267 00b8 02       	 .byte (.L17-.L18)/2
+ 268 00b9 06       	 .byte (.L19-.L18)/2
+ 269 00ba 0A       	 .byte (.L20-.L18)/2
+ 270 00bb 0E       	 .byte (.L21-.L18)/2
+ 271              	 .p2align 1
+ 272              	.L17:
+  88:alarm.c       ****             break;
+ 273              	 .loc 1 88 0
+ 274 00bc 2B48     	 ldr r0,.L34+44
+ 275 00be FFF7FEFF 	 bl puts
+ 276              	.LVL35:
+  89:alarm.c       ****         case GSDK_BOOT_RTC_EINT_WAKEUP:
+ 277              	 .loc 1 89 0
+ 278 00c2 BEE7     	 b .L22
+ 279              	.L19:
+  91:alarm.c       ****             break;
+ 280              	 .loc 1 91 0
+ 281 00c4 2A48     	 ldr r0,.L34+48
+ 282 00c6 FFF7FEFF 	 bl puts
+ 283              	.LVL36:
+  92:alarm.c       ****         case GSDK_BOOT_RTC_ALARM_WAKEUP:
+ 284              	 .loc 1 92 0
+ 285 00ca BAE7     	 b .L22
+ 286              	.L20:
+  94:alarm.c       ****             break;
+ 287              	 .loc 1 94 0
+ 288 00cc 2948     	 ldr r0,.L34+52
+ 289 00ce FFF7FEFF 	 bl puts
+ 290              	.LVL37:
+  95:alarm.c       ****         case GSDK_BOOT_POWERKEY_WAKEUP:
+ 291              	 .loc 1 95 0
+ 292 00d2 B6E7     	 b .L22
+ 293              	.L21:
+  97:alarm.c       ****             break;
+ 294              	 .loc 1 97 0
+ 295 00d4 2848     	 ldr r0,.L34+56
+ARM GAS   			page 9
+
+
+ 296 00d6 FFF7FEFF 	 bl puts
+ 297              	.LVL38:
+  98:alarm.c       ****         default:
+ 298              	 .loc 1 98 0
+ 299 00da B2E7     	 b .L22
+ 300              	.L16:
+ 100:alarm.c       ****             break;
+ 301              	 .loc 1 100 0
+ 302 00dc 2748     	 ldr r0,.L34+60
+ 303 00de FFF7FEFF 	 bl puts
+ 304              	.LVL39:
+ 101:alarm.c       ****         }
+ 305              	 .loc 1 101 0
+ 306 00e2 AEE7     	 b .L22
+ 307              	.LVL40:
+ 308              	.L32:
+ 116:alarm.c       ****         goto _fail;
+ 309              	 .loc 1 116 0
+ 310 00e4 7422     	 movs r2,#116
+ 311 00e6 1B49     	 ldr r1,.L34+20
+ 312 00e8 2548     	 ldr r0,.L34+64
+ 313              	.LVL41:
+ 314 00ea FFF7FEFF 	 bl printf
+ 315              	.LVL42:
+ 117:alarm.c       ****     }
+ 316              	 .loc 1 117 0
+ 317 00ee D0E7     	 b .L13
+ 318              	.LVL43:
+ 319              	.L24:
+ 125:alarm.c       ****     status = gsdk_ril_psm_set(CPSMS, "AT+CPSMS=1");//set "CPSMS=1" is power saving mode(PSM)
+ 320              	 .loc 1 125 0
+ 321 00f0 2448     	 ldr r0,.L34+68
+ 322              	.LVL44:
+ 323 00f2 FFF7FEFF 	 bl puts
+ 324              	.LVL45:
+ 126:alarm.c       **** 	if(GSDK_ERROR == status)
+ 325              	 .loc 1 126 0
+ 326 00f6 2449     	 ldr r1,.L34+72
+ 327 00f8 0020     	 movs r0,#0
+ 328 00fa FFF7FEFF 	 bl gsdk_ril_psm_set
+ 329              	.LVL46:
+ 127:alarm.c       **** 	{
+ 330              	 .loc 1 127 0
+ 331 00fe B0F1FF3F 	 cmp r0,#-1
+ 332 0102 05D1     	 bne .L25
+ 129:alarm.c       **** 		goto _fail;
+ 333              	 .loc 1 129 0
+ 334 0104 8122     	 movs r2,#129
+ 335 0106 1349     	 ldr r1,.L34+20
+ 336 0108 2048     	 ldr r0,.L34+76
+ 337              	.LVL47:
+ 338 010a FFF7FEFF 	 bl printf
+ 339              	.LVL48:
+ 130:alarm.c       **** 	}
+ 340              	 .loc 1 130 0
+ 341 010e C0E7     	 b .L13
+ 342              	.LVL49:
+ARM GAS   			page 10
+
+
+ 343              	.L25:
+ 132:alarm.c       ****     status = gsdk_ril_psm_set(ZSLR, "AT+ZSLR");//sleep command
+ 344              	 .loc 1 132 0
+ 345 0110 1F48     	 ldr r0,.L34+80
+ 346              	.LVL50:
+ 347 0112 FFF7FEFF 	 bl puts
+ 348              	.LVL51:
+ 133:alarm.c       **** 	if(GSDK_ERROR == status)
+ 349              	 .loc 1 133 0
+ 350 0116 1F49     	 ldr r1,.L34+84
+ 351 0118 0220     	 movs r0,#2
+ 352 011a FFF7FEFF 	 bl gsdk_ril_psm_set
+ 353              	.LVL52:
+ 134:alarm.c       **** 	{
+ 354              	 .loc 1 134 0
+ 355 011e B0F1FF3F 	 cmp r0,#-1
+ 356 0122 07D0     	 beq .L33
+ 140:alarm.c       ****     while (1) {
+ 357              	 .loc 1 140 0
+ 358 0124 1C48     	 ldr r0,.L34+88
+ 359              	.LVL53:
+ 360 0126 FFF7FEFF 	 bl puts
+ 361              	.LVL54:
+ 362              	.L27:
+ 142:alarm.c       ****     }
+ 363              	 .loc 1 142 0 discriminator 1
+ 364 012a 4FF47A70 	 mov r0,#1000
+ 365 012e FFF7FEFF 	 bl vTaskDelay
+ 366              	.LVL55:
+ 367 0132 FAE7     	 b .L27
+ 368              	.LVL56:
+ 369              	.L33:
+ 136:alarm.c       **** 		goto _fail;
+ 370              	 .loc 1 136 0
+ 371 0134 8822     	 movs r2,#136
+ 372 0136 0749     	 ldr r1,.L34+20
+ 373 0138 1848     	 ldr r0,.L34+92
+ 374              	.LVL57:
+ 375 013a FFF7FEFF 	 bl printf
+ 376              	.LVL58:
+ 137:alarm.c       **** 	}
+ 377              	 .loc 1 137 0
+ 378 013e A8E7     	 b .L13
+ 379              	.L35:
+ 380              	 .align 2
+ 381              	.L34:
+ 382 0140 00000000 	 .word .LANCHOR1
+ 383 0144 38010000 	 .word .LC11
+ 384 0148 00000000 	 .word rtc_alarm_cb
+ 385 014c 00000000 	 .word .LANCHOR0
+ 386 0150 84010000 	 .word .LC13
+ 387 0154 00000000 	 .word .LANCHOR2
+ 388 0158 A0010000 	 .word .LC14
+ 389 015c 00000000 	 .word .LC2
+ 390 0160 28000000 	 .word .LC3
+ 391 0164 54000000 	 .word .LC4
+ 392 0168 78000000 	 .word .LC5
+ARM GAS   			page 11
+
+
+ 393 016c 90000000 	 .word .LC6
+ 394 0170 B0000000 	 .word .LC7
+ 395 0174 D4000000 	 .word .LC8
+ 396 0178 FC000000 	 .word .LC9
+ 397 017c 20010000 	 .word .LC10
+ 398 0180 58010000 	 .word .LC12
+ 399 0184 D0010000 	 .word .LC15
+ 400 0188 EC010000 	 .word .LC16
+ 401 018c F8010000 	 .word .LC17
+ 402 0190 24020000 	 .word .LC18
+ 403 0194 44020000 	 .word .LC19
+ 404 0198 74020000 	 .word .LC21
+ 405 019c 4C020000 	 .word .LC20
+ 406              	 .cfi_endproc
+ 407              	.LFE21:
+ 409              	 .global g_alarm_handle
+ 410              	 .section .bss.g_alarm_handle,"aw",%nobits
+ 411              	 .align 2
+ 412              	 .set .LANCHOR0,.+0
+ 415              	g_alarm_handle:
+ 416 0000 00000000 	 .space 4
+ 417              	 .section .bss.g_huart,"aw",%nobits
+ 418              	 .align 2
+ 419              	 .set .LANCHOR1,.+0
+ 422              	g_huart:
+ 423 0000 00000000 	 .space 4
+ 424              	 .section .rodata.__func__.9482,"a",%progbits
+ 425              	 .align 2
+ 426              	 .set .LANCHOR2,.+0
+ 429              	__func__.9482:
+ 430 0000 6D61696E 	 .ascii "main\000"
+ 430      00
+ 431              	 .section .rodata.main.str1.4,"aMS",%progbits,1
+ 432              	 .align 2
+ 433              	.LC2:
+ 434 0000 5B505249 	 .ascii "[PRINTF_DEMO]: failed to open uart %d\012\000"
+ 434      4E54465F 
+ 434      44454D4F 
+ 434      5D3A2066 
+ 434      61696C65 
+ 435 0027 00       	 .space 1
+ 436              	.LC3:
+ 437 0028 5B4C4F47 	 .ascii "[LOGD]:F:%s,L:%d,failed to open uart %d\015\012\000"
+ 437      445D3A46 
+ 437      3A25732C 
+ 437      4C3A2564 
+ 437      2C666169 
+ 438 0052 0000     	 .space 2
+ 439              	.LC4:
+ 440 0054 5B4C4F47 	 .ascii "[LOGD]:F:%s,L:%d,AT init failed \015\012\000"
+ 440      445D3A46 
+ 440      3A25732C 
+ 440      4C3A2564 
+ 440      2C415420 
+ 441 0077 00       	 .space 1
+ 442              	.LC5:
+ 443 0078 77616B65 	 .ascii "wakeup from deep sleep\015\000"
+ARM GAS   			page 12
+
+
+ 443      75702066 
+ 443      726F6D20 
+ 443      64656570 
+ 443      20736C65 
+ 444              	.LC6:
+ 445 0090 5B4C4F47 	 .ascii "[LOGW]:it's awakened by RTC_TC\015\000"
+ 445      575D3A69 
+ 445      74277320 
+ 445      6177616B 
+ 445      656E6564 
+ 446              	.LC7:
+ 447 00b0 5B4C4F47 	 .ascii "[LOGW]:it's awakened by RTC_EINT\015\000"
+ 447      575D3A69 
+ 447      74277320 
+ 447      6177616B 
+ 447      656E6564 
+ 448 00d2 0000     	 .space 2
+ 449              	.LC8:
+ 450 00d4 5B4C4F47 	 .ascii "[LOGW]:it's awakened by ALARM_WAKEUP\015\000"
+ 450      575D3A69 
+ 450      74277320 
+ 450      6177616B 
+ 450      656E6564 
+ 451 00fa 0000     	 .space 2
+ 452              	.LC9:
+ 453 00fc 5B4C4F47 	 .ascii "[LOGW]:it's awakened by POWERKEY\015\000"
+ 453      575D3A69 
+ 453      74277320 
+ 453      6177616B 
+ 453      656E6564 
+ 454 011e 0000     	 .space 2
+ 455              	.LC10:
+ 456 0120 5B4C4F47 	 .ascii "[LOGW]:unknown mode\015\000"
+ 456      575D3A75 
+ 456      6E6B6E6F 
+ 456      776E206D 
+ 456      6F64650D 
+ 457 0135 000000   	 .space 3
+ 458              	.LC11:
+ 459 0138 5B4C4F47 	 .ascii "[LOGW]:not enter deep sleep\015\000"
+ 459      575D3A6E 
+ 459      6F742065 
+ 459      6E746572 
+ 459      20646565 
+ 460 0155 000000   	 .space 3
+ 461              	.LC12:
+ 462 0158 5B4C4F47 	 .ascii "[LOGD]:F:%s,L:%d,open alarm  failed :%d\015\012\000"
+ 462      445D3A46 
+ 462      3A25732C 
+ 462      4C3A2564 
+ 462      2C6F7065 
+ 463 0182 0000     	 .space 2
+ 464              	.LC13:
+ 465 0184 5B4C4F47 	 .ascii "[LOGW]:open alarm success\015\000"
+ 465      575D3A6F 
+ 465      70656E20 
+ 465      616C6172 
+ARM GAS   			page 13
+
+
+ 465      6D207375 
+ 466 019f 00       	 .space 1
+ 467              	.LC14:
+ 468 01a0 5B4C4F47 	 .ascii "[LOGD]:F:%s,L:%d,gsdk_alarm_start failed :%d\015\012"
+ 468      445D3A46 
+ 468      3A25732C 
+ 468      4C3A2564 
+ 468      2C677364 
+ 469 01ce 00       	 .ascii "\000"
+ 470 01cf 00       	 .space 1
+ 471              	.LC15:
+ 472 01d0 5B4C4F47 	 .ascii "[LOGW]:start alarm success\015\000"
+ 472      575D3A73 
+ 472      74617274 
+ 472      20616C61 
+ 472      726D2073 
+ 473              	.LC16:
+ 474 01ec 41542B43 	 .ascii "AT+CPSMS=1\000"
+ 474      50534D53 
+ 474      3D3100
+ 475 01f7 00       	 .space 1
+ 476              	.LC17:
+ 477 01f8 5B4C4F47 	 .ascii "[LOGD]:F:%s,L:%d,set CPSMS=1 cmd error\015\012\000"
+ 477      445D3A46 
+ 477      3A25732C 
+ 477      4C3A2564 
+ 477      2C736574 
+ 478 0221 000000   	 .space 3
+ 479              	.LC18:
+ 480 0224 5B4C4F47 	 .ascii "[LOGW]:set CPSM=1 cmd success\015\000"
+ 480      575D3A73 
+ 480      65742043 
+ 480      50534D3D 
+ 480      3120636D 
+ 481 0243 00       	 .space 1
+ 482              	.LC19:
+ 483 0244 41542B5A 	 .ascii "AT+ZSLR\000"
+ 483      534C5200 
+ 484              	.LC20:
+ 485 024c 5B4C4F47 	 .ascii "[LOGD]:F:%s,L:%d,set ZSLR cmd error\015\012\000"
+ 485      445D3A46 
+ 485      3A25732C 
+ 485      4C3A2564 
+ 485      2C736574 
+ 486 0272 0000     	 .space 2
+ 487              	.LC21:
+ 488 0274 5B4C4F47 	 .ascii "[LOGW]:wait for sleep....\015\000"
+ 488      575D3A77 
+ 488      61697420 
+ 488      666F7220 
+ 488      736C6565 
+ 489              	 .section .rodata.rtc_alarm_cb.str1.4,"aMS",%progbits,1
+ 490              	 .align 2
+ 491              	.LC0:
+ 492 0000 5B4C4F47 	 .ascii "[LOGW]:rtc alarm handle cb!\015\000"
+ 492      575D3A72 
+ 492      74632061 
+ARM GAS   			page 14
+
+
+ 492      6C61726D 
+ 492      2068616E 
+ 493 001d 000000   	 .space 3
+ 494              	.LC1:
+ 495 0020 5B4C4F47 	 .ascii "[LOGW]:Timer will be invalid!\015\000"
+ 495      575D3A54 
+ 495      696D6572 
+ 495      2077696C 
+ 495      6C206265 
+ 496              	 .text
+ 497              	.Letext0:
+ 498              	 .file 2 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 499              	 .file 3 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\lock.h"
+ 500              	 .file 4 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\_types.h"
+ 501              	 .file 5 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\lib\\gcc\\arm-none-eabi\\7.3.1\\include\\stddef.h"
+ 502              	 .file 6 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\reent.h"
+ 503              	 .file 7 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\_stdint.h"
+ 504              	 .file 8 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\stdlib.h"
+ 505              	 .file 9 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/include/FreeRTOSConfig.h"
+ 506              	 .file 10 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\errno.h"
+ 507              	 .file 11 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\time.h"
+ 508              	 .file 12 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/ports/include/arch/cc.h"
+ 509              	 .file 13 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/ip4_addr.h"
+ 510              	 .file 14 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/ip6_addr.h"
+ 511              	 .file 15 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/ip_addr.h"
+ 512              	 .file 16 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/err.h"
+ 513              	 .file 17 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/pbuf.h"
+ 514              	 .file 18 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/netif.h"
+ 515              	 .file 19 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/inet.h"
+ 516              	 .file 20 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/ip4.h"
+ 517              	 .file 21 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/ip6.h"
+ 518              	 .file 22 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/lwip/src/include/lwip/ip.h"
+ 519              	 .file 23 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_common.h"
+ 520              	 .file 24 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_uart.h"
+ 521              	 .file 25 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_flash.h"
+ 522              	 .file 26 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_sys.h"
+ 523              	 .file 27 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_alarm.h"
+ 524              	 .file 28 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_ril_cmds.h"
+ 525              	 .file 29 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_ril.h"
+ 526              	 .file 30 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\stdio.h"
+ 527              	 .file 31 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_api.h"
+ 528              	 .file 32 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/FreeRTOS/Source/include/task.h"
+ 529              	 .file 33 "<built-in>"
+ARM GAS   			page 15
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 alarm.c
+    {standard input}:18     .text.rtc_alarm_cb:00000000 $t
+    {standard input}:25     .text.rtc_alarm_cb:00000000 rtc_alarm_cb
+    {standard input}:60     .text.rtc_alarm_cb:00000020 $d
+    {standard input}:67     .text.__io_puts:00000000 $t
+    {standard input}:74     .text.__io_puts:00000000 __io_puts
+    {standard input}:112    .text.__io_puts:0000001c $d
+    {standard input}:117    .text.main:00000000 $t
+    {standard input}:124    .text.main:00000000 main
+    {standard input}:267    .text.main:000000b8 $d
+    {standard input}:271    .text.main:000000bc $t
+    {standard input}:382    .text.main:00000140 $d
+    {standard input}:415    .bss.g_alarm_handle:00000000 g_alarm_handle
+    {standard input}:411    .bss.g_alarm_handle:00000000 $d
+    {standard input}:418    .bss.g_huart:00000000 $d
+    {standard input}:422    .bss.g_huart:00000000 g_huart
+    {standard input}:425    .rodata.__func__.9482:00000000 $d
+    {standard input}:429    .rodata.__func__.9482:00000000 __func__.9482
+    {standard input}:432    .rodata.main.str1.4:00000000 $d
+    {standard input}:490    .rodata.rtc_alarm_cb.str1.4:00000000 $d
+                           .group:00000000 wm4.0.8fab1e1450c2b74bdd5e2aed4c325bf1
+                           .group:00000000 wm4._newlib_version.h.4.875b979a44719054cd750d0952ad3fd6
+                           .group:00000000 wm4.newlib.h.18.5e5ca3429233af402d406a202f1fc1ac
+                           .group:00000000 wm4.ieeefp.h.77.220d9cccac42cd58761758bee2df4ce6
+                           .group:00000000 wm4.features.h.22.fad1cec3bc7ff06488171438dbdcfd02
+                           .group:00000000 wm4.config.h.220.6cac6a9685cfce5e83c17784171638d9
+                           .group:00000000 wm4._ansi.h.31.de524f58584151836e90d8620a16f8e8
+                           .group:00000000 wm4.stdio.h.31.7c0e28c411445f3f9c5b11accf882760
+                           .group:00000000 wm4._default_types.h.6.959254cf5f09734ea7516c89e8bb21bd
+                           .group:00000000 wm4.stddef.h.187.2ff233552538c6ff9b8575ca8ea52cb3
+                           .group:00000000 wm4.cdefs.h.47.0bcdf94cb40e176393dd1404056825b4
+                           .group:00000000 wm4.stddef.h.39.ec95e8feac892e292b69dc7ae75b0d64
+                           .group:00000000 wm4.stdarg.h.34.3a23a216c0c293b3d2ea2e89281481e6
+                           .group:00000000 wm4.lock.h.2.1461d1fff82dffe8bfddc23307f6484f
+                           .group:00000000 wm4._types.h.125.5cf8a495f1f7ef36777ad868a1e32068
+                           .group:00000000 wm4.stddef.h.161.5349cb105733e8777bfb0cf53c4e3f34
+                           .group:00000000 wm4._types.h.184.03611d4f6b5bec9997bcf4279eceba07
+                           .group:00000000 wm4.reent.h.17.90c2574d4acdcfce933db5cb09ff35fe
+                           .group:00000000 wm4.types.h.40.e8c16e7ec36ba55f133d0616070e25fc
+                           .group:00000000 wm4._stdint.h.10.c24fa3af3bc1706662bb5593a907e841
+                           .group:00000000 wm4._endian.h.31.65a10590763c3dde1ac4a7f66d7d4891
+                           .group:00000000 wm4.endian.h.9.49f3a4695c1b61e8a0808de3c4a106cb
+                           .group:00000000 wm4._timeval.h.30.0e8bfd94e85db17dda3286ee81496fe6
+                           .group:00000000 wm4.timespec.h.41.d855182eb0e690443ab8651bcedca6e1
+                           .group:00000000 wm4.select.h.19.97ca6fd0c752a0f3b6719fd314d361e6
+                           .group:00000000 wm4.types.h.69.ed3eae3cf73030a737515151ebcab7a1
+                           .group:00000000 wm4.sched.h.22.c60982713a5c428609783c78f9c78d95
+                           .group:00000000 wm4._pthreadtypes.h.36.fcee9961c35163dde6267ef772ad1972
+                           .group:00000000 wm4.stdio.h.2.4aa87247282eca6c8f36f9de33d8df1a
+                           .group:00000000 wm4.stdio.h.81.932d0c162786b883f622b8d05c120c78
+                           .group:00000000 wm4.stdlib.h.13.4ed386f5c1a80d71e72172885d946ef2
+                           .group:00000000 wm4.stddef.h.161.19e15733342b50ead2919490b095303e
+                           .group:00000000 wm4.alloca.h.8.dfc0c703c47ec3e69746825b17d9e66d
+                           .group:00000000 wm4.stdlib.h.56.d4493cd3736e51e9d56335045f26df45
+                           .group:00000000 wm4.string.h.8.c4b8571ce60dff2817f43fec8b86aecd
+                           .group:00000000 wm4._intsup.h.10.cce27fed8484c08a33f522034c30d2b5
+ARM GAS   			page 16
+
+
+                           .group:00000000 wm4.stdint.h.23.d53047a68f4a85177f80b422d52785ed
+                           .group:00000000 wm4.FreeRTOSConfig.h.68.1d0dd6b8cda279d0020827f5584733bd
+                           .group:00000000 wm4.projdefs.h.71.1734cd3501e070360596dd847bb9d813
+                           .group:00000000 wm4.portmacro.h.72.3d5d774f718d157a637f7eb960850f27
+                           .group:00000000 wm4.portable.h.98.f435842f50d7864fba6a318a13e72513
+                           .group:00000000 wm4.mpu_wrappers.h.71.dd245fe44d82bd40288b5a47f895c82c
+                           .group:00000000 wm4.FreeRTOS.h.175.3abf49eaca38658a192da8d7c86d5374
+                           .group:00000000 wm4.queue.h.72.3695320c7600effec3d17b83c99d3c0b
+                           .group:00000000 wm4.semphr.h.81.476996112f7cf2dd045dbdd37a9136bc
+                           .group:00000000 wm4.list.h.103.6a12b7b9a7a136c3cca0ee53675c5498
+                           .group:00000000 wm4.task.h.88.da474b04c368050657453c137d8efe45
+                           .group:00000000 wm4.timers.h.96.b62a20effad09455c0ed06e5f17e2a48
+                           .group:00000000 wm4.lwipopts.h.39.6b59604adf87dc94bbbda24564503740
+                           .group:00000000 wm4.errno.h.2.ba016d646105af6cad23be83630b6a3f
+                           .group:00000000 wm4.errno.h.9.1ecd7b1049497a0ab61da0f6cbd4b0c6
+                           .group:00000000 wm4.time.h.38.20beed93add9f31905d3a626e4660be9
+                           .group:00000000 wm4.time.h.8.db4619001f026d0b4874c029fef0e91f
+                           .group:00000000 wm4.time.h.2.4581ce0ffb6627cfc02162c94bf846c9
+                           .group:00000000 wm4.time.h.25.483ee9b7e27a5dcca3d222ded0e25e01
+                           .group:00000000 wm4.cc.h.48.d6d2c2bb4a8eeb217c55b9ca1943b7a0
+                           .group:00000000 wm4.arch.h.65.8829bb52e9eb86f038bc22f28844c005
+                           .group:00000000 wm4.debug.h.44.85dd174371aa97df303e04153d799135
+                           .group:00000000 wm4.opt.h.77.035e4f6feedd8c96216e0818f09a9265
+                           .group:00000000 wm4.def.h.33.687716bada84b2810fdf97c9d167aeeb
+                           .group:00000000 wm4.ip4_addr.h.33.1a8b96da9c9099dd4d4b421392c24416
+                           .group:00000000 wm4.ip6_addr.h.43.f0356dc1c9eb4011a6824b272ca0bdec
+                           .group:00000000 wm4.ip_addr.h.58.d7bcbad6cfa9a793708e54980ac1c34d
+                           .group:00000000 wm4.netif.h.33.379f236f9670aafd30086e50d1a89f89
+                           .group:00000000 wm4.err.h.33.f97d15a7862198a77a6b19a8b190fee7
+                           .group:00000000 wm4.pbuf.h.34.202868ef9162d4cb74cfc854b7b74f63
+                           .group:00000000 wm4.netif.h.67.da8672002bd78982c4ab50b84285a595
+                           .group:00000000 wm4.inet.h.41.0cf9f502d748021afadf1fe4fba638f4
+                           .group:00000000 wm4.sockets.h.72.bc82e899e862bc38df9aee17d977f9be
+                           .group:00000000 wm4.ip4.h.33.2db1e45313b1f472e08d288657c61499
+                           .group:00000000 wm4.ip6.h.42.4c9fe14607f20e2a534215f8047124e1
+                           .group:00000000 wm4.ip.h.49.1a1fbae54cafc9b96064363517198239
+                           .group:00000000 wm4.gsdk_common.h.25.69f333dc5f5113dd7092f6831560754f
+                           .group:00000000 wm4.gsdk_flash.h.25.4d08791083e4af07d64570151ac0803c
+                           .group:00000000 wm4.app_loader.h.25.aa64c8d4536aca920728cda79a275eeb
+                           .group:00000000 wm4.gsdk_ril.h.43.ec5a175e110d1c70143139b168262c34
+                           .group:00000000 wm4.gsdk_ril_cmds.h.25.9576f30a39fa8fd69cc4f6c2fc4c8bd9
+
+UNDEFINED SYMBOLS
+puts
+gsdk_alarm_stop
+gsdk_alarm_close
+gsdk_uart_write
+gsdk_uart_open
+gsdk_ril_init
+gsdk_sys_get_boot_mode
+gsdk_alarm_open
+gsdk_alarm_start
+printf
+gsdk_syslog_printf
+gsdk_ril_psm_set
+vTaskDelay

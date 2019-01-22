@@ -1,0 +1,608 @@
+ARM GAS   			page 1
+
+
+   1              	 .cpu cortex-m4
+   2              	 .eabi_attribute 27,1
+   3              	 .eabi_attribute 28,1
+   4              	 .eabi_attribute 20,1
+   5              	 .eabi_attribute 21,1
+   6              	 .eabi_attribute 23,3
+   7              	 .eabi_attribute 24,1
+   8              	 .eabi_attribute 25,1
+   9              	 .eabi_attribute 26,1
+  10              	 .eabi_attribute 30,1
+  11              	 .eabi_attribute 34,1
+  12              	 .eabi_attribute 18,4
+  13              	 .file "appup.c"
+  14              	 .text
+  15              	.Ltext0:
+  16              	 .cfi_sections .debug_frame
+  17              	 .section .text.__io_puts,"ax",%progbits
+  18              	 .align 1
+  19              	 .global __io_puts
+  20              	 .syntax unified
+  21              	 .thumb
+  22              	 .thumb_func
+  23              	 .fpu fpv4-sp-d16
+  25              	__io_puts:
+  26              	.LFB3:
+  27              	 .file 1 "appup.c"
+   1:appup.c       **** /*
+   2:appup.c       **** ** File   : appup.c
+   3:appup.c       **** **
+   4:appup.c       **** *i* Copyright (C) 2013-2018 Gosuncn. All rights reserved.
+   5:appup.c       **** **
+   6:appup.c       **** ** Licensed under the Apache License, Version 2.0 (the "License");
+   7:appup.c       **** ** you may not use this file except in compliance with the License.
+   8:appup.c       **** ** You may obtain a copy of the License at
+   9:appup.c       **** **
+  10:appup.c       **** **      http://www.apache.org/licenses/LICENSE-2.0
+  11:appup.c       **** **
+  12:appup.c       **** ** Unless required by applicable law or agreed to in writing, software
+  13:appup.c       **** ** distributed under the License is distributed on an "AS IS" BASIS,
+  14:appup.c       **** ** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  15:appup.c       **** ** See the License for the specific language governing permissions and
+  16:appup.c       **** ** limitations under the License.
+  17:appup.c       **** **
+  18:appup.c       **** ** Author : dengyi2@gosuncn.cn
+  19:appup.c       **** ** 注意: 此demo仅适用于OpenCPU-C版本.
+  20:appup.c       **** ** 注释: 此demo用于测试本地下载功能.执行demo后,重启系统即可
+  21:appup.c       **** **  $Date: 2018/06/15 09:40:36GMT+08:00 $
+  22:appup.c       **** **
+  23:appup.c       **** */
+  24:appup.c       **** 
+  25:appup.c       **** #include <stdio.h>
+  26:appup.c       **** #include <stdlib.h>
+  27:appup.c       **** #include <string.h>
+  28:appup.c       **** #include "gsdk_api.h"
+  29:appup.c       **** 
+  30:appup.c       **** #define APPUP_FLAGS_BASE    0x002DB000
+  31:appup.c       **** #define APPUP_ADDR          0x002DCFF4
+ARM GAS   			page 2
+
+
+  32:appup.c       **** #define APPFOTA_ADDR        0x002DBFF4
+  33:appup.c       **** #define APPUP_FLAGS_SIZE    0x2000
+  34:appup.c       **** 
+  35:appup.c       **** static gsdk_handle_t g_huart;
+  36:appup.c       **** 
+  37:appup.c       **** int __io_puts(char *data, int len)
+  38:appup.c       **** {
+  28              	 .loc 1 38 0
+  29              	 .cfi_startproc
+  30              	 
+  31              	 
+  32              	.LVL0:
+  33 0000 10B5     	 push {r4,lr}
+  34              	 .cfi_def_cfa_offset 8
+  35              	 .cfi_offset 4,-8
+  36              	 .cfi_offset 14,-4
+  37              	.LVL1:
+  39:appup.c       ****     int ret = 0;
+  40:appup.c       ****     if (g_huart) {
+  38              	 .loc 1 40 0
+  39 0002 064B     	 ldr r3,.L5
+  40 0004 1C68     	 ldr r4,[r3]
+  41 0006 3CB1     	 cbz r4,.L3
+  42 0008 0A46     	 mov r2,r1
+  43 000a 0146     	 mov r1,r0
+  44              	.LVL2:
+  41:appup.c       ****         ret = gsdk_uart_write(g_huart, (uint8_t *)data, len, 1000);
+  45              	 .loc 1 41 0
+  46 000c 4FF47A73 	 mov r3,#1000
+  47 0010 2046     	 mov r0,r4
+  48              	.LVL3:
+  49 0012 FFF7FEFF 	 bl gsdk_uart_write
+  50              	.LVL4:
+  51              	.L1:
+  42:appup.c       ****     }
+  43:appup.c       ****     return ret;
+  44:appup.c       **** }
+  52              	 .loc 1 44 0
+  53 0016 10BD     	 pop {r4,pc}
+  54              	.LVL5:
+  55              	.L3:
+  39:appup.c       ****     if (g_huart) {
+  56              	 .loc 1 39 0
+  57 0018 0020     	 movs r0,#0
+  58              	.LVL6:
+  43:appup.c       **** }
+  59              	 .loc 1 43 0
+  60 001a FCE7     	 b .L1
+  61              	.L6:
+  62              	 .align 2
+  63              	.L5:
+  64 001c 00000000 	 .word .LANCHOR0
+  65              	 .cfi_endproc
+  66              	.LFE3:
+  68              	 .section .text.log_init,"ax",%progbits
+  69              	 .align 1
+  70              	 .global log_init
+ARM GAS   			page 3
+
+
+  71              	 .syntax unified
+  72              	 .thumb
+  73              	 .thumb_func
+  74              	 .fpu fpv4-sp-d16
+  76              	log_init:
+  77              	.LFB4:
+  45:appup.c       **** 
+  46:appup.c       **** int log_init(void)
+  47:appup.c       **** {
+  78              	 .loc 1 47 0
+  79              	 .cfi_startproc
+  80              	 
+  81              	 
+  82 0000 00B5     	 push {lr}
+  83              	 .cfi_def_cfa_offset 4
+  84              	 .cfi_offset 14,-4
+  85 0002 83B0     	 sub sp,sp,#12
+  86              	 .cfi_def_cfa_offset 16
+  48:appup.c       ****     uart_config_t uart_config;
+  49:appup.c       ****     gsdk_status_t status;
+  50:appup.c       **** 
+  51:appup.c       ****     uart_config.baudrate    = UART_BAUDRATE_115200;
+  87              	 .loc 1 51 0
+  88 0004 0923     	 movs r3,#9
+  89 0006 8DF80430 	 strb r3,[sp,#4]
+  52:appup.c       ****     uart_config.parity      = UART_PARITY_NONE;
+  90              	 .loc 1 52 0
+  91 000a 0020     	 movs r0,#0
+  92 000c 8DF80700 	 strb r0,[sp,#7]
+  53:appup.c       ****     uart_config.stop_bit    = UART_STOP_BIT_1;
+  93              	 .loc 1 53 0
+  94 0010 8DF80600 	 strb r0,[sp,#6]
+  54:appup.c       ****     uart_config.word_length = UART_WORD_LENGTH_8;
+  95              	 .loc 1 54 0
+  96 0014 0323     	 movs r3,#3
+  97 0016 8DF80530 	 strb r3,[sp,#5]
+  55:appup.c       **** 
+  56:appup.c       ****     status = gsdk_uart_open(UART_0, &uart_config, &g_huart);
+  98              	 .loc 1 56 0
+  99 001a 094A     	 ldr r2,.L12
+ 100 001c 01A9     	 add r1,sp,#4
+ 101 001e FFF7FEFF 	 bl gsdk_uart_open
+ 102              	.LVL7:
+  57:appup.c       ****     if (status != GSDK_SUCCESS) {
+ 103              	 .loc 1 57 0
+ 104 0022 30B9     	 cbnz r0,.L11
+  58:appup.c       ****         printf("[APPUP_DEMO]: failed to open uart %d\r\n", status);
+  59:appup.c       ****         return -1;
+  60:appup.c       ****     }
+  61:appup.c       **** 
+  62:appup.c       ****     printf("[APPUP_DEMO] log init....OK\r\n");
+ 105              	 .loc 1 62 0
+ 106 0024 0748     	 ldr r0,.L12+4
+ 107              	.LVL8:
+ 108 0026 FFF7FEFF 	 bl puts
+ 109              	.LVL9:
+  63:appup.c       **** 
+ARM GAS   			page 4
+
+
+  64:appup.c       ****     return 0;
+ 110              	 .loc 1 64 0
+ 111 002a 0020     	 movs r0,#0
+ 112              	.L7:
+  65:appup.c       **** }
+ 113              	 .loc 1 65 0
+ 114 002c 03B0     	 add sp,sp,#12
+ 115              	 .cfi_remember_state
+ 116              	 .cfi_def_cfa_offset 4
+ 117              	 
+ 118 002e 5DF804FB 	 ldr pc,[sp],#4
+ 119              	.LVL10:
+ 120              	.L11:
+ 121              	 .cfi_restore_state
+ 122 0032 0146     	 mov r1,r0
+  58:appup.c       ****         printf("[APPUP_DEMO]: failed to open uart %d\r\n", status);
+ 123              	 .loc 1 58 0
+ 124 0034 0448     	 ldr r0,.L12+8
+ 125              	.LVL11:
+ 126 0036 FFF7FEFF 	 bl printf
+ 127              	.LVL12:
+  59:appup.c       ****     }
+ 128              	 .loc 1 59 0
+ 129 003a 4FF0FF30 	 mov r0,#-1
+ 130 003e F5E7     	 b .L7
+ 131              	.L13:
+ 132              	 .align 2
+ 133              	.L12:
+ 134 0040 00000000 	 .word .LANCHOR0
+ 135 0044 28000000 	 .word .LC1
+ 136 0048 00000000 	 .word .LC0
+ 137              	 .cfi_endproc
+ 138              	.LFE4:
+ 140              	 .section .text.main,"ax",%progbits
+ 141              	 .align 1
+ 142              	 .global main
+ 143              	 .syntax unified
+ 144              	 .thumb
+ 145              	 .thumb_func
+ 146              	 .fpu fpv4-sp-d16
+ 148              	main:
+ 149              	.LFB5:
+  66:appup.c       **** 
+  67:appup.c       **** static const char appup_flags_data[] = "0x1A2B3C4D";
+  68:appup.c       **** static const char appfota_flags_data[] = "0x4D3C2B1A";
+  69:appup.c       **** 
+  70:appup.c       **** int main(void)
+  71:appup.c       **** {
+ 150              	 .loc 1 71 0
+ 151              	 .cfi_startproc
+ 152              	 
+ 153              	 
+ 154 0000 10B5     	 push {r4,lr}
+ 155              	 .cfi_def_cfa_offset 8
+ 156              	 .cfi_offset 4,-8
+ 157              	 .cfi_offset 14,-4
+ 158 0002 88B0     	 sub sp,sp,#32
+ARM GAS   			page 5
+
+
+ 159              	 .cfi_def_cfa_offset 40
+  72:appup.c       ****     char buf[sizeof(appup_flags_data)];
+  73:appup.c       ****     char buf1[sizeof(appfota_flags_data)];
+  74:appup.c       ****     gsdk_status_t status;
+  75:appup.c       ****     gsdk_handle_t hflash;
+  76:appup.c       **** 
+  77:appup.c       ****     log_init();
+ 160              	 .loc 1 77 0
+ 161 0004 FFF7FEFF 	 bl log_init
+ 162              	.LVL13:
+  78:appup.c       **** 
+  79:appup.c       ****     status = gsdk_flash_open(APPUP_FLAGS_BASE, APPUP_FLAGS_SIZE, &hflash);
+ 163              	 .loc 1 79 0
+ 164 0008 01AA     	 add r2,sp,#4
+ 165 000a 4FF40051 	 mov r1,#8192
+ 166 000e 2848     	 ldr r0,.L20
+ 167 0010 FFF7FEFF 	 bl gsdk_flash_open
+ 168              	.LVL14:
+  80:appup.c       ****     if (status != GSDK_SUCCESS)
+ 169              	 .loc 1 80 0
+ 170 0014 78B9     	 cbnz r0,.L15
+  81:appup.c       ****         goto _fail;
+  82:appup.c       ****     status = gsdk_flash_erase(hflash, APPUP_FLAGS_BASE, FLASH_BLOCK_4K);
+ 171              	 .loc 1 82 0
+ 172 0016 0022     	 movs r2,#0
+ 173 0018 2549     	 ldr r1,.L20
+ 174 001a 0198     	 ldr r0,[sp,#4]
+ 175              	.LVL15:
+ 176 001c FFF7FEFF 	 bl gsdk_flash_erase
+ 177              	.LVL16:
+  83:appup.c       ****     if (status != GSDK_SUCCESS)
+ 178              	 .loc 1 83 0
+ 179 0020 30B9     	 cbnz r0,.L16
+  84:appup.c       ****         goto _fail_close;
+  85:appup.c       ****     status = gsdk_flash_write(hflash, APPUP_ADDR, (uint8_t *)appup_flags_data, sizeof(appup_flags_d
+ 180              	 .loc 1 85 0
+ 181 0022 0B23     	 movs r3,#11
+ 182 0024 234A     	 ldr r2,.L20+4
+ 183 0026 2449     	 ldr r1,.L20+8
+ 184 0028 0198     	 ldr r0,[sp,#4]
+ 185              	.LVL17:
+ 186 002a FFF7FEFF 	 bl gsdk_flash_write
+ 187              	.LVL18:
+  86:appup.c       ****     if (status != GSDK_SUCCESS)
+ 188              	 .loc 1 86 0
+ 189 002e 40B1     	 cbz r0,.L19
+ 190              	.LVL19:
+ 191              	.L16:
+  87:appup.c       ****         goto _fail_close;
+  88:appup.c       ****     status = gsdk_flash_read(hflash, APPUP_ADDR, (uint8_t *)buf, sizeof(appup_flags_data));
+  89:appup.c       ****     printf("appup flags: %s\n", buf);
+  90:appup.c       ****     if (status != GSDK_SUCCESS)
+  91:appup.c       ****         goto _fail_close;
+  92:appup.c       ****     status = gsdk_flash_write(hflash, APPFOTA_ADDR, (uint8_t *)appfota_flags_data, sizeof(appfota_f
+  93:appup.c       ****     if (status != GSDK_SUCCESS)
+  94:appup.c       ****         goto _fail_close;
+  95:appup.c       ****     status = gsdk_flash_read(hflash, APPFOTA_ADDR, (uint8_t *)buf1, sizeof(appfota_flags_data));
+ARM GAS   			page 6
+
+
+  96:appup.c       ****     printf("appfota flags: %s\n", buf1);
+  97:appup.c       ****     if (status != GSDK_SUCCESS)
+  98:appup.c       ****         goto _fail_close;
+  99:appup.c       **** 
+ 100:appup.c       ****     if (strcmp(appup_flags_data, buf)) {
+ 101:appup.c       ****         goto _fail_close;
+ 102:appup.c       ****     }
+ 103:appup.c       **** 
+ 104:appup.c       ****     if (strcmp(appfota_flags_data, buf1)) {
+ 105:appup.c       ****         goto _fail_close;
+ 106:appup.c       ****     }
+ 107:appup.c       ****     gsdk_flash_close(hflash);
+ 108:appup.c       ****     printf("[APPUP_DEMO] pass!\n");
+ 109:appup.c       ****     return -1;
+ 110:appup.c       **** 
+ 111:appup.c       **** _fail_close:
+ 112:appup.c       ****     gsdk_flash_close(hflash);
+ 192              	 .loc 1 112 0
+ 193 0030 0198     	 ldr r0,[sp,#4]
+ 194 0032 FFF7FEFF 	 bl gsdk_flash_close
+ 195              	.LVL20:
+ 196              	.L15:
+ 113:appup.c       **** _fail:
+ 114:appup.c       ****     printf("[APPUP_DEMO] failed!\n");
+ 197              	 .loc 1 114 0
+ 198 0036 2148     	 ldr r0,.L20+12
+ 199 0038 FFF7FEFF 	 bl puts
+ 200              	.LVL21:
+ 115:appup.c       **** 
+ 116:appup.c       ****     return 0;
+ 201              	 .loc 1 116 0
+ 202 003c 0020     	 movs r0,#0
+ 203              	.L14:
+ 117:appup.c       **** }
+ 204              	 .loc 1 117 0
+ 205 003e 08B0     	 add sp,sp,#32
+ 206              	 .cfi_remember_state
+ 207              	 .cfi_def_cfa_offset 8
+ 208              	 
+ 209 0040 10BD     	 pop {r4,pc}
+ 210              	.LVL22:
+ 211              	.L19:
+ 212              	 .cfi_restore_state
+  88:appup.c       ****     printf("appup flags: %s\n", buf);
+ 213              	 .loc 1 88 0
+ 214 0042 0B23     	 movs r3,#11
+ 215 0044 05AA     	 add r2,sp,#20
+ 216 0046 1C49     	 ldr r1,.L20+8
+ 217 0048 0198     	 ldr r0,[sp,#4]
+ 218              	.LVL23:
+ 219 004a FFF7FEFF 	 bl gsdk_flash_read
+ 220              	.LVL24:
+ 221 004e 0446     	 mov r4,r0
+ 222              	.LVL25:
+  89:appup.c       ****     if (status != GSDK_SUCCESS)
+ 223              	 .loc 1 89 0
+ 224 0050 05A9     	 add r1,sp,#20
+ARM GAS   			page 7
+
+
+ 225 0052 1B48     	 ldr r0,.L20+16
+ 226 0054 FFF7FEFF 	 bl printf
+ 227              	.LVL26:
+  90:appup.c       ****         goto _fail_close;
+ 228              	 .loc 1 90 0
+ 229 0058 002C     	 cmp r4,#0
+ 230 005a E9D1     	 bne .L16
+  92:appup.c       ****     if (status != GSDK_SUCCESS)
+ 231              	 .loc 1 92 0
+ 232 005c 0B23     	 movs r3,#11
+ 233 005e 194A     	 ldr r2,.L20+20
+ 234 0060 1949     	 ldr r1,.L20+24
+ 235 0062 0198     	 ldr r0,[sp,#4]
+ 236 0064 FFF7FEFF 	 bl gsdk_flash_write
+ 237              	.LVL27:
+  93:appup.c       ****         goto _fail_close;
+ 238              	 .loc 1 93 0
+ 239 0068 0028     	 cmp r0,#0
+ 240 006a E1D1     	 bne .L16
+  95:appup.c       ****     printf("appfota flags: %s\n", buf1);
+ 241              	 .loc 1 95 0
+ 242 006c 0B23     	 movs r3,#11
+ 243 006e 02AA     	 add r2,sp,#8
+ 244 0070 1549     	 ldr r1,.L20+24
+ 245 0072 0198     	 ldr r0,[sp,#4]
+ 246              	.LVL28:
+ 247 0074 FFF7FEFF 	 bl gsdk_flash_read
+ 248              	.LVL29:
+ 249 0078 0446     	 mov r4,r0
+ 250              	.LVL30:
+  96:appup.c       ****     if (status != GSDK_SUCCESS)
+ 251              	 .loc 1 96 0
+ 252 007a 02A9     	 add r1,sp,#8
+ 253 007c 1348     	 ldr r0,.L20+28
+ 254 007e FFF7FEFF 	 bl printf
+ 255              	.LVL31:
+  97:appup.c       ****         goto _fail_close;
+ 256              	 .loc 1 97 0
+ 257 0082 002C     	 cmp r4,#0
+ 258 0084 D4D1     	 bne .L16
+ 100:appup.c       ****         goto _fail_close;
+ 259              	 .loc 1 100 0
+ 260 0086 05A9     	 add r1,sp,#20
+ 261 0088 0A48     	 ldr r0,.L20+4
+ 262 008a FFF7FEFF 	 bl strcmp
+ 263              	.LVL32:
+ 264 008e 0028     	 cmp r0,#0
+ 265 0090 CED1     	 bne .L16
+ 104:appup.c       ****         goto _fail_close;
+ 266              	 .loc 1 104 0
+ 267 0092 02A9     	 add r1,sp,#8
+ 268 0094 0B48     	 ldr r0,.L20+20
+ 269 0096 FFF7FEFF 	 bl strcmp
+ 270              	.LVL33:
+ 271 009a 0028     	 cmp r0,#0
+ 272 009c C8D1     	 bne .L16
+ 107:appup.c       ****     printf("[APPUP_DEMO] pass!\n");
+ARM GAS   			page 8
+
+
+ 273              	 .loc 1 107 0
+ 274 009e 0198     	 ldr r0,[sp,#4]
+ 275 00a0 FFF7FEFF 	 bl gsdk_flash_close
+ 276              	.LVL34:
+ 108:appup.c       ****     return -1;
+ 277              	 .loc 1 108 0
+ 278 00a4 0A48     	 ldr r0,.L20+32
+ 279 00a6 FFF7FEFF 	 bl puts
+ 280              	.LVL35:
+ 109:appup.c       **** 
+ 281              	 .loc 1 109 0
+ 282 00aa 4FF0FF30 	 mov r0,#-1
+ 283 00ae C6E7     	 b .L14
+ 284              	.L21:
+ 285              	 .align 2
+ 286              	.L20:
+ 287 00b0 00B02D00 	 .word 2994176
+ 288 00b4 00000000 	 .word .LANCHOR1
+ 289 00b8 F4CF2D00 	 .word 3002356
+ 290 00bc 3C000000 	 .word .LC5
+ 291 00c0 00000000 	 .word .LC2
+ 292 00c4 00000000 	 .word .LANCHOR2
+ 293 00c8 F4BF2D00 	 .word 2998260
+ 294 00cc 14000000 	 .word .LC3
+ 295 00d0 28000000 	 .word .LC4
+ 296              	 .cfi_endproc
+ 297              	.LFE5:
+ 299              	 .section .bss.g_huart,"aw",%nobits
+ 300              	 .align 2
+ 301              	 .set .LANCHOR0,.+0
+ 304              	g_huart:
+ 305 0000 00000000 	 .space 4
+ 306              	 .section .rodata.appfota_flags_data,"a",%progbits
+ 307              	 .align 2
+ 308              	 .set .LANCHOR2,.+0
+ 311              	appfota_flags_data:
+ 312 0000 30783444 	 .ascii "0x4D3C2B1A\000"
+ 312      33433242 
+ 312      314100
+ 313              	 .section .rodata.appup_flags_data,"a",%progbits
+ 314              	 .align 2
+ 315              	 .set .LANCHOR1,.+0
+ 318              	appup_flags_data:
+ 319 0000 30783141 	 .ascii "0x1A2B3C4D\000"
+ 319      32423343 
+ 319      344400
+ 320              	 .section .rodata.log_init.str1.4,"aMS",%progbits,1
+ 321              	 .align 2
+ 322              	.LC0:
+ 323 0000 5B415050 	 .ascii "[APPUP_DEMO]: failed to open uart %d\015\012\000"
+ 323      55505F44 
+ 323      454D4F5D 
+ 323      3A206661 
+ 323      696C6564 
+ 324 0027 00       	 .space 1
+ 325              	.LC1:
+ 326 0028 5B415050 	 .ascii "[APPUP_DEMO] log init....OK\015\000"
+ARM GAS   			page 9
+
+
+ 326      55505F44 
+ 326      454D4F5D 
+ 326      206C6F67 
+ 326      20696E69 
+ 327              	 .section .rodata.main.str1.4,"aMS",%progbits,1
+ 328              	 .align 2
+ 329              	.LC2:
+ 330 0000 61707075 	 .ascii "appup flags: %s\012\000"
+ 330      7020666C 
+ 330      6167733A 
+ 330      2025730A 
+ 330      00
+ 331 0011 000000   	 .space 3
+ 332              	.LC3:
+ 333 0014 61707066 	 .ascii "appfota flags: %s\012\000"
+ 333      6F746120 
+ 333      666C6167 
+ 333      733A2025 
+ 333      730A00
+ 334 0027 00       	 .space 1
+ 335              	.LC4:
+ 336 0028 5B415050 	 .ascii "[APPUP_DEMO] pass!\000"
+ 336      55505F44 
+ 336      454D4F5D 
+ 336      20706173 
+ 336      732100
+ 337 003b 00       	 .space 1
+ 338              	.LC5:
+ 339 003c 5B415050 	 .ascii "[APPUP_DEMO] failed!\000"
+ 339      55505F44 
+ 339      454D4F5D 
+ 339      20666169 
+ 339      6C656421 
+ 340              	 .text
+ 341              	.Letext0:
+ 342              	 .file 2 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 343              	 .file 3 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\lock.h"
+ 344              	 .file 4 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\_types.h"
+ 345              	 .file 5 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\lib\\gcc\\arm-none-eabi\\7.3.1\\include\\stddef.h"
+ 346              	 .file 6 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\reent.h"
+ 347              	 .file 7 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\_stdint.h"
+ 348              	 .file 8 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\stdlib.h"
+ 349              	 .file 9 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_common.h"
+ 350              	 .file 10 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_uart.h"
+ 351              	 .file 11 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_flash.h"
+ 352              	 .file 12 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\stdio.h"
+ 353              	 .file 13 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\string.h"
+ 354              	 .file 14 "<built-in>"
+ARM GAS   			page 10
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 appup.c
+    {standard input}:18     .text.__io_puts:00000000 $t
+    {standard input}:25     .text.__io_puts:00000000 __io_puts
+    {standard input}:64     .text.__io_puts:0000001c $d
+    {standard input}:69     .text.log_init:00000000 $t
+    {standard input}:76     .text.log_init:00000000 log_init
+    {standard input}:134    .text.log_init:00000040 $d
+    {standard input}:141    .text.main:00000000 $t
+    {standard input}:148    .text.main:00000000 main
+    {standard input}:287    .text.main:000000b0 $d
+    {standard input}:300    .bss.g_huart:00000000 $d
+    {standard input}:304    .bss.g_huart:00000000 g_huart
+    {standard input}:307    .rodata.appfota_flags_data:00000000 $d
+    {standard input}:311    .rodata.appfota_flags_data:00000000 appfota_flags_data
+    {standard input}:314    .rodata.appup_flags_data:00000000 $d
+    {standard input}:318    .rodata.appup_flags_data:00000000 appup_flags_data
+    {standard input}:321    .rodata.log_init.str1.4:00000000 $d
+    {standard input}:328    .rodata.main.str1.4:00000000 $d
+                           .group:00000000 wm4.0.8fab1e1450c2b74bdd5e2aed4c325bf1
+                           .group:00000000 wm4._newlib_version.h.4.875b979a44719054cd750d0952ad3fd6
+                           .group:00000000 wm4.newlib.h.18.5e5ca3429233af402d406a202f1fc1ac
+                           .group:00000000 wm4.ieeefp.h.77.220d9cccac42cd58761758bee2df4ce6
+                           .group:00000000 wm4.features.h.22.fad1cec3bc7ff06488171438dbdcfd02
+                           .group:00000000 wm4.config.h.220.6cac6a9685cfce5e83c17784171638d9
+                           .group:00000000 wm4._ansi.h.31.de524f58584151836e90d8620a16f8e8
+                           .group:00000000 wm4.stdio.h.31.7c0e28c411445f3f9c5b11accf882760
+                           .group:00000000 wm4._default_types.h.6.959254cf5f09734ea7516c89e8bb21bd
+                           .group:00000000 wm4.stddef.h.187.2ff233552538c6ff9b8575ca8ea52cb3
+                           .group:00000000 wm4.cdefs.h.47.0bcdf94cb40e176393dd1404056825b4
+                           .group:00000000 wm4.stddef.h.39.ec95e8feac892e292b69dc7ae75b0d64
+                           .group:00000000 wm4.stdarg.h.34.3a23a216c0c293b3d2ea2e89281481e6
+                           .group:00000000 wm4.lock.h.2.1461d1fff82dffe8bfddc23307f6484f
+                           .group:00000000 wm4._types.h.125.5cf8a495f1f7ef36777ad868a1e32068
+                           .group:00000000 wm4.stddef.h.161.5349cb105733e8777bfb0cf53c4e3f34
+                           .group:00000000 wm4._types.h.184.03611d4f6b5bec9997bcf4279eceba07
+                           .group:00000000 wm4.reent.h.17.90c2574d4acdcfce933db5cb09ff35fe
+                           .group:00000000 wm4.types.h.40.e8c16e7ec36ba55f133d0616070e25fc
+                           .group:00000000 wm4._stdint.h.10.c24fa3af3bc1706662bb5593a907e841
+                           .group:00000000 wm4._endian.h.31.65a10590763c3dde1ac4a7f66d7d4891
+                           .group:00000000 wm4.endian.h.9.49f3a4695c1b61e8a0808de3c4a106cb
+                           .group:00000000 wm4._timeval.h.30.0e8bfd94e85db17dda3286ee81496fe6
+                           .group:00000000 wm4.timespec.h.41.d855182eb0e690443ab8651bcedca6e1
+                           .group:00000000 wm4.select.h.19.97ca6fd0c752a0f3b6719fd314d361e6
+                           .group:00000000 wm4.types.h.69.ed3eae3cf73030a737515151ebcab7a1
+                           .group:00000000 wm4.sched.h.22.c60982713a5c428609783c78f9c78d95
+                           .group:00000000 wm4._pthreadtypes.h.36.fcee9961c35163dde6267ef772ad1972
+                           .group:00000000 wm4.stdio.h.2.4aa87247282eca6c8f36f9de33d8df1a
+                           .group:00000000 wm4.stdio.h.81.932d0c162786b883f622b8d05c120c78
+                           .group:00000000 wm4.stdlib.h.13.4ed386f5c1a80d71e72172885d946ef2
+                           .group:00000000 wm4.stddef.h.161.19e15733342b50ead2919490b095303e
+                           .group:00000000 wm4.alloca.h.8.dfc0c703c47ec3e69746825b17d9e66d
+                           .group:00000000 wm4.stdlib.h.56.d4493cd3736e51e9d56335045f26df45
+                           .group:00000000 wm4.string.h.8.c4b8571ce60dff2817f43fec8b86aecd
+                           .group:00000000 wm4._intsup.h.10.cce27fed8484c08a33f522034c30d2b5
+                           .group:00000000 wm4.stdint.h.23.d53047a68f4a85177f80b422d52785ed
+                           .group:00000000 wm4.gsdk_common.h.47.22de8ea3659fbd5af0e08ced1ae1b062
+ARM GAS   			page 11
+
+
+                           .group:00000000 wm4.gsdk_flash.h.25.4d08791083e4af07d64570151ac0803c
+                           .group:00000000 wm4.app_loader.h.25.aa64c8d4536aca920728cda79a275eeb
+
+UNDEFINED SYMBOLS
+gsdk_uart_write
+gsdk_uart_open
+puts
+printf
+gsdk_flash_open
+gsdk_flash_erase
+gsdk_flash_write
+gsdk_flash_close
+gsdk_flash_read
+strcmp

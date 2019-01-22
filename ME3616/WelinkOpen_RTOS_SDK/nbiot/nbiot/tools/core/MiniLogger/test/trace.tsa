@@ -1,0 +1,23 @@
+   /* Dynamic Memory Statistics */
+{
+   KiFixStatisticsReq kiFixStatisticsReq;
+   kiFixStatisticsReq.returnTask = TASK_FL_ID;
+   GsSendStruct (SIG_KI_FIX_STATISTICS_REQ, sizeof(KiFixStatisticsReq), &kiFixStatisticsReq, UNKNOWN_TASK_ID, EMMI_LOW_PRI_TASK_ID);
+}
+{   
+   KiStatisticsReq kiStatisticsReq;
+   kiStatisticsReq.returnTask = TASK_FL_ID;
+   GsSendStruct (SIG_KI_STATISTICS_REQ, sizeof(KiStatisticsReq), &kiStatisticsReq, UNKNOWN_TASK_ID, EMMI_LOW_PRI_TASK_ID);
+}
+{  
+   KiDynamicMemUsageReq kiDynamicMemUsageReq;
+   int i;
+   kiDynamicMemUsageReq.returnTask = TASK_FL_ID;
+   kiDynamicMemUsageReq.queryTask  = MUX_TASK_ID;
+   for (i=0; i<1000; i++)
+   {
+       GsSendStruct (SIG_KI_DYNAMIC_MEM_USAGE_REQ, sizeof(KiDynamicMemUsageReq), &kiDynamicMemUsageReq, UNKNOWN_TASK_ID, EMMI_LOW_PRI_TASK_ID);
+       GsDelay(2000);
+   }
+}
+GsStart ();

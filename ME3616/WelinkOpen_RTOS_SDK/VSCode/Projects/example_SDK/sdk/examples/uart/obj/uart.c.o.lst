@@ -1,0 +1,585 @@
+ARM GAS   			page 1
+
+
+   1              	 .cpu cortex-m4
+   2              	 .eabi_attribute 27,1
+   3              	 .eabi_attribute 28,1
+   4              	 .eabi_attribute 20,1
+   5              	 .eabi_attribute 21,1
+   6              	 .eabi_attribute 23,3
+   7              	 .eabi_attribute 24,1
+   8              	 .eabi_attribute 25,1
+   9              	 .eabi_attribute 26,1
+  10              	 .eabi_attribute 30,1
+  11              	 .eabi_attribute 34,1
+  12              	 .eabi_attribute 18,4
+  13              	 .file "uart.c"
+  14              	 .text
+  15              	.Ltext0:
+  16              	 .cfi_sections .debug_frame
+  17              	 .section .text.__io_puts,"ax",%progbits
+  18              	 .align 1
+  19              	 .global __io_puts
+  20              	 .syntax unified
+  21              	 .thumb
+  22              	 .thumb_func
+  23              	 .fpu fpv4-sp-d16
+  25              	__io_puts:
+  26              	.LFB3:
+  27              	 .file 1 "uart.c"
+   1:uart.c        **** /*
+   2:uart.c        **** ** File   : uart.c
+   3:uart.c        **** **
+   4:uart.c        **** ** Copyright (C) 2013-2018 Gosuncn. All rights reserved.
+   5:uart.c        **** **
+   6:uart.c        **** ** Licensed under the Apache License, Version 2.0 (the "License");
+   7:uart.c        **** ** you may not use this file except in compliance with the License.
+   8:uart.c        **** ** You may obtain a copy of the License at
+   9:uart.c        **** **
+  10:uart.c        **** **      http://www.apache.org/licenses/LICENSE-2.0
+  11:uart.c        **** **
+  12:uart.c        **** ** Unless required by applicable law or agreed to in writing, software
+  13:uart.c        **** ** distributed under the License is distributed on an "AS IS" BASIS,
+  14:uart.c        **** ** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  15:uart.c        **** ** See the License for the specific language governing permissions and
+  16:uart.c        **** ** limitations under the License.
+  17:uart.c        **** **
+  18:uart.c        **** ** Author : dengyi2@gosuncn.cn
+  19:uart.c        **** ** 注释: 此demo用于测试串口,利用串口工具发字符,回显字符
+  20:uart.c        **** **  $Date: 2018/07/20 14:48:36GMT+08:00 $
+  21:uart.c        **** **
+  22:uart.c        **** */
+  23:uart.c        **** 
+  24:uart.c        **** #include <stdio.h>
+  25:uart.c        **** #include <stdlib.h>
+  26:uart.c        **** #include <string.h>
+  27:uart.c        **** #include "gsdk_api.h"
+  28:uart.c        **** 
+  29:uart.c        **** static gsdk_handle_t g_huart;
+  30:uart.c        **** 
+  31:uart.c        **** int __io_puts(char *data, int len)
+ARM GAS   			page 2
+
+
+  32:uart.c        **** {
+  28              	 .loc 1 32 0
+  29              	 .cfi_startproc
+  30              	 
+  31              	 
+  32              	.LVL0:
+  33 0000 10B5     	 push {r4,lr}
+  34              	 .cfi_def_cfa_offset 8
+  35              	 .cfi_offset 4,-8
+  36              	 .cfi_offset 14,-4
+  37              	.LVL1:
+  33:uart.c        ****     int ret = 0;
+  34:uart.c        ****     if (g_huart) {
+  38              	 .loc 1 34 0
+  39 0002 064B     	 ldr r3,.L5
+  40 0004 1C68     	 ldr r4,[r3]
+  41 0006 3CB1     	 cbz r4,.L3
+  42 0008 0A46     	 mov r2,r1
+  43 000a 0146     	 mov r1,r0
+  44              	.LVL2:
+  35:uart.c        ****         ret = gsdk_uart_write(g_huart, (uint8_t *)data, len, 1000);
+  45              	 .loc 1 35 0
+  46 000c 4FF47A73 	 mov r3,#1000
+  47 0010 2046     	 mov r0,r4
+  48              	.LVL3:
+  49 0012 FFF7FEFF 	 bl gsdk_uart_write
+  50              	.LVL4:
+  51              	.L1:
+  36:uart.c        ****     }
+  37:uart.c        ****     return ret;
+  38:uart.c        **** }
+  52              	 .loc 1 38 0
+  53 0016 10BD     	 pop {r4,pc}
+  54              	.LVL5:
+  55              	.L3:
+  33:uart.c        ****     if (g_huart) {
+  56              	 .loc 1 33 0
+  57 0018 0020     	 movs r0,#0
+  58              	.LVL6:
+  37:uart.c        **** }
+  59              	 .loc 1 37 0
+  60 001a FCE7     	 b .L1
+  61              	.L6:
+  62              	 .align 2
+  63              	.L5:
+  64 001c 00000000 	 .word .LANCHOR0
+  65              	 .cfi_endproc
+  66              	.LFE3:
+  68              	 .section .text.main,"ax",%progbits
+  69              	 .align 1
+  70              	 .global main
+  71              	 .syntax unified
+  72              	 .thumb
+  73              	 .thumb_func
+  74              	 .fpu fpv4-sp-d16
+  76              	main:
+  77              	.LFB4:
+ARM GAS   			page 3
+
+
+  39:uart.c        **** 
+  40:uart.c        **** int main(void)
+  41:uart.c        **** {
+  78              	 .loc 1 41 0
+  79              	 .cfi_startproc
+  80              	 
+  81              	 
+  82 0000 30B5     	 push {r4,r5,lr}
+  83              	 .cfi_def_cfa_offset 12
+  84              	 .cfi_offset 4,-12
+  85              	 .cfi_offset 5,-8
+  86              	 .cfi_offset 14,-4
+  87 0002 83B0     	 sub sp,sp,#12
+  88              	 .cfi_def_cfa_offset 24
+  42:uart.c        ****     gsdk_status_t status;
+  43:uart.c        ****     uart_config_t uart_config;
+  44:uart.c        ****     static char test[64];
+  45:uart.c        ****     static char read[64];
+  46:uart.c        ****     int left, snd_cnt, rcv_cnt, read_cnt, write_cnt, cnt;
+  47:uart.c        ****     char *pbuf;
+  48:uart.c        ****     char *pread;
+  49:uart.c        **** 
+  50:uart.c        ****     uart_config.baudrate    = UART_BAUDRATE_115200;
+  89              	 .loc 1 50 0
+  90 0004 0923     	 movs r3,#9
+  91 0006 8DF80430 	 strb r3,[sp,#4]
+  51:uart.c        ****     uart_config.parity      = UART_PARITY_NONE;
+  92              	 .loc 1 51 0
+  93 000a 0020     	 movs r0,#0
+  94 000c 8DF80700 	 strb r0,[sp,#7]
+  52:uart.c        ****     uart_config.stop_bit    = UART_STOP_BIT_1;
+  95              	 .loc 1 52 0
+  96 0010 8DF80600 	 strb r0,[sp,#6]
+  53:uart.c        ****     uart_config.word_length = UART_WORD_LENGTH_8;
+  97              	 .loc 1 53 0
+  98 0014 0323     	 movs r3,#3
+  99 0016 8DF80530 	 strb r3,[sp,#5]
+  54:uart.c        **** 
+  55:uart.c        ****     status = gsdk_uart_open(UART_0, &uart_config, &g_huart);
+ 100              	 .loc 1 55 0
+ 101 001a 314A     	 ldr r2,.L16
+ 102 001c 01A9     	 add r1,sp,#4
+ 103 001e FFF7FEFF 	 bl gsdk_uart_open
+ 104              	.LVL7:
+  56:uart.c        ****     if (status != GSDK_SUCCESS) {
+ 105              	 .loc 1 56 0
+ 106 0022 0028     	 cmp r0,#0
+ 107 0024 54D1     	 bne .L15
+  57:uart.c        ****         gsdk_syslog_printf("[UART_DEMO]: failed to open uart %d\n", status);
+  58:uart.c        ****         return -1;
+  59:uart.c        ****     }
+  60:uart.c        ****     printf("\r\n");
+ 108              	 .loc 1 60 0
+ 109 0026 2F4C     	 ldr r4,.L16+4
+ 110 0028 2046     	 mov r0,r4
+ 111              	.LVL8:
+ 112 002a FFF7FEFF 	 bl puts
+ARM GAS   			page 4
+
+
+ 113              	.LVL9:
+  61:uart.c        ****     printf("Usage:\r\n");
+ 114              	 .loc 1 61 0
+ 115 002e 2E48     	 ldr r0,.L16+8
+ 116 0030 FFF7FEFF 	 bl puts
+ 117              	.LVL10:
+  62:uart.c        ****     printf("use uart tools,send 64 or greater than 64 character to ME3616\r\n");
+ 118              	 .loc 1 62 0
+ 119 0034 2D48     	 ldr r0,.L16+12
+ 120 0036 FFF7FEFF 	 bl puts
+ 121              	.LVL11:
+  63:uart.c        ****     printf("that will show what you send, but only show 64 character\r\n");
+ 122              	 .loc 1 63 0
+ 123 003a 2D48     	 ldr r0,.L16+16
+ 124 003c FFF7FEFF 	 bl puts
+ 125              	.LVL12:
+  64:uart.c        ****     printf("\r\n");
+ 126              	 .loc 1 64 0
+ 127 0040 2046     	 mov r0,r4
+ 128 0042 FFF7FEFF 	 bl puts
+ 129              	.LVL13:
+  65:uart.c        **** 
+  66:uart.c        ****     cnt = 64;
+  67:uart.c        ****     pread = read;
+ 130              	 .loc 1 67 0
+ 131 0046 2B4D     	 ldr r5,.L16+20
+  66:uart.c        ****     pread = read;
+ 132              	 .loc 1 66 0
+ 133 0048 4024     	 movs r4,#64
+ 134              	.LVL14:
+ 135              	.L10:
+  68:uart.c        ****     while(1){
+  69:uart.c        **** 	read_cnt = gsdk_uart_read(g_huart, (uint8_t *)pread, cnt, 100);
+ 136              	 .loc 1 69 0
+ 137 004a 6423     	 movs r3,#100
+ 138 004c 2246     	 mov r2,r4
+ 139 004e 2946     	 mov r1,r5
+ 140 0050 2348     	 ldr r0,.L16
+ 141 0052 0068     	 ldr r0,[r0]
+ 142 0054 FFF7FEFF 	 bl gsdk_uart_read
+ 143              	.LVL15:
+ 144 0058 0246     	 mov r2,r0
+ 145              	.LVL16:
+  70:uart.c        **** 	cnt -= read_cnt;
+ 146              	 .loc 1 70 0
+ 147 005a 241A     	 subs r4,r4,r0
+ 148              	.LVL17:
+  71:uart.c        **** 	pread += read_cnt;
+ 149              	 .loc 1 71 0
+ 150 005c 0544     	 add r5,r5,r0
+ 151              	.LVL18:
+  72:uart.c        **** 	if (cnt < 64)
+ 152              	 .loc 1 72 0
+ 153 005e 3F2C     	 cmp r4,#63
+ 154 0060 F3DC     	 bgt .L10
+ 155              	.LVL19:
+  73:uart.c        **** 	break;
+ARM GAS   			page 5
+
+
+  74:uart.c        ****     }
+  75:uart.c        **** 
+  76:uart.c        ****     cnt = 64;
+  77:uart.c        ****     pread = read;
+  78:uart.c        ****     while(1){
+  79:uart.c        ****         write_cnt = gsdk_uart_write(g_huart, (uint8_t *)pread, read_cnt, 100);
+ 156              	 .loc 1 79 0
+ 157 0062 6423     	 movs r3,#100
+ 158 0064 2349     	 ldr r1,.L16+20
+ 159 0066 1E48     	 ldr r0,.L16
+ 160              	.LVL20:
+ 161 0068 0068     	 ldr r0,[r0]
+ 162 006a FFF7FEFF 	 bl gsdk_uart_write
+ 163              	.LVL21:
+  80:uart.c        ****         cnt -= write_cnt;
+  81:uart.c        ****         pread += write_cnt;
+  82:uart.c        ****         if (cnt != 0) {
+ 164              	 .loc 1 82 0
+ 165 006e 4028     	 cmp r0,#64
+ 166 0070 35D0     	 beq .L11
+  83:uart.c        ****             printf("\r\n");
+ 167              	 .loc 1 83 0
+ 168 0072 1C4C     	 ldr r4,.L16+4
+ 169 0074 2046     	 mov r0,r4
+ 170              	.LVL22:
+ 171 0076 FFF7FEFF 	 bl puts
+ 172              	.LVL23:
+  84:uart.c        ****             printf("WARRING!!! you should send 64 or greater than 64 character,thanks.\r\n");
+ 173              	 .loc 1 84 0
+ 174 007a 1F48     	 ldr r0,.L16+24
+ 175 007c FFF7FEFF 	 bl puts
+ 176              	.LVL24:
+  85:uart.c        ****             printf("eg:");
+ 177              	 .loc 1 85 0
+ 178 0080 1E48     	 ldr r0,.L16+28
+ 179 0082 FFF7FEFF 	 bl printf
+ 180              	.LVL25:
+  86:uart.c        ****             printf("012345678901234567890123456789012345678901234567890123456789ABCD\r\n");
+ 181              	 .loc 1 86 0
+ 182 0086 1E48     	 ldr r0,.L16+32
+ 183 0088 FFF7FEFF 	 bl puts
+ 184              	.LVL26:
+  87:uart.c        ****             printf("\r\n");
+ 185              	 .loc 1 87 0
+ 186 008c 2046     	 mov r0,r4
+ 187 008e FFF7FEFF 	 bl puts
+ 188              	.LVL27:
+  88:uart.c        ****             break;
+  89:uart.c        **** 	}
+  90:uart.c        **** 	while(1);
+  91:uart.c        ****     }
+  92:uart.c        **** 
+  93:uart.c        ****     left = 64;
+  94:uart.c        ****     pbuf = test;
+ 189              	 .loc 1 94 0
+ 190 0092 1C4D     	 ldr r5,.L16+36
+  93:uart.c        ****     pbuf = test;
+ARM GAS   			page 6
+
+
+ 191              	 .loc 1 93 0
+ 192 0094 4024     	 movs r4,#64
+ 193              	.LVL28:
+ 194              	.L12:
+  95:uart.c        ****     while(1) {
+  96:uart.c        ****         rcv_cnt = gsdk_uart_read(g_huart, (uint8_t *)pbuf, left, 100);
+ 195              	 .loc 1 96 0
+ 196 0096 6423     	 movs r3,#100
+ 197 0098 2246     	 mov r2,r4
+ 198 009a 2946     	 mov r1,r5
+ 199 009c 1048     	 ldr r0,.L16
+ 200 009e 0068     	 ldr r0,[r0]
+ 201 00a0 FFF7FEFF 	 bl gsdk_uart_read
+ 202              	.LVL29:
+  97:uart.c        ****         left -= rcv_cnt;
+  98:uart.c        ****         pbuf += rcv_cnt;
+ 203              	 .loc 1 98 0
+ 204 00a4 0544     	 add r5,r5,r0
+ 205              	.LVL30:
+  99:uart.c        ****         if (left == 0)
+ 206              	 .loc 1 99 0
+ 207 00a6 241A     	 subs r4,r4,r0
+ 208              	.LVL31:
+ 209 00a8 F5D1     	 bne .L12
+ 100:uart.c        ****            break;
+ 101:uart.c        ****     }
+ 102:uart.c        ****     left = 64;
+ 103:uart.c        ****     pbuf = test;
+ 210              	 .loc 1 103 0
+ 211 00aa 164D     	 ldr r5,.L16+36
+ 212              	.LVL32:
+ 102:uart.c        ****     pbuf = test;
+ 213              	 .loc 1 102 0
+ 214 00ac 4024     	 movs r4,#64
+ 215              	.LVL33:
+ 216              	.L13:
+ 104:uart.c        ****     while(1) {
+ 105:uart.c        ****         snd_cnt = gsdk_uart_write(g_huart, (uint8_t *)pbuf, left, 100);
+ 217              	 .loc 1 105 0
+ 218 00ae 6423     	 movs r3,#100
+ 219 00b0 2246     	 mov r2,r4
+ 220 00b2 2946     	 mov r1,r5
+ 221 00b4 0A48     	 ldr r0,.L16
+ 222 00b6 0068     	 ldr r0,[r0]
+ 223 00b8 FFF7FEFF 	 bl gsdk_uart_write
+ 224              	.LVL34:
+ 106:uart.c        ****         left -= snd_cnt;
+ 107:uart.c        ****         pbuf += snd_cnt;
+ 225              	 .loc 1 107 0
+ 226 00bc 0544     	 add r5,r5,r0
+ 227              	.LVL35:
+ 108:uart.c        ****         if (left == 0)
+ 228              	 .loc 1 108 0
+ 229 00be 241A     	 subs r4,r4,r0
+ 230              	.LVL36:
+ 231 00c0 F5D1     	 bne .L13
+ 109:uart.c        ****            break;
+ARM GAS   			page 7
+
+
+ 110:uart.c        **** 
+ 111:uart.c        ****     }
+ 112:uart.c        ****     gsdk_uart_close(g_huart);
+ 232              	 .loc 1 112 0
+ 233 00c2 074B     	 ldr r3,.L16
+ 234 00c4 1868     	 ldr r0,[r3]
+ 235              	.LVL37:
+ 236 00c6 FFF7FEFF 	 bl gsdk_uart_close
+ 237              	.LVL38:
+ 238              	.L7:
+ 113:uart.c        **** }
+ 239              	 .loc 1 113 0
+ 240 00ca 2046     	 mov r0,r4
+ 241 00cc 03B0     	 add sp,sp,#12
+ 242              	 .cfi_remember_state
+ 243              	 .cfi_def_cfa_offset 12
+ 244              	 
+ 245 00ce 30BD     	 pop {r4,r5,pc}
+ 246              	.LVL39:
+ 247              	.L15:
+ 248              	 .cfi_restore_state
+ 249 00d0 0146     	 mov r1,r0
+  57:uart.c        ****         return -1;
+ 250              	 .loc 1 57 0
+ 251 00d2 0D48     	 ldr r0,.L16+40
+ 252              	.LVL40:
+ 253 00d4 FFF7FEFF 	 bl gsdk_syslog_printf
+ 254              	.LVL41:
+  58:uart.c        ****     }
+ 255              	 .loc 1 58 0
+ 256 00d8 4FF0FF34 	 mov r4,#-1
+ 257 00dc F5E7     	 b .L7
+ 258              	.LVL42:
+ 259              	.L11:
+ 260 00de FEE7     	 b .L11
+ 261              	.L17:
+ 262              	 .align 2
+ 263              	.L16:
+ 264 00e0 00000000 	 .word .LANCHOR0
+ 265 00e4 28000000 	 .word .LC1
+ 266 00e8 2C000000 	 .word .LC2
+ 267 00ec 34000000 	 .word .LC3
+ 268 00f0 74000000 	 .word .LC4
+ 269 00f4 00000000 	 .word .LANCHOR1
+ 270 00f8 B0000000 	 .word .LC5
+ 271 00fc F4000000 	 .word .LC6
+ 272 0100 F8000000 	 .word .LC7
+ 273 0104 00000000 	 .word .LANCHOR2
+ 274 0108 00000000 	 .word .LC0
+ 275              	 .cfi_endproc
+ 276              	.LFE4:
+ 278              	 .section .bss.g_huart,"aw",%nobits
+ 279              	 .align 2
+ 280              	 .set .LANCHOR0,.+0
+ 283              	g_huart:
+ 284 0000 00000000 	 .space 4
+ 285              	 .section .bss.read.7713,"aw",%nobits
+ARM GAS   			page 8
+
+
+ 286              	 .align 2
+ 287              	 .set .LANCHOR1,.+0
+ 290              	read.7713:
+ 291 0000 00000000 	 .space 64
+ 291      00000000 
+ 291      00000000 
+ 291      00000000 
+ 291      00000000 
+ 292              	 .section .bss.test.7712,"aw",%nobits
+ 293              	 .align 2
+ 294              	 .set .LANCHOR2,.+0
+ 297              	test.7712:
+ 298 0000 00000000 	 .space 64
+ 298      00000000 
+ 298      00000000 
+ 298      00000000 
+ 298      00000000 
+ 299              	 .section .rodata.main.str1.4,"aMS",%progbits,1
+ 300              	 .align 2
+ 301              	.LC0:
+ 302 0000 5B554152 	 .ascii "[UART_DEMO]: failed to open uart %d\012\000"
+ 302      545F4445 
+ 302      4D4F5D3A 
+ 302      20666169 
+ 302      6C656420 
+ 303 0025 000000   	 .space 3
+ 304              	.LC1:
+ 305 0028 0D00     	 .ascii "\015\000"
+ 306 002a 0000     	 .space 2
+ 307              	.LC2:
+ 308 002c 55736167 	 .ascii "Usage:\015\000"
+ 308      653A0D00 
+ 309              	.LC3:
+ 310 0034 75736520 	 .ascii "use uart tools,send 64 or greater than 64 character"
+ 310      75617274 
+ 310      20746F6F 
+ 310      6C732C73 
+ 310      656E6420 
+ 311 0067 20746F20 	 .ascii " to ME3616\015\000"
+ 311      4D453336 
+ 311      31360D00 
+ 312 0073 00       	 .space 1
+ 313              	.LC4:
+ 314 0074 74686174 	 .ascii "that will show what you send, but only show 64 char"
+ 314      2077696C 
+ 314      6C207368 
+ 314      6F772077 
+ 314      68617420 
+ 315 00a7 61637465 	 .ascii "acter\015\000"
+ 315      720D00
+ 316 00ae 0000     	 .space 2
+ 317              	.LC5:
+ 318 00b0 57415252 	 .ascii "WARRING!!! you should send 64 or greater than 64 ch"
+ 318      494E4721 
+ 318      21212079 
+ 318      6F752073 
+ 318      686F756C 
+ARM GAS   			page 9
+
+
+ 319 00e3 61726163 	 .ascii "aracter,thanks.\015\000"
+ 319      7465722C 
+ 319      7468616E 
+ 319      6B732E0D 
+ 319      00
+ 320              	.LC6:
+ 321 00f4 65673A00 	 .ascii "eg:\000"
+ 322              	.LC7:
+ 323 00f8 30313233 	 .ascii "012345678901234567890123456789012345678901234567890"
+ 323      34353637 
+ 323      38393031 
+ 323      32333435 
+ 323      36373839 
+ 324 012b 31323334 	 .ascii "123456789ABCD\015\000"
+ 324      35363738 
+ 324      39414243 
+ 324      440D00
+ 325              	 .text
+ 326              	.Letext0:
+ 327              	 .file 2 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 328              	 .file 3 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\lock.h"
+ 329              	 .file 4 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\_types.h"
+ 330              	 .file 5 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\lib\\gcc\\arm-none-eabi\\7.3.1\\include\\stddef.h"
+ 331              	 .file 6 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\reent.h"
+ 332              	 .file 7 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\sys\\_stdint.h"
+ 333              	 .file 8 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\stdlib.h"
+ 334              	 .file 9 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_common.h"
+ 335              	 .file 10 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_uart.h"
+ 336              	 .file 11 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_flash.h"
+ 337              	 .file 12 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include\\stdio.h"
+ 338              	 .file 13 "E:/01\271\244\327\367\304\277\302\274/WelinkOpen_RTOS_SDK/OC_ME3616G1AV0.0B07/SDK/sdk/include/gsdk_api.h"
+ 339              	 .file 14 "<built-in>"
+ARM GAS   			page 10
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 uart.c
+    {standard input}:18     .text.__io_puts:00000000 $t
+    {standard input}:25     .text.__io_puts:00000000 __io_puts
+    {standard input}:64     .text.__io_puts:0000001c $d
+    {standard input}:69     .text.main:00000000 $t
+    {standard input}:76     .text.main:00000000 main
+    {standard input}:264    .text.main:000000e0 $d
+    {standard input}:279    .bss.g_huart:00000000 $d
+    {standard input}:283    .bss.g_huart:00000000 g_huart
+    {standard input}:286    .bss.read.7713:00000000 $d
+    {standard input}:290    .bss.read.7713:00000000 read.7713
+    {standard input}:293    .bss.test.7712:00000000 $d
+    {standard input}:297    .bss.test.7712:00000000 test.7712
+    {standard input}:300    .rodata.main.str1.4:00000000 $d
+                           .group:00000000 wm4.0.8fab1e1450c2b74bdd5e2aed4c325bf1
+                           .group:00000000 wm4._newlib_version.h.4.875b979a44719054cd750d0952ad3fd6
+                           .group:00000000 wm4.newlib.h.18.5e5ca3429233af402d406a202f1fc1ac
+                           .group:00000000 wm4.ieeefp.h.77.220d9cccac42cd58761758bee2df4ce6
+                           .group:00000000 wm4.features.h.22.fad1cec3bc7ff06488171438dbdcfd02
+                           .group:00000000 wm4.config.h.220.6cac6a9685cfce5e83c17784171638d9
+                           .group:00000000 wm4._ansi.h.31.de524f58584151836e90d8620a16f8e8
+                           .group:00000000 wm4.stdio.h.31.7c0e28c411445f3f9c5b11accf882760
+                           .group:00000000 wm4._default_types.h.6.959254cf5f09734ea7516c89e8bb21bd
+                           .group:00000000 wm4.stddef.h.187.2ff233552538c6ff9b8575ca8ea52cb3
+                           .group:00000000 wm4.cdefs.h.47.0bcdf94cb40e176393dd1404056825b4
+                           .group:00000000 wm4.stddef.h.39.ec95e8feac892e292b69dc7ae75b0d64
+                           .group:00000000 wm4.stdarg.h.34.3a23a216c0c293b3d2ea2e89281481e6
+                           .group:00000000 wm4.lock.h.2.1461d1fff82dffe8bfddc23307f6484f
+                           .group:00000000 wm4._types.h.125.5cf8a495f1f7ef36777ad868a1e32068
+                           .group:00000000 wm4.stddef.h.161.5349cb105733e8777bfb0cf53c4e3f34
+                           .group:00000000 wm4._types.h.184.03611d4f6b5bec9997bcf4279eceba07
+                           .group:00000000 wm4.reent.h.17.90c2574d4acdcfce933db5cb09ff35fe
+                           .group:00000000 wm4.types.h.40.e8c16e7ec36ba55f133d0616070e25fc
+                           .group:00000000 wm4._stdint.h.10.c24fa3af3bc1706662bb5593a907e841
+                           .group:00000000 wm4._endian.h.31.65a10590763c3dde1ac4a7f66d7d4891
+                           .group:00000000 wm4.endian.h.9.49f3a4695c1b61e8a0808de3c4a106cb
+                           .group:00000000 wm4._timeval.h.30.0e8bfd94e85db17dda3286ee81496fe6
+                           .group:00000000 wm4.timespec.h.41.d855182eb0e690443ab8651bcedca6e1
+                           .group:00000000 wm4.select.h.19.97ca6fd0c752a0f3b6719fd314d361e6
+                           .group:00000000 wm4.types.h.69.ed3eae3cf73030a737515151ebcab7a1
+                           .group:00000000 wm4.sched.h.22.c60982713a5c428609783c78f9c78d95
+                           .group:00000000 wm4._pthreadtypes.h.36.fcee9961c35163dde6267ef772ad1972
+                           .group:00000000 wm4.stdio.h.2.4aa87247282eca6c8f36f9de33d8df1a
+                           .group:00000000 wm4.stdio.h.81.932d0c162786b883f622b8d05c120c78
+                           .group:00000000 wm4.stdlib.h.13.4ed386f5c1a80d71e72172885d946ef2
+                           .group:00000000 wm4.stddef.h.161.19e15733342b50ead2919490b095303e
+                           .group:00000000 wm4.alloca.h.8.dfc0c703c47ec3e69746825b17d9e66d
+                           .group:00000000 wm4.stdlib.h.56.d4493cd3736e51e9d56335045f26df45
+                           .group:00000000 wm4.string.h.8.c4b8571ce60dff2817f43fec8b86aecd
+                           .group:00000000 wm4._intsup.h.10.cce27fed8484c08a33f522034c30d2b5
+                           .group:00000000 wm4.stdint.h.23.d53047a68f4a85177f80b422d52785ed
+                           .group:00000000 wm4.gsdk_common.h.47.22de8ea3659fbd5af0e08ced1ae1b062
+                           .group:00000000 wm4.gsdk_flash.h.25.4d08791083e4af07d64570151ac0803c
+                           .group:00000000 wm4.app_loader.h.25.aa64c8d4536aca920728cda79a275eeb
+
+UNDEFINED SYMBOLS
+ARM GAS   			page 11
+
+
+gsdk_uart_write
+gsdk_uart_open
+puts
+gsdk_uart_read
+printf
+gsdk_uart_close
+gsdk_syslog_printf
